@@ -1,13 +1,15 @@
 import React from 'react';
 import { Button, SafeAreaView } from 'react-native';
 
-import PopAlert from '../Components/Common/PopAlert';
-
 import { Logout, RefreshToken } from '../lib/api/TokenActivity';
 
 export default function Main({ navigation }) {
   const btnLogout = () => {
-    Logout({ navigation: navigation });
+    Logout({ navigation });
+  };
+
+  const btnInsRegister = () => {
+    navigation.navigate('InsRegister');
   };
 
   return (
@@ -16,6 +18,8 @@ export default function Main({ navigation }) {
     >
       <Button title="로그아웃" onPress={btnLogout} />
       <Button title="토큰 재발급" onPress={RefreshToken} />
+
+      <Button title="강사 등록" onPress={btnInsRegister} />
     </SafeAreaView>
   );
 }

@@ -4,11 +4,14 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-//import Screens
+/**
+ * 화면 모음
+ */
 import SignUpContainer from './Containers/Screens/SignUp/SignUpContainer';
 import LoginContainer from './Containers/Screens/Login/LoginContainer';
 import Loading from './Containers/Loading';
 import Main from './Containers/Main';
+import InsRegisterContainer from './Containers/Screens/Instructor/InsRegisterContainer';
 
 const Stack = createStackNavigator();
 
@@ -42,6 +45,12 @@ function StackNavigator() {
       <Stack.Screen name="Login" component={LoginContainer} />
       <Stack.Screen name="SignUp" component={SignUpContainer} />
       <Stack.Screen name="Main" component={Main} />
+
+      <Stack.Screen
+        name="InsRegister"
+        component={InsRegisterContainer}
+        options={{ headerShown: true }}
+      />
     </Stack.Navigator>
   );
 }
