@@ -27,6 +27,8 @@ import NMapSearch from '@cSchedule/NMapSearch';
 import CReservation from '@cReservation/CReservation';
 import CEquipment from '@cReservation/CEquipment';
 import CMyLecture from '@cStudent/CMyLecture';
+import CInstructorMyLecture from '@cInstructor/Lecture/CInstructorMyLecture';
+
 import {
   CertificateKind,
   Region,
@@ -150,6 +152,11 @@ function StackNavigator() {
       <Stack.Screen
         name="StudentMyLecture"
         component={CMyLecture}
+        options={{ headerShown: true }}
+      />
+      <Stack.Screen
+        name="InstructorMyLecture"
+        component={CInstructorMyLecture}
         options={{ headerShown: true }}
       />
     </Stack.Navigator>

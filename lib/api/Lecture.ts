@@ -5,6 +5,7 @@ import {
   LectureListAPI,
   LectureDetailAPI,
   StudentMyLectureAPI,
+  InstructorMyLectureAPI,
 } from '@config/strings';
 import {
   Region,
@@ -119,4 +120,18 @@ export const studentMyLectureDetailAPI = async (
 ): Promise<Object> => {
   const res = await axios.get(`${ReservationAPI}/${reservationId}`);
   return res.data;
+};
+
+export const instructorMyLectureAPI = async (
+  page: number,
+  size: number,
+): Promise<Object> => {
+  const res = await axios.get(InstructorMyLectureAPI, {
+    params: {
+      page,
+      size,
+    },
+  });
+
+  return res.data._embedded.lectureInfoList;
 };

@@ -1,7 +1,7 @@
 // API URL
 // export const Server = 'http://localhost:8080';
 // export const Server = 'http://localhost:8080';
-export const Server = 'http://192.168.43.21:8080';
+export const Server = 'http://192.168.0.51:8080';
 
 // auth API
 export const Login = `${Server}/sign/signin`;
@@ -17,6 +17,7 @@ export const LectureAddScheduleAPI = `${Server}/schedule`; // post 요청용
 export const GetLectureScheduleAPI = `${Server}/schedule`; // get 요청용
 export const ReservationAPI = `${Server}/reservation`;
 export const StudentMyLectureAPI = `${Server}/reservation/list`;
+export const InstructorMyLectureAPI = `${Server}/lecture/manage/list`;
 
 // NaverMap API
 // !---- 전송 시 헤더에 아래의 인증정보 추가 필요.

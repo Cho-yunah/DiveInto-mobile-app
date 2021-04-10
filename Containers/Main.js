@@ -5,7 +5,7 @@ import { Button, SafeAreaView } from 'react-native';
 import { makeTimeFormat } from '@lib/time';
 import { Logout, RefreshToken } from '@api/TokenActivity';
 
-const testLectureId = 8;
+const testLectureId = 7;
 
 export default function Main({ navigation }) {
   const btnLogout = () => {
@@ -44,6 +44,10 @@ export default function Main({ navigation }) {
     navigation.navigate('StudentMyLecture', { name: 'hdafsdfasdfai' });
   };
 
+  const btnInstructorMyLecture = () => {
+    navigation.navigate('InstructorMyLecture');
+  };
+
   return (
     <SafeAreaView
       style={{ flex: 1, justifyContent: 'center', backgroundColor: '#FFF' }}
@@ -60,6 +64,7 @@ export default function Main({ navigation }) {
       <Button title="위치 추가" onPress={btnAddLocation} />
 
       <Button title="수강생 강의목록" onPress={btnStudentMyLecture} />
+      <Button title="강사 강의목록" onPress={btnInstructorMyLecture} />
     </SafeAreaView>
   );
 }
