@@ -7,6 +7,7 @@ export type RootLoginStack = {
   Login: undefined;
   LoginWithEmail: undefined;
   SignUp: { testId: number };
+  SetPassword: undefined;
 };
 
 // 스크린 컴포넌트가 전달받을 navigation, route 프롭을 정의한다.
