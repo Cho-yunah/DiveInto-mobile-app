@@ -6,7 +6,7 @@ import { RootLoginStack } from './types';
 import LoginScreen from '../../screens/Login';
 import LoginWithEmailScreen from '@/src/screens/LoginWithEmail';
 import ProfileWithoutLogin from '@/src/components/ProfileWithoutLogin';
-import SetPasswordScreen from '@/src/screens/SignUp';
+import SetPasswordScreen from '@/src/screens/SetPassword';
 
 const Stack = createStackNavigator<RootLoginStack>();
 

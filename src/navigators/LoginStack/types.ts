@@ -6,8 +6,7 @@ export type fadeEffectProp = { current: { progress: any } };
 export type RootLoginStack = {
   Login: undefined;
   LoginWithEmail: undefined;
-  SignUp: { testId: number };
-  SetPassword: undefined;
+  SetPassword: { testId: number };
 };
 
 // 스크린 컴포넌트가 전달받을 navigation, route 프롭을 정의한다.
@@ -17,4 +16,4 @@ export type LoginProps = {
 export type LoginWithEmailProps = {
   navigation: StackNavigationProp<RootLoginStack, 'LoginWithEmail'>;
 };
-export type SignUpProps = StackScreenProps<RootLoginStack, 'SignUp'>;
+export type SetPasswordProps = StackScreenProps<RootLoginStack, 'SetPassword'>;

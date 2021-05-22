@@ -66,10 +66,3 @@ import { StyleSheet } from 'react-native';
 })
 
 export default styles;
-
-type InvalidMessage = {
-  isValid: boolean
-}
-type MatchMessage = {
-  isMatch: boolean
-}

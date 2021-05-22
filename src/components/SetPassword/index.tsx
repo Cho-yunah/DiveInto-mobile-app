@@ -5,7 +5,7 @@ import { View } from 'react-native';
 import { Text } from 'react-native-animatable';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 
-function Password() {
+export default function Password({onPress}: {onPress: ()=> void}) {
   // 비밀번호 text 보이는것 조정 함수
   const [isShow, setIsShow]= useState(false)
   const updateSecureTextEntry = () => { setIsShow(!isShow) }
@@ -40,10 +40,6 @@ function Password() {
     if (!password || !rePassword || password !== rePassword) {setIsMatch(false)}
    else {setIsMatch(true)}
   };
-
-  // 다음 페이지로
-  const moveNextPage={}
-
 
   return (
     <>
@@ -94,10 +90,9 @@ function Password() {
               (!isMatch? "10~16자 영문과 숫자를 조합해주세요.": "위의 비밀번호와 일치합니다.")}  
           </Text>  
       </View>
-          <TouchableOpacity style={styles.nextBtn} >
+          <TouchableOpacity style={styles.nextBtn} onPress={onPress}>
              <Text style={styles.btnText}>다음</Text>
           </TouchableOpacity> 
     </>
   );
 }
-export default Password;
