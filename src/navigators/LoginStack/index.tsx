@@ -1,12 +1,14 @@
 import React from 'react';
 import { RecoilRoot } from 'recoil';
 import { createStackNavigator } from '@react-navigation/stack';
-import { RootLoginStack } from './types';
+import { RootLoginStack, SetPasswordProps } from './types';
 
 import LoginScreen from '../../screens/Login';
 import LoginWithEmailScreen from '@/src/screens/LoginWithEmail';
 import ProfileWithoutLogin from '@/src/components/ProfileWithoutLogin';
 import SetPasswordScreen from '@/src/screens/SetPassword';
+import Button from '@/src/legacy/Containers/common/Button';
+import { NavigationContainer } from '@react-navigation/native';
 
 const Stack = createStackNavigator<RootLoginStack>();
 
@@ -30,6 +32,7 @@ export default function LoginStack() {
             backgroundColor: '#50CAD2',
           },
           headerTintColor: '#fefefe',
+          
         }}
       >
         <Stack.Screen
@@ -51,9 +54,18 @@ export default function LoginStack() {
           name="SetPassword" 
           component={SetPasswordScreen}
           options={{
-            title: '비밀번호 설정',
+            title: '이메일 회원가입',
+        //     headerRight:() => (
+        //       <Button
+        //         title="다음"
+        //         onPress={() => {
+        //           navigation.navigate('LoginWithEmail');
+        //   }}
+        // />
+        //     ),
           }}
         />
+        
       </Stack.Navigator>
     </RecoilRoot>
   );
