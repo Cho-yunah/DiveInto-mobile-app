@@ -12,7 +12,10 @@ import styles from './styles';
 
 const LoginScreen = ({ navigation }: LoginProps) => {
   const onLoginPress = () => {
-    navigation.navigate('LoginWithEmail');
+    const isExist = false;
+    isExist
+      ? navigation.navigate('LoginWithEmail')
+      : navigation.navigate('SetPassword');
   };
 
   return (
