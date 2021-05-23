@@ -32,7 +32,6 @@ export default function LoginStack() {
           },
           headerTintColor: '#fefefe',
         }}
-        initialRouteName="MemberInfo"
       >
         <Stack.Screen
           name="Login"

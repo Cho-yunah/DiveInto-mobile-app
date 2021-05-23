@@ -3,6 +3,8 @@ import { View, TouchableOpacity, Modal, Text } from 'react-native';
 import moment from 'moment';
 import DatePicker from 'react-native-date-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+
+// root path
 import styles from './styles';
 
 function CustomDatePicker() {

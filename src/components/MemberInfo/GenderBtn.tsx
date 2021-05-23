@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+
+// root path
 import styles from './styles';
 
 function GenderBtn() {
