@@ -47,7 +47,6 @@ export default function LoginStack() {
             title: '이메일로 로그인',
           }}
         />
-        {/* <Stack.Screen name="SignUp" component={SignUpScreen} /> */}
         <Stack.Screen
           name="SetPassword"
           component={SetPasswordScreen}

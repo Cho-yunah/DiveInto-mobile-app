@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react'
+import React, { ReactElement } from 'react';
 import { View, Text, Button, SafeAreaView } from 'react-native';
 import { SetPasswordProps } from '@navigators/LoginStack/types';
 
@@ -6,17 +6,21 @@ import { SetPasswordProps } from '@navigators/LoginStack/types';
 import { styles } from './styles';
 
 // import components
-import SetPassword from '@components/SetPassword';
+import { SetPassword, NextButton } from '@components/SetPassword';
 
 export default function SetPasswordScreen({
   navigation,
   route,
 }: SetPasswordProps): ReactElement {
-  const onPress = () => navigation.navigate('LoginWithEmail'); // 다음 페이지를 navigate 안으로 넣어준다.
+  const onPress = () => navigation.navigate('LoginWithEmail');
+
+  navigation.setOptions({
+    headerRight: () => <NextButton onPress={onPress} />,
+  });
 
   return (
     <View style={styles.container}>
-      <SetPassword onPress={onPress}/>
+      <SetPassword />
     </View>
   );
 }
