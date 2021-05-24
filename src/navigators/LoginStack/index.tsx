@@ -37,13 +37,6 @@ export default function LoginStack() {
           headerTintColor: '#fefefe',          
         }}
       >
-        <Stack.Screen 
-          name="SetPassword" 
-          component={SetPasswordScreen}
-          options={({ route }) => ({
-            title: '이메일로 회원가입',
-          })}
-        />
         <Stack.Screen
           name="Login"
           component={LoginScreen}
@@ -59,7 +52,13 @@ export default function LoginStack() {
           }}
         />
         {/* <Stack.Screen name="SignUp" component={SignUpScreen} /> */}
-        
+        <Stack.Screen 
+          name="SetPassword" 
+          component={SetPasswordScreen}
+          options={({ route }) => ({
+            title: '이메일로 회원가입',
+          })}
+        />
         
       </Stack.Navigator>
     </RecoilRoot>
