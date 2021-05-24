@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react'
+import React, { ReactElement } from 'react';
 import { View, Text, Button, SafeAreaView } from 'react-native';
 import { SetPasswordProps } from '@navigators/LoginStack/types';
 
@@ -13,21 +13,11 @@ export default function SetPasswordScreen({
   navigation,
   route,
 }: SetPasswordProps): ReactElement {
+  const onPress = () => navigation.navigate('LoginWithEmail');
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity
-          onPress={() => 
-            navigation.navigate("LoginWithEmail")}> 
-            {/* 뒤의 페이지를 넣어야 함 */}
-          <Text style={{ color: "#FFFFFF", paddingHorizontal: 18, fontSize: 16 }}>
-            다음
-          </Text>
-        </TouchableOpacity>
-      )
-    });
-  }, [navigation]);
+  navigation.setOptions({
+    headerRight: () => <NextButton onPress={onPress} />,
+  });
 
   return (
     <View style={styles.container}>

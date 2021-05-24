@@ -11,3 +11,13 @@ export const isPWValid = atom<IsValid>({
   key: 'isPWValid',
   default: undefined,
 });
+
+export const password = atom({
+  key: 'password',
+  default: '',
+});
+
+export const rePassword = atom({
+  key: 'rePassword',
+  default: '',
+});
