@@ -5,13 +5,13 @@ import { View } from 'react-native';
 import { Text } from 'react-native-animatable';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function Password({onPress}: {onPress: ()=> void}) {
+export default function Password() {
   // 비밀번호 text 보이는것 조정 함수
   const [isShow, setIsShow]= useState(false)
   const updateSecureTextEntry = () => { setIsShow(!isShow) }
 
   // 패스워드 입력 함수 (이름에 따라 패스워드를 받기)
-  let [password, setPassword] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
   const [rePassword, setRePassword ]= useState<string>('')
   const [isValid,setIsValid]=useState(false)
   const [isMatch, setIsMatch] = useState<boolean>(false)  
@@ -52,12 +52,12 @@ export default function Password({onPress}: {onPress: ()=> void}) {
               />
             <TouchableOpacity onPress={updateSecureTextEntry}>
               {isShow
-              ? <Feather name='eye-off' size={24} style={isValid?   styles.validPwIcon : styles.visiblePw} /> 
+              ? <Feather name='eye-off' size={24} style={isValid? styles.validPwIcon : styles.visiblePw} /> 
               : <Feather name='eye' size={24} style={isValid? styles.validPwIcon : styles.invisiblePw}/>
               } 
             </TouchableOpacity>
           </View>
-            {password !== undefined && (
+            {password.length !== 0 && (
               <Text style={isValid? styles.validMessage: styles.invalidMessage}>
                   {isValid
                   ? "올바른 형태의 비밀번호 입니다."
@@ -81,7 +81,7 @@ export default function Password({onPress}: {onPress: ()=> void}) {
               } 
             </TouchableOpacity>
           </View>
-            {rePassword !== undefined && (
+            {rePassword.length !== 0 && (
                 <Text style={isMatch? styles.validMessage: styles.invalidMessage} >
                   {isMatch
                     ?"위의 비밀번호와 일치합니다."
@@ -89,7 +89,7 @@ export default function Password({onPress}: {onPress: ()=> void}) {
                 </Text>  
               )}  
       </View>
-          <TouchableOpacity style={styles.nextBtn} onPress={onPress}>
+          <TouchableOpacity style={styles.nextBtn} >
              <Text style={styles.btnText}>다음</Text>
           </TouchableOpacity> 
     </>

@@ -8,11 +8,14 @@ import LoginWithEmailScreen from '@/src/screens/LoginWithEmail';
 import ProfileWithoutLogin from '@/src/components/ProfileWithoutLogin';
 import SetPasswordScreen from '@/src/screens/SetPassword';
 import Button from '@/src/legacy/Containers/common/Button';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { Pressable } from 'react-native';
 
 const Stack = createStackNavigator<RootLoginStack>();
 
 export default function LoginStack() {
+  // const navigation = useNavigation();
+
   return (
     <RecoilRoot>
       <Stack.Navigator
@@ -31,10 +34,16 @@ export default function LoginStack() {
             fontWeight: 'bold',
             backgroundColor: '#50CAD2',
           },
-          headerTintColor: '#fefefe',
-          
+          headerTintColor: '#fefefe',          
         }}
       >
+        <Stack.Screen 
+          name="SetPassword" 
+          component={SetPasswordScreen}
+          options={({ route }) => ({
+            title: '이메일로 회원가입',
+          })}
+        />
         <Stack.Screen
           name="Login"
           component={LoginScreen}
@@ -50,21 +59,7 @@ export default function LoginStack() {
           }}
         />
         {/* <Stack.Screen name="SignUp" component={SignUpScreen} /> */}
-        <Stack.Screen 
-          name="SetPassword" 
-          component={SetPasswordScreen}
-          options={{
-            title: '이메일 회원가입',
-        //     headerRight:() => (
-        //       <Button
-        //         title="다음"
-        //         onPress={() => {
-        //           navigation.navigate('LoginWithEmail');
-        //   }}
-        // />
-        //     ),
-          }}
-        />
+        
         
       </Stack.Navigator>
     </RecoilRoot>

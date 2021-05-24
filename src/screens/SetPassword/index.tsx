@@ -7,16 +7,31 @@ import { styles } from './styles';
 
 // import components
 import SetPassword from '@components/SetPassword';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function SetPasswordScreen({
   navigation,
   route,
 }: SetPasswordProps): ReactElement {
-  const onPress = () => navigation.navigate('LoginWithEmail'); // 다음 페이지를 navigate 안으로 넣어준다.
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => 
+            navigation.navigate("LoginWithEmail")}> 
+            {/* 뒤의 페이지를 넣어야 함 */}
+          <Text style={{ color: "#FFFFFF", paddingHorizontal: 18, fontSize: 16 }}>
+            다음
+          </Text>
+        </TouchableOpacity>
+      )
+    });
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
-      <SetPassword onPress={onPress}/>
+      <SetPassword />
     </View>
   );
 }
