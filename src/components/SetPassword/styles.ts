@@ -23,8 +23,6 @@ import { StyleSheet } from 'react-native';
   visiblePw: {color: '#E0E0E1'},
   invisiblePw: {color: '#343434'},
 
-  
-
   nextBtn: {
     position : 'absolute',
     top: -280,

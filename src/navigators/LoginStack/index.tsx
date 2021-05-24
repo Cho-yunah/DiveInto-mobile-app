@@ -1,21 +1,16 @@
 import React from 'react';
 import { RecoilRoot } from 'recoil';
 import { createStackNavigator } from '@react-navigation/stack';
-import { RootLoginStack, SetPasswordProps } from './types';
+import { RootLoginStack } from './types';
 
 import LoginScreen from '../../screens/Login';
 import LoginWithEmailScreen from '@/src/screens/LoginWithEmail';
 import ProfileWithoutLogin from '@/src/components/ProfileWithoutLogin';
 import SetPasswordScreen from '@/src/screens/SetPassword';
-import Button from '@/src/legacy/Containers/common/Button';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { Pressable } from 'react-native';
 
 const Stack = createStackNavigator<RootLoginStack>();
 
 export default function LoginStack() {
-  // const navigation = useNavigation();
-
   return (
     <RecoilRoot>
       <Stack.Navigator
