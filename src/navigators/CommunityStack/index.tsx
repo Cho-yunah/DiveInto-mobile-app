@@ -3,7 +3,7 @@ import { RecoilRoot } from 'recoil';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootCommunityStack } from './types';
 
-import CommunityListScreen from '@/src/screens/CommunityList';
+import CommunityMainScreen from '@/src/screens/CommunityMain';
 
 const Stack = createStackNavigator<RootCommunityStack>();
 
@@ -30,8 +30,8 @@ export default function CommunityStack() {
         }}
       >
         <Stack.Screen
-          name="CommunityList"
-          component={CommunityListScreen}
+          name="CommunityMain"
+          component={CommunityMainScreen}
           options={{
             title: '커뮤니티',
           }}

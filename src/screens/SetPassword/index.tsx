@@ -1,13 +1,12 @@
 import React, { ReactElement } from 'react';
-import { View, Text, Button, SafeAreaView } from 'react-native';
+import { View} from 'react-native';
 import { SetPasswordProps } from '@navigators/LoginStack/types';
 
 // import style
 import { styles } from './styles';
 
 // import components
-import SetPassword from '@components/SetPassword';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { SetPassword, NextButton } from '@components/SetPassword';
 
 export default function SetPasswordScreen({
   navigation,

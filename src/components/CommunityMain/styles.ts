@@ -59,5 +59,10 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  }
+  },
+  btnText: {
+    color: '#D8D8D8',
+    fontSize: 14,
+    paddingRight: 17,
+  },
 })

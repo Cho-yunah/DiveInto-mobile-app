@@ -6,10 +6,10 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import LegacyStack from '@legacy_navigators/LegacyStack';
 import LoginStack from '@navigators/LoginStack';
+import CommunityStack from './src/navigators/CommunityStack';
 
 // redux
 import initStore from '@legacy_lib/redux/store';
-import CommunityStack from './src/navigators/CommunityStack';
 
 const store = initStore();
 
@@ -18,8 +18,8 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         {/* <LegacyStack /> */}
-        <LoginStack />
-        {/* <CommunityStack/> */}
+        {/* <LoginStack /> */}
+        <CommunityStack/>
       </NavigationContainer>
     </Provider>
   );

@@ -3,8 +3,8 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { styles } from './style';
-import {ContentItem} from './index'
+import { styles } from './styles';
+import {ContentItem} from './CommunityMain'
 
 
 export default function CommunityItem({imageSrc, title, postAuthor,postingDate}: ContentItem) {
