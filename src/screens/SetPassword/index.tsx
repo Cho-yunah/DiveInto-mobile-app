@@ -6,13 +6,14 @@ import { SetPasswordProps } from '@navigators/LoginStack/types';
 import { styles } from './styles';
 
 // import components
-import { SetPassword, NextButton } from '@components/SetPassword';
+import { SetPassword } from '@components/SetPassword';
+import NextButton from '@components/common/NextButton';
 
 export default function SetPasswordScreen({
   navigation,
   route,
 }: SetPasswordProps): ReactElement {
-  const onPress = () => navigation.navigate('LoginWithEmail');
+  const onPress = () => navigation.navigate('MemberInfo');
 
   navigation.setOptions({
     headerRight: () => <NextButton onPress={onPress} />,

@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  conatiner: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
+  btnText: {
+    color: '#D8D8D8',
+    fontSize: 14,
+    paddingRight: 17,
   },
 });
 
