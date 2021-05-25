@@ -1,11 +1,15 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import styles from './styles';
+import { nextButtonProps } from './types';
 
-export default function SetPassword({ onPress }: { onPress: () => void }) {
+export default function NextButton({
+  onPress = () => {},
+  text = '다음',
+}: nextButtonProps) {
   return (
     <TouchableOpacity onPress={onPress}>
-      <Text style={styles.btnText}>다음</Text>
+      <Text style={styles.btnText}>{text}</Text>
     </TouchableOpacity>
   );
 }

@@ -21,3 +21,8 @@ export const rePassword = atom({
   key: 'rePassword',
   default: '',
 });
+
+export const phoneNumber = atom({
+  key: 'phoneNumber',
+  default: '',
+});

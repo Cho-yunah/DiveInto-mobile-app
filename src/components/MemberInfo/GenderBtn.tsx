@@ -1,56 +1,37 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-
-// root path
-import styles from './styles';
+import { gender, selectTabProps } from './types';
+import { genderBtnStyles as styles } from './styles';
 
 function GenderBtn() {
-  const [genderCheck, setGenderCheck] = useState('남성');
+  const [genderSelected, setGenderSelected] = useState<gender>('남성');
 
-  const handleChange = (e: any) => {
-    const { children } = e.target._internalFiberInstanceHandleDEV.memoizedProps;
-
-    setGenderCheck(children);
-  };
+  const onPress = (gender: gender) => setGenderSelected(gender);
 
   return (
     <View style={styles.genderTotalContainer}>
-      <View
-        style={[
-          styles.eachGenderBtnContainer,
-          genderCheck === '남성' && styles.activeEachGenderBtnContainer,
-        ]}
-      >
-        <TouchableOpacity onPress={handleChange} activeOpacity={0.7}>
-          <Text
-            style={[
-              styles.genderBtnText,
-              genderCheck === '남성' && styles.activeGenderBtnText,
-            ]}
-          >
-            남성
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View
-        style={[
-          styles.eachGenderBtnContainer,
-          genderCheck === '여성' && styles.activeEachGenderBtnContainer,
-        ]}
-      >
-        <TouchableOpacity onPress={handleChange} activeOpacity={0.7}>
-          <Text
-            style={[
-              styles.genderBtnText,
-              genderCheck === '여성' && styles.activeGenderBtnText,
-            ]}
-          >
-            여성
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <SelectTab gender="남성" selected={genderSelected} onPress={onPress} />
+      <SelectTab gender="여성" selected={genderSelected} onPress={onPress} />
     </View>
   );
 }
+
+const SelectTab = ({
+  selected,
+  gender,
+  onPress = () => {},
+}: selectTabProps) => {
+  const isSelect = gender === selected;
+
+  return (
+    <View style={[styles.genderBtn, isSelect && styles.active]}>
+      <TouchableOpacity onPress={() => onPress(gender)} activeOpacity={0.7}>
+        <Text style={[styles.genderBtnText, isSelect && styles.activeText]}>
+          {gender}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export default GenderBtn;
