@@ -4,13 +4,12 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { styles } from './styles';
-import {ContentItem} from './CommunityMain'
-
+import {ContentItem} from './CommunityList'
 
 export default function CommunityItem({imageSrc, title, postAuthor,postingDate}: ContentItem) {
 
   return (
-    <View style={styles.postedContentsContainer}>
+    <View>
         <TouchableOpacity style={styles.listItem} activeOpacity={0.8} >
            <Image style={styles.thumnailImage} source={{uri: imageSrc}}/>
           <View style={styles.contentInfo}>

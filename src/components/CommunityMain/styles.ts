@@ -21,11 +21,9 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 66,
   }, 
-  postedContentsContainer: {
-    marginTop: 12,
-  },
   listItem: {
     flexDirection: 'row',
+    marginTop: 12,
     width:370,
     height: 70,
     backgroundColor: '#FEFEFE',
@@ -61,8 +59,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnText: {
-    color: '#D8D8D8',
-    fontSize: 14,
+    color: '#fefefe',
+    fontSize: 15,
     paddingRight: 17,
   },
 })

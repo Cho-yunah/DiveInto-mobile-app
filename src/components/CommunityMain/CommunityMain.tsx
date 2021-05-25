@@ -1,57 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense} from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
-import ComunityItem from './CommunityItem';
-import axios, {AxiosResponse} from 'axios';
-
-export type ContentItem = {
-  title: string;
-  postAuthor: string;
-  postingDate: string;
-  imageSrc: string;
-}
+import {CommunityList} from '@components/CommunityMain'
 
 export default function CommunityMain() {
-  const [contentItem, setContentItem] = useState<ContentItem[]>([]);
-  
-
-  // 데이터 받아오기
-  // const getData= async()=> {
-  //   await axios.get<ContentItem[]>
-  //   ('http://localhost:3001/contentItem?_limit=10') // data를 잘 받아오는지 test
-  //              .then((res: AxiosResponse) => setContentItem (res.data))
-  //              .catch(e => console.error(e))
-  // }
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-
-  const getDataMore=() => {
-  }
-
-  const imageSrc = '#';
 
   return (
     <>
         <View style={styles.tabContainer}>
-          <Text style={styles.tab}>공유해요</Text>
-          <Text style={styles.tab}>궁금해요</Text>
+          <TouchableOpacity>
+            <Text style={styles.tab}>공유해요</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={styles.tab}>궁금해요</Text>
+          </TouchableOpacity>
         </View>
-        {/* Render 되는 item이 들어올 자리 */}
-        
-        {/* <FlatList
-          data={contentItem} // 렌더링을 할 아이템
-          onEndReached = {getDataMore} // 
-          onEndReachedThreshold={0.5}
-          renderItem={({item}) => (
-            <ComunityItem 
-              title={item.title}
-              postAuthor={item.postAuthor}
-              postingDate={item.postingDate}
-              imageSrc={item.imageSrc}
-            />
-          )}
-        /> */}
+        <Suspense fallback={<Text>Loading...</Text>}>
+        {/* Render 되는 ListItem이 들어올 자리*/}
+          <CommunityList/>
+        </Suspense>
     </>
   );
 }
