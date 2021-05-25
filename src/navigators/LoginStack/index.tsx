@@ -6,6 +6,8 @@ import { RootLoginStack } from './types';
 import LoginScreen from '../../screens/Login';
 import LoginWithEmailScreen from '@/src/screens/LoginWithEmail';
 import ProfileWithoutLogin from '@/src/components/ProfileWithoutLogin';
+import SetPasswordScreen from '@/src/screens/SetPassword';
+import MemberInfoScreen from '@/src/screens/MemberInfo';
 
 const Stack = createStackNavigator<RootLoginStack>();
 
@@ -45,7 +47,18 @@ export default function LoginStack() {
             title: '이메일로 로그인',
           }}
         />
-        {/* <Stack.Screen name="SignUp" component={SignUpScreen} /> */}
+        <Stack.Screen
+          name="SetPassword"
+          component={SetPasswordScreen}
+          options={{
+            title: '비밀번호 설정',
+          }}
+        />
+        <Stack.Screen
+          name="MemberInfo"
+          component={MemberInfoScreen}
+          options={{ title: '회원정보기입' }}
+        />
       </Stack.Navigator>
     </RecoilRoot>
   );
