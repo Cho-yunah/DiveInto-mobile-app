@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, View, TouchableOpacity, Text } from 'react-native';
 import { inputStyles as styles } from './styles';
-import { placeholder } from '@/src/config/color';
+import { placeholder } from '@/src/config/colors';
 
 function CertificationInput() {
   const onPress = () => {};

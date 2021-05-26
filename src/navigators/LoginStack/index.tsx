@@ -3,11 +3,11 @@ import { RecoilRoot } from 'recoil';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootLoginStack } from './types';
 
-import LoginScreen from '../../screens/Login';
-import LoginWithEmailScreen from '@/src/screens/LoginWithEmail';
-import ProfileWithoutLogin from '@/src/components/ProfileWithoutLogin';
-import SetPasswordScreen from '@/src/screens/SetPassword';
-import MemberInfoScreen from '@/src/screens/MemberInfo';
+import LoginScreen from '@screens/Login';
+import LoginWithEmailScreen from '@screens/LoginWithEmail';
+import SetPasswordScreen from '@screens/SetPassword';
+import MemberInfoScreen from '@screens/MemberInfo';
+import Main from '@screens/Main';
 
 const Stack = createStackNavigator<RootLoginStack>();
 
@@ -32,6 +32,7 @@ export default function LoginStack() {
           },
           headerTintColor: '#fefefe',
         }}
+        initialRouteName="Main"
       >
         <Stack.Screen
           name="Login"
@@ -59,6 +60,7 @@ export default function LoginStack() {
           component={MemberInfoScreen}
           options={{ title: '회원정보기입' }}
         />
+        <Stack.Screen name="Main" component={Main} />
       </Stack.Navigator>
     </RecoilRoot>
   );
