@@ -4,12 +4,12 @@ import styles  from './styles';
 
 // import components
 import {CommunityMain, CommunityItem } from '@components/CommunityMain';
-import { CommunityMainProps } from '@/src/navigators/CommunityStack/types';
+import { CommunityPostingProps } from '@/src/navigators/CommunityStack/types';
 import  {AddContentButton}  from '@components/CommunityMain';
 
-export default function CommunityMainScreen({navigation}: CommunityMainProps): ReactElement {
+export default function CommunityMainScreen({navigation}: CommunityPostingProps): ReactElement {
 
-  const onPress = () => navigation.navigate('CommunityMain');
+  const onPress = () => navigation.navigate('CommunityPosting');
 
   navigation.setOptions({
     headerRight: () => <AddContentButton onPress={onPress} />
@@ -18,10 +18,6 @@ export default function CommunityMainScreen({navigation}: CommunityMainProps): R
   return (
     <View style={styles.container}>
       <CommunityMain />
-      {/* <CommunityItem title={'title'}
-              postAuthor={'postAuthor'}
-              postingDate={'postingDate'}
-              imageSrc={'imageSrc'} /> */}
     </View>
   );
 }

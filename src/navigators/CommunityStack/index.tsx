@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { RootCommunityStack } from './types';
 
 import CommunityMainScreen from '@/src/screens/CommunityMain';
+import CommunityPostingScreen from '@/src/screens/CommunityPosting';
 
 const Stack = createStackNavigator<RootCommunityStack>();
 
@@ -34,6 +35,13 @@ export default function CommunityStack() {
           component={CommunityMainScreen}
           options={{
             title: '커뮤니티',
+          }}
+        />
+        <Stack.Screen
+          name="CommunityPosting"
+          component={CommunityPostingScreen}
+          options={{
+            title: '글작성하기',
           }}
         />
       </Stack.Navigator>
