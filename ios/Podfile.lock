@@ -250,12 +250,12 @@ PODS:
   - React-jsinspector (0.63.4)
   - react-native-date-picker (3.3.0):
     - React-Core
-  - react-native-image-picker (3.6.0):
+  - react-native-image-picker (3.2.1):
     - React-Core
   - react-native-nmap (0.0.58):
     - NMapsMap (~> 3.10.1)
     - React
-  - react-native-safe-area-context (3.2.0):
+  - react-native-safe-area-context (3.1.9):
     - React-Core
   - React-RCTActionSheet (0.63.4):
     - React-Core/RCTActionSheetHeaders (= 0.63.4)
@@ -319,13 +319,13 @@ PODS:
     - React-jsi (= 0.63.4)
   - RNCAsyncStorage (1.12.1):
     - React-Core
-  - RNCMaskedView (0.1.11):
+  - RNCMaskedView (0.1.10):
     - React
-  - RNGestureHandler (1.10.3):
+  - RNGestureHandler (1.10.2):
     - React-Core
-  - RNReanimated (1.13.3):
+  - RNReanimated (1.13.2):
     - React-Core
-  - RNScreens (2.18.1):
+  - RNScreens (2.17.1):
     - React-Core
   - RNVectorIcons (8.1.0):
     - React-Core
@@ -519,6 +519,9 @@ SPEC CHECKSUMS:
   react-native-image-picker: 25f5fe3a3a9c4297e0b7a5a16566c5609632856d
   react-native-nmap: 0b154f695c47e4b6db708ecf46bf9ad3ea8ae4b1
   react-native-safe-area-context: e471852c5ed67eea4b10c5d9d43c1cebae3b231d
+  react-native-image-picker: 64d12e81f3d9dad0af107fe6536b295d51932ec0
+  react-native-nmap: 0b154f695c47e4b6db708ecf46bf9ad3ea8ae4b1
+  react-native-safe-area-context: b6e0e284002381d2ff29fa4fff42b4d8282e3c94
   React-RCTActionSheet: 89a0ca9f4a06c1f93c26067af074ccdce0f40336
   React-RCTAnimation: 1bde3ecc0c104c55df246eda516e0deb03c4e49b
   React-RCTBlob: a97d378b527740cc667e03ebfa183a75231ab0f0
