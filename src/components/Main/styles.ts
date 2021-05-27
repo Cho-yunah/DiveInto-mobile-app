@@ -4,11 +4,11 @@ import * as colors from '@config/colors';
 export const shadow = {
   shadowColor: '#000',
   shadowOffset: {
-    width: 0,
-    height: 2,
+    width: 5,
+    height: 5,
   },
-  shadowOpacity: 0.25,
-  shadowRadius: 3.84,
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
 
   elevation: 5,
 };
@@ -50,4 +50,55 @@ export const HeaderStyles = StyleSheet.create({
     padding: 5,
   },
   filterText: { color: colors.White, fontSize: 14 },
+});
+
+export const NewLectures = StyleSheet.create({
+  rootContainer: { marginTop: 40, flex: 1, marginLeft: 18, marginRight: 18 },
+  titleContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  title: { fontSize: 18, fontWeight: '600', flex: 1 },
+  more: {
+    color: colors.deepBlue,
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  lectureContainer: {
+    marginRight: 10,
+    width: 196,
+    height: 200,
+    backgroundColor: colors.White,
+    borderRadius: 20,
+    marginBottom: 6,
+  },
+  lectureImage: { width: '100%', height: 120 },
+  heart: {
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    padding: 8,
+  },
+  infoContainer: { height: 80, padding: 12 },
+  infoTitleContainer: { flexDirection: 'row' },
+  infoTitleText: { fontSize: 14 },
+  tagContainer: { flexDirection: 'row', marginTop: 8 },
+});
+
+export const Tags = StyleSheet.create({
+  tagListContainer: { flexDirection: 'row' },
+  tagContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  tagText: {
+    color: colors.DarkgrayText,
+    fontSize: 10,
+  },
+  separate: {
+    marginLeft: 2,
+    marginRight: 2,
+  },
+  icon: { marginRight: 4 },
 });

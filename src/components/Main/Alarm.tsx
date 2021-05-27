@@ -8,7 +8,11 @@ import BellFill from '@assets/BellFill.svg';
 
 export default function Alarm({ onPress, hasAlarm }: AlarmProps) {
   return (
-    <TouchableOpacity activeOpacity={0.7} style={styles.bell} onPress={onPress}>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      style={[styles.bell, shadow]}
+      onPress={onPress}
+    >
       {hasAlarm ? <BellFill /> : <Bell />}
     </TouchableOpacity>
   );
