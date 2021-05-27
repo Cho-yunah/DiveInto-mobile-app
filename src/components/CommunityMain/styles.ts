@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native'
-import { getAutomaticTypeDirectiveNames } from 'typescript'
 
 export const styles = StyleSheet.create({
   container: {

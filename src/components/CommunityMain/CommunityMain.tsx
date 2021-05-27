@@ -1,9 +1,12 @@
-import React, { Suspense} from 'react';
+import React, { ReactElement, Suspense} from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
 import {CommunityList} from '@components/CommunityMain'
 
-export default function CommunityMain() {
+
+export default function CommunityMain({navigation}): ReactElement {
+
+  const watchContentDetail= () => navigation.navigate('CommunityDetail')
 
   return (
     <>
@@ -17,7 +20,7 @@ export default function CommunityMain() {
         </View>
         <Suspense fallback={<Text>Loading...</Text>}>
         {/* Render 되는 ListItem이 들어올 자리*/}
-          <CommunityList/>
+          <CommunityList onPress={watchContentDetail}/>
         </Suspense>
     </>
   );

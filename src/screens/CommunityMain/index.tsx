@@ -17,7 +17,7 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
 
   return (
     <View style={styles.container}>
-      <CommunityMain />
+      <CommunityMain navigation={navigation}/>
     </View>
   );
 }

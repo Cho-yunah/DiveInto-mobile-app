@@ -5,6 +5,8 @@ import { RootCommunityStack } from './types';
 
 import CommunityMainScreen from '@/src/screens/CommunityMain';
 import CommunityPostingScreen from '@/src/screens/CommunityPosting';
+import SetPasswordScreen from '@/src/screens/SetPassword';
+import { CommunityDetail } from '@/src/components/CommunityDetail';
 
 const Stack = createStackNavigator<RootCommunityStack>();
 
@@ -42,6 +44,13 @@ export default function CommunityStack() {
           component={CommunityPostingScreen}
           options={{
             title: '글작성하기',
+          }}
+        />
+        <Stack.Screen
+          name="CommunityDetail"
+          component={CommunityDetail}
+          options={{
+            title: '글 제목',
           }}
         />
       </Stack.Navigator>

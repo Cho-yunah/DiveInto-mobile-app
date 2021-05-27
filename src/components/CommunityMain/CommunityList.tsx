@@ -6,6 +6,7 @@ import { FlatList } from 'react-native';
 import {CommunityItem} from '@components/CommunityMain'
 import { Text, View } from 'react-native-animatable';
 import { styles } from './styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 export type ContentItem = {
@@ -16,7 +17,7 @@ export type ContentItem = {
 }
 
 
-export default function CommunityList() {
+export default function CommunityList({onPress}: { onPress: () => void }) {
   const [contentItem, setContentItem] = useState<ContentItem[]>([])
     // const listItem = useRecoilValue(getCommunityList)
     // const URL = `http://localhost:3001/contentItem?_limit=10`;
@@ -33,14 +34,18 @@ export default function CommunityList() {
 
     return (
       <View style={styles.container}>
+        <TouchableOpacity onPress={onPress}>
         <CommunityItem title={'title'}
                postAuthor={'postAuthor'}
                postingDate={'postingDate'}
-               imageSrc={'imageSrc'} />
+               imageSrc={'imageSrc'} 
+               />
         <CommunityItem title={'title'}
                postAuthor={'postAuthor'}
                postingDate={'postingDate'}
-               imageSrc={'imageSrc'} />  
+               imageSrc={'imageSrc'} 
+               />
+        </TouchableOpacity>
       </View>
       // API 나오면 아래의 flatlist로 렌더링
       // <FlatList
