@@ -9,6 +9,7 @@ import Person from '@assets/Person.svg';
 import Time from '@assets/Time.svg';
 import Plus from '@assets/Plus.svg';
 import Separator from '@assets/Separator.svg';
+import Star from '@assets/Star.svg';
 
 /**
  *
@@ -25,6 +26,7 @@ export const Tag = ({ tagName, icon, containerStyle, textStyle }: TagProps) => {
       {icon === 'Person' && <Person width={8} height={8} style={styles.icon} />}
       {icon === 'Time' && <Time width={8} height={8} style={styles.icon} />}
       {icon === 'Plus' && <Plus width={8} height={8} style={styles.icon} />}
+      {icon === 'Star' && <Star width={8} height={8} style={styles.icon} />}
       <Text style={[styles.tagText, textStyle]}>{tagName}</Text>
     </View>
   );

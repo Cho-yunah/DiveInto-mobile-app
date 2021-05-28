@@ -63,10 +63,10 @@ const NewLecture = ({
           <Text style={styles.infoTitleText}>{level}</Text>
         </View>
 
+        {/* 강의 정보 태그 리스트 */}
         <View style={styles.tagContainer}>
           <TagList tags={tagList} />
         </View>
-
         <View style={styles.tagContainer}>
           <TagList tags={tags} />
         </View>
@@ -75,10 +75,10 @@ const NewLecture = ({
   );
 };
 
-export default function NewLectures() {
+export default function NewLectureList() {
   return (
     <View style={styles.rootContainer}>
-      <View style={styles.titleContainer}>
+      <View style={styles.header}>
         <Text style={styles.title}>새로운 강의</Text>
         <TouchableOpacity>
           <Text style={styles.more}>더보기</Text>

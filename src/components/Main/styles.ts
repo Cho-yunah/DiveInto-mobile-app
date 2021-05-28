@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import * as colors from '@config/colors';
 
 export const shadow = {
@@ -12,10 +12,6 @@ export const shadow = {
 
   elevation: 5,
 };
-
-export const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: 'white' },
-});
 
 export const HeaderStyles = StyleSheet.create({
   rootContainer: {
@@ -51,10 +47,9 @@ export const HeaderStyles = StyleSheet.create({
   },
   filterText: { color: colors.White, fontSize: 14 },
 });
-
 export const NewLectures = StyleSheet.create({
   rootContainer: { marginTop: 40, flex: 1, marginLeft: 18, marginRight: 18 },
-  titleContainer: {
+  header: {
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
@@ -66,6 +61,7 @@ export const NewLectures = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
   },
+
   lectureContainer: {
     marginRight: 10,
     width: 196,
@@ -80,13 +76,56 @@ export const NewLectures = StyleSheet.create({
     alignSelf: 'flex-end',
     padding: 8,
   },
-  infoContainer: { height: 80, padding: 12 },
+  infoContainer: { flex: 1, padding: 12 },
   infoTitleContainer: { flexDirection: 'row' },
   infoTitleText: { fontSize: 14 },
   tagContainer: { flexDirection: 'row', marginTop: 8 },
 });
+export const PopularLectures = StyleSheet.create({
+  container: { marginTop: 40, flex: 1, marginLeft: 18, marginRight: 18 },
+  header: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  title: { fontSize: 18, fontWeight: '600', flex: 1, marginBottom: 8 },
+  more: {
+    color: colors.deepBlue,
+    fontSize: 14,
+    fontWeight: '600',
+  },
+
+  lectureContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    height: 125,
+    backgroundColor: colors.White,
+    borderRadius: 10,
+    marginBottom: 20,
+    overflow: 'hidden',
+  },
+  imageContainer: {
+    width: '45%',
+    height: '100%',
+    overflow: 'hidden',
+  },
+  image: {
+    height: '100%',
+    resizeMode: 'stretch',
+  },
+  infoContainer: { padding: 12, flexDirection: 'row', flex: 1 },
+  infoTitleContainer: { flexDirection: 'row' },
+  infoTitleText: { fontSize: 14 },
+  tagContainer: { flexDirection: 'row', marginTop: 8 },
+
+  heart: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+});
 
 export const Tags = StyleSheet.create({
+  container: { flex: 1, backgroundColor: 'white' },
   tagListContainer: { flexDirection: 'row' },
   tagContainer: {
     flexDirection: 'row',

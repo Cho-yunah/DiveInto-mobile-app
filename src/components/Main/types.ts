@@ -20,7 +20,7 @@ export type NewLectureProps = {
   image: string;
 };
 
-export type Icon = 'Location' | 'Person' | 'Time' | 'Plus';
+export type Icon = 'Location' | 'Person' | 'Time' | 'Plus' | 'Star';
 export type Tag = { icon?: Icon; tagName: string };
 export type TagList = Tag[];
 

@@ -5,7 +5,7 @@ import { RecoilRoot } from 'recoil';
 
 import { styles } from './styles';
 
-import { Header, NewLectures, PopularLectures } from '@components/Main';
+import { Header, NewLectureList, PopularLectureList } from '@components/Main';
 
 import * as Color from '@config/colors';
 
@@ -19,8 +19,8 @@ export default function Main({ userName = '퐁당퐁당' }: Props) {
       <ScrollView style={styles.container}>
         <Header userName={userName} />
         <View style={{ backgroundColor: Color.Background }}>
-          <NewLectures />
-          <PopularLectures />
+          <NewLectureList />
+          <PopularLectureList />
         </View>
       </ScrollView>
     </RecoilRoot>
