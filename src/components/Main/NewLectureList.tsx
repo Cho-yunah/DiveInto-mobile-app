@@ -84,7 +84,7 @@ export default function NewLectureList() {
           <Text style={styles.more}>더보기</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView horizontal>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <NewLecture />
         <NewLecture />
         <NewLecture />
