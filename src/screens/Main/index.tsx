@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import { View, ScrollView } from 'react-native';
 
 import { RecoilRoot } from 'recoil';
-
 import { styles } from './styles';
-
 import { Header, NewLectureList, PopularLectureList } from '@components/Main';
-
 import * as Color from '@config/colors';
 
 type Props = {

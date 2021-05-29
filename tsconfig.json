@@ -1,10 +1,8 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "typeRoots": ["./node_modules/@types", "./@types"],
+    // "typeRoots": ["./node_modules/@types", "./src/types"],
     "paths": {
-      // "*": ["./src/*"],
-      // "test/*": ["./test/*"],
       "@/*": ["./*"],
       "@legacy_components/*": ["./src/legacy/Components/*"],
       "@legacy_containers/*": ["./src/legacy/Containers/*"],
@@ -69,7 +67,8 @@
       "@config/*": ["./src/config/*"],
       "@navigators/*": ["./src/navigators/*"],
       "@recoil/*": ["./src/recoil/*"],
-      "@screens/*": ["./src/screens/*"]
+      "@screens/*": ["./src/screens/*"],
+      "@typing/*": ["./src/typing/*"]
     },
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
@@ -82,7 +81,6 @@
     "strict": true,
     "target": "esnext"
   },
-  "include": ["src/components", "src/custom.d.ts"],
   "exclude": [
     "node_modules",
     "babel.config.js",

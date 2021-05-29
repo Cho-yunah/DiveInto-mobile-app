@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { HeaderStyles as styles, shadow } from '../styles';
-import { AlarmProps } from '../types';
+import { HeaderStyles as styles, shadow } from './styles';
+import { AlarmProps } from './types';
 
 import Bell from '@assets/Bell.svg';
 import BellFill from '@assets/BellFill.svg';

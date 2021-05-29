@@ -9,16 +9,16 @@ import {
 import {
   Region,
   CostCondition,
-  CertificateKind,
-  GroupName,
+  Level,
+  Organization,
   ClassKind,
-} from '@/@types/common';
+} from '@typing/common';
 
 type Props = {
   region: Region;
   costCondition: CostCondition;
-  certificateKind: CertificateKind;
-  groupName: GroupName;
+  certificateKind: Level;
+  groupName: Organization;
   page: number;
   size: number;
 };

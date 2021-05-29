@@ -1,23 +1,21 @@
+// import { Organization, Level } from '@/src/types/common';
 import { ViewStyle, TextStyle } from 'react-native';
-
-// 헤더
-export type SearchBoxProps = { placeholder: string };
-export type AlarmProps = { onPress: () => void; hasAlarm: boolean };
-export type FilterProps = { onPress: () => void };
+import { Organization, Level, Region } from '@typing/common';
 
 // 강의목록
-export type Organization = 'AIDA' | 'PADI' | 'SSI';
-export type Level = 'level1' | 'level2' | 'level3' | 'level4' | 'level5';
-
 export type NewLectureProps = {
   title: string;
   organization: Organization;
   level: Level;
-  region: string;
+  region: Region;
   maxNumber: number;
   lectureTime: number;
   equipmentNames: string[];
   image: string;
+};
+export type PopularLectureProps = NewLectureProps & {
+  reviewAvg: number;
+  reviewCount: number;
 };
 
 export type Icon = 'Location' | 'Person' | 'Time' | 'Plus' | 'Star';
@@ -35,4 +33,17 @@ export type TagListProps = {
   listContainerStyle?: ViewStyle;
   tagContainerStyle?: ViewStyle;
   tagTextStyle?: TextStyle;
+};
+
+export type InfoTagsProps = {
+  title: string;
+  organization: Organization;
+  level: Level;
+  equipmentNames: string[];
+  region: Region;
+  maxNumber: number;
+  lectureTime: number;
+  reviewAvg?: number;
+  reviewCount?: number;
+  containerStyle: ViewStyle;
 };

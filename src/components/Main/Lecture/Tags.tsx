@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
 import { Tags as styles } from './styles';
 import { TagProps, TagListProps } from './types';
-import * as colors from '@config/colors';
 
 import Location from '@assets/Location.svg';
 import Person from '@assets/Person.svg';
@@ -13,7 +12,7 @@ import Star from '@assets/Star.svg';
 
 /**
  *
- * @component TagList
+ * @component Tag
  * @param {tagName} 태그명
  * @param {containerStyle} 태그 컨테이너 스타일
  */
@@ -45,16 +44,15 @@ export default function TagList({
   tagTextStyle,
 }: TagListProps) {
   const tagList = tags.map((tag, i) => (
-    <>
+    <View key={i} style={{ flexDirection: 'row' }}>
       <Tag
         tagName={tag.tagName}
         icon={tag.icon}
-        key={i}
         containerStyle={tagContainerStyle}
         textStyle={tagTextStyle}
       />
       {i !== tags.length - 1 && <Separator style={styles.separate} />}
-    </>
+    </View>
   ));
 
   return (
