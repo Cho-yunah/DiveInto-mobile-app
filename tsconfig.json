@@ -82,6 +82,7 @@
     "strict": true,
     "target": "esnext"
   },
+  "include": ["src/components", "src/custom.d.ts"],
   "exclude": [
     "node_modules",
     "babel.config.js",
