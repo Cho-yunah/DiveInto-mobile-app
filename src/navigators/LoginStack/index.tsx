@@ -7,7 +7,6 @@ import LoginScreen from '@screens/Login';
 import LoginWithEmailScreen from '@screens/LoginWithEmail';
 import SetPasswordScreen from '@screens/SetPassword';
 import MemberInfoScreen from '@screens/MemberInfo';
-import Main from '@screens/Main';
 
 const Stack = createStackNavigator<RootLoginStack>();
 
@@ -32,7 +31,6 @@ export default function LoginStack() {
           },
           headerTintColor: '#fefefe',
         }}
-        initialRouteName="Main"
       >
         <Stack.Screen
           name="Login"
@@ -60,7 +58,6 @@ export default function LoginStack() {
           component={MemberInfoScreen}
           options={{ title: '회원정보기입' }}
         />
-        <Stack.Screen name="Main" component={Main} />
       </Stack.Navigator>
     </RecoilRoot>
   );
