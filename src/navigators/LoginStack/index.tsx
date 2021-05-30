@@ -8,6 +8,7 @@ import LoginWithEmailScreen from '@/src/screens/LoginWithEmail';
 import ProfileWithoutLogin from '@/src/components/ProfileWithoutLogin';
 import SetPasswordScreen from '@/src/screens/SetPassword';
 import MemberInfoScreen from '@/src/screens/MemberInfo';
+import WriteReviewScreen from '@/src/screens/WriteReview';
 
 const Stack = createStackNavigator<RootLoginStack>();
 
@@ -58,6 +59,11 @@ export default function LoginStack() {
           name="MemberInfo"
           component={MemberInfoScreen}
           options={{ title: '회원정보기입' }}
+        />
+        <Stack.Screen
+          name="WriteReview"
+          component={WriteReviewScreen}
+          options={{ title: '후기작성하기' }}
         />
       </Stack.Navigator>
     </RecoilRoot>

@@ -32,6 +32,7 @@ export default function LoginWithEmail() {
         style={styles.TextInput}
         onChangeText={onPasswordInput}
         value={input}
+        spellCheck={false}
       />
       <Pressable
         style={styles.TextInputIconContainer}
