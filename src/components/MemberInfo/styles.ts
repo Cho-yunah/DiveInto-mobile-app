@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import * as Color from '@config/color';
+import * as Color from '@/src/config/colors';
 
 export const inputStyles = StyleSheet.create({
   inputContainer: {
