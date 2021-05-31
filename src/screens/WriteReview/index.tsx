@@ -1,5 +1,5 @@
 import React from 'react';
-import { WriteReviewProps } from '@/src/navigators/LoginStack/types';
+import { WriteReviewProps } from '@/src/navigators/ReviewStack/types';
 import styles from './styles';
 import { View } from 'react-native';
 import { Content, StarRatings, UploadPics } from '@/src/components/WriteReview';
