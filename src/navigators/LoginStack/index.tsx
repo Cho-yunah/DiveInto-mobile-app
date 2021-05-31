@@ -3,19 +3,10 @@ import { RecoilRoot } from 'recoil';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootLoginStack } from './types';
 
-<<<<<<< HEAD
-import LoginScreen from '../../screens/Login';
-import LoginWithEmailScreen from '@/src/screens/LoginWithEmail';
-import ProfileWithoutLogin from '@/src/components/ProfileWithoutLogin';
-import SetPasswordScreen from '@/src/screens/SetPassword';
-import MemberInfoScreen from '@/src/screens/MemberInfo';
-import WriteReviewScreen from '@/src/screens/WriteReview';
-=======
 import LoginScreen from '@screens/Login';
 import LoginWithEmailScreen from '@screens/LoginWithEmail';
 import SetPasswordScreen from '@screens/SetPassword';
 import MemberInfoScreen from '@screens/MemberInfo';
->>>>>>> 79acfd22f46f127f40d0659ae4e97fcc2e561280
 
 const Stack = createStackNavigator<RootLoginStack>();
 
@@ -66,11 +57,6 @@ export default function LoginStack() {
           name="MemberInfo"
           component={MemberInfoScreen}
           options={{ title: '회원정보기입' }}
-        />
-        <Stack.Screen
-          name="WriteReview"
-          component={WriteReviewScreen}
-          options={{ title: '후기작성하기' }}
         />
       </Stack.Navigator>
     </RecoilRoot>

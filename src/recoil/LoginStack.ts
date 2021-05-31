@@ -26,3 +26,8 @@ export const phoneNumber = atom({
   key: 'phoneNumber',
   default: '',
 });
+
+export const isLoadingState = atom<boolean>({
+  key: 'isLoading',
+  default: false,
+});

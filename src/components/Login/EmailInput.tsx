@@ -1,3 +1,6 @@
+import instance from '@/src/lib/api/axios';
+import { isLoadingState } from '@/src/recoil/LoginStack';
+import { useNavigation } from '@react-navigation/core';
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -9,29 +12,43 @@ import {
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import Entype from 'react-native-vector-icons/Entypo';
-
+import { useRecoilState } from 'recoil';
 import styles from './styles';
 import useTransitionColor from './useTransitionColor';
 
-export default function EmailInput({
-  onLoginPress,
-}: {
-  onLoginPress: () => void;
-}) {
-  const TransitionPressable = Animated.createAnimatedComponent(Pressable);
-  const TransitionText = Animated.createAnimatedComponent(Text);
-
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+export default function EmailInput() {
+  const onTextInput = (text: string) =>
+    checkEmailValidation(text) ? setIsValid(true) : setIsValid(false);
   const [isValid, setIsValid, interpolations] = useTransitionColor({
     screen: 'Login',
   });
+  const TransitionPressable = Animated.createAnimatedComponent(Pressable);
+  const TransitionText = Animated.createAnimatedComponent(Text);
 
+  const [email, setEmail] = useState<string>('');
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [isLoading, setIsLoading] = useRecoilState(isLoadingState);
   const onCheckboxPress = () => setToggleCheckBox(!toggleCheckBox);
+  const navigation = useNavigation();
 
-  const onTextInput = (text: string) =>
-    checkEmailValidation(text) ? setIsValid(true) : setIsValid(false);
+  const requestCheckEmail = async (email: string) => {
+    setIsLoading(true);
+    try {
+      const checkEmail = await instance.post('/sign/check/email', {
+        email,
+      });
+      console.log(checkEmail.data);
+      if (checkEmail.data.existed) navigation.navigate('LoginWithEmail');
+      else navigation.navigate('MemberInfo');
+    } catch (e) {
+      console.log(e);
+    }
+    setIsLoading(false);
+  };
 
-  const onChangeText = () => setIsValid(undefined);
+  useEffect(() => {
+    onTextInput(email);
+  }, [email]);
 
   return (
     <>
@@ -45,7 +62,7 @@ export default function EmailInput({
           Component={TouchableOpacity}
           checked={toggleCheckBox}
           checkedColor={'rgb(32, 122, 180)'}
-          // onPress={() => setToggleCheckBox(s => !s)}
+          onPress={() => setToggleCheckBox(s => !s)}
         />
         <Pressable onPress={onCheckboxPress} style={styles.button}>
           <Text style={styles.checkBoxText}>이메일 저장</Text>
@@ -57,8 +74,7 @@ export default function EmailInput({
         style={styles.emailInput}
         placeholder="이메일 주소를 입력해주세요"
         textContentType={'emailAddress'}
-        onChangeText={onChangeText}
-        onEndEditing={e => onTextInput(e.nativeEvent.text)}
+        onChangeText={setEmail}
         spellCheck={false}
       />
       {isValid && (
@@ -71,22 +87,25 @@ export default function EmailInput({
       )}
 
       {/* 이메일 형식 검증 */}
-      {isValid !== undefined && (
+      {isValid !== undefined && email.length > 0 ? (
         <Text style={isValid ? styles.guideTextValid : styles.guideTextInvalid}>
           {isValid
             ? '올바른 형태의 이메일 주소입니다.'
             : '올바른 형태의 이메일 주소를 작성해주세요.'}
         </Text>
+      ) : (
+        <Text style={styles.guideTextInvalid}>{''}</Text>
       )}
 
       {/* 로그인 버튼 */}
+
       <TransitionPressable
         disabled={!isValid}
-        onPress={onLoginPress}
         style={[
           styles.transitionPressable,
           { backgroundColor: interpolations.backgroundColorInterpolation },
         ]}
+        onPress={() => requestCheckEmail(email)}
       >
         <TransitionText
           style={[
@@ -94,7 +113,7 @@ export default function EmailInput({
             { color: interpolations.colorInterpolation },
           ]}
         >
-          이메일로 시작
+          {isLoading ? 'Loading...' : '이메일로 시작'}
         </TransitionText>
       </TransitionPressable>
     </>

@@ -11,17 +11,10 @@ import { LoginProps } from '@navigators/LoginStack/types';
 import styles from './styles';
 
 const LoginScreen = ({ navigation }: LoginProps) => {
-  const onLoginPress = () => {
-    const isExist = false;
-    isExist
-      ? navigation.navigate('LoginWithEmail')
-      : navigation.navigate('SetPassword');
-  };
-
   return (
     <View style={styles.container}>
       <HeaderText />
-      <EmailInput onLoginPress={onLoginPress} />
+      <EmailInput />
       <SocialLogin />
       <LoginProblem />
     </View>
