@@ -3,11 +3,10 @@ import { RecoilRoot } from 'recoil';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootLoginStack } from './types';
 
-import LoginScreen from '../../screens/Login';
-import LoginWithEmailScreen from '@/src/screens/LoginWithEmail';
-import ProfileWithoutLogin from '@/src/components/ProfileWithoutLogin';
-import SetPasswordScreen from '@/src/screens/SetPassword';
-import MemberInfoScreen from '@/src/screens/MemberInfo';
+import LoginScreen from '@screens/Login';
+import LoginWithEmailScreen from '@screens/LoginWithEmail';
+import SetPasswordScreen from '@screens/SetPassword';
+import MemberInfoScreen from '@screens/MemberInfo';
 
 const Stack = createStackNavigator<RootLoginStack>();
 

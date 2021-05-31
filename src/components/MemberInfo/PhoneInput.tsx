@@ -4,7 +4,7 @@ import { inputStyles as styles } from './styles';
 
 import { useRecoilState } from 'recoil';
 import { phoneNumber } from '@recoil/LoginStack';
-import { placeholder } from '@/src/config/color';
+import { placeholder } from '@/src/config/colors';
 
 function PhoneInput() {
   const [phone, setPhone] = useRecoilState(phoneNumber);

@@ -70,6 +70,7 @@ const pathPlugin = [
         '@navigators': './src/navigators',
         '@recoil': './src/recoil',
         '@screens': './src/screens',
+        '@typing': './src/typing',
       },
     },
   ],

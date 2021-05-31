@@ -6,7 +6,7 @@ export type fadeEffectProp = { current: { progress: any } };
 export type RootLoginStack = {
   Login: undefined;
   LoginWithEmail: undefined;
-  SetPassword: { testId: number };
+  SetPassword: undefined;
   MemberInfo: undefined;
 };
 
