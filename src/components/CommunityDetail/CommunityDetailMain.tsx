@@ -1,13 +1,19 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
+import DetailComments from './DetailComments'
+import DetailContents from './DetailContents'
+import  DetailInfo  from './DetailInfo'
 
 import {styles} from './styles'
 
 export default function CommunityDetailMain() {
   return (
-    < >
-     <Text style= {styles.text}>Hello World!</Text>
-    </>
+    <View style={styles.mainContainer}>
+     <DetailInfo/>
+     <DetailContents/>
+     <DetailComments/>
+    </View>
   )
 }
+
 
