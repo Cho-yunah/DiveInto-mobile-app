@@ -17,5 +17,6 @@ export type LoginProps = {
 export type LoginWithEmailProps = {
   navigation: StackNavigationProp<RootLoginStack, 'LoginWithEmail'>;
 };
+
 export type SetPasswordProps = StackScreenProps<RootLoginStack, 'SetPassword'>;
 export type MemberInfoProps = StackScreenProps<RootLoginStack, 'MemberInfo'>;

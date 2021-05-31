@@ -3,3 +3,9 @@ export type StarProps = {
   setRate: (n: number) => void;
   color: string;
 };
+
+// export type Ratings = 'instructor' | 'lecture' | 'place';
+
+export type starRatingProps = {
+  ratingName: string;
+};

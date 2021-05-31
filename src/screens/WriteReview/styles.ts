@@ -6,6 +6,14 @@ const styles = StyleSheet.create({
     paddingTop: 33,
     flexGrow: 1,
   },
+  headerButton: {
+    fontSize: 14,
+    marginRight: 17,
+  },
+  headerButtonText: {
+    color: '#c1c2c3',
+  },
+  //#F5DAAC
 });
 
 export default styles;
