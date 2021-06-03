@@ -1,6 +1,13 @@
 import { contentState } from '@/src/recoil/ReviewStack';
 import React from 'react';
-import { Text, View, TextInput } from 'react-native';
+import {
+  Text,
+  View,
+  TextInput,
+  Keyboard,
+  Pressable,
+  ScrollView,
+} from 'react-native';
 import { useRecoilState } from 'recoil';
 import styles from './styles';
 

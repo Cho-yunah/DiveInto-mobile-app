@@ -63,6 +63,7 @@
       "@legacy_hooks/*": ["./src/legacy/lib/hooks/*"],
 
       "@assets/*": ["./src/assets/*"],
+      "@api/*": ["./src/lib/api/*"],
       "@components/*": ["./src/components/*"],
       "@config/*": ["./src/config/*"],
       "@navigators/*": ["./src/navigators/*"],

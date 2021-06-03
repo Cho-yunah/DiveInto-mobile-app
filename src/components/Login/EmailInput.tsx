@@ -1,7 +1,5 @@
-import instance from '@/src/lib/api/axios';
-import { isLoadingState } from '@/src/recoil/LoginStack';
-import { useNavigation } from '@react-navigation/core';
-import React, { useEffect, useState } from 'react';
+import { isLoadingState } from '@recoil/LoginStack';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -15,40 +13,33 @@ import Entype from 'react-native-vector-icons/Entypo';
 import { useRecoilState } from 'recoil';
 import styles from './styles';
 import useTransitionColor from './useTransitionColor';
+import { EmailInputProps } from './types';
+import { useFocusEffect } from '@react-navigation/core';
 
-export default function EmailInput() {
-  const onTextInput = (text: string) =>
-    checkEmailValidation(text) ? setIsValid(true) : setIsValid(false);
+export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
+  const [isLoading, setIsLoading] = useRecoilState(isLoadingState);
+  const [email, setEmail] = useState('');
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [isValid, setIsValid, interpolations] = useTransitionColor({
     screen: 'Login',
   });
+
   const TransitionPressable = Animated.createAnimatedComponent(Pressable);
   const TransitionText = Animated.createAnimatedComponent(Text);
 
-  const [email, setEmail] = useState<string>('');
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
-  const [isLoading, setIsLoading] = useRecoilState(isLoadingState);
-  const onCheckboxPress = () => setToggleCheckBox(!toggleCheckBox);
-  const navigation = useNavigation();
-
-  const requestCheckEmail = async (email: string) => {
-    setIsLoading(true);
-    try {
-      const checkEmail = await instance.post('/sign/check/email', {
-        email,
-      });
-      console.log(checkEmail.data);
-      if (checkEmail.data.existed) navigation.navigate('LoginWithEmail');
-      else navigation.navigate('MemberInfo');
-    } catch (e) {
-      console.log(e);
-    }
-    setIsLoading(false);
+  const onTextInput = (text: string) => {
+    checkEmailValidation(text) ? setIsValid(true) : setIsValid(false);
   };
+  const onCheckboxPress = () => setToggleCheckBox(!toggleCheckBox);
 
-  useEffect(() => {
-    onTextInput(email);
-  }, [email]);
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setIsValid(undefined);
+        setEmail('');
+      };
+    }, []),
+  );
 
   return (
     <>
@@ -74,8 +65,12 @@ export default function EmailInput() {
         style={styles.emailInput}
         placeholder="이메일 주소를 입력해주세요"
         textContentType={'emailAddress'}
-        onChangeText={setEmail}
+        onChangeText={e => {
+          onTextInput(e);
+          setEmail(e);
+        }}
         spellCheck={false}
+        value={email}
       />
       {isValid && (
         <Entype
@@ -87,7 +82,7 @@ export default function EmailInput() {
       )}
 
       {/* 이메일 형식 검증 */}
-      {isValid !== undefined && email.length > 0 ? (
+      {isValid !== undefined ? (
         <Text style={isValid ? styles.guideTextValid : styles.guideTextInvalid}>
           {isValid
             ? '올바른 형태의 이메일 주소입니다.'
@@ -105,7 +100,7 @@ export default function EmailInput() {
           styles.transitionPressable,
           { backgroundColor: interpolations.backgroundColorInterpolation },
         ]}
-        onPress={() => requestCheckEmail(email)}
+        onPress={() => requestCheckEmail(email, setIsLoading)}
       >
         <TransitionText
           style={[
@@ -121,7 +116,6 @@ export default function EmailInput() {
 }
 
 function checkEmailValidation(email: string): boolean {
-  // const regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
   const regex =
     /^([a-zA-Z0-9\-._]+)@([a-zA-Z0-9-_]+).([a-z]{2,20})(.[a-z]{2,10})$/;
   return regex.test(email);

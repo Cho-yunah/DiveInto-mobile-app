@@ -27,7 +27,7 @@ const StarRating = ({ ratingName }: starRatingProps) => {
   }
   return (
     <View>
-      <Text style={styles.starText}>강사</Text>
+      <Text style={styles.starText}>{ratingName}</Text>
       <View style={styles.starComponentContainer}>{stars}</View>
     </View>
   );
@@ -36,9 +36,9 @@ const StarRating = ({ ratingName }: starRatingProps) => {
 const StarRatings = () => {
   return (
     <View style={styles.starComponentsContainer}>
-      <StarRating ratingName="instructor" />
-      <StarRating ratingName="lecture" />
-      <StarRating ratingName="place" />
+      <StarRating ratingName="강사" />
+      <StarRating ratingName="강의" />
+      <StarRating ratingName="장소" />
     </View>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import {
   HeaderText,
   LoginProblem,
@@ -9,14 +9,37 @@ import {
 
 import { LoginProps } from '@navigators/LoginStack/types';
 import styles from './styles';
+import instance from '@api/axios';
 
 const LoginScreen = ({ navigation }: LoginProps) => {
+  const requestCheckEmail = async (
+    email: string,
+    setIsLoading: (bool: boolean) => void,
+  ) => {
+    setIsLoading(true);
+    try {
+      console.log(email, 'ddd');
+
+      const checkEmail = await instance.post('/sign/check/email', {
+        email,
+      });
+      console.log(checkEmail.data);
+      if (checkEmail.data.existed) navigation.navigate('LoginWithEmail');
+      else navigation.navigate('MemberInfo');
+    } catch (e) {
+      console.log(e);
+    }
+    setIsLoading(false);
+  };
+
   return (
     <View style={styles.container}>
-      <HeaderText />
-      <EmailInput />
-      <SocialLogin />
-      <LoginProblem />
+      <ScrollView>
+        <HeaderText />
+        <EmailInput requestCheckEmail={requestCheckEmail} />
+        <SocialLogin />
+        <LoginProblem />
+      </ScrollView>
     </View>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { LoginWithEmailProps } from '@navigators/LoginStack/types';
 import { PwForgot, LoginButton, PWInput } from '@components/LoginWithEmail';
 import styles from './styles';
@@ -7,9 +7,11 @@ import styles from './styles';
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   return (
     <View style={styles.container}>
-      <PWInput />
-      <LoginButton />
-      <PwForgot />
+      <ScrollView>
+        <PWInput />
+        <LoginButton />
+        <PwForgot />
+      </ScrollView>
     </View>
   );
 };
