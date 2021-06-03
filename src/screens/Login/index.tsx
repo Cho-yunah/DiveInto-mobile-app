@@ -18,8 +18,6 @@ const LoginScreen = ({ navigation }: LoginProps) => {
   ) => {
     setIsLoading(true);
     try {
-      console.log(email, 'ddd');
-
       const checkEmail = await instance.post('/sign/check/email', {
         email,
       });

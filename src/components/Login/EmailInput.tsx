@@ -1,5 +1,5 @@
-import { isLoadingState } from '@recoil/LoginStack';
-import React, { useCallback, useEffect, useState } from 'react';
+import { emailState, isLoadingState } from '@recoil/LoginStack';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -14,12 +14,11 @@ import { useRecoilState } from 'recoil';
 import styles from './styles';
 import useTransitionColor from './useTransitionColor';
 import { EmailInputProps } from './types';
-import { useFocusEffect } from '@react-navigation/core';
 
 export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
-  const [isLoading, setIsLoading] = useRecoilState(isLoadingState);
-  const [email, setEmail] = useState('');
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [isLoading, setIsLoading] = useRecoilState(isLoadingState);
+  const [email, setEmail] = useRecoilState(emailState);
   const [isValid, setIsValid, interpolations] = useTransitionColor({
     screen: 'Login',
   });
@@ -31,15 +30,6 @@ export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
     checkEmailValidation(text) ? setIsValid(true) : setIsValid(false);
   };
   const onCheckboxPress = () => setToggleCheckBox(!toggleCheckBox);
-
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        setIsValid(undefined);
-        setEmail('');
-      };
-    }, []),
-  );
 
   return (
     <>

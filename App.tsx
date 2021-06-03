@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler'; // navigator, production 시 필수.
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { RecoilRoot, useRecoilValue } from 'recoil';
