@@ -16,7 +16,6 @@ const LecturePicsCarousel = () => {
     minimumViewTime: 400,
     itemVisiblePercentThreshold: 10,
   });
-
   const viewableItemsCallbackRef = useRef(({ viewableItems }: any) => {
     if (viewableItems.length === 1) setActiveDotIdx(viewableItems[0].index);
   });

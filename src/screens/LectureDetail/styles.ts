@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
-  container: {},
+export const LectureDetailScreenStyle = StyleSheet.create({
+  container: {
+    backgroundColor: '#F3F5F7',
+  },
 });
