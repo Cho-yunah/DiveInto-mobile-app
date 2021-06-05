@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { View, Text, Button, SafeAreaView } from 'react-native';
+import { View} from 'react-native';
 import { SetPasswordProps } from '@navigators/LoginStack/types';
 
 // import style
