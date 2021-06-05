@@ -1,4 +1,3 @@
-import { emailState, isLoadingState } from '@recoil/LoginStack';
 import React, { useState } from 'react';
 import {
   View,
@@ -8,16 +7,19 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import { CheckBox } from 'react-native-elements';
-import Entype from 'react-native-vector-icons/Entypo';
-import { useRecoilState } from 'recoil';
+import { EmailInputProps } from './types';
 import styles from './styles';
 import useTransitionColor from './useTransitionColor';
-import { EmailInputProps } from './types';
+
+import { CheckBox } from 'react-native-elements';
+import Entype from 'react-native-vector-icons/Entypo';
+
+import { useRecoilState } from 'recoil';
+import { emailState } from '@recoil/LoginStack';
 
 export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
-  const [isLoading, setIsLoading] = useRecoilState(isLoadingState);
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useRecoilState(emailState);
   const [isValid, setIsValid, interpolations] = useTransitionColor({
     screen: 'Login',
@@ -83,7 +85,6 @@ export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
       )}
 
       {/* 로그인 버튼 */}
-
       <TransitionPressable
         disabled={!isValid}
         style={[
@@ -106,7 +107,6 @@ export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
 }
 
 function checkEmailValidation(email: string): boolean {
-  const regex =
-    /^([a-zA-Z0-9\-._]+)@([a-zA-Z0-9-_]+).([a-z]{2,20})(.[a-z]{2,10})$/;
+  const regex = /^([a-zA-Z0-9\-._]+)@([a-zA-Z0-9-_]+).([a-z]{2,20})(.[a-z]{2,10})$/;
   return regex.test(email);
 }

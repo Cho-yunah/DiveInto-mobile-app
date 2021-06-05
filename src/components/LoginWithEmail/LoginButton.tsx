@@ -1,34 +1,20 @@
-import React, { useCallback } from 'react';
+import React, { useState } from 'react';
 import { Animated, Pressable, Text } from 'react-native';
 import useTransitionColor from '@components/Login/useTransitionColor';
 import styles from './styles';
 import { LoginButtonProps } from './types';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  passwordLoginState,
-  emailState,
-  isLoadingState,
-} from '@recoil/LoginStack';
-import { useFocusEffect } from '@react-navigation/core';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { passwordLoginState, emailState } from '@recoil/LoginStack';
 
 export default function LoginWithEmail({ requestLogin }: LoginButtonProps) {
   const password = useRecoilValue(passwordLoginState);
   const [email, setEmail] = useRecoilState(emailState);
-  const [loading, setIsLoading] = useRecoilState(isLoadingState);
+  const [loading, setIsLoading] = useState(false);
   const TransitionPressable = Animated.createAnimatedComponent(Pressable);
   const TransitionText = Animated.createAnimatedComponent(Text);
   const [isValid, setIsValid, interpolations] = useTransitionColor({
     screen: 'PwInput',
   });
-
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     return () => {
-  //       setIsValid(undefined);
-  //       setEmail('');
-  //     };
-  //   }, []),
-  // );
 
   return (
     <TransitionPressable

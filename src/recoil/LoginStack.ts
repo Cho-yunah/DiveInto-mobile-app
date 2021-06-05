@@ -27,11 +27,6 @@ export const phoneNumber = atom({
   default: '',
 });
 
-export const isLoadingState = atom({
-  key: 'isLoading',
-  default: false,
-});
-
 export const emailState = atom({
   key: 'email',
   default: '',
