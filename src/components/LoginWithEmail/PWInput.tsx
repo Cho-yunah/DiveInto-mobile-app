@@ -1,12 +1,15 @@
+import { passwordLoginState } from '@/src/recoil/LoginStack';
 import React, { useState, useEffect } from 'react';
 import { Pressable, TextInput } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useRecoilState } from 'recoil';
 import useTransitionColor from '../Login/useTransitionColor';
 import styles from './styles';
 
 export default function LoginWithEmail() {
   const [isPWVisible, setIsPWVisible] = useState(false);
-  const [input, setInput] = useState('');
+  const [password, setPassword] = useRecoilState(passwordLoginState);
+
   const [isValid, setIsValid, interpolations] = useTransitionColor({
     screen: 'PwInput',
   });
@@ -17,8 +20,8 @@ export default function LoginWithEmail() {
   }, []);
 
   const onPasswordInput = (text: string) => {
-    setInput(text);
-    setIsValid(input.length > 3 ? true : false);
+    setPassword(text);
+    setIsValid(text.length > 3 ? true : false);
   };
 
   const onPWVisiblePress = () => setIsPWVisible(!isPWVisible);
@@ -31,7 +34,8 @@ export default function LoginWithEmail() {
         placeholder="비밀번호를 입력해주세요"
         style={styles.TextInput}
         onChangeText={onPasswordInput}
-        value={input}
+        value={password}
+        spellCheck={false}
       />
       <Pressable
         style={styles.TextInputIconContainer}

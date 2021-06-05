@@ -7,6 +7,7 @@ import LoginScreen from '@screens/Login';
 import LoginWithEmailScreen from '@screens/LoginWithEmail';
 import SetPasswordScreen from '@screens/SetPassword';
 import MemberInfoScreen from '@screens/MemberInfo';
+import WriteReviewScreen from '@/src/screens/WriteReview';
 
 const Stack = createStackNavigator<RootLoginStack>();
 
