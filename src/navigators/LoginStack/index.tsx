@@ -13,7 +13,6 @@ const Stack = createStackNavigator<RootLoginStack>();
 
 export default function LoginStack() {
   return (
-    <RecoilRoot>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
@@ -60,6 +59,5 @@ export default function LoginStack() {
           options={{ title: '회원정보기입' }}
         />
       </Stack.Navigator>
-    </RecoilRoot>
   );
 }

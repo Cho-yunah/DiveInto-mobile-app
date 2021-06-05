@@ -1,0 +1,41 @@
+// 이메일 승인 코드 전송
+POST /email/code/send HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 31
+Host: 52.79.225.4:8081
+
+{
+  "email" : "ohlworld1@gmail.com"
+}
+
+###
+
+// 로그인 요청
+POST /sign/login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 57
+Host: 52.79.225.4:8081
+
+{
+  "email" : "yechan@gmail.com",
+  "password" : "1234"
+}
+
+###
+
+// 회원가입
+POST /sign/sign-up HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/hal+json
+Content-Length: 191
+Host: 52.79.225.4:8081
+
+{
+  "verifyCode" : "853322",
+  "email" : "ohlworld1@gmail.com",
+  "password" : "1234",
+  "nickName" : "ohl",
+  "birth" : "1999-09-11",
+  "phoneNumber" : "010-1111-2222",
+  "gender" : "MALE"
+}
