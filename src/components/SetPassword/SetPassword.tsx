@@ -27,22 +27,14 @@ export default function SetPassword() {
 
   // 유효성 검사 함수
   const validation = () => {
-    const passwordReg = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,16}$/; // 영문자, 숫자 포함(10~16자)
-    const specialChar = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi; // 특수문자 reg
-    const koreanChar = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/gi; // 한글reg
+    const passwordReg =  /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+])(?!.*[^a-zA-z0-9$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
 
     const hasEveryCharacter = passwordReg.test(password);
-    const noSpecialCharacter =
-      specialChar.test(password) || specialChar.test(rePassword);
-    const noKoreanCharacter =
-      koreanChar.test(password) || koreanChar.test(rePassword);
     const isLongerThanTen = password.length >= 10 ? true : false;
 
     if (password) {
       hasEveryCharacter &&
-      isLongerThanTen &&
-      !noSpecialCharacter &&
-      !noKoreanCharacter
+      isLongerThanTen 
         ? setIsValid(true)
         : setIsValid(false),
         setIsMatch(false);
