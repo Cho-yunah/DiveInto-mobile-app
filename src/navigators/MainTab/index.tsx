@@ -7,6 +7,7 @@ import * as colors from '@config/colors';
 
 import { IsInstructor } from '@recoil/Global';
 import LectureStack from '@navigators/LectureStack';
+import CommunityStack from '../CommunityStack';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -35,7 +36,8 @@ export default function LoginStack() {
         {isInstructor ? (
           <>
             <Tab.Screen name="홈" component={LectureStack} />
-            <Tab.Screen name="커뮤니티" component={Tmp} />
+            <Tab.Screen name="커뮤니티" component={CommunityStack
+            } />
             <Tab.Screen name="강의일정" component={Tmp} />
             <Tab.Screen name="강의후기" component={Tmp} />
             <Tab.Screen name="프로필" component={Tmp} />
@@ -43,7 +45,7 @@ export default function LoginStack() {
         ) : (
           <>
             <Tab.Screen name="홈" component={LectureStack} />
-            <Tab.Screen name="커뮤니티" component={Tmp} />
+            <Tab.Screen name="커뮤니티" component={CommunityStack} />
             <Tab.Screen name="강의일정" component={Tmp} />
             <Tab.Screen name="프로필" component={Tmp} />
           </>

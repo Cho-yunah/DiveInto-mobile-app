@@ -5,7 +5,6 @@ import { RootCommunityStack } from './types';
 
 import CommunityMainScreen from '@/src/screens/CommunityMain';
 import CommunityPostingScreen from '@/src/screens/CommunityPosting';
-import SetPasswordScreen from '@/src/screens/SetPassword';
 import { CommunityDetail } from '@/src/components/CommunityDetail';
 
 const Stack = createStackNavigator<RootCommunityStack>();

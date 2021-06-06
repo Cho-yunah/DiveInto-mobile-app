@@ -1,23 +1,48 @@
-import React, {ReactElement} from 'react'
-import { View, Text } from 'react-native';
+import React, { ReactElement} from 'react'
+import { View } from 'react-native';
 import styles  from './styles';
 
-// import components
-import {CommunityMain, CommunityItem } from '@components/CommunityMain';
-import { CommunityPostingProps } from '@/src/navigators/CommunityStack/types';
-import  {AddContentButton}  from '@components/CommunityMain';
+import {CommunityMain} from '@components/CommunityMain';
+import { CommunityPostingProps } from '@navigators/CommunityStack/types';
+import NextButton from '@components/common/NextButton'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+const Tab= createMaterialTopTabNavigator();
+
 
 export default function CommunityMainScreen({navigation}: CommunityPostingProps): ReactElement {
 
-  const onPress = () => navigation.navigate('CommunityPosting');
+  const addContent = () => navigation.navigate('CommunityPosting');
+
+  const showContentDetail = () => navigation.navigate('CommunityDetail')
 
   navigation.setOptions({
-    headerRight: () => <AddContentButton onPress={onPress} />
+    headerRight: () => <NextButton text='글쓰기' onPress={addContent} />
   })
 
   return (
-    <View style={styles.container}>
-      <CommunityMain navigation={navigation}/>
+    <View style={styles.container}  > 
+    <Tab.Navigator  
+      tabBarOptions={{
+        labelStyle: { fontSize: 18 }, 
+        activeTintColor:'#50CAD2', 
+        inactiveTintColor: '#6A6D70', 
+        indicatorStyle: {borderColor: '#50CAD2', borderWidth: 1} }}  
+    >
+      <Tab.Screen 
+        name="공유해요" 
+        component={SharedContents} 
+      />
+      <Tab.Screen 
+        name="궁금해요"
+        component={QuestionaryContent} 
+        />
+    </Tab.Navigator>
     </View>
   );
 }
+
+const SharedContents = () => <CommunityMain data={SharedContents}/>
+
+const QuestionaryContent = () => <CommunityMain data={QuestionaryContent}/>
+
