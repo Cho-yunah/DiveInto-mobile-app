@@ -7,6 +7,7 @@ import * as colors from '@config/colors';
 
 import { IsInstructor } from '@recoil/Global';
 import LectureStack from '@navigators/LectureStack';
+import ProfileStack from '@navigators/ProfileStack';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -30,6 +31,7 @@ export default function LoginStack() {
           tabBarIcon: ({ focused, color, size }) =>
             IconSelector({ focused, color, size, routeName: route.name }),
         })}
+        // initialRouteName=""
       >
         {/* 탭 이름은 같더라도 강사와 수강생 뷰가 다를 수 있어서 구분해놨으나, 동일하라면 강의후기에만 조건문 걸면 됨. */}
         {isInstructor ? (
@@ -38,7 +40,7 @@ export default function LoginStack() {
             <Tab.Screen name="커뮤니티" component={Tmp} />
             <Tab.Screen name="강의일정" component={Tmp} />
             <Tab.Screen name="강의후기" component={Tmp} />
-            <Tab.Screen name="프로필" component={Tmp} />
+            <Tab.Screen name="프로필" component={ProfileStack} />
           </>
         ) : (
           <>
