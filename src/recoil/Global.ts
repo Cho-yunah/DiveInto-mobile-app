@@ -7,5 +7,5 @@ export const IsLogin = atom({
 
 export const IsInstructor = atom({
   key: 'IsInstructor',
-  default: true,
+  default: false,
 });
