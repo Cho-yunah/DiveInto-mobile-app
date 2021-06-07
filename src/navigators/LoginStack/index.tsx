@@ -7,12 +7,12 @@ import LoginScreen from '@screens/Login';
 import LoginWithEmailScreen from '@screens/LoginWithEmail';
 import SetPasswordScreen from '@screens/SetPassword';
 import MemberInfoScreen from '@screens/MemberInfo';
+import WriteReviewScreen from '@/src/screens/WriteReview';
 
 const Stack = createStackNavigator<RootLoginStack>();
 
 export default function LoginStack() {
   return (
-    <RecoilRoot>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
@@ -59,6 +59,5 @@ export default function LoginStack() {
           options={{ title: '회원정보기입' }}
         />
       </Stack.Navigator>
-    </RecoilRoot>
   );
 }

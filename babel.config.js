@@ -71,6 +71,7 @@ const pathPlugin = [
         '@recoil': './src/recoil',
         '@screens': './src/screens',
         '@typing': './src/typing',
+        '@api': './src/lib/api',
       },
     },
   ],

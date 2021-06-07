@@ -521,9 +521,9 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 93bd528844ad21dc07aab1c67cb10abae6df6949
   React-jsinspector: 58aef7155bc9a9683f5b60b35eccea8722a4f53a
   react-native-date-picker: 76fc79be2f3cad8ff1b2850fc5601e5f8107979d
-  react-native-image-picker: 5bb3325530fd4dc3053a77a73d4f65b6649de820
+  react-native-image-picker: 25f5fe3a3a9c4297e0b7a5a16566c5609632856d
   react-native-nmap: 0b154f695c47e4b6db708ecf46bf9ad3ea8ae4b1
-  react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
+  react-native-safe-area-context: e471852c5ed67eea4b10c5d9d43c1cebae3b231d
   React-RCTActionSheet: 89a0ca9f4a06c1f93c26067af074ccdce0f40336
   React-RCTAnimation: 1bde3ecc0c104c55df246eda516e0deb03c4e49b
   React-RCTBlob: a97d378b527740cc667e03ebfa183a75231ab0f0

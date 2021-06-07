@@ -26,3 +26,13 @@ export const phoneNumber = atom({
   key: 'phoneNumber',
   default: '',
 });
+
+export const emailState = atom({
+  key: 'email',
+  default: '',
+});
+
+export const passwordLoginState = atom({
+  key: 'passwordLogin',
+  default: '',
+});
