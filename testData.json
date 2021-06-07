@@ -1,0 +1,15 @@
+{
+  "shared" : [
+    {"id": "1", "title": "hi", "postAuthor": "yuna","postingDate":"6/1",  "imageSrc": "https://source.unsplash.com/random", "commentNum": "3" },
+    {"id": "2", "title": "hello", "postAuthor": "yoon","postingDate":"6/2",  "imageSrc": " https://source.unsplash.com/random", "commentNum": "2" },
+    {"id": "3", "title": "world", "postAuthor": "you", "postingDate":"6/3", "imageSrc": "https://source.unsplash.com/random", "commentNum": "5" },
+    {"id": "4", "title": "hey", "postAuthor": "woo", "postingDate":"6/5", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "5", "title": "hey", "postAuthor": "woo", "postingDate":"6/5", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "6", "title": "hey", "postAuthor": "woo", "postingDate":"6/5", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "7", "title": "hey", "postAuthor": "woo", "postingDate":"6/5", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "8", "title": "hey", "postAuthor": "woo", "postingDate":"6/5", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "9", "title": "hey", "postAuthor": "woo", "postingDate":"6/5", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "10", "title": "hey", "postAuthor": "woo", "postingDate":"6/5", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" }
+    
+  ]
+}
