@@ -45,6 +45,10 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-around' 
   },
+  flexBox: {
+    flexDirection: 'row',
+
+  },
   iconBox: {
     flexDirection: 'row',
     position: 'absolute',
@@ -58,10 +62,5 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  btnText: {
-    color: '#fefefe',
-    fontSize: 15,
-    paddingRight: 17,
   },
 })

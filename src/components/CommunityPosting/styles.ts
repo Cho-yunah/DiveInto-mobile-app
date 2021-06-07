@@ -1,10 +1,6 @@
 import {StyleSheet} from 'react-native'
 
-export const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-  },
-  // posting 글 작성란 styling
+export const SelectStyle = StyleSheet.create({
   selectContainer: {
     marginTop: 30 ,
     width: 353,
@@ -31,6 +27,12 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'left', 
     color: '#6A6D70' ,
+  },
+})
+
+export const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
   },
   ////
   inputContainer: {

@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import {styles} from './styles'
+import {SelectStyle as styles} from './styles'
 
 export default function SelectCategory() {
   return (

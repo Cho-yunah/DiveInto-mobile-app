@@ -18,11 +18,11 @@ export default function CommunityItem({imageSrc, title, postAuthor,postingDate, 
           <Image style={styles.thumnailImage} source={{uri: imageSrc}}/>
           <View style={styles.contentInfo}>
             <Text>{title}</Text>
-            <Text>
-              {postAuthor}
-                <Entypo name='dot-single' size={14} color={colors.BlackText}/>
-              {postingDate}
-            </Text>
+            <View style={styles.flexBox}>
+              <Text>{postAuthor}</Text>
+                  <Entypo name='dot-single' size={14} color={colors.BlackText}/>
+              <Text>{postingDate}</Text>
+            </View>
           </View>
       </TouchableOpacity>
       <View style= {styles.iconBox}>

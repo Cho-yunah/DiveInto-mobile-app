@@ -1,8 +1,8 @@
 import React from 'react'
-import {View,TextInput, Text } from 'react-native'
+import {TextInput } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import {styles} from './styles'
+import {CommnetInputStyle as styles} from './styles'
 
 export default function DetailComments() {
   return (

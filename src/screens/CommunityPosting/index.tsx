@@ -1,22 +1,27 @@
 import React, {ReactElement} from 'react'
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import styles  from './styles';
 
 // import components
-import { CommunityMainProps } from '@/src/navigators/CommunityStack/types';
-import  {CommunityPosting, EditCompleteButton}  from '@components/CommunityPosting';
+import { CommunityMainProps } from '@navigators/CommunityStack/types';
+import  { EditCompleteButton, SelectCategory, SelectTag, TitleAndContents, AddImages}  from '@components/CommunityPosting';
+import NextButton from '@components/common/NextButton'
+
 
 export default function CommunityPostingScreen({navigation}: CommunityMainProps): ReactElement {
 
   const onPress = () => navigation.navigate('CommunityMain');
 
   navigation.setOptions({
-    headerRight: () => <EditCompleteButton onPress={onPress} />
+    headerRight: () => <NextButton text='완료' onPress={onPress} />
   })
 
   return (
     <View style={styles.container}>
-      <CommunityPosting/>
+      <SelectCategory/>
+      <SelectTag/>
+      <TitleAndContents/>
+      <AddImages/>
     </View>
-  );
+  )
 }

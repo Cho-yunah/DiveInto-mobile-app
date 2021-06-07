@@ -1,6 +1,5 @@
 import React, { ReactElement, Suspense, useEffect, useRef} from 'react';
 import { Text,ScrollView } from 'react-native';
-// import { styles } from './styles';
 
 import {CommunityList} from '@components/CommunityMain'
 import { useScrollToTop } from '@react-navigation/native';
