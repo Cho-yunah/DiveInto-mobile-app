@@ -3,6 +3,7 @@ export type CommunityMainProps = {
 };
 
 export type ContentItem = {
+  // id: number;
   title: string;
   postAuthor: string;
   postingDate: string;
