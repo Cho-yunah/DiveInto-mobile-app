@@ -1,16 +1,19 @@
 import React from 'react';
 import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { styles } from './styles';
 import CommonBtn from '../CommonBtn';
 
 export default function NoticeList() {
-  const moveNavigaion1 = () => {
-    console.log('move1');
+  const navigation = useNavigation();
+
+  const moveNoticeListScreen = () => {
+    navigation.navigate('NoticeList');
   };
 
-  const moveNavigaion2 = () => {
-    console.log('move2');
+  const moveFAQScreen = () => {
+    navigation.navigate('ProfileTab');
   };
 
   const moveNavigaion3 = () => {
@@ -19,8 +22,8 @@ export default function NoticeList() {
 
   return (
     <View style={styles.container}>
-      <CommonBtn title="공지사항" moveNavigation={moveNavigaion1} />
-      <CommonBtn title="자주 묻는 질문" moveNavigation={moveNavigaion2} />
+      <CommonBtn title="공지사항" moveNavigation={moveNoticeListScreen} />
+      <CommonBtn title="자주 묻는 질문" moveNavigation={moveFAQScreen} />
       <CommonBtn title="약관 및 정책" moveNavigation={moveNavigaion3} />
     </View>
   );
