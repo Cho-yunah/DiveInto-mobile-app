@@ -3,13 +3,11 @@ import { Modal, TouchableWithoutFeedback, View, Text } from 'react-native';
 import { modalStyles } from './styles';
 import { ProgressModalProps } from './types';
 
-import ProgressBar from './ProgressBar';
-
 export default function ProgressModal({
   visible,
   onRequestClose,
   preventParentEvent,
-  percent,
+  children,
 }: ProgressModalProps) {
   return (
     <Modal
@@ -21,18 +19,10 @@ export default function ProgressModal({
       <TouchableWithoutFeedback onPress={onRequestClose}>
         <View style={modalStyles.modalContainer}>
           <TouchableWithoutFeedback onPress={preventParentEvent}>
-            <View style={modalStyles.modalWrapper}>
-              <Text style={modalStyles.modalTitle}>Download Video</Text>
-              <Text style={modalStyles.modalSubTitle}>
-                please wait until download finish, don't close the app
-              </Text>
-              <ProgressBar progress={percent} backgroundColor="#fafafa" />
-            </View>
+            {children}
           </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
     </Modal>
   );
 }
-
-//<UploadProgress title={file.name} file={file} key={i} index={i} />

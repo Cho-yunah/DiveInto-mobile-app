@@ -1,2 +1,2 @@
-export { default as ProgressModal } from './ProgressModal';
-export { default as UploadProgress } from './UploadProgress';
+export { default as Modal } from './Modal';
+export { default as ProgressComponent } from './ProgressComponent';

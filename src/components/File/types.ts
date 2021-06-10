@@ -4,7 +4,7 @@ export type ProgressModalProps = {
   visible: boolean;
   onRequestClose?: () => void;
   preventParentEvent?: (event: GestureResponderEvent) => void;
-  percent: number;
+  children: any;
 };
 
 export type S3BucketInfo = {
