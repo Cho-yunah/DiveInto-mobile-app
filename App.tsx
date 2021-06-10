@@ -10,6 +10,8 @@ import LegacyStack from '@legacy_navigators/LegacyStack';
 import LoginStack from '@navigators/LoginStack';
 import MainTab from '@/src/navigators/MainTab';
 
+import UploadTest from '@screens/UploadTest';
+
 // redux
 import initStore from '@legacy_lib/redux/store';
 const store = initStore();
@@ -20,6 +22,11 @@ export default function App() {
       <NavigationContainer>
         {/* 레거시 */}
         {/* <LegacyStack /> */}
+
+        {/* 파일업로드 테스트 */}
+        {/* <RecoilRoot>
+          <UploadTest />
+        </RecoilRoot> */}
 
         {/* 리뉴얼 */}
         <RecoilRoot>

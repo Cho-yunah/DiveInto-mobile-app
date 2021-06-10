@@ -1,6 +1,9 @@
 # push empty directory
 !.keep
 
+# API key not upload
+token.ts
+
 # OSX
 #
 .DS_Store
