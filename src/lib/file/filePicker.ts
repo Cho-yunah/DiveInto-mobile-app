@@ -1,6 +1,6 @@
 import DocumentPicker from 'react-native-document-picker';
 
-export async function SingleFileSelector() {
+export async function singleFileSelect() {
   // Pick a single file
   try {
     const res = await DocumentPicker.pick({
@@ -24,7 +24,7 @@ export async function SingleFileSelector() {
   }
 }
 
-export async function MultiFileSelector() {
+export async function multiFileSelect() {
   // Pick multiple files
   try {
     const results = await DocumentPicker.pickMultiple({

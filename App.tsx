@@ -10,23 +10,26 @@ import LegacyStack from '@legacy_navigators/LegacyStack';
 import LoginStack from '@navigators/LoginStack';
 import MainTab from '@/src/navigators/MainTab';
 
+import UploadTest from '@screens/UploadTest';
+
 // redux
 import initStore from '@legacy_lib/redux/store';
 const store = initStore();
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        {/* 레거시 */}
-        {/* <LegacyStack /> */}
+    // <Provider store={store}>
+    //   <NavigationContainer>
+    //     {/* 레거시 */}
+    //     {/* <LegacyStack /> */}
 
-        {/* 리뉴얼 */}
-        <RecoilRoot>
-          <SelectNavigator />
-        </RecoilRoot>
-      </NavigationContainer>
-    </Provider>
+    //     {/* 리뉴얼 */}
+    //     <RecoilRoot>
+    //       <SelectNavigator />
+    //     </RecoilRoot>
+    //   </NavigationContainer>
+    // </Provider>
+    <UploadTest />
   );
 }
 

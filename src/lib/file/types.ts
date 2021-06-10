@@ -1,3 +1,4 @@
 export type OnInit = () => void;
-export type OnProgress = (percent: number) => void;
-export type OnEnd = () => void;
+export type OnProgress = (written: number, total: number) => void;
+export type OnSuccess = (data?: Object) => void;
+export type OnError = (e: Error) => void;
