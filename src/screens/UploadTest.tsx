@@ -6,6 +6,8 @@ import {
   GestureResponderEvent,
 } from 'react-native';
 import { DocumentPickerResponse } from 'react-native-document-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+
 import { singleFileSelect, singleFileUpload } from '@lib/file';
 import { dropbox } from '@config/token';
 
@@ -29,6 +31,28 @@ export default function UploadTest() {
     setImage(result);
     console.log('result : ', result);
   };
+
+  const onAlbum = () =>
+    launchImageLibrary(
+      {
+        mediaType: 'photo',
+        includeBase64: true,
+        maxHeight: 200,
+        maxWidth: 200,
+      },
+      async response => {
+        if (response.didCancel) setImage(undefined);
+        else
+          setImage({
+            uri: response.uri!,
+            fileCopyUri: '',
+            copyError: response.errorMessage,
+            type: response.type!,
+            name: response.fileName!,
+            size: response.fileSize!,
+          });
+      },
+    );
 
   const onUpload = async () => {
     // progressBar 관련 함수
@@ -67,9 +91,8 @@ export default function UploadTest() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Button title="파일" onPress={onSelect} />
+      <Button title="이미지" onPress={onAlbum} />
       <Button title="업로드" onPress={onUpload} />
-      {/* {image && <UploadProgress title="test" file={image} index={0} />} */}
-      {/* {image && <Image style={{ flex: 1 }} source={{ uri: image?.uri }} />} */}
       <Modal
         visible={visible}
         onRequestClose={onRequestClose}

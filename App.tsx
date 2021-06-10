@@ -24,14 +24,14 @@ export default function App() {
         {/* <LegacyStack /> */}
 
         {/* 파일업로드 테스트 */}
-        <RecoilRoot>
+        {/* <RecoilRoot>
           <UploadTest />
-        </RecoilRoot>
+        </RecoilRoot> */}
 
         {/* 리뉴얼 */}
-        {/* <RecoilRoot>
+        <RecoilRoot>
           <SelectNavigator />
-        </RecoilRoot> */}
+        </RecoilRoot>
       </NavigationContainer>
     </Provider>
   );
