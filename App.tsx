@@ -18,18 +18,22 @@ const store = initStore();
 
 export default function App() {
   return (
-    // <Provider store={store}>
-    //   <NavigationContainer>
-    //     {/* 레거시 */}
-    //     {/* <LegacyStack /> */}
+    <Provider store={store}>
+      <NavigationContainer>
+        {/* 레거시 */}
+        {/* <LegacyStack /> */}
 
-    //     {/* 리뉴얼 */}
-    //     <RecoilRoot>
-    //       <SelectNavigator />
-    //     </RecoilRoot>
-    //   </NavigationContainer>
-    // </Provider>
-    <UploadTest />
+        {/* 파일업로드 테스트 */}
+        <RecoilRoot>
+          <UploadTest />
+        </RecoilRoot>
+
+        {/* 리뉴얼 */}
+        {/* <RecoilRoot>
+          <SelectNavigator />
+        </RecoilRoot> */}
+      </NavigationContainer>
+    </Provider>
   );
 }
 

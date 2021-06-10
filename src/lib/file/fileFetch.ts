@@ -8,16 +8,16 @@ export async function singleFileUpload({
   uploadTo,
   onInit,
   onProgress,
-  OnSuccess,
-  OnError,
+  onSuccess,
+  onError,
   headers,
 }: {
   fileInfo: DocumentPickerResponse;
   uploadTo: string;
   onInit?: OnInit;
   onProgress?: OnProgress;
-  OnSuccess?: OnSuccess;
-  OnError?: OnError;
+  onSuccess?: OnSuccess;
+  onError?: OnError;
   headers?: { [key: string]: string };
 }): Promise<void> {
   onInit && onInit();
@@ -39,12 +39,12 @@ export async function singleFileUpload({
     })
     .then(res => {
       console.log('업로드 성공 : ', res.text());
-      OnSuccess && OnSuccess();
+      onSuccess && onSuccess();
     })
     .catch(err => {
       // error handling ..
       console.log('파일 업로드 에러 : ', err);
-      OnError && OnError(err);
+      onError && onError(err);
     });
 }
 
@@ -86,7 +86,7 @@ export const multiFileUpload = async (
         throw new Error('파일 업로드 에러');
       }
       console.log('멀티폼 데이터 업로드 완료 : ', res);
-      onSuccess && onSuccess(res.data);
+      onSuccess && onSuccess();
     })
     .catch(err => {
       console.log('멀티폼 데이터 업로드 에러 : ', err);
