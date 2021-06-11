@@ -1,16 +1,30 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { HeaderStyles as styles } from './styles';
+import { mainHeaderStyles as styles, lecturerHeaderStyles } from './styles';
+import { HeaderContainerProps } from './types';
 import ProfileImg from './ProfileImg';
 import UploadImgBtn from './UploadImgBtn';
 
-export default function Header() {
+export default function Header({
+  currScreen,
+  buttonText,
+}: HeaderContainerProps) {
   return (
-    <View style={styles.rootContainer}>
-      <View style={styles.headerContainer}>
+    <View
+      style={[
+        styles.rootContainer,
+        currScreen === 'lecturer' && lecturerHeaderStyles.rootContainer,
+      ]}
+    >
+      <View
+        style={[
+          styles.headerContainer,
+          currScreen === 'lecturer' && lecturerHeaderStyles.headerContainer,
+        ]}
+      >
         <ProfileImg />
-        <UploadImgBtn />
+        <UploadImgBtn buttonText={buttonText} />
       </View>
     </View>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import LecturerQuestionScrren from '../../screens/FAQ/LecturerQuestion';
+import LecturerQuestionScreen from '../../screens/FAQ/LecturerQuestion';
 import ManualScreen from '../../screens/FAQ/Manual';
 import ComplainScren from '../../screens/FAQ/Complain';
 import ETCScreen from '@/src/screens/FAQ/ETC';
@@ -14,7 +14,7 @@ export default function ProfileTab() {
     <Tab.Navigator tabBar={props => <TabBar {...props} />}>
       <Tab.Screen
         name="LecturerQuestion"
-        component={LecturerQuestionScrren}
+        component={LecturerQuestionScreen}
         options={{ title: '강사문의' }}
       />
       <Tab.Screen

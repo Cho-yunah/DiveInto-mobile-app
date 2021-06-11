@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image } from 'react-native';
 
-import { HeaderStyles as styles } from './styles';
+import { mainHeaderStyles as styles } from './styles';
 
 export default function ProfileImg() {
   return (

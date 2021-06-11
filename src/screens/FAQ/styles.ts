@@ -5,6 +5,9 @@ export const TabBarStyles = StyleSheet.create({
   container: {
     width: '100%',
     height: 41,
+    backgroundColor: Color.White,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
   },
   tabWrapper: {
     flex: 1,

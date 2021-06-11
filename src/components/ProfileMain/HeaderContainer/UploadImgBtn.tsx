@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
-import { HeaderStyles as styles } from './styles';
+import { mainHeaderStyles as styles } from './styles';
 
-export default function UploadImgBtn() {
+export default function UploadImgBtn({ buttonText }: { buttonText: string }) {
   const onChangeImgBtn = (): void => {
     console.log('change Image');
   };
@@ -11,7 +11,7 @@ export default function UploadImgBtn() {
   return (
     <View>
       <TouchableOpacity onPress={onChangeImgBtn}>
-        <Text style={styles.changeImageButton}>사진 수정</Text>
+        <Text style={styles.changeImageButton}>{buttonText}</Text>
       </TouchableOpacity>
     </View>
   );

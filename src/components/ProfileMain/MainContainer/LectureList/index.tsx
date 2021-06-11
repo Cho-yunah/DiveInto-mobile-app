@@ -3,8 +3,11 @@ import { View } from 'react-native';
 
 import { styles } from './styles';
 import CommonBtn from '../CommonBtn';
+import { useNavigation } from '@react-navigation/native';
 
 export default function LectureList() {
+  const navigation = useNavigation();
+
   const moveNavigaion1 = () => {
     console.log('move1');
   };
@@ -14,7 +17,7 @@ export default function LectureList() {
   };
 
   const moveNavigaion3 = () => {
-    console.log('move3');
+    navigation.navigate('ApplyLecturer');
   };
 
   return (

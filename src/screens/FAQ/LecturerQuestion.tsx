@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { FAQListItem } from '../../components/NoticeBoard';
+import { FAQListItem } from '@/src/components/NoticeBoard';
 
-export default function LecturerQuestionScrren() {
+export default function LecturerQuestionScreen() {
   return (
     <View>
       <FAQListItem />

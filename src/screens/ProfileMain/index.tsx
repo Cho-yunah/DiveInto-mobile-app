@@ -9,7 +9,7 @@ export default function ProfileMain() {
   return (
     <RecoilRoot>
       <SafeAreaView style={styles.container}>
-        <HeaderContainer />
+        <HeaderContainer currScreen={'main'} buttonText="사진수정" />
         <MainContainer />
       </SafeAreaView>
     </RecoilRoot>

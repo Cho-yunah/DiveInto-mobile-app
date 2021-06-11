@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
 import * as Color from '../../config/colors';
 
-export const styles = StyleSheet.create({
+export const NoticeListItem = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Color.White,
     borderBottomWidth: 1,
     borderBottomColor: '#CCD7DF',
     padding: 20,
@@ -20,12 +21,12 @@ export const styles = StyleSheet.create({
   },
 });
 
-export const xxx = StyleSheet.create({
+export const FAQListItem = StyleSheet.create({
   container: {
-    // flex: 1,
     borderBottomWidth: 1,
     borderBottomColor: '#CCD7DF',
     padding: 20,
+    backgroundColor: Color.White,
   },
   text: {
     fontSize: 14,

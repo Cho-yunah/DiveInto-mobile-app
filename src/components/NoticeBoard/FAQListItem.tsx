@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { xxx as styles } from './styles';
+import { FAQListItem as styles } from './styles';
 
 export default function FAQListItem() {
   return (
