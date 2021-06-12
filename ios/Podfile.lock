@@ -270,7 +270,7 @@ PODS:
     - React-Core
   - react-native-document-picker (5.0.4):
     - React-Core
-  - react-native-image-picker (3.8.1):
+  - react-native-image-picker (4.0.3):
     - React-Core
   - react-native-nmap (0.0.58):
     - NMapsMap (~> 3.10.1)
@@ -587,7 +587,7 @@ SPEC CHECKSUMS:
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
   react-native-date-picker: 76fc79be2f3cad8ff1b2850fc5601e5f8107979d
   react-native-document-picker: 3690b7d064a1153d4d572ab6a045fdd130cbf14c
-  react-native-image-picker: 5a7dd93d4f9dd0d910da5dde3707fd96f70d03b3
+  react-native-image-picker: 4089335b89b625d4e34d53fb249c48a7a791b3ea
   react-native-nmap: 0b154f695c47e4b6db708ecf46bf9ad3ea8ae4b1
   react-native-safe-area-context: e471852c5ed67eea4b10c5d9d43c1cebae3b231d
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
