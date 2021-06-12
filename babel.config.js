@@ -72,6 +72,7 @@ const pathPlugin = [
         '@screens': './src/screens',
         '@typing': './src/typing',
         '@api': './src/lib/api',
+        '@lib': './src/lib',
       },
     },
   ],
