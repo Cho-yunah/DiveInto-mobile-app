@@ -39,3 +39,45 @@ Host: 52.79.225.4:8081
   "phoneNumber" : "010-1111-2222",
   "gender" : "MALE"
 }
+
+###
+
+// 강사정보 추가
+POST /sign/instructor/info HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MjMxMTc3MTMsInVzZXJfbmFtZSI6IjIiLCJhdXRob3JpdGllcyI6WyJST0xFX1NUVURFTlQiXSwianRpIjoiOWY5YTRmNzAtZWQ2ZC00ZTFiLWE5ZDItNWMyYzUyNjc5NmMyIiwiY2xpZW50X2lkIjoiYXV0aF9pZCIsInNjb3BlIjpbInJlYWQiXX0.c59Y6NUGAbDWC6-4q5GJ4t2OgBkJtjwNIUvTcqIU7Zc
+Content-Length: 98
+Host: 52.79.225.4:8081
+
+{
+  "organization" : "AIDA",
+  "selfIntroduction" : "10년차 프리 다이빙 강사입니다."
+}
+
+###
+
+// 강사 자격증 추가
+POST /sign/instructor/certificate HTTP/1.1
+Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MjMxMTc3MTMsInVzZXJfbmFtZSI6IjIiLCJhdXRob3JpdGllcyI6WyJST0xFX1NUVURFTlQiXSwianRpIjoiOWY5YTRmNzAtZWQ2ZC00ZTFiLWE5ZDItNWMyYzUyNjc5NmMyIiwiY2xpZW50X2lkIjoiYXV0aF9pZCIsInNjb3BlIjpbInJlYWQiXX0.c59Y6NUGAbDWC6-4q5GJ4t2OgBkJtjwNIUvTcqIU7Zc
+Host: 52.79.225.4:8081
+
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=certificateImages; filename=test1
+Content-Type: image/png
+
+test data
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=certificateImages; filename=test2
+Content-Type: image/png
+
+test data
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--
+
+###
+
+// 강사 신청자 조회
+GET /sign/instructor/request/list?page=0&size=2 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MjMxMTc3MTMsInVzZXJfbmFtZSI6IjIiLCJhdXRob3JpdGllcyI6WyJST0xFX1NUVURFTlQiXSwianRpIjoiOWY5YTRmNzAtZWQ2ZC00ZTFiLWE5ZDItNWMyYzUyNjc5NmMyIiwiY2xpZW50X2lkIjoiYXV0aF9pZCIsInNjb3BlIjpbInJlYWQiXX0.c59Y6NUGAbDWC6-4q5GJ4t2OgBkJtjwNIUvTcqIU7Zc
+Host: 52.79.225.4:8081
