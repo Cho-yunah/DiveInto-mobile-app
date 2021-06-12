@@ -4,7 +4,7 @@ import styles  from './styles';
 
 // import components
 import { CommunityMainProps } from '@navigators/CommunityStack/types';
-import  { EditCompleteButton, SelectCategory, SelectTag, TitleAndContents, AddImages}  from '@components/CommunityPosting';
+import  { SelectBox, TitleAndContents, AddImages}  from '@components/CommunityPosting';
 import NextButton from '@components/common/NextButton'
 
 
@@ -18,8 +18,8 @@ export default function CommunityPostingScreen({navigation}: CommunityMainProps)
 
   return (
     <View style={styles.container}>
-      <SelectCategory/>
-      <SelectTag/>
+      <SelectBox name={'category'}/>
+      <SelectBox name={'tag'}/>
       <TitleAndContents/>
       <AddImages/>
     </View>

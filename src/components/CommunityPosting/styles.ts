@@ -6,6 +6,14 @@ export const SelectStyle = StyleSheet.create({
     width: 353,
     height: 40,
   },
+  shadowContainer: {
+    marginTop: 30 ,
+    width: 353,
+    height: 40,
+    shadowOffset:{width: 2, height: -2},
+    shadowColor: '#566B7E33',
+    shadowOpacity: 0.5,
+  },
   itemStyle: {
     justifyContent: 'flex-start',
   },
@@ -17,11 +25,13 @@ export const SelectStyle = StyleSheet.create({
     borderWidth: 0,
   },
   dropDown: {
-    borderWidth: 0,
+    borderWidth: 1,
+    borderTopColor: '#A9BBC9',
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8, 
-    shadowOffset:{width: 20, height: -2},
+    shadowOffset:{width: 2, height: 2},
     shadowColor: '#566B7E33',
+    shadowOpacity: 0.5,
   },
   labelStyle: { 
     fontSize: 15,
@@ -34,7 +44,6 @@ export const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
   },
-  ////
   inputContainer: {
     marginTop: 30,
     width: 353,
