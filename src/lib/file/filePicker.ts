@@ -1,4 +1,7 @@
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker, {
+  DocumentPickerResponse,
+} from 'react-native-document-picker';
+import { launchImageLibrary, Asset } from 'react-native-image-picker';
 
 export async function singleFileSelect() {
   // Pick a single file
@@ -48,4 +51,67 @@ export async function multiFileSelect() {
       throw err;
     }
   }
+}
+
+export async function singleImageSelect() {
+  const getImage = (): Promise<DocumentPickerResponse | undefined> =>
+    new Promise((resolve, reject) => {
+      launchImageLibrary(
+        {
+          mediaType: 'photo',
+          selectionLimit: 1,
+        },
+        async response => {
+          console.log('response : ', response);
+          if (response.didCancel) resolve(undefined);
+          else {
+            const asset: Asset = response.assets[0];
+            console.log('선택된 이미지 : ', asset);
+            resolve({
+              uri: asset.uri!,
+              fileCopyUri: '',
+              copyError: response.errorMessage,
+              type: asset.type!,
+              name: asset.fileName!,
+              size: asset.fileSize!,
+            });
+          }
+        },
+      );
+    });
+
+  const result = await getImage();
+
+  return result;
+}
+
+export async function multiImageSelect() {
+  const getImage = (): Promise<DocumentPickerResponse[] | undefined> =>
+    new Promise((resolve, reject) => {
+      launchImageLibrary(
+        {
+          mediaType: 'photo',
+          selectionLimit: 0,
+        },
+        async response => {
+          if (response.didCancel) resolve(undefined);
+          else {
+            const assets = response.assets;
+            const result = assets.map(asset => ({
+              uri: asset.uri!,
+              fileCopyUri: '',
+              copyError: response.errorMessage,
+              type: asset.type!,
+              name: asset.fileName!,
+              size: asset.fileSize!,
+            }));
+            resolve(result);
+          }
+        },
+      );
+    });
+
+  const result = await getImage();
+
+  return result;
 }

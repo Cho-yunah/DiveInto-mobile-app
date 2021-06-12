@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  SafeAreaView,
-  Image,
-  GestureResponderEvent,
-} from 'react-native';
+import { Button, SafeAreaView, GestureResponderEvent } from 'react-native';
 import { DocumentPickerResponse } from 'react-native-document-picker';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
-import { singleFileSelect, singleFileUpload } from '@lib/file';
+import {
+  singleFileSelect,
+  singleFileUpload,
+  singleImageSelect,
+  multiImageSelect,
+} from '@lib/file';
 import { dropbox } from '@config/token';
 
 import { ProgressComponent, Modal } from '@components/File';
@@ -31,28 +30,11 @@ export default function UploadTest() {
     setImage(result);
     console.log('result : ', result);
   };
-
-  const onAlbum = () =>
-    launchImageLibrary(
-      {
-        mediaType: 'photo',
-        includeBase64: true,
-        maxHeight: 200,
-        maxWidth: 200,
-      },
-      async response => {
-        if (response.didCancel) setImage(undefined);
-        else
-          setImage({
-            uri: response.uri!,
-            fileCopyUri: '',
-            copyError: response.errorMessage,
-            type: response.type!,
-            name: response.fileName!,
-            size: response.fileSize!,
-          });
-      },
-    );
+  const onAlbum = async () => {
+    const result = await singleImageSelect();
+    setImage(result);
+    console.log('result : ', result);
+  };
 
   const onUpload = async () => {
     // progressBar 관련 함수
