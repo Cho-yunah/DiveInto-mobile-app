@@ -12,6 +12,7 @@ import ServicePolicyScreen from '@/src/screens/Policies/ServicePolicy';
 import FTPolicyScreen from '@/src/screens/Policies/FTPolicy';
 import PrivacyPolicyScreen from '@/src/screens/Policies/PrivacyPolicy';
 import ApplyLecturerScreen from '@/src/screens/ApplyLecturer';
+import ModifyNumScreen from '@/src/screens/ModifyNum';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,11 @@ export default function ProfileStack<ProfileStak>() {
           name="ProfileMain"
           component={ProfileMainScreen}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ModifyNum"
+          component={ModifyNumScreen}
+          options={{ title: '휴대폰 번호 변경' }}
         />
         <Stack.Screen
           name="ApplyLecturer"
@@ -95,6 +101,12 @@ export default function ProfileStack<ProfileStak>() {
           options={{
             title: '개인정보 처리방침',
           }}
+        />
+
+        <Stack.Screen
+          name="ProfileWithoutLogin"
+          component={ProfileWithoutLoginScreen}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </RecoilRoot>

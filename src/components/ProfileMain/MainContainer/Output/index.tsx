@@ -3,6 +3,7 @@ import { View } from 'react-native';
 
 import { styles } from './styles';
 import CommonBtn from '../CommonBtn';
+import ShowOutputModal from './ShowOutputModal';
 
 export default function Output() {
   const moveNavigaion1 = () => {
@@ -19,8 +20,8 @@ export default function Output() {
 
   return (
     <View style={styles.container}>
-      <CommonBtn title="로그아웃" moveNavigation={moveNavigaion1} />
-      <CommonBtn title="회원탈퇴" moveNavigation={moveNavigaion2} />
+      <ShowOutputModal title="로그아웃" desc="로그아웃 하시겠습니까?" />
+      <ShowOutputModal title="회원탈퇴" desc="회원탈퇴 하시겠습니까?" />
     </View>
   );
 }
