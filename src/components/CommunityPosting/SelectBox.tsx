@@ -1,17 +1,18 @@
-import React, { useState } from 'react'
-import { View } from 'react-native';
+import instance from '@/src/lib/api/axios';
+import React, { useRef, useState } from 'react'
+import { View,TouchableWithoutFeedback } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import {SelectStyle as styles} from './styles'
 
-export default function SelectBox({name}) {
-  const [open, setOpen]= useState(false)
 
+export default function SelectBox({name}) {
+  const [open, setOpen]= useState(false) // dropdown picker open시 그림자 효과
+ 
     return (
-    <View style={name==='category'? category.zIndex: tag.zIndex}>
+      <View style={name==='category'? category.zIndex: tag.zIndex}>
       <DropDownPicker
         containerStyle={open? styles.shadowContainer : styles.selectContainer}
-        // containerStyle={styles.selectContainer}
         placeholder={name==='category'? category.placeholder : tag.placeholder}
         items = {name==='category'? category.item : tag.item}
         itemStyle={styles.itemStyle}
@@ -23,6 +24,7 @@ export default function SelectBox({name}) {
         onClose={() => setOpen(false)}
         />
     </View>
+   
   )
 }
 

@@ -15,7 +15,6 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
   const addContent = () => navigation.navigate('CommunityPosting');
 
   const showContentDetail = () => navigation.navigate('CommunityDetail')
-
   navigation.setOptions({
     headerRight: () => <NextButton text='글쓰기' onPress={addContent} />
   })
@@ -42,7 +41,7 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
   );
 }
 
-const SharedContents = () => <CommunityMain data={SharedContents}/>
+const SharedContents = () => <CommunityMain data={SharedContents} navigation={navigation} />
 
 const QuestionaryContent = () => <CommunityMain data={QuestionaryContent}/>
 

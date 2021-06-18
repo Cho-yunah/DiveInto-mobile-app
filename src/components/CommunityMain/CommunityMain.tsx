@@ -14,7 +14,6 @@ export default function CommunityMain():ReactElement  {
   useScrollToTop(listRef)
 
   // list data 받아오기
-  // const [shouldFetch, setShouldFetch] = useState(true);
   const [contentItems, setContentItems] = useState<ContentItem[]>([])
   const [page, setPage] = useState<number>(1)
   const [refreshing, setRefreshing] = useState<boolean>(false)
@@ -35,9 +34,19 @@ export default function CommunityMain():ReactElement  {
   }, [])
 
   const contentsLoadMore= useCallback(() =>  getCommunityList(),[])
+  const onRefresh = async() => {}
 
-  const onRefresh = async() => {
-    
+  // render하는 Item
+  const renderCommunityItem=({item, index})=> {
+    return (
+      <CommunityItem
+                title={item.title}
+                postAuthor={item.postAuthor}
+                postingDate={item.postingDate}
+                imageSrc={item.imageSrc}
+                commentNum={item.commentNum}
+      />
+    )
   }
   
   return (
@@ -51,15 +60,7 @@ export default function CommunityMain():ReactElement  {
             // onEndReachedThreshold={0.5}
             refreshing={refreshing}
             onRefresh={onRefresh}
-            renderItem={({item}) => (
-              <CommunityItem
-                title={item.title}
-                postAuthor={item.postAuthor}
-                postingDate={item.postingDate}
-                imageSrc={item.imageSrc}
-                commentNum={item.commentNum}
-              />
-            )}
+            renderItem={renderCommunityItem}
           />
       </Suspense>
     </View>

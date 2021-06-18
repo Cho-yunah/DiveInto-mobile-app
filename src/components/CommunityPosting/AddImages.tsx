@@ -1,13 +1,39 @@
-import React from 'react'
-import { Text, View } from 'react-native'
-import { Image } from 'react-native-animatable'
+import React, { useState } from 'react'
+import { Pressable, Text, View, Image} from 'react-native'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {styles} from './styles'
 
+import {multiImageSelect} from '@lib/file/filePicker'
+// import { useEffect } from 'react';
+
 export default function AddImages () {
+  const [imageUri, setImageUri]= useState<string[]>();
+  
+  const getImage = async () => {
+    const result = await multiImageSelect()
+    const resultArray=(result?.map(item => item.uri))
+    setImageUri(resultArray)
+    return resultArray
+  }
+  console.log(imageUri)
+    
   return (
     <View style = {styles.inputContainer}>
       <View style= {styles.addImageBox} >
-        <Image style={styles.CommunityImage} source={{}}></Image>
+        <Pressable 
+          style={styles.imageUploadBtn}
+          onPress={()=>getImage()}
+          >
+            {imageUri !== undefined?
+             imageUri.map(result => {
+                return (
+                  <Image source={{uri: result}}
+                  resizeMode='contain' />
+                )
+              })
+              :  <FontAwesome name={'image'} size={16} color={'#fefefe'} />
+            }
+        </Pressable> 
         <Text style= {styles.text}> 사진을 업로드해주세요(최대 3장)</Text>
       </View>
     </View>

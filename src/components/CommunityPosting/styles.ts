@@ -25,7 +25,8 @@ export const SelectStyle = StyleSheet.create({
     borderWidth: 0,
   },
   dropDown: {
-    borderWidth: 1,
+    borderTopWidth: 1,
+    borderWidth: 0,
     borderTopColor: '#A9BBC9',
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8, 
@@ -53,13 +54,16 @@ export const styles = StyleSheet.create({
   },
   addImageBox: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  CommunityImage: {
+  imageUploadBtn: {
     width: 60,
     height: 60,
-    borderRadius: 8,
     backgroundColor: '#CCD7DF',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
   },
   text: {
     color: '#D8D8D8',

@@ -10,7 +10,8 @@ import NextButton from '@components/common/NextButton'
 
 export default function CommunityPostingScreen({navigation}: CommunityMainProps): ReactElement {
 
-  const onPress = () => navigation.navigate('CommunityMain');
+  const onPress = () => (
+    navigation.navigate('CommunityMain'));
 
   navigation.setOptions({
     headerRight: () => <NextButton text='완료' onPress={onPress} />
