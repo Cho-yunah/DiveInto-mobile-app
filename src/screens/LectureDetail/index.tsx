@@ -9,8 +9,86 @@ import { ScrollView } from 'react-native';
 import { LectureDetailScreenStyle as styles } from './styles';
 import LectureReview from '@/src/components/LectureDetail/LectureReview';
 import ReserveBtn from '@/src/components/LectureDetail/LectureReview/ReserveBtn';
+import { useLayoutEffect } from 'react';
+import instance from '@/src/lib/api/axios';
+import { useSetRecoilState } from 'recoil';
+import {
+  lectureDetailState,
+  lectureInstructorProfileState,
+} from '@/src/recoil/LectureStack';
 
 const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
+  const setLectureDetail = useSetRecoilState(lectureDetailState);
+  const setLectureInstructorProfile = useSetRecoilState(
+    lectureInstructorProfileState,
+  );
+  useLayoutEffect(() => {
+    const requestLectureDetail = async () => {
+      try {
+        const res = await instance.get(`/lecture?id=${1}`);
+        console.log(res);
+        const {
+          id,
+          title,
+          classKind,
+          organization,
+          level,
+          maxNumber,
+          period,
+          description,
+          price,
+          region,
+          reviewTotalAvg,
+          reviewCount,
+          isMarked,
+        } = res.data;
+        setLectureDetail({
+          id,
+          title,
+          classKind,
+          organization,
+          level,
+          maxNumber,
+          period,
+          description,
+          price,
+          region,
+          reviewTotalAvg,
+          reviewCount,
+          isMarked,
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    requestLectureDetail();
+  }, []);
+
+  useLayoutEffect(() => {
+    const requestInstructorProfile = async () => {
+      try {
+        const res = await instance.get(
+          `/lecture/instructor/info/creator?lectureId=${1}`,
+        );
+        console.log(res);
+        const { instructorId, nickName, selfIntroduction, profilePhotoUrl } =
+          res.data;
+
+        setLectureInstructorProfile({
+          instructorId,
+          nickName,
+          selfIntroduction,
+          profilePhotoUrl,
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    requestInstructorProfile();
+  }, []);
+
   return (
     <>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>

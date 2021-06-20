@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import styles from '../../Login/styles';
 
 export const LectureInfoStyles = StyleSheet.create({
   container: {
@@ -7,16 +6,16 @@ export const LectureInfoStyles = StyleSheet.create({
     paddingVertical: 24,
     backgroundColor: '#FEFEFE',
   },
-  topInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 21,
-  },
-  lectureTitle: { fontSize: 18, lineHeight: 21, color: '#202020' },
+  topInfo: {},
+  lectureTitle: { fontSize: 18, color: '#202020' },
   lectureTagContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 12,
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  lectureTagInnerContainer: {
+    flexDirection: 'row',
   },
   lectureTag: {
     marginRight: 4,
@@ -24,8 +23,6 @@ export const LectureInfoStyles = StyleSheet.create({
   lecturePriceContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    position: 'absolute',
-    right: 0,
   },
   lecturePrice: { fontSize: 18, color: '#50CAD2', fontWeight: 'bold' },
   lecturePriceUnit: { fontSize: 18 },
