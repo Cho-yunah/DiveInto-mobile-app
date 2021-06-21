@@ -7,12 +7,13 @@ import LoginScreen from '@screens/Login';
 import LoginWithEmailScreen from '@screens/LoginWithEmail';
 import SetPasswordScreen from '@screens/SetPassword';
 import MemberInfoScreen from '@screens/MemberInfo';
+import WriteReviewScreen from '@/src/screens/WriteReview';
+import LectureDetailScreen from '@/src/screens/LectureDetail';
 
 const Stack = createStackNavigator<RootLoginStack>();
 
 export default function LoginStack() {
   return (
-    <RecoilRoot>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
@@ -34,7 +35,7 @@ export default function LoginStack() {
       >
         <Stack.Screen
           name="Login"
-          component={LoginScreen}
+          component={LectureDetailScreen}
           options={{
             title: '로그인/회원가입',
           }}
@@ -59,6 +60,5 @@ export default function LoginStack() {
           options={{ title: '회원정보기입' }}
         />
       </Stack.Navigator>
-    </RecoilRoot>
   );
 }

@@ -68,7 +68,9 @@
       "@navigators/*": ["./src/navigators/*"],
       "@recoil/*": ["./src/recoil/*"],
       "@screens/*": ["./src/screens/*"],
-      "@typing/*": ["./src/typing/*"]
+      "@typing/*": ["./src/typing/*"],
+      "@api/*": ["./src/lib/api/*"],
+      "@lib/*": ["./src/lib/*"]
     },
     "allowJs": true,
     "allowSyntheticDefaultImports": true,

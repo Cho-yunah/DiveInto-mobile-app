@@ -9,6 +9,7 @@ target 'DiveInto' do
   use_react_native!(:path => config["reactNativePath"])
 
   pod 'NMapsMap'
+
   
   target 'DiveIntoTests' do
     inherit! :complete

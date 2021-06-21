@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,31 +7,31 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import { CheckBox } from 'react-native-elements';
-import Entype from 'react-native-vector-icons/Entypo';
-
+import { EmailInputProps } from './types';
 import styles from './styles';
 import useTransitionColor from './useTransitionColor';
 
-export default function EmailInput({
-  onLoginPress,
-}: {
-  onLoginPress: () => void;
-}) {
-  const TransitionPressable = Animated.createAnimatedComponent(Pressable);
-  const TransitionText = Animated.createAnimatedComponent(Text);
+import { CheckBox } from 'react-native-elements';
+import Entype from 'react-native-vector-icons/Entypo';
 
+import { useRecoilState } from 'recoil';
+import { emailState } from '@recoil/LoginStack';
+
+export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useRecoilState(emailState);
   const [isValid, setIsValid, interpolations] = useTransitionColor({
     screen: 'Login',
   });
 
-  const onCheckboxPress = () => setToggleCheckBox(!toggleCheckBox);
+  const TransitionPressable = Animated.createAnimatedComponent(Pressable);
+  const TransitionText = Animated.createAnimatedComponent(Text);
 
-  const onTextInput = (text: string) =>
+  const onTextInput = (text: string) => {
     checkEmailValidation(text) ? setIsValid(true) : setIsValid(false);
-
-  const onChangeText = () => setIsValid(undefined);
+  };
+  const onCheckboxPress = () => setToggleCheckBox(!toggleCheckBox);
 
   return (
     <>
@@ -45,7 +45,7 @@ export default function EmailInput({
           Component={TouchableOpacity}
           checked={toggleCheckBox}
           checkedColor={'rgb(32, 122, 180)'}
-          // onPress={() => setToggleCheckBox(s => !s)}
+          onPress={() => setToggleCheckBox(s => !s)}
         />
         <Pressable onPress={onCheckboxPress} style={styles.button}>
           <Text style={styles.checkBoxText}>이메일 저장</Text>
@@ -57,8 +57,12 @@ export default function EmailInput({
         style={styles.emailInput}
         placeholder="이메일 주소를 입력해주세요"
         textContentType={'emailAddress'}
-        onChangeText={onChangeText}
-        onEndEditing={e => onTextInput(e.nativeEvent.text)}
+        onChangeText={e => {
+          onTextInput(e);
+          setEmail(e);
+        }}
+        spellCheck={false}
+        value={email}
       />
       {isValid && (
         <Entype
@@ -70,22 +74,24 @@ export default function EmailInput({
       )}
 
       {/* 이메일 형식 검증 */}
-      {isValid !== undefined && (
+      {isValid !== undefined ? (
         <Text style={isValid ? styles.guideTextValid : styles.guideTextInvalid}>
           {isValid
             ? '올바른 형태의 이메일 주소입니다.'
             : '올바른 형태의 이메일 주소를 작성해주세요.'}
         </Text>
+      ) : (
+        <Text style={styles.guideTextInvalid}>{''}</Text>
       )}
 
       {/* 로그인 버튼 */}
       <TransitionPressable
         disabled={!isValid}
-        onPress={onLoginPress}
         style={[
           styles.transitionPressable,
           { backgroundColor: interpolations.backgroundColorInterpolation },
         ]}
+        onPress={() => requestCheckEmail(email, setIsLoading)}
       >
         <TransitionText
           style={[
@@ -93,7 +99,7 @@ export default function EmailInput({
             { color: interpolations.colorInterpolation },
           ]}
         >
-          이메일로 시작
+          {isLoading ? 'Loading...' : '이메일로 시작'}
         </TransitionText>
       </TransitionPressable>
     </>
@@ -101,7 +107,6 @@ export default function EmailInput({
 }
 
 function checkEmailValidation(email: string): boolean {
-  // const regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
   const regex = /^([a-zA-Z0-9\-._]+)@([a-zA-Z0-9-_]+).([a-z]{2,20})(.[a-z]{2,10})$/;
   return regex.test(email);
 }
