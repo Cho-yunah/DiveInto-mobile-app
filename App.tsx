@@ -24,9 +24,9 @@ export default function App() {
         {/* <LegacyStack /> */}
 
         {/* 파일업로드 테스트 */}
-        {/* <RecoilRoot>
-          <UploadTest />
-        </RecoilRoot> */}
+        {/* <RecoilRoot> */}
+        {/* <UploadTest /> */}
+        {/* </RecoilRoot> */}
 
         {/* 리뉴얼 */}
         <RecoilRoot>
