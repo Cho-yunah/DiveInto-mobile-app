@@ -1,9 +1,6 @@
 import {StyleSheet} from 'react-native'
 
-export const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1
-  },
+export const DetailInfoStyle = StyleSheet.create({
   writerInfoBox: {
     flexDirection:'row',
     alignItems : 'center',
@@ -38,6 +35,15 @@ export const styles = StyleSheet.create({
     width: 60,
     justifyContent: 'space-between',
   },
+  modify: {
+    color: '#A9BBC9'
+  },
+  delete: {
+    color: '#E93A55'
+  }
+})
+
+export const ContentsStyle = StyleSheet.create({
   contentsContainer : {
     paddingVertical: 33,
     borderWidth: 1,
@@ -57,6 +63,9 @@ export const styles = StyleSheet.create({
     backgroundColor: '#E3CCCC',
     marginRight: 15
   },
+})
+
+export const CommnetInputStyle = StyleSheet.create({
   CommentInputBox: {
     position: 'absolute',
     flexDirection: 'row',
