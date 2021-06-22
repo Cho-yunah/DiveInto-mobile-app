@@ -1,5 +1,5 @@
 import React, { ReactElement} from 'react'
-import { View } from 'react-native';
+import { View , Text} from 'react-native';
 import styles  from './styles';
 
 import {CommunityMain} from '@components/CommunityMain';
@@ -14,7 +14,8 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
 
   const addContent = () => navigation.navigate('CommunityPosting');
 
-  const showContentDetail = () => navigation.navigate('CommunityDetail')
+  // const showContentDetail = () => navigation.navigate('CommunityDetail')
+
   navigation.setOptions({
     headerRight: () => <NextButton text='글쓰기' onPress={addContent} />
   })
@@ -41,7 +42,12 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
   );
 }
 
-const SharedContents = () => <CommunityMain data={SharedContents} navigation={navigation} />
+const SharedContents = () => <CommunityMain data={SharedContents} />
 
-const QuestionaryContent = () => <CommunityMain data={QuestionaryContent}/>
+const QuestionaryContent = () => {
+return (<>
+  <Text>not yet</Text>
+</>
+)}
 
+{/* <CommunityMain data={QuestionaryContent} /> */}

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Pressable, Text, View, Image} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {styles} from './styles'
-
 import {multiImageSelect} from '@lib/file/filePicker'
 // import { useEffect } from 'react';
 
@@ -24,15 +23,14 @@ export default function AddImages () {
           style={styles.imageUploadBtn}
           onPress={()=>getImage()}
           >
-            {imageUri !== undefined?
-             imageUri.map(result => {
+            {imageUri === undefined
+              ? <FontAwesome name={'image'} size={16} color={'#fefefe'} /> 
+              : imageUri.map((result) => {
                 return (
                   <Image source={{uri: result}}
                   resizeMode='contain' />
                 )
-              })
-              :  <FontAwesome name={'image'} size={16} color={'#fefefe'} />
-            }
+              })}
         </Pressable> 
         <Text style= {styles.text}> 사진을 업로드해주세요(최대 3장)</Text>
       </View>

@@ -10,16 +10,11 @@ import * as colors from '@config/colors';
 
 import {ContentItem} from './types'
 
-export default function CommunityItem({imageSrc, title, postAuthor,postingDate, commentNum}: ContentItem) {
-
-  const showContentDetail = () => {
-    navigation.navigate('CommunityDetail')
-  }
+export default function CommunityItem({imageSrc, title, postAuthor,postingDate, commentNum }: ContentItem) {
 
   return (
-    < >
-      <TouchableOpacity style={styles.listItem} activeOpacity={0.8} 
-        onPress={()=> showContentDetail()}>
+    <View>
+      <TouchableOpacity style={styles.listItem} activeOpacity={0.8} >
           <Image style={styles.thumnailImage} source={{uri: imageSrc}}/>
           <View style={styles.contentInfo}>
             <Text>{title}</Text>
@@ -34,7 +29,7 @@ export default function CommunityItem({imageSrc, title, postAuthor,postingDate, 
         <CommentNum commentNum={commentNum}/>
         <Heart/>
       </View>
-    </>
+    </View>
   )
 }
 

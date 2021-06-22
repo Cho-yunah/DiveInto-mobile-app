@@ -3,10 +3,12 @@ export type CommunityMainProps = {
 };
 
 export type ContentItem = {
-  // id: number;
   title: string;
   postAuthor: string;
   postingDate: string;
   imageSrc: string;
   commentNum: number;
+  // navigation: object;
+  // onItemClick: ()=> void;
+  id: string;
 }
