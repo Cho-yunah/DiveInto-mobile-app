@@ -26,7 +26,7 @@ export default function UploadTest() {
   const preventParentEvent = (e: GestureResponderEvent) => e.stopPropagation();
 
   const onSelect = async () => {
-    const result = await singleFileSelect();
+    const result = await singleImageSelect();
     setImage(result);
     console.log('result : ', result);
   };
