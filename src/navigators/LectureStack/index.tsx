@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { RootLectureStack } from './types';
 
 import MainList from '@screens/MainList';
+import LectureDetailScreen from '@/src/screens/LectureDetail';
 
 const Stack = createStackNavigator<RootLectureStack>();
 
@@ -33,6 +34,11 @@ export default function LoginStack() {
           name="MainList"
           component={MainList}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="LectureDetail"
+          component={LectureDetailScreen}
+          options={{ title: '강의 제목' }}
         />
       </Stack.Navigator>
     </RecoilRoot>
