@@ -79,7 +79,7 @@ const LectureReview = () => {
 
         <FlatList
           renderItem={({ item, index }) => (
-            <PersonalReview item={item} index={index} />
+            <PersonalReview item={item} index={index} key={index} />
           )}
           data={reviewData}
         />
