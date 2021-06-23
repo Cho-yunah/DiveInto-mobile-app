@@ -3,7 +3,7 @@ import { View , Text} from 'react-native';
 import styles  from './styles';
 
 import {CommunityMain} from '@components/CommunityMain';
-import { CommunityPostingProps } from '@navigators/CommunityStack/types';
+import { CommunityPostingProps, CommunityDetailProps } from '@navigators/CommunityStack/types';
 import NextButton from '@components/common/NextButton'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
@@ -13,8 +13,6 @@ const Tab= createMaterialTopTabNavigator();
 export default function CommunityMainScreen({navigation}: CommunityPostingProps): ReactElement {
 
   const addContent = () => navigation.navigate('CommunityPosting');
-
-  // const showContentDetail = () => navigation.navigate('CommunityDetail')
 
   navigation.setOptions({
     headerRight: () => <NextButton text='글쓰기' onPress={addContent} />
@@ -42,7 +40,10 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
   );
 }
 
-const SharedContents = () => <CommunityMain data={SharedContents} />
+const SharedContents = ({navigation}:CommunityDetailProps):ReactElement => {
+  // const handleItemClick = () => navigation.navigate('CommunityDetail')
+
+  return (<CommunityMain navigation={navigation}/>)}
 
 const QuestionaryContent = () => {
 return (<>

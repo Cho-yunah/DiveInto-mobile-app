@@ -8,7 +8,7 @@ import CommunityItem from './CommunityItem';
 import {styles} from './styles'
 
 
-export default function CommunityMain(navigation):ReactElement  {
+export default function CommunityMain({navigation}):ReactElement  {
   // focus 되어있는 tab click 하면 맨위로 이동
   const listRef= useRef(null)
   useScrollToTop(listRef)
@@ -71,7 +71,8 @@ export default function CommunityMain(navigation):ReactElement  {
           postingDate={item.postingDate}
           imageSrc={item.imageSrc}
           commentNum={item.commentNum}
-          // navigation={item.navigation}
+          // onPress={handleItemClick}
+          navigation={item.navigation}
           // onItemClick={handleItemClick}
         />
       )

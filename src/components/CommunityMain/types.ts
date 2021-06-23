@@ -1,3 +1,7 @@
+
+import { CommunityDetailProps } from '@navigators/CommunityStack/types';
+
+
 export type CommunityMainProps = {
   enterContenetDetail: () => void
 };
@@ -8,7 +12,7 @@ export type ContentItem = {
   postingDate: string;
   imageSrc: string;
   commentNum: number;
-  // navigation: object;
   // onItemClick: ()=> void;
+  navigation: CommunityDetailProps;
   id: string;
 }
