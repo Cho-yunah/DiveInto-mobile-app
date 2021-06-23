@@ -6,7 +6,10 @@ import { RootMainTab } from './types';
 import * as colors from '@config/colors';
 
 import { IsInstructor } from '@recoil/Global';
+
+// navigators
 import LectureStack from '@navigators/LectureStack';
+import { AdmMyLectureStack } from '@navigators/MyLectureStack';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -36,7 +39,7 @@ export default function LoginStack() {
           <>
             <Tab.Screen name="홈" component={LectureStack} />
             <Tab.Screen name="커뮤니티" component={Tmp} />
-            <Tab.Screen name="강의일정" component={Tmp} />
+            <Tab.Screen name="강의일정" component={AdmMyLectureStack} />
             <Tab.Screen name="강의후기" component={Tmp} />
             <Tab.Screen name="프로필" component={Tmp} />
           </>

@@ -33,6 +33,7 @@ export type TagListProps = {
   listContainerStyle?: ViewStyle;
   tagContainerStyle?: ViewStyle;
   tagTextStyle?: TextStyle;
+  hideSeparator?: boolean;
 };
 
 export type InfoTagsProps = {
