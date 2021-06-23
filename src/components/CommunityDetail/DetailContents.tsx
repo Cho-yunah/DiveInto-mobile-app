@@ -2,7 +2,8 @@ import React from 'react'
 import { View , Text} from 'react-native'
 import { Image } from 'react-native-animatable'
 import { ScrollView } from 'react-native-gesture-handler'
-import {styles} from './styles'
+
+import {ContentsStyle as styles} from './styles'
 
 export default function DetailContents() {
 

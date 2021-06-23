@@ -5,7 +5,7 @@ import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 export type RootCommunityStack = {
   CommunityMain: undefined;
   CommunityPosting: undefined;
-  CommunityDetail: () => void;
+  CommunityDetail: undefined;
 };
 
 // 스크린 컴포넌트가 전달받을 navigation, route 프롭을 정의한다.

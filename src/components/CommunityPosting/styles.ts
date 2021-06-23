@@ -1,14 +1,18 @@
 import {StyleSheet} from 'react-native'
 
-export const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-  },
-  // posting 글 작성란 styling
+export const SelectStyle = StyleSheet.create({
   selectContainer: {
     marginTop: 30 ,
     width: 353,
     height: 40,
+  },
+  shadowContainer: {
+    marginTop: 30 ,
+    width: 353,
+    height: 40,
+    shadowOffset:{width: 2, height: -2},
+    shadowColor: '#566B7E33',
+    shadowOpacity: 0.5,
   },
   itemStyle: {
     justifyContent: 'flex-start',
@@ -21,18 +25,26 @@ export const styles = StyleSheet.create({
     borderWidth: 0,
   },
   dropDown: {
+    borderTopWidth: 1,
     borderWidth: 0,
+    borderTopColor: '#A9BBC9',
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8, 
-    shadowOffset:{width: 20, height: -2},
+    shadowOffset:{width: 2, height: 2},
     shadowColor: '#566B7E33',
+    shadowOpacity: 0.5,
   },
   labelStyle: { 
     fontSize: 15,
     textAlign: 'left', 
     color: '#6A6D70' ,
   },
-  ////
+})
+
+export const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+  },
   inputContainer: {
     marginTop: 30,
     width: 353,
@@ -42,13 +54,16 @@ export const styles = StyleSheet.create({
   },
   addImageBox: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  CommunityImage: {
+  imageUploadBtn: {
     width: 60,
     height: 60,
-    borderRadius: 8,
     backgroundColor: '#CCD7DF',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
   },
   text: {
     color: '#D8D8D8',

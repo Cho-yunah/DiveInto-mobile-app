@@ -1,16 +1,18 @@
 import React, {ReactElement} from 'react'
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import styles  from './styles';
 
 // import components
-import { CommunityDetailProps } from '@/src/navigators/CommunityStack/types';
-import { CommunityDetail } from '@/src/components/CommunityDetail';
+import { CommunityDetailProps } from '@navigators/CommunityStack/types';
+import { DetailInfo, DetailContents, DetailComments } from '@components/CommunityDetail';
 
-export default function CommunityMainScreen({navigation}: CommunityDetailProps): ReactElement {
+export default function CommunityDetailScreen({navigation}: CommunityDetailProps): ReactElement {
 
   return (
     <View style={styles.container}>
-      <CommunityDetail />
+      <DetailInfo/>
+      <DetailContents/>
+      <DetailComments/>
     </View>
   );
 }
