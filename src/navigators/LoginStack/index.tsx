@@ -35,7 +35,7 @@ export default function LoginStack() {
       >
         <Stack.Screen
           name="Login"
-          component={LectureDetailScreen}
+          component={LoginScreen}
           options={{
             title: '로그인/회원가입',
           }}

@@ -14,8 +14,8 @@ export const styles = StyleSheet.create({
   tab: {
     paddingHorizontal: 66,
     paddingVertical: 13,
-    borderColor: '#50CAD2', borderBottomWidth: 2, 
-    
+    borderColor: '#50CAD2', 
+    borderBottomWidth: 2, 
   }, 
   tabText: {
     color: '#6A6D70',
@@ -46,7 +46,6 @@ export const styles = StyleSheet.create({
   },
   flexBox: {
     flexDirection: 'row',
-
   },
   iconBox: {
     flexDirection: 'row',
@@ -62,4 +61,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  loaderStyle: {
+    marginVertical: 16,
+  }
 })

@@ -9,17 +9,15 @@ import { styles } from './styles'
 import * as colors from '@config/colors';
 
 import {ContentItem} from './types'
+import { useNavigation } from '@react-navigation/native';
 
-export default function CommunityItem({imageSrc, title, postAuthor,postingDate, commentNum}: ContentItem) {
+export default function CommunityItem({imageSrc, title, postAuthor,postingDate, commentNum }: ContentItem) {
+  const navigation= useNavigation()
 
-  const showContentDetail = () => {
-    navigation.navigate('CommunityDetail')
-  }
+    // const handleItemClick=()=> { navigation.navigate('CommunityDetail') }
 
   return (
-    < >
-      <TouchableOpacity style={styles.listItem} activeOpacity={0.8} 
-        onPress={()=> showContentDetail()}>
+      <TouchableOpacity style={styles.listItem} activeOpacity={0.8}  onPress={() => navigation.navigate('CommunityDetail')} >
           <Image style={styles.thumnailImage} source={{uri: imageSrc}}/>
           <View style={styles.contentInfo}>
             <Text>{title}</Text>
@@ -29,12 +27,11 @@ export default function CommunityItem({imageSrc, title, postAuthor,postingDate, 
               <Text>{postingDate}</Text>
             </View>
           </View>
-      </TouchableOpacity>
       <View style= {styles.iconBox}>
         <CommentNum commentNum={commentNum}/>
         <Heart/>
       </View>
-    </>
+      </TouchableOpacity>
   )
 }
 
