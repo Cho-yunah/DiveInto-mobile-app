@@ -1,13 +1,11 @@
 import { StyleSheet } from 'react-native';
 import * as Color from '@/src/config/colors';
 
-const { borderBottomWidth, borderBottomColor } = Color.underLine;
-
 export const commonInput = StyleSheet.create({
   container: {
     marginTop: 60,
-    borderBottomColor: borderBottomColor,
-    borderBottomWidth: borderBottomWidth,
+    borderBottomColor: Color.underLin,
+    borderBottomWidth: 1,
   },
   topBlank: {
     marginTop: 24,
@@ -24,7 +22,7 @@ export const UploadCertificate = StyleSheet.create({
     height: 76,
     marginTop: 60,
     padding: 8,
-    borderColor: borderBottomColor,
+    borderColor: Color.underLin,
     borderWidth: 1,
     borderRadius: 8,
   },

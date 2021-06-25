@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { TabBarStyles as styles } from './styles';
-import * as Color from '../../config/colors';
+
+import * as Color from '@/src/config/colors';
 
 type Route = {
   key: string;

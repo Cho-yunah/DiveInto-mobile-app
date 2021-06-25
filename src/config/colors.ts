@@ -10,7 +10,4 @@ export const BlackText = '#343434';
 export const White = '#FEFEFE';
 export const Gray2 = '#D8D8D8';
 export const Background = '#F3F5F7';
-export const underLine = {
-  borderBottomWidth: 1,
-  borderBottomColor: '#CCD7DF',
-};
+export const underLin = '#CCD7DF';
