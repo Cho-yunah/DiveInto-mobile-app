@@ -6,10 +6,13 @@ import { nextButtonProps } from './types';
 export default function NextButton({
   onPress = () => {},
   text = '다음',
+  disable,
 }: nextButtonProps) {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <Text style={styles.btnText}>{text}</Text>
+    <TouchableOpacity onPress={onPress} disabled={!disable}>
+      <Text style={[styles.btnText, disable && styles.ActivationButtonText]}>
+        {text}
+      </Text>
     </TouchableOpacity>
   );
 }

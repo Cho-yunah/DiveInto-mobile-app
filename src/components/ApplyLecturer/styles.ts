@@ -4,7 +4,7 @@ import * as Color from '@/src/config/colors';
 export const commonInput = StyleSheet.create({
   container: {
     marginTop: 60,
-    borderBottomColor: Color.underLin,
+    borderBottomColor: Color.underLine,
     borderBottomWidth: 1,
   },
   topBlank: {

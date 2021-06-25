@@ -6,6 +6,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingRight: 17,
   },
+
+  ActivationButtonText: {
+    color: '#F5DAAC',
+  },
 });
 
 export default styles;
