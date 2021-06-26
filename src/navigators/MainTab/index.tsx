@@ -48,7 +48,7 @@ export default function LoginStack() {
             <Tab.Screen name="홈" component={LectureStack} />
             <Tab.Screen name="커뮤니티" component={CommunityStack} />
             <Tab.Screen name="강의일정" component={Tmp} />
-            <Tab.Screen name="프로필" component={Tmp} />
+            <Tab.Screen name="프로필" component={ProfileStack} />
           </>
         )}
       </Tab.Navigator>

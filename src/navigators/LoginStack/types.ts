@@ -7,6 +7,7 @@ export type RootLoginStack = {
   Login: undefined;
   LoginWithEmail: undefined;
   SetPassword: undefined;
+  AuthEamil: undefined;
   MemberInfo: undefined;
 };
 
@@ -19,4 +20,6 @@ export type LoginWithEmailProps = {
 };
 
 export type SetPasswordProps = StackScreenProps<RootLoginStack, 'SetPassword'>;
+
+export type AuthEmailProps = StackScreenProps<RootLoginStack, 'AuthEamil'>;
 export type MemberInfoProps = StackScreenProps<RootLoginStack, 'MemberInfo'>;

@@ -32,6 +32,16 @@ export const emailState = atom({
   default: '',
 });
 
+export const isCertification = atom({
+  key: 'isCertification',
+  default: false,
+});
+
+export const isCertificationError = atom({
+  key: 'isCertificationError',
+  default: false,
+});
+
 export const passwordLoginState = atom({
   key: 'passwordLogin',
   default: '',

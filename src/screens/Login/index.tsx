@@ -23,7 +23,7 @@ const LoginScreen = ({ navigation }: LoginProps) => {
       });
       console.log(checkEmail.data);
       if (checkEmail.data.existed) navigation.navigate('LoginWithEmail');
-      else navigation.navigate('MemberInfo');
+      else navigation.navigate('AuthEamil');
     } catch (e) {
       console.log(e);
     }

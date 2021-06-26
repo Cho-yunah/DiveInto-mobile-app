@@ -2,10 +2,10 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RecoilRoot } from 'recoil';
 
-import ProfileWithoutLoginScreen from '../../screens/ProfileWithoutLogin';
-import ProfileMainScreen from '../../screens/ProfileMain';
-import NoticeListScreen from '../../screens/NoticeList';
-import ProfileTab from '../ProfileTab';
+import ProfileWithoutLoginScreen from '@/src/screens/ProfileWithoutLogin';
+import ProfileMainScreen from '@/src/screens/ProfileMain';
+import NoticeListScreen from '@/src/screens/NoticeList';
+import ProfileTab from '@/src/navigators/ProfileTab';
 import BusinessPolicyScreen from '@/src/screens/Policies/BusinessPolicy';
 import PolicyScreen from '@/src/screens/Policies';
 import ServicePolicyScreen from '@/src/screens/Policies/ServicePolicy';
