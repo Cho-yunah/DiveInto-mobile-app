@@ -1,7 +1,7 @@
 import React from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { useWindowDimensions } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { AdditionalServiceStyles as styles } from './styles';
-
 const serviceTags = [
   '주차가능',
   '그룹가능',
@@ -11,22 +11,26 @@ const serviceTags = [
 ];
 
 const AdditionalService = () => {
+  const windowWidth = useWindowDimensions().width;
   return (
     <View style={styles.container}>
       <Text style={styles.title}>부가서비스</Text>
-      <FlatList
-        data={serviceTags}
-        renderItem={({ item }) => (
-          <View style={styles.serviceTag} key={item}>
-            <Text style={styles.serviceTagText}>#{item}</Text>
-          </View>
-        )}
-        horizontal
-        contentContainerStyle={{
+      <ScrollView
+        style={{
           marginTop: 14,
+          flex: 1,
+          width: windowWidth,
         }}
         showsHorizontalScrollIndicator={false}
-      />
+      >
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+          {serviceTags.map(tag => (
+            <View style={styles.serviceTag} key={tag}>
+              <Text style={styles.serviceTagText}>#{tag}</Text>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 };

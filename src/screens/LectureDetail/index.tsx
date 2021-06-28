@@ -4,67 +4,18 @@ import InstructorProfile from '@/src/components/LectureDetail/InstructorProfile'
 import LectureInfo from '@/src/components/LectureDetail/LectureInfo';
 import LecturePicsCarousel from '@/src/components/LectureDetail/LecturePicsCarousel';
 import LocationInfo from '@/src/components/LectureDetail/LocationInfo';
+import LectureReview from '@/src/components/LectureDetail/LectureReview';
+import ReserveBtn from '@/src/components/LectureDetail/LectureReview/ReserveBtn';
 import { LectureDetailProps } from '@/src/navigators/LectureStack/types';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { LectureDetailScreenStyle as styles } from './styles';
-import LectureReview from '@/src/components/LectureDetail/LectureReview';
-import ReserveBtn from '@/src/components/LectureDetail/LectureReview/ReserveBtn';
 import { useLayoutEffect } from 'react';
-import instance from '@/src/lib/api/axios';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  lectureDetailState,
-  lectureInstructorProfileState,
-} from '@/src/recoil/LectureStack';
+import { useRecoilValue } from 'recoil';
+import { lectureDetailState } from '@/src/recoil/LectureStack';
 import Entype from 'react-native-vector-icons/Entypo';
 
 const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
-  const setLectureDetail = useSetRecoilState(lectureDetailState);
   const { isMarked } = useRecoilValue(lectureDetailState);
-  const setLectureInstructorProfile = useSetRecoilState(
-    lectureInstructorProfileState,
-  );
-  useLayoutEffect(() => {
-    const requestLectureDetail = async () => {
-      try {
-        const res = await instance.get(`/lecture?id=${1}`);
-        const {
-          id,
-          title,
-          classKind,
-          organization,
-          level,
-          maxNumber,
-          period,
-          description,
-          price,
-          region,
-          reviewTotalAvg,
-          reviewCount,
-          isMarked,
-        } = res.data;
-        setLectureDetail({
-          id,
-          title,
-          classKind,
-          organization,
-          level,
-          maxNumber,
-          period,
-          description,
-          price,
-          region,
-          reviewTotalAvg,
-          reviewCount,
-          isMarked,
-        });
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    requestLectureDetail();
-  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -82,30 +33,6 @@ const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
         </TouchableOpacity>
       ),
     });
-  }, []);
-
-  useLayoutEffect(() => {
-    const requestInstructorProfile = async () => {
-      try {
-        const res = await instance.get(
-          `/lecture/instructor/info/creator?lectureId=${1}`,
-        );
-        console.log(res);
-        const { instructorId, nickName, selfIntroduction, profilePhotoUrl } =
-          res.data;
-
-        setLectureInstructorProfile({
-          instructorId,
-          nickName,
-          selfIntroduction,
-          profilePhotoUrl,
-        });
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    requestInstructorProfile();
   }, []);
 
   return (

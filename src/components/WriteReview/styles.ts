@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   starComponentContainer: {
     backgroundColor: '#FEFEFE',
-    width: 120,
+    width: 115,
     height: 32,
     borderRadius: 8,
     padding: 6,
@@ -68,6 +68,21 @@ const styles = StyleSheet.create({
   },
   photoUploadLimit: {
     color: '#D8D8D8',
+  },
+  uploadedPicsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginRight: 38,
+  },
+  uploadedPicBtn: {},
+  uploadedPic: { width: 60, height: 60, borderRadius: 8, marginRight: 10 },
+  removeIconFilter: {
+    position: 'absolute',
+    backgroundColor: 'rgba(255,255,255,0.4)',
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

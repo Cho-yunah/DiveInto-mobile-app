@@ -10,3 +10,4 @@ const PwForgot = () => (
 );
 
 export default PwForgot;
+1;
