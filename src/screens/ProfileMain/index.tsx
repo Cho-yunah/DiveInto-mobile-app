@@ -1,9 +1,9 @@
-import { HeaderContainer, MainContainer } from '@/src/components/ProfileMain';
 import React from 'react';
 import { Text, View, SafeAreaView } from 'react-native';
 import { RecoilRoot } from 'recoil';
 
 import { styles } from './styles';
+import { HeaderContainer, MainContainer } from '@/src/components/ProfileMain';
 
 export default function ProfileMain() {
   return (

@@ -16,4 +16,6 @@ export type CommunityPostingProps = {
   navigation: StackNavigationProp<RootCommunityStack, 'CommunityPosting'>;
 };
 
-export type CommunityDetailProps = StackScreenProps<RootCommunityStack, 'CommunityDetail'>;
+export type CommunityDetailProps = {
+  navigation: StackScreenProps<RootCommunityStack, 'CommunityDetail'>;
+} 

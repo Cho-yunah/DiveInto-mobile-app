@@ -6,6 +6,7 @@ import { RootLoginStack } from './types';
 import LoginScreen from '@screens/Login';
 import LoginWithEmailScreen from '@screens/LoginWithEmail';
 import SetPasswordScreen from '@screens/SetPassword';
+import AuthEmailScreen from '@screens/AuthEmail';
 import MemberInfoScreen from '@screens/MemberInfo';
 import WriteReviewScreen from '@/src/screens/WriteReview';
 import LectureDetailScreen from '@/src/screens/LectureDetail';
@@ -35,7 +36,7 @@ export default function LoginStack() {
     >
       <Stack.Screen
         name="Login"
-        component={LectureDetailScreen}
+        component={LoginScreen}
         options={{
           title: '로그인/회원가입',
         }}
@@ -53,6 +54,11 @@ export default function LoginStack() {
         options={{
           title: '비밀번호 설정',
         }}
+      />
+      <Stack.Screen
+        name="AuthEamil"
+        component={AuthEmailScreen}
+        options={{ title: '이메일 주소 인증' }}
       />
       <Stack.Screen
         name="MemberInfo"

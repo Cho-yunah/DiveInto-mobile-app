@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, ScrollView } from 'react-native';
 
-import { NoticeListItem } from '../../components/NoticeBoard';
+import { NoticeListItem } from '@/src/components/NoticeBoard';
 
 const mockupData = [
   {

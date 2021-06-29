@@ -1,9 +1,9 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import LecturerQuestionScreen from '../../screens/FAQ/LecturerQuestion';
-import ManualScreen from '../../screens/FAQ/Manual';
-import ComplainScren from '../../screens/FAQ/Complain';
+import LecturerQuestionScreen from '@/src//screens/FAQ/LecturerQuestion';
+import ManualScreen from '@/src/screens/FAQ/Manual';
+import ComplainScren from '@/src/screens/FAQ/Complain';
 import ETCScreen from '@/src/screens/FAQ/ETC';
 import TabBar from '@/src/screens/FAQ/TabBar';
 

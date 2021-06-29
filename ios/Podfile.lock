@@ -562,7 +562,11 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
+<<<<<<< HEAD
   FBReactNativeSpec: 4710e8185fa848d014f827acba28703bfc46eee3
+=======
+  FBReactNativeSpec: 9e9a86f28c95e44c2c7ba5c5dc9beab7748ba571
+>>>>>>> 1a46f6402894434061a12759af899d9e799d7b69
   Flipper: 1bd2db48dcc31e4b167b9a33ec1df01c2ded4893
   Flipper-DoubleConversion: 38631e41ef4f9b12861c67d17cb5518d06badc41
   Flipper-Folly: 755929a4f851b2fb2c347d533a23f191b008554c
@@ -586,8 +590,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
   react-native-date-picker: 76fc79be2f3cad8ff1b2850fc5601e5f8107979d
-  react-native-document-picker: 3690b7d064a1153d4d572ab6a045fdd130cbf14c
-  react-native-image-picker: 4089335b89b625d4e34d53fb249c48a7a791b3ea
+  react-native-document-picker: 1a7518132d4a06b67f459be9bb1464a567d2b3b4
+  react-native-image-picker: 474cf2c33c2b6671da53d293a16c97995f0aec15
   react-native-nmap: 0b154f695c47e4b6db708ecf46bf9ad3ea8ae4b1
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737

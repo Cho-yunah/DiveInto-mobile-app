@@ -9,9 +9,7 @@ export default function CommonInput({
   placeholderText,
   topBlank,
 }: CommonInputProps) {
-  const onChangeText = () => {
-    console.log('change text');
-  };
+  const onChangeText = () => console.log('change text');
 
   return (
     <View style={[styles.container, topBlank && styles.topBlank]}>
