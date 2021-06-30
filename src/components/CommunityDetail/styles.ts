@@ -66,14 +66,17 @@ export const ContentsStyle = StyleSheet.create({
 })
 
 export const CommnetInputStyle = StyleSheet.create({
+  Container: {
+    // position: 'relative',
+    backgroundColor: 'tomato',
+  },
   CommentInputBox: {
-    position: 'absolute',
-    flexDirection: 'row',
-    width: '90%',
-    padding: 15,
+    flex: 1,
+    width: 353,
     height: 46,
-    bottom: 20,
-    margin: 20,
+    padding: 15,
+    textAlignVertical: 'center',
+    marginHorizontal: 20,
     backgroundColor: '#fff',
     borderRadius: 10,
     shadowOffset: {
@@ -83,12 +86,22 @@ export const CommnetInputStyle = StyleSheet.create({
     shadowColor: "#566B7E33",
     shadowOpacity: 0.5,
     shadowRadius: 8,
-    elevation: 6,
+    elevation: 6
   },
   arrowIcon: {
-    position: 'absolute',
-    bottom: 50,
-    right: 25,
+    // position: 'absolute',
+    // top: 10,
+    // right: 25,
+    fontSize:24,
     color: '#D8D8D8'
+  }
+})
+
+export const CommentDetailStyles = StyleSheet.create({
+  CommentBox: {
+    width: 100,
+    height: 50,
+    backgroundColor: 'pink'
+
   }
 })

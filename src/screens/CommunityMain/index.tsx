@@ -41,8 +41,7 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
 }
 
 const SharedContents = ({navigation}:CommunityDetailProps):ReactElement => {
-  // const handleItemClick = () => navigation.navigate('CommunityDetail')
-
+  
   return (<CommunityMain navigation={navigation}/>)}
 
 const QuestionaryContent = () => {

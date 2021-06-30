@@ -4,7 +4,7 @@ import styles  from './styles';
 
 // import components
 import { CommunityDetailProps } from '@navigators/CommunityStack/types';
-import { DetailInfo, DetailContents, DetailComments } from '@components/CommunityDetail';
+import { DetailInfo, DetailContents, DetailCommentsInput, CommentDetail } from '@components/CommunityDetail';
 
 export default function CommunityDetailScreen({navigation}: CommunityDetailProps): ReactElement {
 
@@ -12,7 +12,10 @@ export default function CommunityDetailScreen({navigation}: CommunityDetailProps
     <View style={styles.container}>
       <DetailInfo/>
       <DetailContents/>
-      <DetailComments/>
+      {/* 댓글이 달리는 부분 */}
+      <CommentDetail/>
+      {/* 댓글 입력 inputBox */}
+      <DetailCommentsInput/>
     </View>
   );
 }

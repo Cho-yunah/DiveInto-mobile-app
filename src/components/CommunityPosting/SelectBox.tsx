@@ -1,6 +1,5 @@
-import instance from '@/src/lib/api/axios';
-import React, { useRef, useState } from 'react'
-import { View,TouchableWithoutFeedback } from 'react-native';
+import React, { useState } from 'react'
+import { View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import {SelectStyle as styles} from './styles'
