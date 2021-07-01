@@ -13,3 +13,7 @@ export type DatePickerModalProps = {
   date: Date | null;
   onDateChange: (date: Date) => void;
 };
+
+export type ErrorTextProps = {
+  isError: boolean;
+};

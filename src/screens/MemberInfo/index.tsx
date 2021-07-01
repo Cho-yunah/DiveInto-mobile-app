@@ -3,7 +3,6 @@ import { View } from 'react-native';
 
 import {
   PhoneInput,
-  CertificationInput,
   NicknameInput,
   GenderBtn,
   CustomDatePicker,
@@ -23,7 +22,6 @@ const MemberInfoScreen = ({ navigation }: MemberInfoProps) => {
   return (
     <View style={styles.conatiner}>
       <PhoneInput />
-      <CertificationInput />
       <NicknameInput />
       <GenderBtn />
       <CustomDatePicker />

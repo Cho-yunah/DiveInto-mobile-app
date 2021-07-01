@@ -33,6 +33,7 @@ export default function LoginStack() {
         },
         headerTintColor: '#fefefe',
       }}
+      initialRouteName="MemberInfo"
     >
       <Stack.Screen
         name="Login"
@@ -49,16 +50,16 @@ export default function LoginStack() {
         }}
       />
       <Stack.Screen
+        name="AuthEamil"
+        component={AuthEmailScreen}
+        options={{ title: '이메일 주소 인증' }}
+      />
+      <Stack.Screen
         name="SetPassword"
         component={SetPasswordScreen}
         options={{
           title: '비밀번호 설정',
         }}
-      />
-      <Stack.Screen
-        name="AuthEamil"
-        component={AuthEmailScreen}
-        options={{ title: '이메일 주소 인증' }}
       />
       <Stack.Screen
         name="MemberInfo"

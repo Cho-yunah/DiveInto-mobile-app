@@ -4,43 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { phoneNumber as styles } from './styles';
 import { PhoneNuberInfoProps } from '../types';
-import CommonModal from '../CommonModal';
-
-// const ChangePhoneModal = ({
-//   show,
-//   toggleShowModal,
-// }: {
-//   show: boolean;
-//   toggleShowModal: () => void;
-// }) => {
-//   return (
-//     <Modal
-//       transparent
-//       animationType="fade"
-//       visible={show}
-//       supportedOrientations={['portrait']}
-//     >
-//       <SafeAreaView style={modalStyle.modalContainer}>
-//         <View style={modalStyle.modalContentstsContainer}>
-//           <Text style={modalStyle.contentsText}>
-//             휴대폰 번호를 변경하시겠습니까?
-//           </Text>
-//           <View style={modalStyle.buttonContainer}>
-//             <TouchableOpacity
-//               onPress={toggleShowModal}
-//               style={modalStyle.buttonLayout}
-//             >
-//               <Text style={modalStyle.cancelButtonText}>취소</Text>
-//             </TouchableOpacity>
-//             <TouchableOpacity style={modalStyle.buttonLayout}>
-//               <Text style={modalStyle.confirmButtonText}>확인</Text>
-//             </TouchableOpacity>
-//           </View>
-//         </View>
-//       </SafeAreaView>
-//     </Modal>
-//   );
-// };
+import CommonModal from '@components/common/CommonModal';
 
 export default function PhoneNumberInfo({ phone }: PhoneNuberInfoProps) {
   const navigation = useNavigation();
