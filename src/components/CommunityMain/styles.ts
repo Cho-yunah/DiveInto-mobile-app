@@ -63,5 +63,13 @@ export const styles = StyleSheet.create({
   },
   loaderStyle: {
     marginVertical: 16,
-  }
+  },
+  btnText: {
+    color: '#D8D8D8',
+    fontSize: 14,
+    paddingRight: 17,
+  },
+  ActivationButtonText: {
+    color: '#F5DAAC',
+  },
 })

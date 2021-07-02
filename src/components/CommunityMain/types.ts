@@ -12,6 +12,8 @@ export type CommentNumber = {
   commentNum: number
 }
 
-export type OnItemClick = {
-  onItemClick: () => void
-}
+export type nextButtonProps = {
+  onPress: () => void;
+  text?: string;
+  disable?: boolean;
+};

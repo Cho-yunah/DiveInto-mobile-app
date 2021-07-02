@@ -3,11 +3,11 @@ import { Text, View, FlatList, ActivityIndicator } from 'react-native';
 
 import { useScrollToTop } from '@react-navigation/native';
 import axios, { AxiosResponse } from 'axios';
-import { ContentItem, OnItemClick } from './types';
+import { ContentItem } from './types';
 import CommunityItem from './CommunityItem';
 import {styles} from './styles'
 
-export default function CommunityMain({onItemClick}: OnItemClick):ReactElement  {
+export default function CommunityMain({onItemClick}):ReactElement  {
 
   // focus 되어있는 tab click 하면 맨위로 이동
   const listRef= useRef(null)

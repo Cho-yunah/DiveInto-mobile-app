@@ -10,6 +10,7 @@ import * as colors from '@config/colors';
 import {ContentItem, CommentNumber} from './types'
 
 export default function CommunityItem({imageSrc, title, postAuthor,postingDate, commentNum, onItemClick }: ContentItem) { 
+  
   return (
       <TouchableOpacity 
         style={styles.listItem} 

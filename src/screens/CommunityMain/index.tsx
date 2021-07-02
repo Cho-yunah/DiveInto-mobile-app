@@ -3,15 +3,16 @@ import { View , Text} from 'react-native';
 import styles  from './styles';
 
 import {CommunityMain} from '@components/CommunityMain';
+import NextButton from '@components/CommunityMain/NextButton'
+
 import { CommunityPostingProps, CommunityDetailProps } from '@navigators/CommunityStack/types';
-import NextButton from '@components/common/NextButton'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 const Tab= createMaterialTopTabNavigator();
 
 export default function CommunityMainScreen({navigation}: CommunityPostingProps): ReactElement {
-  const addContent = () => navigation.navigate('CommunityPosting');
-   const onItemClick = ()=>  navigation.navigate('CommunityDetail') 
+  const addContent = () => navigation.navigate('CommunityPosting')
+  const onItemClick = ()=> navigation.navigate('CommunityDetail')
 
   navigation.setOptions({
     headerRight: () => <NextButton text='글쓰기' onPress={addContent} />
@@ -28,8 +29,8 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
     >
       <Tab.Screen 
         name="공유해요" 
-        // component={SharedContents} 
-        children={()=> <CommunityMain onItemClick={onItemClick}/> }
+        // component={SharedContents}
+        children={()=> <SharedContents onItemClick={onItemClick}/> }
       />
       <Tab.Screen 
         name="궁금해요"
@@ -40,16 +41,12 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
   );
 }
 
-// const SharedContents = ({navigation}):ReactElement => {
-//   // const onItemClick = ()=>  navigation.jumpTo('CommunityDetail') 
-//   // const onItemClick = ()=>  console.log('clicked!!')
-//   return (<CommunityMain navigation={navigation}/>)
-// }
+const SharedContents = ({onItemClick}):ReactElement => {
+  return (<CommunityMain onItemClick={onItemClick}/>)
+}
 
 const QuestionaryContent = () => {
 return (<>
   <Text>not yet</Text>
 </>
 )}
-
-{/* <CommunityMain data={QuestionaryContent} /> */}
