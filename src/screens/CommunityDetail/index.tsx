@@ -1,5 +1,5 @@
 import React, {ReactElement} from 'react'
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import styles  from './styles';
 
 // import components
@@ -11,11 +11,11 @@ export default function CommunityDetailScreen({navigation}: CommunityDetailProps
   return (
     <View style={styles.container}>
       <DetailInfo/>
-      <DetailContents/>
-      {/* 댓글이 달리는 부분 */}
-      <CommentDetail/>
-      {/* 댓글 입력 inputBox */}
-      <DetailCommentsInput/>
+        <ScrollView>
+          <DetailContents/>
+          <CommentDetail/>
+        </ScrollView>
+        <DetailCommentsInput/>
     </View>
   );
 }

@@ -7,17 +7,15 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 import { styles } from './styles'
 import * as colors from '@config/colors';
+import {ContentItem, CommentNumber} from './types'
 
-import {ContentItem} from './types'
-import { useNavigation } from '@react-navigation/native';
-
-export default function CommunityItem({imageSrc, title, postAuthor,postingDate, commentNum }: ContentItem) {
-  const navigation= useNavigation()
-
-    // const handleItemClick=()=> { navigation.navigate('CommunityDetail') }
-
+export default function CommunityItem({imageSrc, title, postAuthor,postingDate, commentNum, onItemClick }: ContentItem) { 
   return (
-      <TouchableOpacity style={styles.listItem} activeOpacity={0.8}  onPress={() => navigation.navigate('CommunityDetail')} >
+      <TouchableOpacity 
+        style={styles.listItem} 
+        activeOpacity={0.8}  
+        onPress={onItemClick}
+        >
           <Image style={styles.thumnailImage} source={{uri: imageSrc}}/>
           <View style={styles.contentInfo}>
             <Text>{title}</Text>
@@ -36,7 +34,7 @@ export default function CommunityItem({imageSrc, title, postAuthor,postingDate, 
 }
 
 // comment 갯수
-const CommentNum = ({commentNum}) => {
+const CommentNum = ({commentNum}: CommentNumber ) => {
   return (
     <View style={styles.commentAndLike} >
       <MaterialIcons name='comment' size={14} color={colors.Gray2}/>

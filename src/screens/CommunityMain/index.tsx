@@ -9,10 +9,9 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 const Tab= createMaterialTopTabNavigator();
 
-
 export default function CommunityMainScreen({navigation}: CommunityPostingProps): ReactElement {
-
   const addContent = () => navigation.navigate('CommunityPosting');
+   const onItemClick = ()=>  navigation.navigate('CommunityDetail') 
 
   navigation.setOptions({
     headerRight: () => <NextButton text='글쓰기' onPress={addContent} />
@@ -29,7 +28,8 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
     >
       <Tab.Screen 
         name="공유해요" 
-        component={SharedContents} 
+        // component={SharedContents} 
+        children={()=> <CommunityMain onItemClick={onItemClick}/> }
       />
       <Tab.Screen 
         name="궁금해요"
@@ -40,9 +40,11 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
   );
 }
 
-const SharedContents = ({navigation}:CommunityDetailProps):ReactElement => {
-  
-  return (<CommunityMain navigation={navigation}/>)}
+// const SharedContents = ({navigation}):ReactElement => {
+//   // const onItemClick = ()=>  navigation.jumpTo('CommunityDetail') 
+//   // const onItemClick = ()=>  console.log('clicked!!')
+//   return (<CommunityMain navigation={navigation}/>)
+// }
 
 const QuestionaryContent = () => {
 return (<>

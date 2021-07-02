@@ -45,17 +45,19 @@ export const DetailInfoStyle = StyleSheet.create({
 
 export const ContentsStyle = StyleSheet.create({
   contentsContainer : {
-    paddingVertical: 33,
+    paddingVertical: 30,
     borderWidth: 1,
     borderColor: '#CCD7DF',
-    backgroundColor: '#fefefe'
+    backgroundColor: '#fefefe',
+    marginBottom: 5
   },
   textStyle: {
     lineHeight: 25,
     marginHorizontal: 19,
+    color: '#202020',
   },
   imageBox: {
-    marginTop: 32
+    marginTop: 30
   },
   contentsImage: {
     width: 320,
@@ -65,43 +67,86 @@ export const ContentsStyle = StyleSheet.create({
   },
 })
 
-export const CommnetInputStyle = StyleSheet.create({
-  Container: {
-    // position: 'relative',
-    backgroundColor: 'tomato',
-  },
+export const CommentInputStyle = StyleSheet.create({
   CommentInputBox: {
-    flex: 1,
     width: 353,
     height: 46,
-    padding: 15,
-    textAlignVertical: 'center',
+    paddingRight: 34,
+    paddingLeft: 15, 
+    paddingTop: 10,
+    marginTop: 8,
+    marginBottom: 20,
     marginHorizontal: 20,
     backgroundColor: '#fff',
     borderRadius: 10,
     shadowOffset: {
       width: 2,
-      height: 4,
+      height: 2,
     },
     shadowColor: "#566B7E33",
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.8,
     shadowRadius: 8,
-    elevation: 6
+    elevation: 3,
+    lineHeight: 20,
+    flex:1,
+    alignItems: 'center',
   },
   arrowIcon: {
-    // position: 'absolute',
-    // top: 10,
-    // right: 25,
+    position: 'absolute',
+    bottom: 28,
+    right: 25,
     fontSize:24,
     color: '#D8D8D8'
-  }
+  },
+  activeArrowIcon: {
+    position: 'absolute',
+    bottom: 28,
+    right: 25,
+    fontSize:24,
+    color: '#207AB4'
+  },
 })
 
 export const CommentDetailStyles = StyleSheet.create({
-  CommentBox: {
-    width: 100,
-    height: 50,
-    backgroundColor: 'pink'
-
+  commentBox: {
+    width: 353,
+    height: 69,
+    marginVertical: 12,
+    marginHorizontal: 17,
+    paddingVertical:10,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    color: '#202020'
+  },
+  commentWriterInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  image: {
+    width: 16,
+    height: 16,
+    borderRadius: 50,
+    borderWidth: 0,
+    backgroundColor: 'pink',
+    marginRight: 5
+  },
+  nicknameStyle: {
+    fontSize: 12,
+    lineHeight: 20,
+    width: 260
+  },
+  dateStyle: {
+    position: 'absolute',
+    top: 11,
+    right: 15,
+    fontSize: 12,
+    lineHeight: 20.4,
+    color: '#6A6D70',
+    width: 35
+  },
+  comment: {
+    marginTop: 10,
+    lineHeight: 14
   }
 })

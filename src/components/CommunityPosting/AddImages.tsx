@@ -3,7 +3,6 @@ import { Pressable, Text, View, Image} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {styles} from './styles'
 import {multiImageSelect} from '@lib/file/filePicker'
-// import { useEffect } from 'react';
 
 export default function AddImages () {
   const [imageUri, setImageUri]= useState<string[]>();

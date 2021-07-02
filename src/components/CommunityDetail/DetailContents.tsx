@@ -1,7 +1,5 @@
 import React from 'react'
-import { View , Text} from 'react-native'
-import { Image } from 'react-native-animatable'
-import { ScrollView } from 'react-native-gesture-handler'
+import { View , Text, ScrollView, Image} from 'react-native'
 
 import {ContentsStyle as styles} from './styles'
 

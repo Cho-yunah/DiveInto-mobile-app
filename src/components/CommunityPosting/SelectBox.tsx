@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {name} from './types'
 
 import {SelectStyle as styles} from './styles'
 
 
-export default function SelectBox({name}) {
+export default function SelectBox({name}: name) {
   const [open, setOpen]= useState(false) // dropdown picker open시 그림자 효과
  
     return (

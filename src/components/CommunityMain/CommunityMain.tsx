@@ -1,14 +1,14 @@
-import React, { ReactElement, Suspense, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, { ReactElement, Suspense, useCallback, useEffect, useRef, useState} from 'react';
 import { Text, View, FlatList, ActivityIndicator } from 'react-native';
 
 import { useScrollToTop } from '@react-navigation/native';
 import axios, { AxiosResponse } from 'axios';
-import { ContentItem } from './types';
+import { ContentItem, OnItemClick } from './types';
 import CommunityItem from './CommunityItem';
 import {styles} from './styles'
 
+export default function CommunityMain({onItemClick}: OnItemClick):ReactElement  {
 
-export default function CommunityMain({navigation}):ReactElement  {
   // focus 되어있는 tab click 하면 맨위로 이동
   const listRef= useRef(null)
   useScrollToTop(listRef)
@@ -30,7 +30,6 @@ export default function CommunityMain({navigation}):ReactElement  {
       .catch(e => console.error(e))
       return response; 
   }
-  console.log('current page: ', page)
 
   // data 받아오기
   useEffect(()=> {
@@ -57,8 +56,6 @@ export default function CommunityMain({navigation}):ReactElement  {
     setContentItems([])
     getCommunityList()
   }
- 
-  // const handleItemClick=()=> { navigation.navigate('CommunityDetail') }
 
   // render하는 Item
   const renderCommunityItem= useCallback(
@@ -71,13 +68,12 @@ export default function CommunityMain({navigation}):ReactElement  {
           postingDate={item.postingDate}
           imageSrc={item.imageSrc}
           commentNum={item.commentNum}
-          // onPress={handleItemClick}
-          navigation={item.navigation}
-          // onItemClick={handleItemClick}
+          onItemClick={onItemClick}
         />
       )
-    }, []
+    },[]
   )
+
   return (
     <View style={styles.container}>
       <Suspense fallback={<Text>Loading...</Text>}>

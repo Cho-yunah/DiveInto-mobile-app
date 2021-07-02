@@ -4,3 +4,7 @@ export type inputTextType= {
   maxLength: number,
   numberOfLines: number
 }
+
+export type name = {
+  name: string
+}

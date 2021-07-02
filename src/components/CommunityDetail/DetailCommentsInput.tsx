@@ -1,24 +1,22 @@
 import React, { useState } from 'react'
-import {TextInput, View } from 'react-native'
+import {TextInput } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign';
-// import InputScrollView from 'react-native-input-scroll-view';
-import {CommnetInputStyle as styles} from './styles'
+import {CommentInputStyle as styles} from './styles'
 
 export default function DetailCommentsInput() {
-  const [comments, setComments] = useState({text: 'haha'})
+  const [comments, setComments] = useState('')
 
   return (
-    <View style={styles.Container}>
+    <>
       <TextInput 
         placeholder='댓글을 입력하세요' 
         style={styles.CommentInputBox}
-        onChangeText={text => setComments({text})}
+        onChangeText={text => setComments(text)}
         multiline
+        value={comments}
       />
-      <AntDesign
-          name='arrowright'
-          style={styles.arrowIcon}
-        />
-    </View>
-  )
-}
+      {comments? 
+        <AntDesign name='arrowright' style={styles.activeArrowIcon}/>  
+        : <AntDesign  name='arrowright' style={styles.arrowIcon}/> }
+    </>
+  )}
