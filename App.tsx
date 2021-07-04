@@ -12,11 +12,22 @@ import MainTab from '@/src/navigators/MainTab';
 
 import UploadTest from '@screens/UploadTest';
 
+import * as FCM from '@lib/firebase/FCM';
+
 // redux
 import initStore from '@legacy_lib/redux/store';
 const store = initStore();
 
 export default function App() {
+   useEffect(() => {
+    const init = async () => {
+      const fcm = await FCM.getToken();
+      console.log('fcm Token : ', fcm);
+    };
+
+    init();
+  }, []);
+
   return (
     <Provider store={store}>
       <NavigationContainer>
