@@ -3,9 +3,7 @@ import iid from '@react-native-firebase/iid';
 import DeviceInfo from 'react-native-device-info';
 
 export const getToken = async () => {
-  console.log("호출되긴 하냐");
   const FCMToken = await iid().getToken();
-  console.log('FCM토큰 : ', FCMToken);
 
   return FCMToken;
 };
