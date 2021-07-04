@@ -1,16 +1,13 @@
 import React from 'react';
 import { WriteReviewProps } from '@/src/navigators/ReviewStack/types';
 import styles from './styles';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import UploadReviewHeaderBtn from './UploadReviewHeaderBtn';
 import { Content, StarRatings, UploadPics } from '@/src/components/WriteReview';
 
 const WriteReviewScreen = ({ navigation }: WriteReviewProps) => {
   navigation.setOptions({
-    headerRight: () => (
-      <Pressable onPress={() => {}} style={styles.headerButton}>
-        <Text style={styles.headerButtonText}>완료</Text>
-      </Pressable>
-    ),
+    headerRight: () => <UploadReviewHeaderBtn />,
   });
   return (
     <View style={styles.container}>

@@ -1,15 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { FlatList, Image, useWindowDimensions, View } from 'react-native';
 import { LecturePicsStyles as styles } from './styles';
-
-const tempDataArr = [
-  'https://aquazealots.com/wp-content/uploads/2019/11/best-freediving-spots-in-the-world-1.jpeg',
-  'https://i1.wp.com/crystalfreediving.com/wp-content/uploads/2015/04/freediving4-001.jpg?resize=830%2C374&ssl=1',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMWNVl3M4oqxlcjCXhij_QjQmLcRM9Sna-lA&usqp=CAU',
-];
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import useRequestLecturePics from './useRequestLecturePics';
 
 const LecturePicsCarousel = () => {
   const [activeDotIdx, setActiveDotIdx] = useState(0);
+  const lecturePics = useRequestLecturePics();
   const windowWidth = useWindowDimensions().width;
   const viewabilityConfRef = useRef({
     viewAreayCoveragePercentThreshold: 50,
@@ -20,20 +17,25 @@ const LecturePicsCarousel = () => {
     if (viewableItems.length === 1) setActiveDotIdx(viewableItems[0].index);
   });
 
+  if (!lecturePics.length)
+    return (
+      <SkeletonPlaceholder>
+        <SkeletonPlaceholder.Item width={windowWidth} height={195} />
+      </SkeletonPlaceholder>
+    );
+
   return (
     <View style={styles.container}>
       <FlatList
-        renderItem={({ item, index }) => {
-          return (
-            <View key={index}>
-              <Image
-                source={{ uri: item }}
-                style={[styles.carouselImage, { width: windowWidth }]}
-              />
-            </View>
-          );
-        }}
-        data={tempDataArr}
+        renderItem={({ item }) => (
+          <View key={item.url}>
+            <Image
+              source={{ uri: item.url }}
+              style={[styles.carouselImage, { width: windowWidth }]}
+            />
+          </View>
+        )}
+        data={lecturePics}
         horizontal
         showsHorizontalScrollIndicator={false}
         snapToAlignment={'center'}
@@ -43,7 +45,7 @@ const LecturePicsCarousel = () => {
         onViewableItemsChanged={viewableItemsCallbackRef.current}
       />
       <View style={styles.dotIndicatorContainer}>
-        {tempDataArr.map((_, index) => (
+        {lecturePics.map((_, index) => (
           <View
             style={
               index === activeDotIdx
