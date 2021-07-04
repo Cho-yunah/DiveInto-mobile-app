@@ -1,4 +1,4 @@
-package com.diveinto;
+package com.pungdong.pungdong;
 
 import com.facebook.react.ReactActivity;
 
