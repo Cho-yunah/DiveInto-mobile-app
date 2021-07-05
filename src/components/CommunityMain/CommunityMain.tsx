@@ -6,6 +6,8 @@ import axios, { AxiosResponse } from 'axios';
 import { ContentItem } from './types';
 import CommunityItem from './CommunityItem';
 import {styles} from './styles'
+import { atom, selector, useRecoilValue } from 'recoil';
+
 
 export default function CommunityMain({onItemClick}):ReactElement  {
 
@@ -19,17 +21,18 @@ export default function CommunityMain({onItemClick}):ReactElement  {
   const [page, setPage] = useState<number>(1)  
   const [refreshing, setRefreshing] = useState(false)
 
-  const URL = `http://localhost:3000/shared?limit=10&page=${page}`
+  const URL = `http://52.78.56.229:8082/community/post/1`
 
   const getCommunityList = async() => {
     if(isLoading) return;
       setIsLoading(true)
       const response = await axios.get(URL)
-      .then((res: AxiosResponse) => setContentItems ([...contentItems, ...res.data]))
+      .then((res: AxiosResponse) => {console.log(res.data)})
       .then(()=> {setIsLoading(false), setRefreshing(false)})  
       .catch(e => console.error(e))
       return response; 
-  }
+    }
+    // setContentItems ([...contentItems, ...res.data]))
 
   // data 받아오기
   useEffect(()=> {

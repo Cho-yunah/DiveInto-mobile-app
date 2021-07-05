@@ -1,3 +1,4 @@
+import { Background } from './../../config/colors';
 import {StyleSheet} from 'react-native'
 
 export const DetailInfoStyle = StyleSheet.create({
@@ -71,11 +72,11 @@ export const CommentInputStyle = StyleSheet.create({
   CommentInputBox: {
     width: 353,
     height: 46,
-    paddingRight: 34,
+    paddingRight: 38,
     paddingLeft: 15, 
     paddingTop: 10,
     marginTop: 8,
-    marginBottom: 20,
+    marginBottom: 30,
     marginHorizontal: 20,
     backgroundColor: '#fff',
     borderRadius: 10,
@@ -88,19 +89,19 @@ export const CommentInputStyle = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
     lineHeight: 20,
-    flex:1,
-    alignItems: 'center',
+    // flex:1,
+    // alignItems: 'center',
   },
   arrowIcon: {
     position: 'absolute',
-    bottom: 28,
+    bottom: 41,
     right: 25,
     fontSize:24,
     color: '#D8D8D8'
   },
   activeArrowIcon: {
     position: 'absolute',
-    bottom: 28,
+    bottom: 41,
     right: 25,
     fontSize:24,
     color: '#207AB4'

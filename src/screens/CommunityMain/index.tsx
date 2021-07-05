@@ -2,11 +2,13 @@ import React, { ReactElement} from 'react'
 import { View , Text} from 'react-native';
 import styles  from './styles';
 
-import {CommunityMain} from '@components/CommunityMain';
+import {CommunityMain } from '@components/CommunityMain';
+import {QuestionaryContentsList } from '@components/CommunityMain';
 import NextButton from '@components/CommunityMain/NextButton'
 
 import { CommunityPostingProps, CommunityDetailProps } from '@navigators/CommunityStack/types';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
 
 const Tab= createMaterialTopTabNavigator();
 
@@ -34,7 +36,7 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
       />
       <Tab.Screen 
         name="궁금해요"
-        component={QuestionaryContent} 
+        component={QuestionaryContents} 
         />
     </Tab.Navigator>
     </View>
@@ -45,8 +47,8 @@ const SharedContents = ({onItemClick}):ReactElement => {
   return (<CommunityMain onItemClick={onItemClick}/>)
 }
 
-const QuestionaryContent = () => {
+const QuestionaryContents = () => {
 return (<>
-  <Text>not yet</Text>
+  <QuestionaryContentsList/>
 </>
 )}
