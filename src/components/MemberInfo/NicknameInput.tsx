@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { TextInput, View, TouchableOpacity, Text } from 'react-native';
+import { useRecoilState } from 'recoil';
 
 import { inputStyles as styles } from './styles';
 import { placeholder } from '@/src/config/colors';
 import instance from '@lib/api/axios';
 import ErrorText from '@components/MemberInfo/ErrorText';
 import CommonModal from '@components/common/CommonModal';
+import { nicknameState } from '@/src/recoil/LoginStack';
 
 function NicknameInput() {
-  const [nickname, setNickname] = useState('');
+  const [nickname, setNickname] = useRecoilState(nicknameState);
   const [OverlapError, setOverlapError] = useState(false);
   const [validNickname, setValidNickname] = useState(true);
   const [show, setShow] = useState(false);
@@ -34,11 +36,10 @@ function NicknameInput() {
       setOverlapError(false);
 
       await instance.get(`/sign/check/nickName?nickName=${nickname}`);
-
       setShow(state => !state);
     } catch (e) {
       setOverlapError(true);
-      // console.error(e);
+      console.error(e);
     }
   };
 

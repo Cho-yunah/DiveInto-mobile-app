@@ -1,4 +1,4 @@
-export type gender = '남성' | '여성';
+export type gender = string;
 
 export type selectTabProps = {
   selected: gender;
