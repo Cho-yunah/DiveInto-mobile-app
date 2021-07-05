@@ -13,6 +13,7 @@ import FTPolicyScreen from '@/src/screens/Policies/FTPolicy';
 import PrivacyPolicyScreen from '@/src/screens/Policies/PrivacyPolicy';
 import ApplyLecturerScreen from '@/src/screens/ApplyLecturer';
 import ModifyNumScreen from '@/src/screens/ModifyNum';
+import DetailNoticeScreen from '@/src/screens/DetailNotice';
 
 const Stack = createStackNavigator();
 
@@ -55,6 +56,8 @@ export default function ProfileStack<ProfileStak>() {
             title: '강사신청',
           }}
         />
+
+        {/* 공지 사항 관련 View Stack */}
         <Stack.Screen
           name="NoticeList"
           component={NoticeListScreen}
@@ -63,16 +66,27 @@ export default function ProfileStack<ProfileStak>() {
           }}
         />
         <Stack.Screen
+          name="DetailNotice"
+          component={DetailNoticeScreen}
+          options={{
+            title: '세부 공지',
+          }}
+        />
+
+        <Stack.Screen
           name="ProfileTab"
           component={ProfileTab}
           options={{
             title: '자주 묻는 질문',
           }}
         />
+
         <Stack.Screen
           name="Policy"
           component={PolicyScreen}
-          options={{ title: '이용약관 및 정책' }}
+          options={{
+            title: '이용약관 및 정책',
+          }}
         />
         <Stack.Screen
           name="BusinessPolicy"
@@ -102,7 +116,6 @@ export default function ProfileStack<ProfileStak>() {
             title: '개인정보 처리방침',
           }}
         />
-
         <Stack.Screen
           name="ProfileWithoutLogin"
           component={ProfileWithoutLoginScreen}
