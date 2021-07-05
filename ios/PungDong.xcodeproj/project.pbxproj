@@ -783,7 +783,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ohl.PungDong;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pungdong.pungdong;
 				PRODUCT_NAME = PungDong;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -806,7 +806,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ohl.PungDong;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pungdong.pungdong;
 				PRODUCT_NAME = PungDong;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
