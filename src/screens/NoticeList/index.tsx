@@ -3,7 +3,7 @@ import { FlatList, ScrollView } from 'react-native';
 
 // import
 import { NoticeListItem } from '@/src/components/NoticeBoard';
-import { noticeList } from '../../assets/data/staticData';
+import { noticeList } from '@assets/data/staticData';
 
 export default function NoticeListScreen() {
   return (

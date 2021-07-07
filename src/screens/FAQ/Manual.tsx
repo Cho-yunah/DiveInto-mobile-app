@@ -1,12 +1,18 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View, FlatList } from 'react-native';
 
 import { FAQListItem } from '@/src/components/NoticeBoard';
+import { FAQManualList } from '@assets/data/staticData';
 
 export default function ManualScreen() {
   return (
     <View>
-      <FAQListItem />
+      <FlatList
+        data={FAQManualList}
+        renderItem={({ item }) => (
+          <FAQListItem desc={item.desc} key={item.id} />
+        )}
+      />
     </View>
   );
 }

@@ -18,6 +18,8 @@ export default function NoticeListItems({
   const moveDetailTerms = () => {
     navigation.navigate('DetailNotice', {
       noticeId: id,
+      title,
+      date,
     });
   };
 
