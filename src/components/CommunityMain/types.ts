@@ -1,11 +1,16 @@
+import { NumberLiteralType } from "typescript";
+
 export type ContentItem = {
+  id: number;
   title: string;
-  postAuthor: string;
-  postingDate: string;
-  imageSrc: string;
-  commentNum: number;
+  dateOfRegistration: string;
+  category: string;
+  writerNickname: string;
+  imageUrl: string;
+  commentCount: number;
+  likeCount: number;
+  liked: boolean;
   onItemClick: ()=>void;
-  id: string;
 }
 
 export type CommentNumber = {

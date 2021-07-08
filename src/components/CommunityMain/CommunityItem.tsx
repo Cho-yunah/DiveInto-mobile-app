@@ -9,7 +9,7 @@ import { styles } from './styles'
 import * as colors from '@config/colors';
 import {ContentItem, CommentNumber} from './types'
 
-export default function CommunityItem({imageSrc, title, postAuthor,postingDate, commentNum, onItemClick }: ContentItem) { 
+export default function CommunityItem({id, title,dateOfRegistration, writerNickname, imageUrl, commentCount, likeCount, liked, onItemClick }: ContentItem) { 
   
   return (
       <TouchableOpacity 
@@ -17,17 +17,17 @@ export default function CommunityItem({imageSrc, title, postAuthor,postingDate, 
         activeOpacity={0.8}  
         onPress={onItemClick}
         >
-          <Image style={styles.thumnailImage} source={{uri: imageSrc}}/>
+          <Image style={styles.thumnailImage} source={{uri: imageUrl}}/>
           <View style={styles.contentInfo}>
             <Text>{title}</Text>
             <View style={styles.flexBox}>
-              <Text>{postAuthor}</Text>
+              <Text>{writerNickname}</Text>
                   <Entypo name='dot-single' size={14} color={colors.BlackText}/>
-              <Text>{postingDate}</Text>
+              <Text>{dateOfRegistration}</Text>
             </View>
           </View>
       <View style= {styles.iconBox}>
-        <CommentNum commentNum={commentNum}/>
+        <CommentNum commentNum={commentCount}/>
         <Heart/>
       </View>
       </TouchableOpacity>
@@ -55,7 +55,7 @@ const Heart = () => {
         size={14} 
         color={heart? colors.Selected : colors.Gray2}
       />
-      <Text style={{color:colors.Gray2}}>5</Text>
+      <Text style={{color:colors.Gray2}}>4</Text>
     </Pressable>
   )
 }

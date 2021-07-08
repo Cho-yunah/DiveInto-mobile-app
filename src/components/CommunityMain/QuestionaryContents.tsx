@@ -15,26 +15,27 @@ import axios, { AxiosResponse } from 'axios';
 
 // }
 
-const getContent = selector({
-  key: 'getContent',
-  get: async({get})=> {
-    const response = await axios.get('http://52.78.56.229:8082/community/post/1')
+// const getContent = selector({
+//   key: 'getContent',
+//   get: async({get})=> {
+//     const response = await axios.get('')
     
-    return response
-  }
-})
+//     return response
+//   }
+// })
 
-const CurrentContentInfo =()=> {
-  const contentItem = useRecoilValue(getContent)
-  return <View>
-      <Text>not yet</Text>
-    </View>
-}
+// const CurrentContentInfo =()=> {
+//   const contentItem = useRecoilValue(getContent)
+//   return <View>
+//       <Text>not yet</Text>
+//     </View>
+// }
 
 export default function QuestionaryContentsList() {
   return (
-      <Suspense fallback={<Text>Loading...</Text>}>
-        <CurrentContentInfo/>
-      </Suspense>
+      // <Suspense fallback={<Text>Loading...</Text>}>
+       
+      // </Suspense>
+      <Text>.</Text>
   )
 }

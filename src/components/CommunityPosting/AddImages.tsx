@@ -13,7 +13,7 @@ export default function AddImages () {
     setImageUri(resultArray)
     return resultArray
   }
-  console.log(imageUri)
+  // console.log(imageUri)
     
   return (
     <View style = {styles.inputContainer}>

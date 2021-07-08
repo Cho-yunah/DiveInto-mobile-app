@@ -8,7 +8,7 @@ import NextButton from '@components/CommunityMain/NextButton'
 
 import { CommunityPostingProps, CommunityDetailProps } from '@navigators/CommunityStack/types';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
+import { useEffect } from 'react';
 
 const Tab= createMaterialTopTabNavigator();
 
@@ -16,9 +16,11 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
   const addContent = () => navigation.navigate('CommunityPosting')
   const onItemClick = ()=> navigation.navigate('CommunityDetail')
 
-  navigation.setOptions({
-    headerRight: () => <NextButton text='글쓰기' onPress={addContent} />
-  })
+  useEffect(()=> {
+    navigation.setOptions({
+      headerRight: () => <NextButton text='글쓰기' onPress={addContent} />
+    })
+  },[])
 
   return (
     <View style={styles.container}  > 
@@ -49,6 +51,6 @@ const SharedContents = ({onItemClick}):ReactElement => {
 
 const QuestionaryContents = () => {
 return (<>
-  <QuestionaryContentsList/>
+  <Text>not yet</Text>
 </>
 )}
