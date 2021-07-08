@@ -15,6 +15,7 @@ export const AdditionalServiceStyles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 9,
     marginRight: 7,
+    marginTop: 5,
   },
   serviceTagText: {
     color: '#202020',

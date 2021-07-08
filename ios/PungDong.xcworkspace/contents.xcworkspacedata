@@ -2,9 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:DiveInto.xcodeproj">
+      location = "group:PungDong.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/haneojin/Desktop/tet/PungDong/ios/PungDong.xcodeproj">
    </FileRef>
 </Workspace>

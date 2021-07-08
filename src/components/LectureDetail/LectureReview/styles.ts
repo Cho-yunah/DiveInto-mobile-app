@@ -26,31 +26,39 @@ export const LectureReviewStyles = StyleSheet.create({
     flexDirection: 'row',
   },
   orderBySelectorBtn: {
-    height: 23,
+    height: 25,
     width: 85,
     borderRadius: 10,
     paddingHorizontal: 16,
     paddingVertical: 4,
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#566b7e',
     marginRight: 8,
     marginBottom: 8,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 5,
+      height: 5,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+
+    elevation: 5,
   },
   orderBySelectorBtnActive: {
     backgroundColor: '#50CAD2',
-    height: 23,
+    height: 25,
     width: 85,
     borderRadius: 10,
     paddingHorizontal: 16,
-    paddingVertical: 4,
+    paddingVertical: 6,
     alignItems: 'center',
     marginRight: 8,
   },
   orderBySelectorText: {},
   seeMoreBtn: {
     position: 'absolute',
-    right: 17,
+    right: 5,
     top: 24,
   },
   seeMoreBtnText: {
@@ -88,6 +96,7 @@ export const ReviewListStyles = StyleSheet.create({
   },
   contentText: {
     color: '#535557',
+    maxWidth: 320,
   },
   openStarsContainer: {
     flexDirection: 'row',

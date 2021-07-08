@@ -7,7 +7,7 @@ export type PersonalReviewItem = {
   pics: string[];
 };
 
-export type PersonalReviewProps = {
-  item: PersonalReviewItem;
-  index: number;
-};
+export type SortByType =
+  | 'writeDate,DESC'
+  | 'totalStarAvg,DESC'
+  | 'totalStarAvg,ASC';

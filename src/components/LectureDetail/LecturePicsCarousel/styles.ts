@@ -10,16 +10,16 @@ export const LecturePicsStyles = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'row',
     bottom: 10,
-    width: 45,
-    justifyContent: 'space-between',
   },
   dotIndicator: {
     width: 10,
     height: 10,
     borderRadius: 5,
     backgroundColor: 'rgba(224, 224, 225, 0.6)',
+    marginRight: 5,
   },
   dotIndicatorActive: {
+    marginRight: 5,
     width: 10,
     height: 10,
     borderRadius: 5,
