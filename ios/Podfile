@@ -3,7 +3,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'DiveInto' do
+target 'PungDong' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
@@ -11,7 +11,7 @@ target 'DiveInto' do
   pod 'NMapsMap'
 
   
-  target 'DiveIntoTests' do
+  target 'PungDongTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -33,10 +33,10 @@ target 'DiveInto' do
   
 end
 
-target 'DiveInto-tvOS' do
-  # Pods for DiveInto-tvOS
+target 'PungDong-tvOS' do
+  # Pods for PungDong-tvOS
 
-  target 'DiveInto-tvOSTests' do
+  target 'PungDong-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end
