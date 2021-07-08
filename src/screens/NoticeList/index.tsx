@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlatList, ScrollView } from 'react-native';
 
 // import
@@ -6,9 +6,11 @@ import { NoticeListItem } from '@/src/components/NoticeBoard';
 import { noticeList } from '@assets/data/staticData';
 
 export default function NoticeListScreen() {
+  const listLength = noticeList.length;
+
   return (
     <FlatList
-      data={[...noticeList]}
+      data={noticeList}
       renderItem={({ item }) => (
         <NoticeListItem
           title={item.title}
@@ -17,6 +19,7 @@ export default function NoticeListScreen() {
           key={item.id}
         />
       )}
+      initialNumToRender={listLength}
     />
   );
 }

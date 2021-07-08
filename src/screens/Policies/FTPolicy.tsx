@@ -20,6 +20,7 @@ export default function FTPolicyScreen() {
           />
         )}
         keyExtractor={item => String(item.id)}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );

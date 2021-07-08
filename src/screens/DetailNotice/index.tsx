@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 import { styles } from './styles';
 import { findContentsProps } from './types';
@@ -19,11 +19,9 @@ function index({ route, navigation }: DetailNoticeProps) {
     title,
   });
 
-  console.log(detailContents, noticeId);
-
-  const findContents = detailContents.find((item: any) => noticeId === item.id);
-
-  console.log(findContents);
+  const findContents: any = detailContents.find(({ id }: findContentsProps) => {
+    return noticeId === id;
+  });
 
   return (
     <View style={styles.bg}>

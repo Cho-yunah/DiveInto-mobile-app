@@ -1,30 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView } from 'react-native';
 
 import { styles } from './styles';
+import { userInfoPorps } from './types';
 import PhoneNumberInfo from './UserInfo/PhoneNumberInfo';
 import EtcUserInfo from './UserInfo/EtcUserInfo';
 import LectureList from './LectureList';
 import NoticeList from './NoticeList';
 import Output from './Output';
 
-type Data = {
-  phone: string;
-  email: string;
-  nickname: string;
-};
-
-const mockupData: Data = {
-  phone: '01011112222',
-  email: 'pmj6516@naver.com',
-  nickname: '퐁당퐁당',
-};
-
-export default function MainContainer() {
+export default function MainContainer({
+  email,
+  nickname,
+  phone,
+}: userInfoPorps) {
   return (
     <ScrollView style={styles.rootContainer}>
-      <PhoneNumberInfo phone={mockupData.phone} />
-      <EtcUserInfo nickname={mockupData.nickname} email={mockupData.email} />
+      <PhoneNumberInfo phone={phone} />
+      <EtcUserInfo nickname={nickname} email={email} />
       <LectureList />
       <NoticeList />
       <Output />

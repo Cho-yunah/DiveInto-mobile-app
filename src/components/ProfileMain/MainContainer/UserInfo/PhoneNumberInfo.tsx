@@ -5,15 +5,17 @@ import { useNavigation } from '@react-navigation/native';
 import { phoneNumber as styles } from './styles';
 import { PhoneNuberInfoProps } from '../types';
 import CommonModal from '@components/common/CommonModal';
+import { useRecoilValue } from 'recoil';
+import { phoneState } from '@/src/recoil/ProfileStack';
 
 export default function PhoneNumberInfo({ phone }: PhoneNuberInfoProps) {
   const navigation = useNavigation();
-  const [show, setShow] = useState<boolean>(false);
+  const [show, setShow] = useState(false);
+  const tempPhone = useRecoilValue(phoneState);
 
-  const autoMasking = (): string =>
-    phone
-      .replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3')
-      .replace(/\d{3}$/, '***');
+  console.log(tempPhone);
+
+  const autoMasking = (): string => phone.replace(/\d{3}$/, '***');
 
   const toggleShowModal = (): void => {
     setShow(!show);

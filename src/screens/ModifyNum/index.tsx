@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, TextInput } from 'react-native';
 
 import { styles } from './styles';
 import { ModifyNumProps } from '@navigators/ProfileStack/types';
 import NextButton from '@components/common/NextButton';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { phoneState } from '@/src/recoil/ProfileStack';
 
 export default function ModifyNumScreen({ navigation }: ModifyNumProps) {
   const onPress = () => {
-    console.log('confirm');
+    console.log('done');
   };
+
+  // const ChangePhone = (text: string) => {};
 
   navigation.setOptions({
     headerRight: () => <NextButton onPress={onPress} text="완료" />,

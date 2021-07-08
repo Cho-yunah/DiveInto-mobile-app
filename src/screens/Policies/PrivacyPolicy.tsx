@@ -20,6 +20,7 @@ export default function PrivacyPolicyScreen() {
           />
         )}
         keyExtractor={item => String(item.id)}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
