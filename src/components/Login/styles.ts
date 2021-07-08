@@ -52,13 +52,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  socialLoginText: {
-    marginTop: 70,
-    borderColor: '#c1c2c3',
-    borderTopWidth: 1,
+  socialLoginTextWrapper: {
     position: 'absolute',
-    top: -80,
-    left: 155,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+  },
+  socialLoginText: {
+    borderColor: '#c1c2c3',
+    top: -10,
     textAlign: 'center',
     width: 80,
     backgroundColor: '#fefefe',

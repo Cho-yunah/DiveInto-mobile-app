@@ -107,6 +107,7 @@ export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
 }
 
 function checkEmailValidation(email: string): boolean {
-  const regex = /^([a-zA-Z0-9\-._]+)@([a-zA-Z0-9-_]+).([a-z]{2,20})(.[a-z]{2,10})$/;
+  const regex =
+    /^([a-zA-Z0-9\-._]+)@([a-zA-Z0-9-_]+).([a-z]{2,20})(.[a-z]{2,10})$/;
   return regex.test(email);
 }

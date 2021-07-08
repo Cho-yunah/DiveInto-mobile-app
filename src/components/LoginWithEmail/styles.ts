@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
   underlineText: {
     fontSize: 14,
     textAlign: 'center',
-    marginTop: 215,
     textDecorationLine: 'underline',
   },
 });
