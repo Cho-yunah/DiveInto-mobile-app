@@ -1,5 +1,3 @@
-import { NumberLiteralType } from "typescript";
-
 export type ContentItem = {
   id: number;
   title: string;
@@ -16,6 +14,10 @@ export type ContentItem = {
 export type CommentNumber = {
   commentNum: number
 }
+export type likeCount = {
+  likeCount: number
+}
+
 
 export type nextButtonProps = {
   onPress: () => void;

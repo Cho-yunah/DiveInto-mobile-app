@@ -1,97 +1,76 @@
-import React, { ReactElement, Suspense, useCallback, useEffect, useRef, useState} from 'react';
+import React, { ReactElement, Suspense, useRef} from 'react';
 import { Text, View, FlatList, ActivityIndicator } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
-import axios, { AxiosResponse } from 'axios';
-import { ContentItem } from './types';
 import CommunityItem from './CommunityItem';
 import {styles} from './styles'
-import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRequestCommunityList} from './useRequestCommunityList';
+import {loadingState, listPageState, refreshState, communityListState} from '@/src/recoil/CommunityStack'
 
 export default function CommunityMain({onItemClick}: any):ReactElement  {
 
   // focus 되어있는 tab click 하면 맨위로 이동
   const listRef= useRef(null)
   useScrollToTop(listRef)
-
-  // list data 받아오기
-  const [isLoading, setIsLoading] = useState(false);
-  const [contentItems, setContentItems]= useState<ContentItem[]>([])
-  const [page, setPage] = useState<number>(1)  
-  const [refreshing, setRefreshing] = useState(false)
   
-  const URL = `http://52.78.56.229:8082/community/post/category?category=SHARE&page=0&size=1`
+  // data 받아오기
+  const communityList =useRequestCommunityList()
+  const isLoading = useRecoilValue<boolean>(loadingState);
+  const [page, setPage] = useRecoilState<number>(listPageState)  
+  const [refreshing, setRefreshing] = useRecoilState(refreshState)
+  const list =useRecoilValue(communityListState)
 
-  const getCommunityList = async()=> {
-    if(isLoading) return;
-      setIsLoading(true)
-      const response = await axios.get(URL)
-        .then((res: AxiosResponse) => setContentItems ([...contentItems, ...res.data._embedded.postsModelList] ))
-        .then(()=> {setIsLoading(false), setRefreshing(false)})  
-        .catch(e => console.error(e))
-        return response; 
-  }
-    console.log(contentItems)
-
-    // data 받아오기
-  useEffect(()=> {
-    getCommunityList()
- }, [contentItems])
-
-  // contents 더 가져오기
-  const contentsLoadMore= ()=> { setPage(page+1)}
-
- // data 받아올 때의 loader
- const renderLoader =() => {
+  // data 받아올 때의 loader
+  const renderLoader =() => {
     return (
-      isLoading? 
+      (isLoading===true)? 
       <View style={styles.loaderStyle}>
         <ActivityIndicator size="large" color="#50CAD2" />
       </View> : null
     )
- }
+  }
+
+  // contents 더 가져오기
+  const contentsLoadMore= ()=> { 
+    if(isLoading) return
+    setPage(page+1)
+   
+  }
   // 새로고침
   const onFresh = () => {
     console.log('fresh!')
     setRefreshing(true)
-    setPage(1)
-    setContentItems([])
-    getCommunityList()
+    setPage(0)
+    // useRequestCommunityList()
   }
-
-  // render하는 Item
-  const renderCommunityItem= useCallback(
-    ({item, index})=> {
-      return (
-        <CommunityItem
-          id={item.id}
-          title={item.title}
-          category={item.category}
-          writerNickname={item.writerNickname}
-          dateOfRegistration={item.dateOfRegistration}
-          imageUrl={item.imageUrl}
-          commentCount={item.commentCount}
-          likeCount={item.likeCount}
-          liked={item.liked}
-          onItemClick={onItemClick}
-        />
-      )
-    },[]
-  )
 
   return (
     <View style={styles.container}>
       <Suspense fallback={<Text>Loading...</Text>}>
           <FlatList 
             ref={listRef}
-            renderItem={renderCommunityItem}
-            data={contentItems } // 렌더링을 할 아이템
-            keyExtractor={(item, index) => item.id.toString()}            
+            renderItem={({item})=> (
+                <CommunityItem
+                  id={item.id}
+                  title={item.title}
+                  category={item.category}
+                  writerNickname={item.writerNickname}
+                  dateOfRegistration={item.dateOfRegistration}
+                  imageUrl={item.imageUrl}
+                  commentCount={item.commentCount}
+                  likeCount={item.likeCount}
+                  liked={item.liked}
+                  onItemClick={onItemClick}
+                />
+             )}
+            data={communityList} // 렌더링데이터
+            keyExtractor={(item, index) => item.id.toString()}
             onEndReached={contentsLoadMore}
             onEndReachedThreshold={0}
-            ListFooterComponent={renderLoader} // footer에 도달했을때 로딩 표시
+            ListFooterComponent={renderLoader} // footer에 도달하면 로딩 표시
             refreshing={refreshing} //새로고침 props
             onRefresh={onFresh}
-            extraData={contentItems}
+            extraData={communityList} // communityList가 바뀌면 리렌더
             windowSize={2}
             maxToRenderPerBatch={8}
           />

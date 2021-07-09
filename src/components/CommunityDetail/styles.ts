@@ -8,7 +8,7 @@ export const DetailInfoStyle = StyleSheet.create({
     paddingHorizontal: 17,
     paddingVertical: 13,
     position: 'relative',
-    backgroundColor: '#fefefe'
+    backgroundColor: '#fefefe',
   },
   writerImage: {
     width: 36,
@@ -18,7 +18,7 @@ export const DetailInfoStyle = StyleSheet.create({
     backgroundColor: 'pink',
     marginRight: 16
   },
-  nicknameStyle: {
+  title: {
     fontSize: 14,
     fontWeight: '600',
     lineHeight: 21

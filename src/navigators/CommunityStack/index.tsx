@@ -11,15 +11,15 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 const Stack = createStackNavigator<RootCommunityStack>();
 
-export default function CommunityStack({navigation,route}) {
+export default function CommunityStack({navigation,route}: any) {
 
   // community posting, community detail page 일때,
   // bottom navigation bar hiding
   useEffect (()=> {
     const routeName = getFocusedRouteNameFromRoute(route);
     navigation.setOptions(
-    routeName && routeName === 'CommunityPosting'? {tabBarVisible: false} : {tabBarVisible: true},
-    routeName && routeName === 'CommunityDetail'? { tabBarVisible: false} : {tabBarVisible: true}
+      (routeName && routeName === 'CommunityDetail'? { tabBarVisible: false} : {tabBarVisible: true}) ||
+      (routeName && routeName === 'CommunityPosting'? {tabBarVisible: false} : {tabBarVisible: true})
     )
   },[navigation, route]) 
 
