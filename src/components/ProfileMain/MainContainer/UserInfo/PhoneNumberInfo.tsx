@@ -11,9 +11,6 @@ import { phoneState } from '@/src/recoil/ProfileStack';
 export default function PhoneNumberInfo({ phone }: PhoneNuberInfoProps) {
   const navigation = useNavigation();
   const [show, setShow] = useState(false);
-  const tempPhone = useRecoilValue(phoneState);
-
-  console.log(tempPhone);
 
   const autoMasking = (): string => phone.replace(/\d{3}$/, '***');
 
