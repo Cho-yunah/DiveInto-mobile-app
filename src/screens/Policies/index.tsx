@@ -1,14 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import { mainPolicyScteen as styles } from './styles';
+import { PolicyProps } from '@/src/navigators/ProfileStack/types';
 import { CommonTitle } from '@/src/components/PolicyBoard';
-import { useNavigation } from '@react-navigation/native';
 
-export default function PolicyScreen() {
-  const navigation = useNavigation();
-
+export default function PolicyScreen({ navigation }: PolicyProps) {
   const moveBusinessPolicyScreen = () => {
     navigation.navigate('BusinessPolicy');
   };

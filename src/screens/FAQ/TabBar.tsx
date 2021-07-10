@@ -25,8 +25,6 @@ export default function TabBar({
           const label = options.title;
           const isFocused = state.index === index;
 
-          console.log(route.key);
-
           const onPress = () => {
             const event = navigation.emit({
               type: 'tabPress',

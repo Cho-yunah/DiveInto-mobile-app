@@ -33,12 +33,21 @@ export async function singleFileUpload({
     ),
   )
     .uploadProgress({ interval: 250 }, (written, total) => {
+      console.log(written, '여기봐');
+
       const percent = Math.round((written / total) * 100);
       console.log('업로드 퍼센트 : ', percent);
       onProgress && onProgress(written, total);
     })
     .then(res => {
+      // if (res.respInfo.status) {
+      //   throw Error()
+      // }
+      console.log(res.json());
+
       console.log('업로드 성공 : ', res.text());
+      console.log(res.text(), '데이터입니다.');
+
       onSuccess && onSuccess();
     })
     .catch(err => {

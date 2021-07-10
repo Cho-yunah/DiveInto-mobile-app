@@ -16,7 +16,7 @@ export default function AuthEmailScreen({ navigation }: AuthEmailProps) {
   const certification = useRecoilValue(isCertification);
 
   const onPress = () => {
-    navigation.navigate('MemberInfo');
+    navigation.navigate('SetPassword');
   };
 
   navigation.setOptions({
