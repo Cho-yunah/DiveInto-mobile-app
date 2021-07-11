@@ -17,8 +17,6 @@ export default function UploadImgBtn({
 }) {
   const atk = useRecoilValue(atkState);
 
-  console.log(atk);
-
   const [isCompleted, setIsCompleted] = useState<null | boolean>(null);
 
   const onChangeImgBtn = async () => {
