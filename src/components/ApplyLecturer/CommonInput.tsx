@@ -5,11 +5,16 @@ import { commonInput as styles } from './styles';
 import { placeholder } from '@/src/config/colors';
 import { CommonInputProps } from './types';
 
+// 강사 소개, 소속 단체 관련 TextInput Component
 export default function CommonInput({
   placeholderText,
   topBlank,
+  value,
+  handleInputText,
 }: CommonInputProps) {
-  const onChangeText = () => console.log('change text');
+  const onChangeText = (text: string) => {
+    handleInputText(text);
+  };
 
   return (
     <View style={[styles.container, topBlank && styles.topBlank]}>
@@ -18,6 +23,7 @@ export default function CommonInput({
         placeholder={placeholderText}
         placeholderTextColor={placeholder}
         onChangeText={onChangeText}
+        value={value}
       />
     </View>
   );

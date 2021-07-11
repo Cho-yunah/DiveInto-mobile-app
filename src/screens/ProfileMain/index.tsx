@@ -4,14 +4,13 @@ import { useSetRecoilState } from 'recoil';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { styles } from './styles';
+import instance from '@lib/api/axios';
+import { ProfileMainProps } from '@navigators/ProfileStack/types';
 import { userInfoProps } from './types';
-import { atkState } from '@/src/recoil/ProfileStack';
-import { HeaderContainer, MainContainer } from '@/src/components/ProfileMain';
-import instance from '@/src/lib/api/axios';
+import { atkState } from '@recoil/ProfileStack';
+import { HeaderContainer, MainContainer } from '@components/ProfileMain';
 
-export default function ProfileMain() {
-  console.log('main component start');
-
+export default function ProfileMain({ navigation }: ProfileMainProps) {
   const setAtk = useSetRecoilState(atkState);
   const [userInfo, setUserInfo] = useState<userInfoProps | undefined>({
     email: '',

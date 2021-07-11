@@ -10,12 +10,12 @@ export const userInfoAtom = atom<userInfoProps | null>({
   },
 });
 
-// export const phoneState = atom({
-//   key: 'phone',
-//   default: '',
-// });
-
 export const atkState = atom<string | null>({
   key: 'atk',
   default: null,
 });
+
+// export const groupState = atom<string>({
+//   key: 'group',
+//   default: '',
+// });
