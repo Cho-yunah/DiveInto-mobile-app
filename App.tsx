@@ -9,6 +9,7 @@ import { IsLogin } from '@recoil/Global';
 import LegacyStack from '@legacy_navigators/LegacyStack';
 import LoginStack from '@navigators/LoginStack';
 import MainTab from '@/src/navigators/MainTab';
+import AdmMyLectureStack from '@navigators/MyLectureStack/AdmMyLectureStack';
 
 import UploadTest from '@screens/UploadTest';
 
@@ -30,7 +31,8 @@ export default function App() {
 
         {/* 리뉴얼 */}
         <RecoilRoot>
-          <SelectNavigator />
+          <AdmMyLectureStack />
+          {/* <SelectNavigator /> */}
         </RecoilRoot>
       </NavigationContainer>
     </Provider>
