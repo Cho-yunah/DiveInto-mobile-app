@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import { useSetRecoilState } from 'recoil';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { styles } from './styles';
 import instance from '@lib/api/axios';
@@ -56,6 +56,7 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
             email={userInfo?.email}
             nickname={userInfo?.nickname}
             phone={userInfo?.phone}
+            type="instructor"
           />
         </SafeAreaView>
       )}

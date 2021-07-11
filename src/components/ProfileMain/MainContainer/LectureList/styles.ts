@@ -4,7 +4,8 @@ import { underLine } from '../../styles';
 
 export const styles = StyleSheet.create({
   container: {
-    height: 130,
+    // borderWidth: 1,
+    // height: 130,
     borderBottomWidth: underLine.borderBottomWidth,
     borderBottomColor: underLine.borderBottomColor,
   },

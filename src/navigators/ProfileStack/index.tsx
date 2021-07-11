@@ -14,6 +14,7 @@ import PrivacyPolicyScreen from '@/src/screens/Policies/PrivacyPolicy';
 import ApplyLecturerScreen from '@/src/screens/ApplyLecturer';
 import ModifyNumScreen from '@/src/screens/ModifyNum';
 import DetailNoticeScreen from '@/src/screens/DetailNotice';
+import FindAllReviewScreen from '@/src/screens/FindAllReiew';
 // import DetailPoliciesScreen from '@/src/screens/DetailPolicies';
 
 const Stack = createStackNavigator();
@@ -52,6 +53,15 @@ export default function ProfileStack<ProfileStak>() {
           name="ModifyNum"
           component={ModifyNumScreen}
           options={{ title: '휴대폰 번호 변경' }}
+        />
+
+        {/* 강사 자신의 강의 리스트 조회 */}
+        <Stack.Screen
+          name="FindAllReview"
+          component={FindAllReviewScreen}
+          options={{
+            title: '후기 모아보기',
+          }}
         />
 
         {/* 강사 신청 View */}
