@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react';
-import { ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, View } from 'react-native';
+import { useRecoilValue } from 'recoil';
 
 import { styles } from './styles';
-import instance from '@lib/api/axios';
 import ReviewFilterContainer from '@components/FindInstructorReview/ReviewFilter';
 import CommonLecture from '@components/FindInstructorReview/CommonLecture';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { atkState } from '@/src/recoil/ProfileStack';
+import { atkState } from '@recoil/ProfileStack';
+import instance from '@/src/lib/api/axios';
+import { CommonLectureProps } from '@/src/components/FindInstructorReview/CommonLecture/types';
 
 export default function FindAllReviewScreen() {
-  // const setLectureList = useSetRecoilState();
   const atk = useRecoilValue(atkState);
+  const [LectureList, setLectureList] = useState(null);
 
   useEffect(() => {
     const getLectureInfo = async () => {
@@ -21,7 +22,7 @@ export default function FindAllReviewScreen() {
           },
         });
 
-        console.log(res.data._embedded.myLectureInfoList);
+        setLectureList(res.data._embedded.myLectureInfoList);
       } catch (err) {
         console.log(err);
       }
@@ -31,14 +32,30 @@ export default function FindAllReviewScreen() {
   }, [atk]);
 
   return (
-    <ScrollView style={styles.container}>
-      <ReviewFilterContainer />
-      <CommonLecture />
-      <CommonLecture />
-      <CommonLecture />
-      <CommonLecture />
-      <CommonLecture />
-      <CommonLecture />
-    </ScrollView>
+    <>
+      {LectureList && (
+        <View style={styles.container}>
+          <ReviewFilterContainer />
+          <FlatList
+            data={LectureList}
+            renderItem={({ item }: { item: CommonLectureProps }) => {
+              const { id, title, organization, level, region, imageUrl } = item;
+
+              return (
+                <CommonLecture
+                  id={id}
+                  title={title}
+                  organization={organization}
+                  level={level}
+                  region={region}
+                  imageUrl={imageUrl}
+                />
+              );
+            }}
+            keyExtractor={item => String(item.id)}
+          />
+        </View>
+      )}
+    </>
   );
 }

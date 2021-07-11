@@ -8,8 +8,7 @@ export default function ReviewFilterContainer() {
   return (
     <View style={styles.container}>
       <ReviewFilter text="최신순" active />
-      <ReviewFilter text="낮은평순" />
-      <ReviewFilter text="높은평순" />
+      <ReviewFilter text="가나다순" />
     </View>
   );
 }

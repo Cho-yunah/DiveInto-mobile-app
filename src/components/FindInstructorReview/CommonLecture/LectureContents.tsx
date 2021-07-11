@@ -3,18 +3,27 @@ import { Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { LectureContentsStyle as styles } from './styles';
+import { LectureContentsProps } from './types';
 
-export default function LectureContents() {
+export default function LectureContents({
+  id,
+  title,
+  organization,
+  level,
+  region,
+}: LectureContentsProps) {
   return (
     <View style={styles.container}>
       <View style={[styles.topViewlayout, styles.commonLayout]}>
         <FontAwesome size={10} color={'#535557'} name={'map-marker'} />
-        <Text style={styles.topContentsStyle}>위치</Text>
+        <Text style={styles.topContentsStyle}>{region}</Text>
       </View>
-      <View style={[styles.middleViewLayout, styles.commonLayout]}>
-        <Text style={styles.titleStyle}>타이틀</Text>
-        <Text style={styles.subTitleStyle}>소속단체</Text>
-        <Text style={styles.subTitleStyle}>레벨</Text>
+      <View style={styles.titleViewLayout}>
+        <Text style={styles.titleStyle}>{title}</Text>
+      </View>
+      <View style={styles.middleViewLayout}>
+        <Text style={styles.subTitleStyle}>{organization}</Text>
+        <Text style={styles.subTitleStyle}>{level}</Text>
       </View>
       <View style={styles.bottomViewLayout}>
         <FontAwesome size={12} color={'#F8C25D'} name={'star'} />

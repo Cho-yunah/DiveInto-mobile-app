@@ -1,4 +1,5 @@
-import { atom, selector } from 'recoil';
+import { atom, selector, selectorFamily } from 'recoil';
+import instance from '../lib/api/axios';
 import { userInfoProps } from '../screens/ProfileMain/types';
 
 export const userInfoAtom = atom<userInfoProps | null>({
@@ -15,7 +16,7 @@ export const atkState = atom<string | null>({
   default: null,
 });
 
-// export const groupState = atom<string>({
-//   key: 'group',
-//   default: '',
-// });
+export const LectureListState = atom({
+  key: 'LectureList',
+  default: [],
+});

@@ -11,10 +11,13 @@ export const styles = StyleSheet.create({
 });
 
 export const LectureImageStyle = StyleSheet.create({
-  imageStyle: {
+  container: {
     width: 151,
-    height: 108,
-    resizeMode: 'cover',
+    height: 101,
+  },
+  imageStyle: {
+    width: '100%',
+    height: '100%',
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
   },
@@ -22,7 +25,7 @@ export const LectureImageStyle = StyleSheet.create({
 
 export const LectureContentsStyle = StyleSheet.create({
   container: {
-    marginVertical: 20,
+    justifyContent: 'center',
     marginLeft: 16,
   },
   topViewlayout: {
@@ -35,7 +38,7 @@ export const LectureContentsStyle = StyleSheet.create({
     lineHeight: 12,
     paddingLeft: 4,
   },
-  middleViewLayout: {
+  titleViewLayout: {
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -44,6 +47,10 @@ export const LectureContentsStyle = StyleSheet.create({
     lineHeight: 21,
     paddingRight: 12,
   },
+  middleViewLayout: {
+    flexDirection: 'row',
+  },
+
   subTitleStyle: {
     color: '#6A6D70',
     fontSize: 12,
@@ -60,6 +67,6 @@ export const LectureContentsStyle = StyleSheet.create({
     paddingLeft: 4,
   },
   commonLayout: {
-    marginBottom: 12,
+    marginBottom: 6,
   },
 });
