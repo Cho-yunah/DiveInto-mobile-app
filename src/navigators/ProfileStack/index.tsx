@@ -15,7 +15,8 @@ import PrivacyPolicyScreen from '@/src/screens/Policies/PrivacyPolicy';
 import ApplyLecturerScreen from '@/src/screens/ApplyLecturer';
 import ModifyNumScreen from '@/src/screens/ModifyNum';
 import DetailNoticeScreen from '@/src/screens/DetailNotice';
-import FindAllReviewScreen from '@/src/screens/FindAllReiew';
+import LectureCollectionScreen from '@/src/screens/FindAllReiew/LectureCollection';
+import ReviewCollectionScreen from '@/src/screens/FindAllReiew/ReviewCollection';
 // import DetailPoliciesScreen from '@/src/screens/DetailPolicies';
 
 const Stack = createStackNavigator();
@@ -59,9 +60,17 @@ export default function ProfileStack<ProfileStak>() {
         {/* 강사 자신의 강의 리스트 조회 */}
         <Stack.Screen
           name="FindAllReview"
-          component={FindAllReviewScreen}
+          component={LectureCollectionScreen}
           options={{
             title: '후기 모아보기',
+          }}
+        />
+        {/* 한 강의에 관한 리뷰 모아보기 */}
+        <Stack.Screen
+          name="ReviewCollection"
+          component={ReviewCollectionScreen}
+          options={{
+            title: '후기 리스트',
           }}
         />
 

@@ -9,7 +9,7 @@ import { atkState } from '@recoil/ProfileStack';
 import instance from '@/src/lib/api/axios';
 import { CommonLectureProps } from '@/src/components/FindInstructorReview/CommonLecture/types';
 
-export default function FindAllReviewScreen() {
+export default function LectureCollectionScreen() {
   const atk = useRecoilValue(atkState);
   const [LectureList, setLectureList] = useState(null);
 

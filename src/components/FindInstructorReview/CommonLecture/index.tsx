@@ -5,6 +5,7 @@ import { styles } from './styles';
 import LectureContents from './LectureContents';
 import LectureImage from './LectureImage';
 import { CommonLectureProps } from './types';
+import { useNavigation } from '@react-navigation/native';
 
 export default function CommonLecture({
   id,
@@ -14,8 +15,13 @@ export default function CommonLecture({
   region,
   imageUrl,
 }: CommonLectureProps) {
+  const navigation = useNavigation();
+
   const moveReviewCollection = () => {
-    console.log('move');
+    navigation.navigate('ReviewCollection', {
+      id,
+      title,
+    });
   };
 
   return (
