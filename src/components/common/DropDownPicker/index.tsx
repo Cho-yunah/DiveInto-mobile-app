@@ -25,6 +25,7 @@ export function DropDownPicker({
   const [value, setValue] = useState<null | string | string[]>(null);
 
   useEffect(() => {
+    console.log('DropDownLIb zIndex : ', zIndex);
     const find = items.find((item, idx) => idx == defaultIndex);
     find && setValue(multiple ? [find.value] : find.value);
     console.log('find : ', find?.value);
@@ -48,15 +49,30 @@ export function DropDownPicker({
       placeholderStyle={{ color: color.lightPlaceholder, fontSize: 14 }}
       style={{
         borderWidth: 1.3,
-        borderColor: color.Gray2,
-        backgroundColor: color.lightPlaceholderBack,
+        borderColor: color.White,
+        backgroundColor: color.White,
+        marginBottom: 18,
+        ...shadow,
       }}
       dropDownContainerStyle={{
-        borderWidth: 1.3,
+        borderWidth: 1,
         borderColor: color.Gray2,
-        backgroundColor: color.lightPlaceholderBack,
+        backgroundColor: color.White,
+        ...shadow,
       }}
       zIndex={zIndex}
     />
   );
 }
+
+export const shadow = {
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 3,
+    height: 3,
+  },
+  shadowOpacity: 0.1,
+  shadowRadius: 2,
+
+  elevation: 3,
+};
