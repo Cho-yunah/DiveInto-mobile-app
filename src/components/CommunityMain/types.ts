@@ -3,11 +3,11 @@ export type ContentItem = {
   title: string;
   dateOfRegistration: string;
   category: string;
-  writerNickname: string;
-  imageUrl: string;
+  writerNickname?: string;
+  imageUrl?: string;
   commentCount: number;
   likeCount: number;
-  liked: boolean;
+  liked?: boolean;
   onItemClick: ()=>void;
 }
 

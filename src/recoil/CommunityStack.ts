@@ -1,15 +1,15 @@
-import {atom} from 'recoil'
+import {atom, atomFamily, selector} from 'recoil'
 
 export type ContentItem = {
   id: number;
   title: string;
   dateOfRegistration: string;
   category: string;
-  writerNickname: string;
-  imageUrl: string;
+  writerNickname?: string;
+  imageUrl?: string;
   commentCount: number;
   likeCount: number;
-  liked: boolean;
+  liked?: boolean;
   onItemClick: ()=>void;
 }
 
@@ -17,6 +17,29 @@ export const communityListState = atom<ContentItem[]>({
   key: 'communityListState',
   default: []
 })
+
+// export const communityListFamily = atomFamily({
+//   key: 'communityListFamily',
+//   default: (id : string) => ({
+//     id, 
+//     title: '', 
+//     dateOfRegistration: '', 
+//     category: '', 
+//     writerNickname: '', 
+//     imageUrl: '',
+//     commentCount: 0,
+//     likeCount: 0,
+//     liked: false
+//   })
+// })
+
+// export const communityListSelector = selector({
+//   key: 'communityListSelector',
+//   get: ({get}) => {
+//     const allCommunityListItem = get(communityListState)
+//     return allCommunityListItem.map((id) => get(communityListFamily(id)))
+//   }
+// })
 
 export const loadingState = atom<boolean>({
   key: 'lodingState',

@@ -46,7 +46,7 @@ export const useRequestCommunityItem = () => {
     const requestCommunityItem = async()=> {
       try {
         const {data} = await axios.get(URL);
-       console.log(data)
+        console.log(data)
 
        const {
         id, title,

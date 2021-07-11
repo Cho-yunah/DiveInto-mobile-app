@@ -11,11 +11,14 @@ export const useRequestCommunityList = (): ContentItem[] => {
   
   const listPage = useRecoilValue(listPageState)
   const URL = `http://52.78.56.229:8082/community/post/category?category=SHARE&page=0&size=1`
+  // const URL = `http://52.78.56.229:8082/community/post/category?category=SHARE&page={listPage}&size=1`
 
   useEffect(()=> {
+    if(isLoading) return;
     const requestCommunityList = async() => {
       try {
         setIsLoading(true)
+        console.log('listPage', listPage)
         const {data} = await axios.get(URL);
         setTimeout(()=> {
           setIsLoading(false)

@@ -1,4 +1,4 @@
-import React, { ReactElement, Suspense, useRef} from 'react';
+import React, { ReactElement, Suspense, useCallback, useRef} from 'react';
 import { Text, View, FlatList, ActivityIndicator } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import CommunityItem from './CommunityItem';
@@ -16,7 +16,7 @@ export default function CommunityMain({onItemClick}: any):ReactElement  {
   // data 받아오기
   const communityList =useRequestCommunityList()
   const isLoading = useRecoilValue<boolean>(loadingState);
-  const [page, setPage] = useRecoilState<number>(listPageState)  
+  const [page, setPage] = useRecoilState<number>(listPageState) 
   const [refreshing, setRefreshing] = useRecoilState(refreshState)
   const list =useRecoilValue(communityListState)
 
@@ -31,18 +31,21 @@ export default function CommunityMain({onItemClick}: any):ReactElement  {
   }
 
   // contents 더 가져오기
-  const contentsLoadMore= ()=> { 
+  const contentsLoadMore= useCallback(()=> { 
     if(isLoading) return
-    setPage(page+1)
-   
-  }
+    // console.log(page)
+  }, [communityList])
+
   // 새로고침
   const onFresh = () => {
     console.log('fresh!')
-    setRefreshing(true)
+    // setRefreshing(true)
     setPage(0)
+        console.log(page)
     // useRequestCommunityList()
   }
+
+  console.log('mainpage', communityList)
 
   return (
     <View style={styles.container}>
@@ -76,5 +79,5 @@ export default function CommunityMain({onItemClick}: any):ReactElement  {
           />
       </Suspense>
     </View>
-  );
+  )
 };
