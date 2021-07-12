@@ -19,7 +19,7 @@ import initStore from '@legacy_lib/redux/store';
 const store = initStore();
 
 export default function App() {
-   useEffect(() => {
+  useEffect(() => {
     const init = async () => {
       const fcm = await FCM.getToken();
       console.log('fcm Token : ', fcm);
@@ -49,4 +49,4 @@ export default function App() {
 }
 
 const SelectNavigator = () =>
-  useRecoilValue(IsLogin) ? <MainTab /> : <LoginStack />;
+  !useRecoilValue(IsLogin) ? <MainTab /> : <LoginStack />;

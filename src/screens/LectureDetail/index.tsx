@@ -17,6 +17,9 @@ import Entype from 'react-native-vector-icons/Entypo';
 const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
   const { isMarked } = useRecoilValue(lectureDetailState);
 
+  const navigateToReserveLecture = () =>
+    navigation.navigate('ReserveLecture', { lectureId: 1 });
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -52,7 +55,7 @@ const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
         <LectureReview />
       </ScrollView>
       {/* 예약하기 버튼 */}
-      <ReserveBtn />
+      <ReserveBtn navigateToReserveLecture={navigateToReserveLecture} />
     </>
   );
 };
