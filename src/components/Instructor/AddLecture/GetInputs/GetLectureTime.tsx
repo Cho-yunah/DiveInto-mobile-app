@@ -1,21 +1,36 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { GrayText } from '@config/colors';
 
 import { Modal } from '@components/common';
-import DatePicker from 'react-native-date-picker';
 import { WheelPicker } from '@components/common';
 
+import { useSetRecoilState } from 'recoil';
+import { LectureTimeInput } from '@recoil/Instructor/AddLecture';
+
+import { fillZero } from '@lib/time';
 export function GetLectureTime() {
   const [isVisible, setIsVisible] = useState(false);
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
+  const setLectureTime = useSetRecoilState(LectureTimeInput);
 
   const hours = Array.from({ length: 30 }, (v, i) => `${i}`);
   const minutes = Array.from({ length: 60 }, (v, i) => `${i}`);
 
-  const onHourSelect = (value: string) => setHour(parseInt(value));
-  const onMinuteSelect = (value: string) => setMinute(parseInt(value));
+  const onHourSelect = (value: string) => {
+    setHour(parseInt(value));
+    timeFotmatSet(value, minute.toString());
+  };
+  const onMinuteSelect = (value: string) => {
+    setMinute(parseInt(value));
+    timeFotmatSet(hour.toString(), value);
+  };
+  const timeFotmatSet = (hour: string, minute: string) => {
+    const newHour = fillZero(2, hour);
+    const newMinute = fillZero(2, minute);
+    const second = '00';
+    setLectureTime(`${newHour}:${newMinute}:${second}`);
+  };
 
   return (
     <>

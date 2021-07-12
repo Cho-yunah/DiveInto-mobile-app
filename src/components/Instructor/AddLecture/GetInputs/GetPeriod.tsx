@@ -5,9 +5,12 @@ import { Switch } from './Switch';
 import { Modal } from '@components/common';
 import { WheelPicker } from '@components/common';
 
+import { useRecoilState } from 'recoil';
+import { LecturePeriodInput } from '@recoil/Instructor/AddLecture';
+
 export function GetPeriod() {
   const [isVisible, setIsVisible] = useState(false);
-  const [period, setPeriod] = useState(1);
+  const [period, setPeriod] = useRecoilState(LecturePeriodInput);
 
   const onPress = (idx: 0 | 1) => {
     idx === 0 && setPeriod(1);
@@ -36,7 +39,7 @@ export function GetPeriod() {
           <WheelPicker
             itemList={itemList}
             onSelect={onPeriodSelect}
-            defaultIdx={period - 2}
+            defaultIdx={period && period - 2}
           />
           <Text style={styles.modalText}>일</Text>
         </View>
