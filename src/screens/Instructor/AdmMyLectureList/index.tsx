@@ -13,6 +13,7 @@ export function AdmMyLectureList({ navigation }: MyLectureListProps) {
     const onPress = () => navigation.navigate('강의등록');
 
     navigation.setOptions({
+      title: '내 강의 목록',
       headerRight: () => <NextButton onPress={onPress} text="강의등록" />,
     });
   }, []);

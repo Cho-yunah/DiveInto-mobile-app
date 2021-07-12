@@ -5,7 +5,11 @@ import { RootAdmMyLectureStack } from './types';
 
 const Stack = createStackNavigator<RootAdmMyLectureStack>();
 
-import { AdmMyLectureList, AddLecture } from '@screens/Instructor';
+import {
+  AdmMyLectureList,
+  AddLecture,
+  AddEqipments,
+} from '@screens/Instructor';
 
 export default function AdmMyLectureStack() {
   return (
@@ -29,18 +33,9 @@ export default function AdmMyLectureStack() {
           headerTintColor: '#fefefe',
         }}
       >
-        <Stack.Screen
-          name="강의목록"
-          component={AdmMyLectureList}
-          options={{
-            title: '강의목록',
-          }}
-        />
-        <Stack.Screen
-          name="강의등록"
-          component={AddLecture}
-          options={{ title: '강의등록' }}
-        />
+        <Stack.Screen name="강의목록" component={AdmMyLectureList} />
+        <Stack.Screen name="강의등록" component={AddLecture} />
+        <Stack.Screen name="장비등록" component={AddEqipments} />
       </Stack.Navigator>
     </RecoilRoot>
   );

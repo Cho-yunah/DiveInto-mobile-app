@@ -5,10 +5,12 @@ export function GetInput({
   keyboardType = 'default',
   placeholder = '값을 입력해주세요.',
   hasDoneButton = false,
+  editable = true,
 }: {
   keyboardType?: 'number-pad' | 'default';
   placeholder?: string;
   hasDoneButton?: boolean;
+  editable?: boolean;
 }) {
   const [title, setTitle] = useState<string>();
   return (
@@ -29,6 +31,7 @@ export function GetInput({
       returnKeyType={
         hasDoneButton || keyboardType === 'number-pad' ? 'done' : 'default'
       }
+      editable={editable}
     />
   );
 }
