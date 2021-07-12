@@ -3,11 +3,12 @@ import { View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {SelectStyle as styles} from './styles'
 import { atom, atomFamily, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { postingFormState } from './TitleAndContents';
 
-const categoryAndTagState = atomFamily<Element, string>({
-  key: 'categoryAndTagState',
-  default: ''
-})
+// const categoryAndTagState = atomFamily<Element, string>({
+//   key: 'categoryAndTagState',
+//   default: ''
+// })
 
 const pickerOpenState = atom({
   key: 'pickerOpenState',
@@ -18,11 +19,11 @@ export default function SelectBox() {
   const pickerOpen = useRecoilValue(pickerOpenState)
   const setPickerOpen = useSetRecoilState(pickerOpenState)
 
-    return (
-      <>
-        <Category pickerOpen={pickerOpen} setPickerOpen={setPickerOpen}/>
-        <Tag pickerOpen={pickerOpen} setPickerOpen={setPickerOpen}/>
-      </>
+  return (
+    <>
+      <Category pickerOpen={pickerOpen} setPickerOpen={setPickerOpen}/>
+      <Tag pickerOpen={pickerOpen} setPickerOpen={setPickerOpen}/>
+    </>
   )
 }
 
@@ -32,7 +33,7 @@ const Category= ({pickerOpen, setPickerOpen}: any) => {
     {label: '궁금해요', value: '궁금해요'},
   ]
 
-  const [category, setCategory] = useRecoilState(categoryAndTagState('category'))  
+  const [category, setCategory] = useRecoilState(postingFormState('category'))  
   console.log(category)
 
   return (
@@ -59,7 +60,7 @@ const Tag=({pickerOpen, setPickerOpen}: any) => {
     {label: '태그 1', value: '태그1', }, 
     {label: '태그 2', value: '태그 2'},
   ]
-  const [tag, setTag] = useRecoilState(categoryAndTagState('tag'))  
+  const [tag, setTag] = useRecoilState(postingFormState('tag'))  
   console.log(tag)
 
   return (

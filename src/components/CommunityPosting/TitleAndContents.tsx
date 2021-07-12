@@ -4,10 +4,15 @@ import {  atomFamily,useRecoilState } from 'recoil'
 import {styles} from './styles'
 import {inputTextType} from './types'
 
-const titleAndContentsState = atomFamily<Element, string>({
-  key: 'titleAndContentState',
+export const postingFormState = atomFamily<Element, string>({
+  key: 'postingFormState',
   default: ''
 })
+
+// const titleAndContentsState = atomFamily<Element, string>({
+//   key: 'titleAndContentState',
+//   default: ''
+// })
 
 export default function TitleAndContents() {
   return (
@@ -19,7 +24,7 @@ export default function TitleAndContents() {
 }
 
 const Title = () => {
-  const [title, setTitle] = useRecoilState(titleAndContentsState('title'))
+  const [title, setTitle] = useRecoilState(postingFormState('title'))
   console.log(title)
 
   return (
@@ -39,7 +44,7 @@ const Title = () => {
   )
 }
 const Contents = () => {
-  const [contents, setContents] = useRecoilState(titleAndContentsState('contents'))
+  const [contents, setContents] = useRecoilState(postingFormState('contents'))
   console.log(contents)
   return (
     <View style={styles.inputContainer} >
