@@ -24,8 +24,8 @@ export default function InstructorLectureList() {
     console.log('move4');
   };
 
-  const moveNavigaion5 = () => {
-    console.log('move5');
+  const moveNaviLikeCollection = () => {
+    navigation.navigate('LikeCollection');
   };
 
   return (
@@ -34,7 +34,7 @@ export default function InstructorLectureList() {
       <CommonBtn title="후기 모아보기" moveNavigation={moveNavFindAllReview} />
       <CommonBtn title="정산 관리" moveNavigation={moveNavigaion3} />
       <CommonBtn title="수강내역" moveNavigation={moveNavigaion4} />
-      <CommonBtn title="종아요목록" moveNavigation={moveNavigaion5} />
+      <CommonBtn title="종아요목록" moveNavigation={moveNaviLikeCollection} />
     </View>
   );
 }

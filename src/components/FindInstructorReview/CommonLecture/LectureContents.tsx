@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { LectureContentsStyle as styles } from './styles';
-import { LectureContentsProps } from './types';
+import { LectureContentsProps } from '../types';
 
 export default function LectureContents({
   id,

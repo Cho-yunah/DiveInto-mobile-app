@@ -2,9 +2,12 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
 import { ReviewFilterStyle as styles } from './styles';
-import { ReviewFilterProps } from './types';
+import { LectureFilterProps } from '../types';
 
-export default function ReviewFilter({ text, active }: ReviewFilterProps) {
+export default function EachLectureFilter({
+  text,
+  active,
+}: LectureFilterProps) {
   return (
     <TouchableOpacity
       style={[styles.buttonStyle, active && styles.activeButtonStyle]}

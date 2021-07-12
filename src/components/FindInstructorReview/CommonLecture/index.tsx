@@ -1,11 +1,11 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { styles } from './styles';
 import LectureContents from './LectureContents';
 import LectureImage from './LectureImage';
-import { CommonLectureProps } from './types';
-import { useNavigation } from '@react-navigation/native';
+import { CommonLectureProps } from '../types';
 
 export default function CommonLecture({
   id,

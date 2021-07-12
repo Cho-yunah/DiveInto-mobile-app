@@ -1,35 +1,38 @@
-import { StyleSheet, Platform } from 'react-native';
-import * as Color from '@config/colors';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  container: {
+  orderBySelectorsContainer: {
+    marginVertical: 8,
     flexDirection: 'row',
-    paddingVertical: 20,
   },
-});
-
-export const ReviewFilterStyle = StyleSheet.create({
-  buttonStyle: {
-    paddingVertical: 4,
-    paddingHorizontal: 16,
+  orderBySelectorBtn: {
+    height: 25,
+    width: 85,
     borderRadius: 10,
-    backgroundColor: Color.White,
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+    alignItems: 'center',
     marginRight: 8,
+    marginBottom: 8,
+
     shadowColor: '#000',
     shadowOffset: {
-      width: 0,
-      height: 2,
+      width: 5,
+      height: 5,
     },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+
+    elevation: 5,
   },
-  activeButtonStyle: {
-    backgroundColor: Color.PointBlue,
-  },
-  textStyle: {
-    fontSize: 12,
-    color: Color.BasicText,
-  },
-  activeTextStyle: {
-    color: Color.White,
+  orderBySelectorBtnActive: {
+    backgroundColor: '#50CAD2',
+    height: 25,
+    width: 85,
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+    alignItems: 'center',
+    marginRight: 8,
   },
 });

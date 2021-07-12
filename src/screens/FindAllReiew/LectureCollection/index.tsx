@@ -3,11 +3,11 @@ import { FlatList, View } from 'react-native';
 import { useRecoilValue } from 'recoil';
 
 import { styles } from './styles';
-import ReviewFilterContainer from '@components/FindInstructorReview/ReviewFilter';
+import LectureFilterContainer from '@/src/components/FindInstructorReview/LectureFilter';
 import CommonLecture from '@components/FindInstructorReview/CommonLecture';
 import { atkState } from '@recoil/ProfileStack';
 import instance from '@/src/lib/api/axios';
-import { CommonLectureProps } from '@/src/components/FindInstructorReview/CommonLecture/types';
+import { CommonLectureProps } from '@components/FindInstructorReview/types';
 
 export default function LectureCollectionScreen() {
   const atk = useRecoilValue(atkState);
@@ -35,7 +35,7 @@ export default function LectureCollectionScreen() {
     <>
       {LectureList && (
         <View style={styles.container}>
-          <ReviewFilterContainer />
+          <LectureFilterContainer />
           <FlatList
             data={LectureList}
             renderItem={({ item }: { item: CommonLectureProps }) => {
