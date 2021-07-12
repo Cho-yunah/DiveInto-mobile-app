@@ -17,6 +17,15 @@ export const inputStyles = StyleSheet.create({
   },
   button: { alignItems: 'flex-end' },
   buttonText: { color: Color.deepBlue, fontSize: 14 },
+  notErrorText: {
+    paddingTop: 8,
+    color: Color.Selected,
+    fontSize: 12,
+    opacity: 0,
+  },
+  errorText: {
+    opacity: 1,
+  },
 });
 
 export const genderBtnStyles = StyleSheet.create({

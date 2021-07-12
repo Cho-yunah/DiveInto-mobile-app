@@ -1,12 +1,18 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View, FlatList } from 'react-native';
 
 import { FAQListItem } from '@/src/components/NoticeBoard';
+import { FAQComplainList } from '@assets/data/staticData';
 
 export default function ComplainScren() {
   return (
     <View>
-      <FAQListItem />
+      <FlatList
+        data={FAQComplainList}
+        renderItem={({ item }) => (
+          <FAQListItem desc={item.desc} key={item.id} />
+        )}
+      />
     </View>
   );
 }

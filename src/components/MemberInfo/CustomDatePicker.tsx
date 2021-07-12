@@ -9,11 +9,14 @@ import {
 import moment from 'moment';
 import DatePicker from 'react-native-date-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useRecoilState } from 'recoil';
+
 import { datePickerStyles as styles } from './styles';
 import { DatePickerModalProps } from './types';
+import { birthState } from '@/src/recoil/LoginStack';
 
 function CustomDatePicker() {
-  const [date, setDate] = useState<Date | null>(null);
+  const [date, setDate] = useRecoilState(birthState);
   const [show, setShow] = useState(false);
   const [complete, setComplete] = useState(false);
 

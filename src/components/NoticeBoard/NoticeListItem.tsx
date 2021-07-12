@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { NoticeListItem as styles } from './styles';
 import { NoticeListItemProps } from './types';
 
-export default function NoticeListItems({ title, date }: NoticeListItemProps) {
+export default function NoticeListItems({
+  title,
+  date,
+  id,
+}: NoticeListItemProps) {
   const navigation = useNavigation();
 
   const moveDetailTerms = () => {
-    // navigation.navigate('DetailTerms');
-    console.log('Click moveDetailTerms function');
+    navigation.navigate('DetailNotice', {
+      noticeId: id,
+      title,
+      date,
+    });
   };
 
   return (

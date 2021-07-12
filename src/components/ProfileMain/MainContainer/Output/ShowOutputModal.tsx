@@ -4,7 +4,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import { commonButton as styles } from '../styles';
 import { ShowOutputModalProps } from './types';
-import CommonModal from '../CommonModal';
+import CommonModal from '@components/common/CommonModal';
 
 export default function ShowOutpuModal({ title, desc }: ShowOutputModalProps) {
   const [show, setShow] = useState(false);

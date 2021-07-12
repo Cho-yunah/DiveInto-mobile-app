@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { inputStyles as styles } from './styles';
 import { placeholder } from '@/src/config/colors';
 import instance from '@/src/lib/api/axios';
 import {
   emailState,
+  verifyCodeState,
   isCertification,
   isCertificationError,
 } from '@/src/recoil/LoginStack';
 
 export default function CertificationInput() {
-  const [uniqueNumber, setUniqueNumber] = useState('');
+  const [uniqueNumber, setUniqueNumber] = useRecoilState(verifyCodeState);
   const [isValid, setIsValid] = useState(true);
   const setIsCertificationError = useSetRecoilState(isCertificationError);
 
