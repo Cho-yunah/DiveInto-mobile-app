@@ -17,6 +17,7 @@ import ModifyNumScreen from '@/src/screens/ModifyNum';
 import DetailNoticeScreen from '@/src/screens/DetailNotice';
 import LectureCollectionScreen from '@/src/screens/FindAllReiew/LectureCollection';
 import ReviewCollectionScreen from '@/src/screens/FindAllReiew/ReviewCollection';
+import LikeCollectionScreen from '@/src/screens/LikeCollection';
 // import DetailPoliciesScreen from '@/src/screens/DetailPolicies';
 
 const Stack = createStackNavigator();
@@ -83,6 +84,13 @@ export default function ProfileStack<ProfileStak>() {
           }}
         />
 
+        {/* 좋아요 목록 View */}
+        <Stack.Screen
+          name="LikeCollection"
+          component={LikeCollectionScreen}
+          options={{ title: '좋아요 목록' }}
+        />
+
         {/* 공지 사항 리스트, 상세 View */}
         <Stack.Screen
           name="NoticeList"
@@ -99,7 +107,6 @@ export default function ProfileStack<ProfileStak>() {
           }}
         />
 
-        {/*  */}
         <Stack.Screen
           name="ProfileTab"
           component={ProfileTab}

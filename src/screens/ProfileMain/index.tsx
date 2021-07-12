@@ -56,7 +56,7 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
             email={userInfo?.email}
             nickname={userInfo?.nickname}
             phone={userInfo?.phone}
-            type="instructor"
+            type="student"
           />
         </SafeAreaView>
       )}

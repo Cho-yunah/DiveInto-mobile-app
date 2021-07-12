@@ -12,8 +12,8 @@ export default function StudentLectureList() {
     console.log('move1');
   };
 
-  const moveNavigaion2 = () => {
-    console.log('move2');
+  const moveNavLikeCollection = () => {
+    navigation.navigate('LikeCollection');
   };
 
   const moveNavApplyLecturer = () => {
@@ -23,7 +23,7 @@ export default function StudentLectureList() {
   return (
     <View style={styles.container}>
       <CommonBtn title="수강내역" moveNavigation={moveNavigaion1} />
-      <CommonBtn title="종아요목록" moveNavigation={moveNavigaion2} />
+      <CommonBtn title="종아요목록" moveNavigation={moveNavLikeCollection} />
       <CommonBtn title="강사신청" moveNavigation={moveNavApplyLecturer} />
     </View>
   );
