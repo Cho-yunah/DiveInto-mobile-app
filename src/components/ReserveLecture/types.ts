@@ -12,4 +12,6 @@ export type SizeModalProps = {
 
 export type ReserveBtnProps = {
   navigateToRequestPayment: () => void;
+  isDisabled: boolean;
+  setIsDisabled: (isDisabled: boolean) => void;
 };

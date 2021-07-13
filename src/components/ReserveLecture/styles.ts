@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 export const ReserveBtn = StyleSheet.create({
-  headerBtnText: { color: '#F5DAAC', fontSize: 16 },
+  headerBtnTextDisabled: { color: '#D8D8D8', fontSize: 16 },
+  headerBtnText: { color: 'yellow', fontSize: 16 },
 });
 
 export const SelectStudentNumber = StyleSheet.create({

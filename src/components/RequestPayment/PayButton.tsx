@@ -9,7 +9,7 @@ import {
 } from '@/src/recoil/LectureStack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import { useRecoilValue } from 'recoil';
 import { payButton as styles } from './styles';
@@ -52,7 +52,7 @@ const PayButton = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
+      <Pressable
         style={styles.button}
         onPress={() =>
           requestReservation(
@@ -68,7 +68,7 @@ const PayButton = () => {
         ) : (
           <Text style={styles.buttonText}>결제하기</Text>
         )}
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };

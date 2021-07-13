@@ -9,7 +9,7 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 const LectureCalendar = () => {
   const [currMonth, setCurrMonth] = useRecoilState(currMonthState);
@@ -47,6 +47,10 @@ const LectureCalendar = () => {
         setMarkedDate({ ...markedDate, ...obj });
       });
   }, [ScheduleInfoLists]);
+
+  useEffect(() => {
+    return () => {};
+  }, []);
 
   return (
     <View style={{ backgroundColor: '#fefefe' }}>
