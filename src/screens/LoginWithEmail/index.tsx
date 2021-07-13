@@ -12,7 +12,7 @@ import { IsLogin, IsInstructor } from '@/src/recoil/Global';
 import jwt_decode from 'jwt-decode';
 import { JWToken } from './types';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   const setIsLogin = useSetRecoilState(IsLogin);
@@ -33,6 +33,8 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
       if (login?.data?.access_token) {
         const atk = login.data.access_token;
         const decoded: JWToken = jwt_decode(atk);
+        console.log(login);
+
         console.log('atk : ', atk);
 
         await AsyncStorage.setItem('token', atk);

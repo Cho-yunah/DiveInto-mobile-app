@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native';
-import { useSetRecoilState } from 'recoil';
-import AsyncStorage from '@react-native-community/async-storage';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { styles } from './styles';
+import instance from '@lib/api/axios';
+import { ProfileMainProps } from '@navigators/ProfileStack/types';
 import { userInfoProps } from './types';
-import { atkState } from '@/src/recoil/ProfileStack';
-import { HeaderContainer, MainContainer } from '@/src/components/ProfileMain';
-import instance from '@/src/lib/api/axios';
+import { atkState } from '@recoil/ProfileStack';
+import { HeaderContainer, MainContainer } from '@components/ProfileMain';
+import { IsInstructor } from '@/src/recoil/Global';
 
-export default function ProfileMain() {
-  console.log('main component start');
+export default function ProfileMain({ navigation }: ProfileMainProps) {
+  const isInstructor = useRecoilValue(IsInstructor);
+  // console.log(isInstructor);
 
   const setAtk = useSetRecoilState(atkState);
   const [userInfo, setUserInfo] = useState<userInfoProps | undefined>({
@@ -57,6 +60,7 @@ export default function ProfileMain() {
             email={userInfo?.email}
             nickname={userInfo?.nickname}
             phone={userInfo?.phone}
+            type={isInstructor ? 'instructor' : 'student'}
           />
         </SafeAreaView>
       )}

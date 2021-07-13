@@ -13,7 +13,7 @@ export const commonButton = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 30,
+    paddingBottom: 30,
   },
   buttonText: {
     fontSize: 14,

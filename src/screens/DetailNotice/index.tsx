@@ -10,7 +10,7 @@ import {
   SubContents,
   EditContents,
   Appreciation,
-} from '@components/DetailNotice';
+} from '@components/DetailNotice/AboutNotice';
 
 function index({ route, navigation }: DetailNoticeProps) {
   const { noticeId, title, date } = route.params;

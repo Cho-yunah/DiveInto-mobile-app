@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import { Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useRecoilValue } from 'recoil';
 
 import ProfileWithoutLoginScreen from '@/src/screens/ProfileWithoutLogin';
 import ProfileMainScreen from '@/src/screens/ProfileMain';
@@ -14,11 +15,19 @@ import PrivacyPolicyScreen from '@/src/screens/Policies/PrivacyPolicy';
 import ApplyLecturerScreen from '@/src/screens/ApplyLecturer';
 import ModifyNumScreen from '@/src/screens/ModifyNum';
 import DetailNoticeScreen from '@/src/screens/DetailNotice';
+import LectureCollectionScreen from '@/src/screens/FindAllReiew/LectureCollection';
+import ReviewCollectionScreen from '@/src/screens/FindAllReiew/ReviewCollection';
+import LikeCollectionScreen from '@/src/screens/LikeCollection';
+import { IsInstructor } from '@/src/recoil/Global';
 // import DetailPoliciesScreen from '@/src/screens/DetailPolicies';
 
 const Stack = createStackNavigator();
 
 export default function ProfileStack<ProfileStak>() {
+  const temp = useRecoilValue(IsInstructor);
+
+  // console.log(temp, 'temp');
+
   return (
     <RecoilRoot>
       <Stack.Navigator
@@ -54,6 +63,23 @@ export default function ProfileStack<ProfileStak>() {
           options={{ title: '휴대폰 번호 변경' }}
         />
 
+        {/* 강사 자신의 강의 리스트 조회 */}
+        <Stack.Screen
+          name="FindAllReview"
+          component={LectureCollectionScreen}
+          options={{
+            title: '후기 모아보기',
+          }}
+        />
+        {/* 한 강의에 관한 리뷰 모아보기 */}
+        <Stack.Screen
+          name="ReviewCollection"
+          component={ReviewCollectionScreen}
+          options={{
+            title: '후기 리스트',
+          }}
+        />
+
         {/* 강사 신청 View */}
         <Stack.Screen
           name="ApplyLecturer"
@@ -61,6 +87,13 @@ export default function ProfileStack<ProfileStak>() {
           options={{
             title: '강사신청',
           }}
+        />
+
+        {/* 좋아요 목록 View */}
+        <Stack.Screen
+          name="LikeCollection"
+          component={LikeCollectionScreen}
+          options={{ title: '좋아요 목록' }}
         />
 
         {/* 공지 사항 리스트, 상세 View */}
@@ -79,7 +112,6 @@ export default function ProfileStack<ProfileStak>() {
           }}
         />
 
-        {/*  */}
         <Stack.Screen
           name="ProfileTab"
           component={ProfileTab}
