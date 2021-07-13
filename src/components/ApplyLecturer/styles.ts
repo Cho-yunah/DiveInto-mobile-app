@@ -22,7 +22,7 @@ export const UploadCertificate = StyleSheet.create({
     height: 76,
     marginTop: 60,
     padding: 8,
-    borderColor: Color.underLin,
+    borderColor: Color.underLine,
     borderWidth: 1,
     borderRadius: 8,
   },

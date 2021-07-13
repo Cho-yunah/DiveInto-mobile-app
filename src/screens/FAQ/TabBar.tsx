@@ -4,8 +4,6 @@ import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
 
 import { TabBarStyles as styles } from './styles';
 
-import * as Color from '@/src/config/colors';
-
 type Route = {
   key: string;
   name: string;

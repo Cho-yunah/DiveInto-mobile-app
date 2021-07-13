@@ -8,7 +8,7 @@ import InfoTags from './InfoTags';
 
 const lectureExm = require('@assets/LectureExm.png');
 
-const PopularLecture = ({
+export const PopularLecture = ({
   title = '프리다이빙',
   organization = 'AIDA',
   level = 'level1',

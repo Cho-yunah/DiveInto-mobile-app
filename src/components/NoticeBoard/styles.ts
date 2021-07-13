@@ -24,11 +24,16 @@ export const NoticeListItem = StyleSheet.create({
 
 export const FAQListItem = StyleSheet.create({
   container: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#CCD7DF',
-    padding: 20,
     backgroundColor: Color.White,
   },
+  buttonStyle: {
+    // padding: 20,
+    paddingVertical: 20,
+    marginHorizontal: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCD7DF',
+  },
+
   text: {
     fontSize: 14,
     color: '#202020',
