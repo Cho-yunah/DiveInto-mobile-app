@@ -19,6 +19,11 @@ export type RootProfileStack = {
     id: number;
     title: string;
   };
+  DetailFAQ: {
+    FAQ_id: number;
+    title: string;
+    type: string;
+  };
 };
 
 //  공통 타입
@@ -33,6 +38,8 @@ export type DetailNoticeProps = StackScreenProps<
   RootProfileStack,
   'DetailNotice'
 >;
+
+export type DetailFAQProps = StackScreenProps<RootProfileStack, 'DetailFAQ'>;
 
 export type PolicyProps = StackScreenProps<RootProfileStack, 'Policy'>;
 

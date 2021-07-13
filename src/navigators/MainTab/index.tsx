@@ -18,6 +18,7 @@ const Tab = createBottomTabNavigator<RootMainTab>();
 
 export default function LoginStack() {
   const isInstructor = useRecoilValue(IsInstructor);
+  console.log(isInstructor);
 
   return (
     <RecoilRoot>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { styles } from './styles';
@@ -9,8 +9,12 @@ import { ProfileMainProps } from '@navigators/ProfileStack/types';
 import { userInfoProps } from './types';
 import { atkState } from '@recoil/ProfileStack';
 import { HeaderContainer, MainContainer } from '@components/ProfileMain';
+import { IsInstructor } from '@/src/recoil/Global';
 
 export default function ProfileMain({ navigation }: ProfileMainProps) {
+  const isInstructor = useRecoilValue(IsInstructor);
+  // console.log(isInstructor);
+
   const setAtk = useSetRecoilState(atkState);
   const [userInfo, setUserInfo] = useState<userInfoProps | undefined>({
     email: '',
@@ -56,7 +60,7 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
             email={userInfo?.email}
             nickname={userInfo?.nickname}
             phone={userInfo?.phone}
-            type="instructor"
+            type={isInstructor ? 'instructor' : 'student'}
           />
         </SafeAreaView>
       )}

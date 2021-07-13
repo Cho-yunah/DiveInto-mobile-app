@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useRecoilValue } from 'recoil';
 
 import ProfileWithoutLoginScreen from '@/src/screens/ProfileWithoutLogin';
 import ProfileMainScreen from '@/src/screens/ProfileMain';
@@ -18,11 +18,16 @@ import DetailNoticeScreen from '@/src/screens/DetailNotice';
 import LectureCollectionScreen from '@/src/screens/FindAllReiew/LectureCollection';
 import ReviewCollectionScreen from '@/src/screens/FindAllReiew/ReviewCollection';
 import LikeCollectionScreen from '@/src/screens/LikeCollection';
+import { IsInstructor } from '@/src/recoil/Global';
 // import DetailPoliciesScreen from '@/src/screens/DetailPolicies';
 
 const Stack = createStackNavigator();
 
 export default function ProfileStack<ProfileStak>() {
+  const temp = useRecoilValue(IsInstructor);
+
+  // console.log(temp, 'temp');
+
   return (
     <RecoilRoot>
       <Stack.Navigator

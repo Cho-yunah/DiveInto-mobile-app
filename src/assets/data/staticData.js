@@ -282,62 +282,6 @@ const detailContents = [
   },
 ];
 
-const FAQLecturerList = [
-  { id: 1, desc: '강의 신청은 어디서 하면 되나요?' },
-  { id: 2, desc: '강의 신청은 어디서 하면 되나요?' },
-  { id: 3, desc: '강의 신청은 어디서 하면 되나요?' },
-  { id: 4, desc: '강의 신청은 어디서 하면 되나요?' },
-  { id: 5, desc: '강의 신청은 어디서 하면 되나요?' },
-  { id: 6, desc: '강의 신청은 어디서 하면 되나요?' },
-  { id: 7, desc: '강의 신청은 어디서 하면 되나요?' },
-  { id: 8, desc: '강의 신청은 어디서 하면 되나요?' },
-  { id: 9, desc: '강의 신청은 어디서 하면 되나요?' },
-  { id: 10, desc: '강의 신청은 어디서 하면 되나요?' },
-  { id: 11, desc: '강의 신청은 어디서 하면 되나요?' },
-];
-
-const FAQManualList = [
-  { id: 1, desc: '강의 일정은 어디서 보나요?' },
-  { id: 2, desc: '강의 일정은 어디서 보나요?' },
-  { id: 3, desc: '강의 일정은 어디서 보나요?' },
-  { id: 4, desc: '강의 일정은 어디서 보나요?' },
-  { id: 5, desc: '강의 일정은 어디서 보나요?' },
-  { id: 6, desc: '강의 일정은 어디서 보나요?' },
-  { id: 7, desc: '강의 일정은 어디서 보나요?' },
-  { id: 8, desc: '강의 일정은 어디서 보나요?' },
-  { id: 9, desc: '강의 일정은 어디서 보나요?' },
-  { id: 10, desc: '강의 일정은 어디서 보나요?' },
-  { id: 11, desc: '강의 일정은 어디서 보나요?' },
-];
-
-const FAQComplainList = [
-  { id: 1, desc: '로그인이 안될 경우가 있어요' },
-  { id: 2, desc: '로그인이 안될 경우가 있어요' },
-  { id: 3, desc: '로그인이 안될 경우가 있어요' },
-  { id: 4, desc: '로그인이 안될 경우가 있어요' },
-  { id: 5, desc: '로그인이 안될 경우가 있어요' },
-  { id: 6, desc: '로그인이 안될 경우가 있어요' },
-  { id: 7, desc: '로그인이 안될 경우가 있어요' },
-  { id: 8, desc: '로그인이 안될 경우가 있어요' },
-  { id: 9, desc: '로그인이 안될 경우가 있어요' },
-  { id: 10, desc: '로그인이 안될 경우가 있어요' },
-  { id: 11, desc: '로그인이 안될 경우가 있어요' },
-];
-
-const FAQofETCList = [
-  { id: 1, desc: '환불 신청하면 언제 돈이 들어오나요?' },
-  { id: 2, desc: '환불 신청하면 언제 돈이 들어오나요?' },
-  { id: 3, desc: '환불 신청하면 언제 돈이 들어오나요?' },
-  { id: 4, desc: '환불 신청하면 언제 돈이 들어오나요?' },
-  { id: 5, desc: '환불 신청하면 언제 돈이 들어오나요?' },
-  { id: 6, desc: '환불 신청하면 언제 돈이 들어오나요?' },
-  { id: 7, desc: '환불 신청하면 언제 돈이 들어오나요?' },
-  { id: 8, desc: '환불 신청하면 언제 돈이 들어오나요?' },
-  { id: 9, desc: '환불 신청하면 언제 돈이 들어오나요?' },
-  { id: 10, desc: '환불 신청하면 언제 돈이 들어오나요?' },
-  { id: 11, desc: '환불 신청하면 언제 돈이 들어오나요?' },
-];
-
 const servicePolicyInfo = [
   {
     id: 1,
@@ -458,10 +402,6 @@ const privacyPolicyInfo = [
 module.exports = {
   noticeList,
   detailContents,
-  FAQLecturerList,
-  FAQManualList,
-  FAQComplainList,
-  FAQofETCList,
   servicePolicyInfo,
   FTPPolicyInfo,
   privacyPolicyInfo,
