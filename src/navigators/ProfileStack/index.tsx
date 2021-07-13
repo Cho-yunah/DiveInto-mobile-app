@@ -3,22 +3,23 @@ import { Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RecoilRoot, useRecoilValue } from 'recoil';
 
-import ProfileWithoutLoginScreen from '@/src/screens/ProfileWithoutLogin';
-import ProfileMainScreen from '@/src/screens/ProfileMain';
-import NoticeListScreen from '@/src/screens/NoticeList';
-import ProfileTab from '@/src/navigators/ProfileTab';
-import BusinessPolicyScreen from '@/src/screens/Policies/BusinessPolicy';
-import PolicyScreen from '@/src/screens/Policies';
-import ServicePolicyScreen from '@/src/screens/Policies/ServicePolicy';
-import FTPolicyScreen from '@/src/screens/Policies/FTPolicy';
-import PrivacyPolicyScreen from '@/src/screens/Policies/PrivacyPolicy';
-import ApplyLecturerScreen from '@/src/screens/ApplyLecturer';
-import ModifyNumScreen from '@/src/screens/ModifyNum';
-import DetailNoticeScreen from '@/src/screens/DetailNotice';
-import LectureCollectionScreen from '@/src/screens/FindAllReiew/LectureCollection';
-import ReviewCollectionScreen from '@/src/screens/FindAllReiew/ReviewCollection';
-import LikeCollectionScreen from '@/src/screens/LikeCollection';
-import { IsInstructor } from '@/src/recoil/Global';
+import ProfileWithoutLoginScreen from '@screens/ProfileWithoutLogin';
+import ProfileMainScreen from '@screens/ProfileMain';
+import NoticeListScreen from '@screens/NoticeList';
+import ProfileTab from '@navigators/ProfileTab';
+import BusinessPolicyScreen from '@screens/Policies/BusinessPolicy';
+import PolicyScreen from '@screens/Policies';
+import ServicePolicyScreen from '@screens/Policies/ServicePolicy';
+import FTPolicyScreen from '@screens/Policies/FTPolicy';
+import PrivacyPolicyScreen from '@screens/Policies/PrivacyPolicy';
+import ApplyLecturerScreen from '@screens/ApplyLecturer';
+import ModifyNumScreen from '@screens/ModifyNum';
+import DetailNoticeScreen from '@screens/DetailNotice';
+import LectureCollectionScreen from '@screens/FindAllReiew/LectureCollection';
+import ReviewCollectionScreen from '@screens/FindAllReiew/ReviewCollection';
+import LikeCollectionScreen from '@screens/LikeCollection';
+import LectureScheduleScreen from '@screens/LectureSchedule';
+import { IsInstructor } from '@recoil/Global';
 // import DetailPoliciesScreen from '@/src/screens/DetailPolicies';
 
 const Stack = createStackNavigator();
@@ -94,6 +95,12 @@ export default function ProfileStack<ProfileStak>() {
           name="LikeCollection"
           component={LikeCollectionScreen}
           options={{ title: '좋아요 목록' }}
+        />
+
+        {/* 강의 일정 View */}
+        <Stack.Screen
+          name="LectureSchedule"
+          component={LectureScheduleScreen}
         />
 
         {/* 공지 사항 리스트, 상세 View */}
