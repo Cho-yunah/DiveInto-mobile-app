@@ -1,18 +1,19 @@
 import React, {ReactElement} from 'react'
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import styles  from './styles';
 
-// import components
 import { CommunityDetailProps } from '@navigators/CommunityStack/types';
-import { DetailInfo, DetailContents, DetailComments } from '@components/CommunityDetail';
+import { DetailInfo, DetailContents, DetailCommentsInput, CommentDetail } from '@components/CommunityDetail';
 
 export default function CommunityDetailScreen({navigation}: CommunityDetailProps): ReactElement {
-
   return (
     <View style={styles.container}>
       <DetailInfo/>
-      <DetailContents/>
-      <DetailComments/>
+        <ScrollView>
+          <DetailContents/>
+          <CommentDetail/>
+        </ScrollView>
+        <DetailCommentsInput/>
     </View>
   );
 }

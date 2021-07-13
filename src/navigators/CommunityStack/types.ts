@@ -1,6 +1,5 @@
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 
-
 // route.params로 전달될 속성값들을 명시한다.
 export type RootCommunityStack = {
   CommunityMain: undefined;

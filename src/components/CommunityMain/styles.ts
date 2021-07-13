@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native'
 export const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    flex: 1
   },
   tabContainer: {
     backgroundColor: "#fefefe",
@@ -63,5 +64,13 @@ export const styles = StyleSheet.create({
   },
   loaderStyle: {
     marginVertical: 16,
-  }
+  },
+  btnText: {
+    color: '#D8D8D8',
+    fontSize: 14,
+    paddingRight: 17,
+  },
+  ActivationButtonText: {
+    color: '#F5DAAC',
+  },
 })
