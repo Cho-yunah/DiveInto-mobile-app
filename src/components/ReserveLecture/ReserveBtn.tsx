@@ -49,9 +49,7 @@ const ReserveBtn = ({
       onPress={() => moveToRequestPayment()}
       disabled={isDisabled}
     >
-      <Text style={isDisabled ? styles.headerBtnText : styles.headerBtnText}>
-        다음
-      </Text>
+      <Text style={styles.headerBtnText}>다음</Text>
     </TouchableOpacity>
   );
 };

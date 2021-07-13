@@ -1,6 +1,6 @@
 import { ReserveLectureProps } from '@/src/navigators/LectureStack/types';
 import React, { useLayoutEffect, useState } from 'react';
-import { Modal, Pressable, ScrollView, Text, View } from 'react-native';
+import { Modal, Pressable, ScrollView, Text } from 'react-native';
 import styles from './styles';
 import {
   LectureCalendar,
@@ -51,7 +51,7 @@ const index = ({ navigation }: ReserveLectureProps) => {
             onPress={() => setIsDisabled(false)}
             style={styles.modalOuterContainer}
           >
-            <ModalContainer />
+            <ModalContainer message={'수강 가능한 일정을 선택해 주세요.'} />
           </Pressable>
         </Modal>
       </ScrollView>
@@ -59,9 +59,9 @@ const index = ({ navigation }: ReserveLectureProps) => {
   );
 };
 
-const ModalContainer = () => (
+export const ModalContainer = ({ message }: { message: string }) => (
   <SafeAreaView style={styles.modalContainer}>
-    <Text style={styles.modalText}>수강 가능한 일정을 선택해 주세요.</Text>
+    <Text style={styles.modalText}>{message}</Text>
   </SafeAreaView>
 );
 

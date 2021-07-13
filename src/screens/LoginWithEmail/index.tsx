@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { Modal, Pressable, ScrollView, View } from 'react-native';
 import { LoginWithEmailProps } from '@navigators/LoginStack/types';
 import { PwForgot, LoginButton, PWInput } from '@components/LoginWithEmail';
 import styles from './styles';
@@ -12,10 +12,14 @@ import { IsLogin, IsInstructor } from '@/src/recoil/Global';
 import jwt_decode from 'jwt-decode';
 import { JWToken } from './types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState } from 'react';
+import { ModalContainer } from '../ReserveLecture';
+import { useEffect } from 'react';
 
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   const setIsLogin = useSetRecoilState(IsLogin);
   const setIsInstructor = useSetRecoilState(IsInstructor);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const requestLogin: LoginButtonProps['requestLogin'] = async (
     email,
@@ -23,7 +27,7 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
     setIsLoading,
   ) => {
     setIsLoading(true);
-
+    setIsError(false);
     try {
       const login = await instance.post('/sign/login', {
         email,
@@ -41,7 +45,8 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
         setIsLogin(true);
       }
     } catch (e) {
-      console.log(e);
+      console.log(e.response.data);
+      setIsError(true);
     }
     setIsLoading(false);
   };
@@ -53,6 +58,14 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
         <LoginButton requestLogin={requestLogin} />
         <PwForgot />
       </ScrollView>
+      <Modal visible={isError} transparent={true} animationType={'fade'}>
+        <Pressable
+          onPress={() => setIsError(false)}
+          style={styles.modalOuterContainer}
+        >
+          <ModalContainer message={'이메일 혹은 비밀번호가 잘못되었습니다.'} />
+        </Pressable>
+      </Modal>
     </View>
   );
 };

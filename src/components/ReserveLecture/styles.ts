@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 export const ReserveBtn = StyleSheet.create({
-  headerBtnTextDisabled: { color: '#D8D8D8', fontSize: 16 },
   headerBtnText: { color: 'yellow', fontSize: 16 },
 });
 

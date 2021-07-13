@@ -13,6 +13,7 @@ import useTransitionColor from './useTransitionColor';
 
 import { CheckBox } from 'react-native-elements';
 import Entype from 'react-native-vector-icons/Entypo';
+import { ActivityIndicator } from 'react-native-paper';
 
 import { useRecoilState } from 'recoil';
 import { emailState } from '@recoil/LoginStack';
@@ -99,7 +100,11 @@ export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
             { color: interpolations.colorInterpolation },
           ]}
         >
-          {isLoading ? 'Loading...' : '이메일로 시작'}
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#fefefe" />
+          ) : (
+            '이메일로 시작'
+          )}
         </TransitionText>
       </TransitionPressable>
     </>

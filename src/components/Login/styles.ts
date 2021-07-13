@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   transitionPressable: {
+    height: 50,
     borderWidth: 1,
     borderRadius: 10,
     marginTop: 70,
