@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { View} from 'react-native';
+import { View } from 'react-native';
 import { SetPasswordProps } from '@navigators/LoginStack/types';
 
 // import style
@@ -16,7 +16,7 @@ export default function SetPasswordScreen({
   const onPress = () => navigation.navigate('MemberInfo');
 
   navigation.setOptions({
-    headerRight: () => <NextButton onPress={onPress} />,
+    headerRight: () => <NextButton onPress={onPress} disable={true} />,
   });
 
   return (

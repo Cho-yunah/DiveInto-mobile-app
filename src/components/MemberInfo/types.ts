@@ -1,4 +1,4 @@
-export type gender = '남성' | '여성';
+export type gender = string;
 
 export type selectTabProps = {
   selected: gender;
@@ -12,4 +12,8 @@ export type DatePickerModalProps = {
   onComplete: () => void;
   date: Date | null;
   onDateChange: (date: Date) => void;
+};
+
+export type ErrorTextProps = {
+  isError: boolean;
 };

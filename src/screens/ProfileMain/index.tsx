@@ -1,17 +1,69 @@
-import React from 'react';
-import { Text, View, SafeAreaView } from 'react-native';
-import { RecoilRoot } from 'recoil';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView } from 'react-native';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { styles } from './styles';
-import { HeaderContainer, MainContainer } from '@/src/components/ProfileMain';
+import instance from '@lib/api/axios';
+import { ProfileMainProps } from '@navigators/ProfileStack/types';
+import { userInfoProps } from './types';
+import { atkState } from '@recoil/ProfileStack';
+import { HeaderContainer, MainContainer } from '@components/ProfileMain';
+import { IsInstructor } from '@/src/recoil/Global';
 
-export default function ProfileMain() {
+export default function ProfileMain({ navigation }: ProfileMainProps) {
+  const isInstructor = useRecoilValue(IsInstructor);
+  // console.log(isInstructor);
+
+  const setAtk = useSetRecoilState(atkState);
+  const [userInfo, setUserInfo] = useState<userInfoProps | undefined>({
+    email: '',
+    nickname: '',
+    phone: '',
+  });
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+
+        setAtk(token);
+
+        const res = await instance.get('/account', {
+          headers: {
+            Authorization: token,
+          },
+        });
+
+        setUserInfo(state => ({
+          ...state,
+          email: res.data.email,
+          nickname: res.data.nickName,
+          phone: res.data.phoneNumber,
+        }));
+
+        // console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getUserInfo();
+  }, []);
+
   return (
-    <RecoilRoot>
-      <SafeAreaView style={styles.container}>
-        <HeaderContainer currScreen={'main'} buttonText="사진수정" />
-        <MainContainer />
-      </SafeAreaView>
-    </RecoilRoot>
+    <>
+      {userInfo && (
+        <SafeAreaView style={styles.container}>
+          <HeaderContainer currScreen={'main'} buttonText="사진수정" />
+          <MainContainer
+            email={userInfo?.email}
+            nickname={userInfo?.nickname}
+            phone={userInfo?.phone}
+            type={isInstructor ? 'instructor' : 'student'}
+          />
+        </SafeAreaView>
+      )}
+    </>
   );
 }

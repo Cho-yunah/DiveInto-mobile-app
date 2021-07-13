@@ -14,7 +14,6 @@ import { JWToken } from './types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 import { ModalContainer } from '../ReserveLecture';
-import { useEffect } from 'react';
 
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   const setIsLogin = useSetRecoilState(IsLogin);
@@ -38,7 +37,10 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
         const decoded: JWToken = jwt_decode(atk);
 
         await AsyncStorage.setItem('atk', atk);
+
         console.log('atk : ', atk);
+
+        await AsyncStorage.setItem('token', atk);
 
         if (decoded.authorities.includes('ROLE_INSTRUCTOR'))
           setIsInstructor(true);

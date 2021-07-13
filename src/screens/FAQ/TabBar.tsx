@@ -4,8 +4,6 @@ import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
 
 import { TabBarStyles as styles } from './styles';
 
-import * as Color from '@/src/config/colors';
-
 type Route = {
   key: string;
   name: string;
@@ -24,8 +22,6 @@ export default function TabBar({
           const { options } = descriptors[route.key];
           const label = options.title;
           const isFocused = state.index === index;
-
-          console.log(route.key);
 
           const onPress = () => {
             const event = navigation.emit({
