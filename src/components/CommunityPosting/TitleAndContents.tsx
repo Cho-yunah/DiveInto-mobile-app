@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, TextInput } from 'react-native'
-import {  atomFamily,useRecoilState } from 'recoil'
+import {  atomFamily,useRecoilState, useRecoilValue } from 'recoil'
 import {styles} from './styles'
 import {inputTextType} from './types'
 
@@ -8,11 +8,6 @@ export const postingFormState = atomFamily<Element, string>({
   key: 'postingFormState',
   default: ''
 })
-
-// const titleAndContentsState = atomFamily<Element, string>({
-//   key: 'titleAndContentState',
-//   default: ''
-// })
 
 export default function TitleAndContents() {
   return (
@@ -25,7 +20,6 @@ export default function TitleAndContents() {
 
 const Title = () => {
   const [title, setTitle] = useRecoilState(postingFormState('title'))
-  console.log(title)
 
   return (
     <View style={styles.inputContainer} >
@@ -37,15 +31,16 @@ const Title = () => {
         numberOfLines={2}
         multiline={true}
         onChangeText={(text)=> {
-          setTitle({ title: text })
+          setTitle( text )
         }}
+        value={title.toString()}
         />
     </View>
   )
 }
 const Contents = () => {
   const [contents, setContents] = useRecoilState(postingFormState('contents'))
-  console.log(contents)
+  // console.log(contents)
   return (
     <View style={styles.inputContainer} >
       <TextInput 
@@ -56,8 +51,9 @@ const Contents = () => {
         placeholderTextColor='#D8D8D8' 
         multiline={true}
         onChangeText={(text)=> {
-          setContents({contents: text})
+          setContents(text)
         }}
+        value={contents.toString()}
         />
     </View>
   )

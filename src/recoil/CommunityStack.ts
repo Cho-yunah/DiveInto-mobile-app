@@ -18,6 +18,14 @@ export const communityListState = atom<ContentItem[]>({
   default: []
 })
 
+export const allCommunityListState = selector({
+  key: 'allCommunityListState',
+  get: ({get}) => {
+    const list = get(communityListState)
+    return list;
+  }
+})
+
 // export const communityListFamily = atomFamily({
 //   key: 'communityListFamily',
 //   default: (id : string) => ({

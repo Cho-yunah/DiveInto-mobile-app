@@ -5,11 +5,6 @@ import {SelectStyle as styles} from './styles'
 import { atom, atomFamily, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { postingFormState } from './TitleAndContents';
 
-// const categoryAndTagState = atomFamily<Element, string>({
-//   key: 'categoryAndTagState',
-//   default: ''
-// })
-
 const pickerOpenState = atom({
   key: 'pickerOpenState',
   default: false
@@ -29,27 +24,27 @@ export default function SelectBox() {
 
 const Category= ({pickerOpen, setPickerOpen}: any) => {
   const categoryItem = [
-    {label: '공유해요', value: '공유해요'}, 
-    {label: '궁금해요', value: '궁금해요'},
+    {label: '공유해요', value: 'SHARE'}, 
+    {label: '궁금해요', value: 'QUESTION'},
   ]
 
   const [category, setCategory] = useRecoilState(postingFormState('category'))  
-  console.log(category)
+  // console.log(category)
 
   return (
     <View style={{zIndex:200}}>
         <DropDownPicker
-        containerStyle={pickerOpen? styles.shadowContainer : styles.selectContainer}
-        placeholder={'카테고리를 선택해주세요'}
-        placeholderStyle={{color: '#D8D8D8'}}
-        items = {categoryItem}
-        itemStyle={styles.itemStyle}
-        style={styles.pickerStyle}
-        dropDownStyle={styles.dropDown}
-        labelStyle={styles.labelStyle}
-        onOpen={() => setPickerOpen(true)}
-        onClose={() => setPickerOpen(false)}
-        onChangeItem={item => setCategory(item.value)}        
+          containerStyle={pickerOpen? styles.shadowContainer : styles.selectContainer}
+          placeholder={'카테고리를 선택해주세요'}
+          placeholderStyle={{color: '#D8D8D8'}}
+          items = {categoryItem}
+          itemStyle={styles.itemStyle}
+          style={styles.pickerStyle}
+          dropDownStyle={styles.dropDown}
+          labelStyle={styles.labelStyle}
+          onOpen={() => setPickerOpen(true)}
+          onClose={() => setPickerOpen(false)}
+          onChangeItem={item => setCategory(item.value)}  
         />
     </View>
   )
@@ -61,7 +56,7 @@ const Tag=({pickerOpen, setPickerOpen}: any) => {
     {label: '태그 2', value: '태그 2'},
   ]
   const [tag, setTag] = useRecoilState(postingFormState('tag'))  
-  console.log(tag)
+  // console.log(tag)
 
   return (
     <View style={{zIndex:100}}>
@@ -76,7 +71,7 @@ const Tag=({pickerOpen, setPickerOpen}: any) => {
         placeholderStyle={{color: '#D8D8D8'}}
         onOpen={() => setPickerOpen(true)}
         onClose={() => setPickerOpen(false)}
-        onChangeItem={item => setTag(item.value)}        
+        onChangeItem={item => setTag([item.value])}        
        />
     </View>
   )

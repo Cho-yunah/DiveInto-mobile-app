@@ -7,7 +7,7 @@ export type ContentItem = {
   imageUrl?: string;
   commentCount: number;
   likeCount: number;
-  liked?: boolean;
+  liked: boolean;
   onItemClick: ()=>void;
 }
 
@@ -17,8 +17,6 @@ export type CommentNumber = {
 export type likeCount = {
   likeCount: number
 }
-
-
 export type nextButtonProps = {
   onPress: () => void;
   text?: string;
