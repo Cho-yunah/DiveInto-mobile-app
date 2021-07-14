@@ -46,6 +46,26 @@ export type GetTheSameClassScheduleStateType = {
   endTime: string;
   date: string;
 };
+
+export type rentEquipmentInfosType = {
+  scheduleEquipmentStockId: number;
+  rentNumber: number; // 갯수
+};
+
+export type requestReservationEquipmentDetailType = {
+  scheduleEquipmentStockId: number;
+  rentNumber: number; // 갯수
+  size: string; // 사이즈
+  name: string; // 장비 이름
+  price: number;
+};
+
+export type EquipmentsType = {
+  id: number;
+  name: string;
+  price: number;
+  equipmentStocks: EquipmentStocksType[];
+};
 export const searchText = atom({
   key: 'searchText',
   default: '',
@@ -106,12 +126,21 @@ export const currMonthState = atom<number>({
   default: new Date().getMonth() + 1,
 });
 
+// selector caching 조절용 상태
+export const cachingState = atom({
+  key: 'caching',
+  default: 0,
+});
 export const lectureScheduleListsSelector = selectorFamily({
   key: 'lectureScheduleLists',
   get:
     (lectureId: number) =>
     async ({ get }) => {
+      get(cachingState); // caching 조절
+      console.log('caching state changed.');
+
       const month = get(currMonthState);
+      console.log(`현재 달${month}`);
 
       try {
         const {
@@ -124,7 +153,7 @@ export const lectureScheduleListsSelector = selectorFamily({
 
         return _embedded.scheduleInfoList;
       } catch (e) {
-        return e;
+        console.log(e.response.data);
       }
     },
 });
@@ -169,12 +198,6 @@ export const getTheSameClassScheduleState = selector<
   },
 });
 
-export type EquipmentsType = {
-  id: number;
-  name: string;
-  price: number;
-  equipmentStocks: EquipmentStocksType[];
-};
 // 현재 강의에서 제공해주는 대여 장비 목록
 export const getEquipmentsState = selectorFamily<EquipmentsType[], number>({
   key: 'getEquipments',
@@ -218,13 +241,7 @@ export const selectedEquipmentsState = atom({
 });
 
 // 한 장비와 그 장비의 사이즈들의 예약 정보를 담고있는 배열
-export type requestReservationEquipmentDetailType = {
-  scheduleEquipmentStockId: number;
-  rentNumber: number; // 갯수
-  size: string; // 사이즈
-  name: string; // 장비 이름
-  price: number;
-};
+
 export const requestReservationEquipmentState = atomFamily<
   requestReservationEquipmentDetailType[],
   number
@@ -238,8 +255,3 @@ export const studentNumberState = atom<number>({
   key: 'studentNumber',
   default: 1,
 });
-
-export type rentEquipmentInfosType = {
-  scheduleEquipmentStockId: number;
-  rentNumber: number; // 갯수
-};

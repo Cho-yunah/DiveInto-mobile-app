@@ -39,21 +39,15 @@ const RentEquipmentsMain = () => {
     );
 
   return (
-    <Suspense
-      fallback={
-        <View>
-          <Text>loading...</Text>
-        </View>
-      }
-    >
+    <>
       <FlatList
         data={getEquipments}
         renderItem={({ item }) => (
-          <EachEquipment item={item} setIsOpen={setIsOpen} />
+          <EachEquipment item={item} setIsOpen={setIsOpen} key={item.id} />
         )}
       />
       {isOpen ? <SizeModal setIsOpen={setIsOpen} /> : null}
-    </Suspense>
+    </>
   );
 };
 

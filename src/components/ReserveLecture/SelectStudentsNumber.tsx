@@ -5,6 +5,7 @@ import Entype from 'react-native-vector-icons/Entypo';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   getTheSameClassScheduleState,
+  lectureInfoSelector,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
 import addCashComma from '@/src/lib/utils/addCashComma';
@@ -12,6 +13,7 @@ import addCashComma from '@/src/lib/utils/addCashComma';
 const SelectStudentsNumber = () => {
   const [studentNumber, setStudentNumber] = useRecoilState(studentNumberState);
   const classScheduleState = useRecoilValue(getTheSameClassScheduleState);
+  const { price } = useRecoilValue(lectureInfoSelector);
   const limitNumber =
     classScheduleState[0]?.maxNumber - classScheduleState[0]?.currentNumber;
   const increaseNumber = () => {
@@ -20,10 +22,9 @@ const SelectStudentsNumber = () => {
   };
   const decreaseNumber = () =>
     setStudentNumber(num => (num <= 1 ? 1 : num - 1));
-  const price = 120000;
 
   useEffect(() => {
-    setStudentNumber(1);
+    setStudentNumber(1); // 수업 일정 바뀔때마다 학생수 1로 변경
   }, [classScheduleState]);
 
   if (!classScheduleState.length)
@@ -40,7 +41,6 @@ const SelectStudentsNumber = () => {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>인원 선택</Text>
-
         <Text>해당 일정의 수업은 만원입니다. 다른 일정을 선택해 주세요.</Text>
       </View>
     );

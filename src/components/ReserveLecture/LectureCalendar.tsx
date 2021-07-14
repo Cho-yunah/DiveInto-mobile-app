@@ -1,4 +1,5 @@
 import {
+  cachingState,
   currMonthState,
   currScheduleIdState,
   currSelectedDateState,
@@ -9,7 +10,7 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 const LectureCalendar = () => {
   const [currMonth, setCurrMonth] = useRecoilState(currMonthState);
@@ -18,6 +19,7 @@ const LectureCalendar = () => {
   const [currSelectedDate, setCurrSelectedDate] = useRecoilState(
     currSelectedDateState,
   );
+  const setCaching = useSetRecoilState(cachingState);
   const [currScheduleId, setCurrScheduleId] =
     useRecoilState(currScheduleIdState);
 
@@ -32,7 +34,6 @@ const LectureCalendar = () => {
         const obj: any = {};
         schedule.dateTimeInfos.forEach((s: any) => {
           obj[s.date] = {
-            color: 'red',
             selectedColor: '#50CAD2',
             selected: true,
             currentNumber: schedule.currentNumber,
@@ -49,7 +50,12 @@ const LectureCalendar = () => {
   }, [ScheduleInfoLists]);
 
   useEffect(() => {
-    return () => {};
+    return () => {
+      // 선택한 일정의 수업 정보 배열 초기화를 위한 clean up
+      setCurrSelectedDate('');
+      setCurrMonth(new Date().getMonth() + 1);
+      setCaching(caching => caching + 1);
+    };
   }, []);
 
   return (

@@ -23,8 +23,6 @@ const AboutReservationDetail = () => {
     ),
   );
 
-  console.log('dsdf', equipmentsState);
-
   console.log(classSchedule);
   console.log(reservedEquipmentsArray, ';sdfsdkfjsdlkfj');
 

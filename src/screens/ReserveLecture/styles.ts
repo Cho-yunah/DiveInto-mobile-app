@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     position: 'absolute',
-    height: 40,
     top: 650,
     left: 20,
     right: 20,
@@ -23,6 +22,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#6A6D70',
+    paddingVertical: 10,
   },
   modalText: { fontSize: 16, color: '#fefefe' },
 });

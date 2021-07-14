@@ -1,5 +1,6 @@
 import instance from '@/src/lib/api/axios';
 import {
+  cachingState,
   currScheduleIdState,
   getEquipmentsState,
   rentEquipmentInfosType,
@@ -11,7 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { payButton as styles } from './styles';
 
 const PayButton = () => {
@@ -19,6 +20,7 @@ const PayButton = () => {
   const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
   const currScheduleId = useRecoilValue(currScheduleIdState);
   const numberOfPeople = useRecoilValue(studentNumberState);
+  const setCaching = useSetRecoilState(cachingState);
   const [isLoading, setIsLoading] = useState(false);
   equipmentsState.forEach(equip =>
     reservedEquipmentsArray.push(
@@ -46,6 +48,10 @@ const PayButton = () => {
       console.log(data);
     } catch (e) {
       console.log(e.response.data);
+      if (e.response.data.success === false) {
+        console.log('hey');
+        setCaching(cache => cache + 1);
+      }
     }
     setIsLoading(false);
   };

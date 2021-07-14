@@ -1,5 +1,5 @@
 import { ReserveLectureProps } from '@/src/navigators/LectureStack/types';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState, Suspense } from 'react';
 import { Modal, Pressable, ScrollView, Text } from 'react-native';
 import styles from './styles';
 import {
@@ -9,13 +9,14 @@ import {
   RentEquipments,
   ReserveBtn,
 } from '@components/ReserveLecture';
-import { Suspense } from 'react';
 import SuspenseCalendar from '@/src/components/ReserveLecture/SuspenseCalendar';
 import SuspenseReserveBtn from '@/src/components/ReserveLecture/SuspenseReserveBtn';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useEffect } from 'react';
 
 const index = ({ navigation }: ReserveLectureProps) => {
   const [isDisabled, setIsDisabled] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
   const navigateToRequestPayment = () => {
     navigation.navigate('RequestPayment');
   };
@@ -27,6 +28,7 @@ const index = ({ navigation }: ReserveLectureProps) => {
             navigateToRequestPayment={navigateToRequestPayment}
             isDisabled={isDisabled}
             setIsDisabled={setIsDisabled}
+            setModalMessage={setModalMessage}
           />
         </Suspense>
       ),
@@ -51,7 +53,7 @@ const index = ({ navigation }: ReserveLectureProps) => {
             onPress={() => setIsDisabled(false)}
             style={styles.modalOuterContainer}
           >
-            <ModalContainer message={'수강 가능한 일정을 선택해 주세요.'} />
+            <ModalContainer message={modalMessage} />
           </Pressable>
         </Modal>
       </ScrollView>

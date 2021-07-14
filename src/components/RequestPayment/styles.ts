@@ -44,6 +44,7 @@ export const aboutReservationDetail = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 6,
     borderRadius: 8,
+    marginBottom: 2,
   },
   equipmentsText: {
     color: '#fefefe',

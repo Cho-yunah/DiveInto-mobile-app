@@ -7,6 +7,7 @@ import MainList from '@screens/MainList';
 import LectureDetailScreen from '@/src/screens/LectureDetail';
 import ReserveLectureScreen from '@/src/screens/ReserveLecture';
 import RequestPaymentScreen from '@/src/screens/RequestPayment';
+import WriteReviewScreen from '@/src/screens/WriteReview';
 
 const Stack = createStackNavigator<RootLectureStack>();
 
