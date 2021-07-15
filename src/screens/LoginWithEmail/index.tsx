@@ -39,8 +39,13 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
 
         await AsyncStorage.setItem('token', atk);
 
-        if (decoded.authorities.includes('ROLE_INSTRUCTOR'))
+        if (decoded.authorities.includes('ROLE_INSTRUCTOR')) {
           setIsInstructor(true);
+          await AsyncStorage.setItem('instructor', 'instructor');
+        } else {
+          await AsyncStorage.setItem('instructor', 'student');
+        }
+
         setIsLogin(true);
       }
     } catch (e) {
