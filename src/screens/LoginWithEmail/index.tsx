@@ -12,7 +12,7 @@ import { IsLogin, IsInstructor } from '@/src/recoil/Global';
 import jwt_decode from 'jwt-decode';
 import { JWToken } from './types';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   const setIsLogin = useSetRecoilState(IsLogin);
