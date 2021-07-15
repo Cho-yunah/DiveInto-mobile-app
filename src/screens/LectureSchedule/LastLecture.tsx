@@ -13,6 +13,7 @@ export default function LastLectureScreen() {
       <TouchSwipe
         imgComponent={<LectureImg />}
         contentsComponents={<LectureContents />}
+        type="last"
       ></TouchSwipe>
     </View>
   );

@@ -10,20 +10,19 @@ export const TouchSwipeStyle = StyleSheet.create({
     width: SCREEN_WIDTH,
     backgroundColor: Color.White,
     flexDirection: 'row',
+
     borderBottomRightRadius: 10,
     borderTopRightRadius: 10,
   },
   deleteBottonContainer: {
     backgroundColor: Color.Selected,
     justifyContent: 'center',
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10,
+    width: SCREEN_WIDTH * 0.25,
   },
 
   deleteBox: {
     alignItems: 'center',
     paddingLeft: 32,
-    width: SCREEN_WIDTH * 0.2,
   },
   textStyle: {
     fontSize: 12,
@@ -37,8 +36,6 @@ export const lectureImgStyle = StyleSheet.create({
   imageElStyle: {
     width: SCREEN_WIDTH * 0.4,
     height: 108,
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
   },
 });
 
@@ -47,10 +44,9 @@ export const lectureContentsStyle = StyleSheet.create({
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
     backgroundColor: Color.White,
-    flex: 1,
+
     justifyContent: 'center',
     paddingLeft: 13,
-    paddingVertical: 15,
   },
   commonLayout: {
     flexDirection: 'row',
@@ -65,8 +61,10 @@ export const lectureContentsStyle = StyleSheet.create({
     fontSize: 12,
     color: '#535557',
     lineHeight: 20,
+    paddingRight: 10,
   },
   smallTextStyle: {
     fontSize: 10,
+    paddingBottom: 5,
   },
 });

@@ -25,10 +25,6 @@ import { IsInstructor } from '@recoil/Global';
 const Stack = createStackNavigator();
 
 export default function ProfileStack<ProfileStak>() {
-  const temp = useRecoilValue(IsInstructor);
-
-  // console.log(temp, 'temp');
-
   return (
     <RecoilRoot>
       <Stack.Navigator

@@ -3,13 +3,10 @@ import { View, Image } from 'react-native';
 
 import { lectureImgStyle as styles } from './styles';
 
-export default function LectureImg() {
+export default function LectureImg({ img }: { img: string }) {
   return (
     <View>
-      <Image
-        source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
-        style={styles.imageElStyle}
-      />
+      <Image source={{ uri: img }} style={styles.imageElStyle} />
     </View>
   );
 }
