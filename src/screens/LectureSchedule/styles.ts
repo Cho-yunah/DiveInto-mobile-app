@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F3F5F7',
+  container: { flex: 1 },
+  eachScreenContainerStyle: {
+    marginHorizontal: 17,
   },
 });

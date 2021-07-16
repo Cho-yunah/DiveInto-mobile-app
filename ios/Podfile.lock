@@ -402,7 +402,7 @@ PODS:
     - React-perflogger (= 0.64.2)
   - rn-fetch-blob (0.12.0):
     - React-Core
-  - RNCAsyncStorage (1.15.5):
+  - RNCAsyncStorage (1.12.1):
     - React-Core
   - RNCMaskedView (0.1.11):
     - React
@@ -520,7 +520,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
-  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
@@ -630,7 +630,7 @@ EXTERNAL SOURCES:
   rn-fetch-blob:
     :path: "../node_modules/rn-fetch-blob"
   RNCAsyncStorage:
-    :path: "../node_modules/@react-native-async-storage/async-storage"
+    :path: "../node_modules/@react-native-community/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
   RNCPushNotificationIOS:
@@ -713,10 +713,10 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: a9904c6d0218fb9f8b19d6dd88607225927668f9
   ReactCommon: 149906e01aa51142707a10665185db879898e966
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
-  RNCAsyncStorage: 8324611026e8dc3706f829953aa6e3899f581589
-  RNCMaskedView: f127cd9652acfa31b91dcff613e07ba18b774db6
-  RNCPushNotificationIOS: 5b1cf9ad2aaa107ecb92d5d2d7005ba521b2b97a
-  RNDeviceInfo: 49f6d50f861c7810fac2dd9b71cfb56cc1940e14
+  RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
+  RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
+  RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
+  RNDeviceInfo: 8d3a29207835f972bce883723882980143270d55
   RNFBApp: 9c90f9d576861947ba75fe0830567c570bcbcf6d
   RNFBIid: e3a0c5de29ab0d414f6b186963066b4d34884d59
   RNFBMessaging: c873e6c37f69d22de22cab134413030a9c6330a9
@@ -728,6 +728,6 @@ SPEC CHECKSUMS:
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 64f1e608b22fe0856f39098ca9dd1ea0c78a21c7
+PODFILE CHECKSUM: 8f5129abd7db25bb4cea7c384387e5e808257565
 
 COCOAPODS: 1.10.1

@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 import { ModalContainer } from '../ReserveLecture';
 
+
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   const setIsLogin = useSetRecoilState(IsLogin);
   const setIsInstructor = useSetRecoilState(IsInstructor);
@@ -43,8 +44,17 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
         await AsyncStorage.setItem('token', atk);
         setIsLogin(true);
 
-        if (decoded.authorities.includes('ROLE_INSTRUCTOR'))
+        if (decoded.authorities.includes('ROLE_INSTRUCTOR')) {
           setIsInstructor(true);
+<<<<<<< HEAD
+=======
+          await AsyncStorage.setItem('instructor', 'instructor');
+        } else {
+          await AsyncStorage.setItem('instructor', 'student');
+        }
+
+        setIsLogin(true);
+>>>>>>> 9ec36d88b10a3aab32883a0aa2ad538488f1a57d
       }
     } catch (e) {
       console.log(e.response.data);

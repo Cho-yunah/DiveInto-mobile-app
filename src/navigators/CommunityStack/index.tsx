@@ -6,10 +6,23 @@ import { RootCommunityStack } from './types';
 import CommunityMainScreen from '@screens/CommunityMain';
 import CommunityPostingScreen from '@screens/CommunityPosting';
 import CommunityDetailScreen from '@screens/CommunityDetail';
+import { useEffect } from 'react';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 const Stack = createStackNavigator<RootCommunityStack>();
 
-export default function CommunityStack() {
+export default function CommunityStack({navigation,route}: any) {
+
+  // community posting, community detail page 일때,
+  // bottom navigation bar hiding
+  useEffect (()=> {
+    const routeName = getFocusedRouteNameFromRoute(route);
+    navigation.setOptions(
+      (routeName && routeName === 'CommunityDetail'? { tabBarVisible: false} : {tabBarVisible: true}) ||
+      (routeName && routeName === 'CommunityPosting'? {tabBarVisible: false} : {tabBarVisible: true})
+    )
+  },[navigation, route]) 
+
   return (
     <RecoilRoot>
       <Stack.Navigator

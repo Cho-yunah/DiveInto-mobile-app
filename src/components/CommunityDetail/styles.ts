@@ -1,3 +1,4 @@
+import { Background } from './../../config/colors';
 import {StyleSheet} from 'react-native'
 
 export const DetailInfoStyle = StyleSheet.create({
@@ -7,7 +8,7 @@ export const DetailInfoStyle = StyleSheet.create({
     paddingHorizontal: 17,
     paddingVertical: 13,
     position: 'relative',
-    backgroundColor: '#fefefe'
+    backgroundColor: '#fefefe',
   },
   writerImage: {
     width: 36,
@@ -17,7 +18,7 @@ export const DetailInfoStyle = StyleSheet.create({
     backgroundColor: 'pink',
     marginRight: 16
   },
-  nicknameStyle: {
+  title: {
     fontSize: 14,
     fontWeight: '600',
     lineHeight: 21
@@ -45,17 +46,19 @@ export const DetailInfoStyle = StyleSheet.create({
 
 export const ContentsStyle = StyleSheet.create({
   contentsContainer : {
-    paddingVertical: 33,
+    paddingVertical: 30,
     borderWidth: 1,
     borderColor: '#CCD7DF',
-    backgroundColor: '#fefefe'
+    backgroundColor: '#fefefe',
+    marginBottom: 5
   },
   textStyle: {
     lineHeight: 25,
     marginHorizontal: 19,
+    color: '#202020',
   },
   imageBox: {
-    marginTop: 32
+    marginTop: 30
   },
   contentsImage: {
     width: 320,
@@ -65,30 +68,86 @@ export const ContentsStyle = StyleSheet.create({
   },
 })
 
-export const CommnetInputStyle = StyleSheet.create({
+export const CommentInputStyle = StyleSheet.create({
   CommentInputBox: {
-    position: 'absolute',
-    flexDirection: 'row',
-    width: '90%',
-    padding: 15,
+    width: 353,
     height: 46,
-    bottom: 20,
-    margin: 20,
+    paddingRight: 38,
+    paddingLeft: 15, 
+    paddingTop: 10,
+    marginTop: 8,
+    marginBottom: 30,
+    marginHorizontal: 20,
     backgroundColor: '#fff',
     borderRadius: 10,
     shadowOffset: {
       width: 2,
-      height: 4,
+      height: 2,
     },
     shadowColor: "#566B7E33",
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.8,
     shadowRadius: 8,
-    elevation: 6,
+    elevation: 3,
+    lineHeight: 20,
+    // flex:1,
+    // alignItems: 'center',
   },
   arrowIcon: {
     position: 'absolute',
-    bottom: 50,
+    bottom: 41,
     right: 25,
+    fontSize:24,
     color: '#D8D8D8'
+  },
+  activeArrowIcon: {
+    position: 'absolute',
+    bottom: 41,
+    right: 25,
+    fontSize:24,
+    color: '#207AB4'
+  },
+})
+
+export const CommentDetailStyles = StyleSheet.create({
+  commentBox: {
+    width: 353,
+    height: 69,
+    marginVertical: 12,
+    marginHorizontal: 17,
+    paddingVertical:10,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    color: '#202020'
+  },
+  commentWriterInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  image: {
+    width: 16,
+    height: 16,
+    borderRadius: 50,
+    borderWidth: 0,
+    backgroundColor: 'pink',
+    marginRight: 5
+  },
+  nicknameStyle: {
+    fontSize: 12,
+    lineHeight: 20,
+    width: 260
+  },
+  dateStyle: {
+    position: 'absolute',
+    top: 11,
+    right: 15,
+    fontSize: 12,
+    lineHeight: 20.4,
+    color: '#6A6D70',
+    width: 35
+  },
+  comment: {
+    marginTop: 10,
+    lineHeight: 14
   }
 })

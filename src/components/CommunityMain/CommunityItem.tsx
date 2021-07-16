@@ -1,72 +1,74 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, Pressable } from 'react-native';
-
+import React from 'react'
+import {View, Text, Image, TouchableOpacity, Pressable} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
-import { styles } from './styles';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { styles } from './styles'
 import * as colors from '@config/colors';
+import {ContentItem, CommentNumber, likeCount} from './types'
+import { atom, atomFamily, useRecoilState,  } from 'recoil';
 
-import { ContentItem } from './types';
-import { useNavigation } from '@react-navigation/native';
-
-export default function CommunityItem({
-  imageSrc,
-  title,
-  postAuthor,
-  postingDate,
-  commentNum,
-}: ContentItem) {
-  const navigation = useNavigation();
-
-  // const handleItemClick=()=> { navigation.navigate('CommunityDetail') }
-
+export default function CommunityItem({id, title,dateOfRegistration, writerNickname, imageUrl, commentCount, likeCount, liked, onItemClick }: ContentItem) { 
+  
   return (
-    <TouchableOpacity
-      style={styles.listItem}
-      activeOpacity={0.8}
-      onPress={() => navigation.navigate('CommunityDetail')}
-    >
-      <Image style={styles.thumnailImage} source={{ uri: imageSrc }} />
-      <View style={styles.contentInfo}>
-        <Text>{title}</Text>
-        <View style={styles.flexBox}>
-          <Text>{postAuthor}</Text>
-          <Entypo name="dot-single" size={14} color={colors.BlackText} />
-          <Text>{postingDate}</Text>
-        </View>
+      <TouchableOpacity 
+        style={styles.listItem} 
+        activeOpacity={0.8}  
+        onPress={onItemClick}
+        >
+          <Image style={styles.thumnailImage} source={{uri: imageUrl}}/>
+          <View style={styles.contentInfo}>
+            <Text>{title}</Text>
+            <View style={styles.flexBox}>
+              <Text>{writerNickname}</Text>
+                  <Entypo name='dot-single' size={14} color={colors.BlackText}/>
+              <Text>{dateOfRegistration}</Text>
+            </View>
+          </View>
+      <View style= {styles.iconBox}>
+        <CommentNum commentNum={commentCount}/>
+        <LikeBtn id={id} likeCount={likeCount} liked={liked}/>
       </View>
-      <View style={styles.iconBox}>
-        <CommentNum commentNum={commentNum} />
-        <Heart />
-      </View>
-    </TouchableOpacity>
-  );
+      </TouchableOpacity>
+  )
 }
 
 // comment 갯수
-const CommentNum = ({ commentNum }) => {
+const CommentNum = ({commentNum}: CommentNumber ) => {
   return (
-    <View style={styles.commentAndLike}>
-      <MaterialIcons name="comment" size={14} color={colors.Gray2} />
-      <Text style={{ color: colors.Gray2 }}>{commentNum}</Text>
+    <View style={styles.commentAndLike} >
+      <MaterialIcons name='comment' size={14} color={colors.Gray2}/>
+      <Text style={{color:colors.Gray2}}>{commentNum}</Text>
     </View>
-  );
-};
+  )
+}
 
-// 게시물 좋아요 갯수
-const Heart = () => {
-  const [heart, setHeart] = useState(false);
+// 게시물 좋아요 상태
+const likeState= atomFamily<Element,number>({
+  key: 'likeState',
+  default: ''
+})
+// 좋아요 버튼 
+const LikeBtn = ({id,likeCount, liked}:{id: number,likeCount: number, liked: boolean}) => {
+  const [like, setLike] = useRecoilState(likeState(id))
+  const Clickedlike=() => {
+    setLike(!like)
+
+  }
+  const likeCountNum : number = (
+   like
+    ? likeCount+1
+    : likeCount===0? 0 : likeCount-1
+  )
 
   return (
-    <Pressable onPress={() => setHeart(!heart)} style={styles.commentAndLike}>
-      <FontAwesome
-        name="heart"
-        size={14}
-        color={heart ? colors.Selected : colors.Gray2}
+    <Pressable onPress={Clickedlike} style={styles.commentAndLike} >
+      <FontAwesome 
+        name='heart' 
+        size={14} 
+        color={like? colors.Selected : colors.Gray2}
       />
-      <Text style={{ color: colors.Gray2 }}>5</Text>
+      <Text style={{color:colors.Gray2}}>{likeCountNum}</Text>
     </Pressable>
-  );
-};
+  )
+}
