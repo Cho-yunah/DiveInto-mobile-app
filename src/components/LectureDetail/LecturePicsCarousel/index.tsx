@@ -1,11 +1,24 @@
 import React, { useRef, useState } from 'react';
-import { FlatList, Image, useWindowDimensions, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  Pressable,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { LecturePicsStyles as styles } from './styles';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import useRequestLecturePics from './useRequestLecturePics';
+import { useSetRecoilState } from 'recoil';
+import {
+  lectureModalState,
+  lecutureModalSelectedIdxState,
+} from '@/src/recoil/LectureStack';
 
 const LecturePicsCarousel = () => {
   const [activeDotIdx, setActiveDotIdx] = useState(0);
+  const setModalPics = useSetRecoilState(lectureModalState);
+  const setSelectedIdx = useSetRecoilState(lecutureModalSelectedIdxState);
   const lecturePics = useRequestLecturePics();
   const windowWidth = useWindowDimensions().width;
   const viewabilityConfRef = useRef({
@@ -27,13 +40,21 @@ const LecturePicsCarousel = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        renderItem={({ item }) => (
-          <View key={item.url}>
+        renderItem={({ item, index }) => (
+          <Pressable
+            key={item.url}
+            onPress={() => {
+              console.log('hey', index);
+
+              setModalPics(lecturePics);
+              setSelectedIdx(index);
+            }}
+          >
             <Image
               source={{ uri: item.url }}
               style={[styles.carouselImage, { width: windowWidth }]}
             />
-          </View>
+          </Pressable>
         )}
         data={lecturePics}
         horizontal

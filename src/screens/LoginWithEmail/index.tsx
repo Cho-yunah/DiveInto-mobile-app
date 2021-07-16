@@ -41,10 +41,10 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
         console.log('atk : ', atk);
 
         await AsyncStorage.setItem('token', atk);
+        setIsLogin(true);
 
         if (decoded.authorities.includes('ROLE_INSTRUCTOR'))
           setIsInstructor(true);
-        setIsLogin(true);
       }
     } catch (e) {
       console.log(e.response.data);

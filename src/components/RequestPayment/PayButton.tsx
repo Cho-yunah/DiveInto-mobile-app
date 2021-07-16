@@ -8,20 +8,24 @@ import {
   requestReservationEquipmentState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
+import { PayButtonProps } from '@/src/screens/RequestPayment/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react';
+import { useRef } from 'react';
+import { useEffect } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { payButton as styles } from './styles';
 
-const PayButton = () => {
+const PayButton = ({ setErrorMsg }: PayButtonProps) => {
   const equipmentsState = useRecoilValue(getEquipmentsState(1)); // 강의 id -> 제공되는 대여장비, name,id, price
   const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
   const currScheduleId = useRecoilValue(currScheduleIdState);
   const numberOfPeople = useRecoilValue(studentNumberState);
   const setCaching = useSetRecoilState(cachingState);
   const [isLoading, setIsLoading] = useState(false);
+  let flag = useRef(false);
   equipmentsState.forEach(equip =>
     reservedEquipmentsArray.push(
       ...useRecoilValue(requestReservationEquipmentState(equip.id)),
@@ -49,12 +53,18 @@ const PayButton = () => {
     } catch (e) {
       console.log(e.response.data);
       if (e.response.data.success === false) {
-        console.log('hey');
-        setCaching(cache => cache + 1);
+        setErrorMsg(e.response.data.msg);
+        flag.current = true;
       }
     }
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    return () => {
+      if (flag.current) setCaching(cache => cache + 1);
+    };
+  }, []);
 
   return (
     <View style={styles.container}>

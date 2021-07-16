@@ -60,6 +60,13 @@ export type requestReservationEquipmentDetailType = {
   price: number;
 };
 
+export type locationResponseType = {
+  id: number;
+  address: string;
+  latitude: number;
+  longitude: number;
+};
+
 export type EquipmentsType = {
   id: number;
   name: string;
@@ -69,6 +76,30 @@ export type EquipmentsType = {
 export const searchText = atom({
   key: 'searchText',
   default: '',
+});
+
+export const requestLocationInfoSelector = selectorFamily({
+  key: 'requestLocationInfo',
+  get:
+    (lectureId: number) =>
+    async ({ get }) => {
+      try {
+        const { data } = await instance.get(`/location?lectureId=${lectureId}`);
+        return data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+});
+
+export const lectureModalState = atom<LectureDetailPicsType[]>({
+  key: 'lectureModal',
+  default: [],
+});
+
+export const lecutureModalSelectedIdxState = atom<number>({
+  key: 'lectureModalFirstItemIdx',
+  default: 0,
 });
 
 export const lectureDetailPicsState = atom<LectureDetailPicsType[]>({
@@ -143,17 +174,15 @@ export const lectureScheduleListsSelector = selectorFamily({
       console.log(`현재 달${month}`);
 
       try {
-        const {
-          data: { _embedded },
-        } = await instance.get(
+        const { data } = await instance.get(
           `/schedule?lectureId=${lectureId}&month=${month}`,
         );
 
-        console.log(_embedded.scheduleInfoList);
+        console.log(data._embedded?.scheduleInfoList);
 
-        return _embedded.scheduleInfoList;
+        return data._embedded?.scheduleInfoList || [];
       } catch (e) {
-        console.log(e.response.data);
+        console.log(e);
       }
     },
 });

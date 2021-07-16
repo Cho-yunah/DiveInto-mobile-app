@@ -48,6 +48,7 @@ const SelectLectureSchedule = () => {
                 };
                 return (
                   <TouchableOpacity
+                    key={sch.scheduleDateTimeId}
                     style={[styles.schedule, conditionalBorderStyle]}
                     disabled={sch.currentNumber === sch.maxNumber}
                   >

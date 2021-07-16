@@ -12,6 +12,10 @@ import { useRecoilValue } from 'recoil';
 import { ReserveBtn as styles } from './styles';
 import { ReserveBtnProps } from './types';
 
+type FlagType = {
+  [key: number]: boolean;
+};
+
 const ReserveBtn = ({
   navigateToRequestPayment,
   isDisabled,
@@ -22,7 +26,7 @@ const ReserveBtn = ({
   const classSchedule = useRecoilValue(getTheSameClassScheduleState);
   const studentNumber = useRecoilValue(studentNumberState); // 원하는 수강 인원
   const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
-  let flag = useRef(false);
+  let flag = useRef<FlagType>({});
   equipmentsState.forEach(equip => {
     const eachEquipmentArr = useRecoilValue(
       requestReservationEquipmentState(equip.id),
@@ -30,12 +34,12 @@ const ReserveBtn = ({
     let sumOfEquip = 0;
     eachEquipmentArr.forEach(itemBySize => {
       sumOfEquip += itemBySize.rentNumber;
-      if (sumOfEquip > studentNumber) {
-        flag.current = true;
-      } else {
-        flag.current = false;
-      }
     });
+    if (sumOfEquip > studentNumber) {
+      flag.current[equip.id] = true;
+    } else {
+      flag.current[equip.id] = false;
+    }
     reservedEquipmentsArray.push(...eachEquipmentArr);
   });
 
@@ -48,7 +52,13 @@ const ReserveBtn = ({
       setIsDisabled(true);
       return;
     }
-    if (flag.current) {
+    const checkArr = [];
+
+    for (const property in flag.current) {
+      checkArr.push(flag.current[property]);
+    }
+
+    if (checkArr.length && checkArr.some(boolean => boolean === true)) {
       setModalMessage(
         '대여 장비수가 수강 인원을 초과하였습니다.' +
           '\n' +
