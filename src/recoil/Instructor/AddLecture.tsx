@@ -1,5 +1,12 @@
 import { atom } from 'recoil';
 import { Region, ClassKind, Organization, Level } from '@typing/common';
+import { DocumentPickerResponse } from 'react-native-document-picker';
+
+export const LectureImages = atom<DocumentPickerResponse[] | undefined>({
+  key: 'AddLectrueImages',
+  default: undefined,
+});
+
 export const RegionSelect = atom<Region | null>({
   key: 'RegionSelect',
   default: null,

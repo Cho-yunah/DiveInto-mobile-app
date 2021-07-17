@@ -8,6 +8,7 @@ const Stack = createStackNavigator<RootAdmMyLectureStack>();
 import {
   AdmMyLectureList,
   AddLecture,
+  AddLecture2,
   AddEqipments,
 } from '@screens/Instructor';
 
@@ -35,6 +36,7 @@ export default function AdmMyLectureStack() {
       >
         <Stack.Screen name="강의목록" component={AdmMyLectureList} />
         <Stack.Screen name="강의등록" component={AddLecture} />
+        <Stack.Screen name="강의등록2" component={AddLecture2} />
         <Stack.Screen name="장비등록" component={AddEqipments} />
       </Stack.Navigator>
     </RecoilRoot>

@@ -2,86 +2,41 @@ import React, { useState, useLayoutEffect } from 'react';
 import { ScrollView, Text } from 'react-native';
 import { Background } from '@config/colors';
 import { AddLectureProps } from '@navigators/MyLectureStack/types';
+import { DocumentPickerResponse } from 'react-native-document-picker';
 
 import NextButton from '@components/common/NextButton';
 import {
-  RegionSelector,
-  ClassKindSelector,
-  OrganaizationSelector,
-  LevelSelector,
-} from '@components/Instructor/AddLecture/DropDownPickers';
-import {
   GetInput,
-  GetLectureTime,
-  GetPeriod,
+  GetImages,
 } from '@components/Instructor/AddLecture/GetInputs';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
-  RegionSelect,
-  ClassKindSelect,
-  OrganaizationSelect,
-  LevelSelect,
-  LecturePeriodInput,
-  LectureTimeInput,
   LectureTitleInput,
   LectureDescriptionInput,
   LecturePriceInput,
-  LectureMaxStdNumInput,
+  LectureImages,
 } from '@recoil/Instructor/AddLecture';
 export function AddLecture({ navigation }: AddLectureProps) {
-  // 컴포넌트에서 설정된 값
-  const region = useRecoilValue(RegionSelect);
-  const classKind = useRecoilValue(ClassKindSelect);
-  const organaization = useRecoilValue(OrganaizationSelect);
-  const level = useRecoilValue(LevelSelect);
-  const period = useRecoilValue(LecturePeriodInput);
-  const lectureTime = useRecoilValue(LectureTimeInput);
   // 여기서 설정해야하는 값
   const [title, setTitle] = useRecoilState(LectureTitleInput);
   const [description, setDescription] = useRecoilState(LectureDescriptionInput);
   const [price, setPrice] = useRecoilState(LecturePriceInput);
-  const [max, setMax] = useRecoilState(LectureMaxStdNumInput);
+  const setImages = useSetRecoilState(LectureImages);
 
   useLayoutEffect(() => {
     const onPress = () => {
-      navigation.navigate('장비등록');
-      console.log(
-        region,
-        classKind,
-        organaization,
-        level,
-        period,
-        lectureTime,
-        title,
-        description,
-        price,
-        max,
-      );
+      navigation.navigate('강의등록2');
+      console.log(title, description, price);
     };
     navigation.setOptions({
       title: '강의등록',
       headerRight: () => <NextButton onPress={onPress} text="다음" />,
     });
-  }, [
-    region,
-    classKind,
-    organaization,
-    level,
-    period,
-    lectureTime,
-    title,
-    description,
-    price,
-    max,
-  ]);
+  }, [title, description, price]);
 
   return (
     <ScrollView style={{ backgroundColor: Background, margin: 15 }}>
-      <RegionSelector zIndex={4} />
-      <ClassKindSelector zIndex={3} />
-      <OrganaizationSelector zIndex={2} />
-      <LevelSelector zIndex={1} />
       <GetInput placeholder="강의 제목을 작성해주세요." onChange={setTitle} />
       <GetInput
         placeholder="강의 내용을 작성해주세요."
@@ -92,13 +47,9 @@ export function AddLecture({ navigation }: AddLectureProps) {
         keyboardType="number-pad"
         onChange={value => setPrice(parseInt(value))}
       />
-      <GetInput
-        placeholder="수업당 최대 수강생 수를 입력해주세요."
-        keyboardType="number-pad"
-        onChange={value => setMax(parseInt(value))}
+      <GetImages
+        onSelect={(images: DocumentPickerResponse[]) => setImages(images)}
       />
-      <GetPeriod />
-      <GetLectureTime />
     </ScrollView>
   );
 }
