@@ -1,14 +1,35 @@
+import instance from '@/src/lib/api/axios'
+import { atkState, DetailInfoType } from '@/src/recoil/CommunityStack'
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import {View, Image, Text, TouchableOpacity } from 'react-native'
 import { useRecoilValue } from 'recoil'
 import {DetailInfoStyle as styles} from './styles'
-import { communityItemSelector, useRequestCommunityItem } from './useRequestCommunityItem'
 
-export default function DetialInfo() {
-  const {id,title,category,dateOfRegistration }= useRecoilValue(communityItemSelector)
+export default function DetailInfo({id, title, dateOfRegistration}: 
+  DetailInfoType) {
+  const navigation = useNavigation()
+  const token = useRecoilValue(atkState)
+  console.log('detail',token)
 
-  useRequestCommunityItem()
-  
+  const config = {
+    headers: {
+      Authorization: token,
+      // 'Content-Type': 'application/json'
+    }
+  }
+
+  const requestDelete = async() => {
+    console.log('delete!')
+    console.log(id)
+    try {
+      const response = await instance.delete(`community/post/${id}`, config )
+      // console.log(response)
+    } catch(e) {
+      console.log(e)
+    }
+  }
+    
   return (
     <View >
       <View style={styles.writerInfoBox}>
@@ -19,17 +40,25 @@ export default function DetialInfo() {
        </View>
     </View>
        <View style= {styles.buttons}>
-          <EditButton text={'수정'} style={styles.modify} onPress={''}/>
-          <EditButton text={'삭제'} style={styles.delete} onPress={''}/>
+          <EditBtn style={styles.modify} navigation={navigation} id={id} />
+          <DeleteBtn style={styles.delete} requestDelete={requestDelete}/>
        </View>
     </View>
   )
 }
 
-function EditButton({text, style, onPress}:any) {
+const EditBtn=({navigation, id}: any) => {
+  console.log(id)
   return (
-    <TouchableOpacity>
-      <Text style={style}>{text}</Text>
+    <TouchableOpacity  onPress={()=> navigation.navigate('CommunityPosting', {id})} >
+      <Text >수정</Text>
+    </TouchableOpacity>
+  )
+}
+const DeleteBtn= ({requestDelete}:any) => {
+  return (
+    <TouchableOpacity onPress={requestDelete}>
+      <Text >삭제</Text>
     </TouchableOpacity>
   )
 }

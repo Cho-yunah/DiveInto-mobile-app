@@ -1,37 +1,48 @@
-import { communityListState, listPageState, loadingState, refreshState } from "@/src/recoil/CommunityStack"
-import axios from "axios"
-import { useEffect } from "react"
+import instance from "@/src/lib/api/axios"
+import { atkState, communityListState, listPageState, loadingState, refreshState } from "@/src/recoil/CommunityStack"
+import AsyncStorage from "@react-native-community/async-storage"
+import { useLayoutEffect } from "react"
 import { useRecoilState, useRecoilValue,  } from "recoil"
 import { ContentItem } from "./types"
 
 export const useRequestCommunityList = (): ContentItem[] => {
+  const [token, setToken] = useRecoilState(atkState)
   const [isLoading, setIsLoading] = useRecoilState<boolean>(loadingState);
   const [communityList, setCommunityList]= useRecoilState<ContentItem[]>(communityListState)
   const [refreshing, setRefreshing] = useRecoilState(refreshState)
+
+  // token 받아오기 - main list page로 옮기기
+  useLayoutEffect(()=> {
+    const getToken = async() => {
+    try{
+      const getTokenRequest= await AsyncStorage.getItem('token');
+      setToken(getTokenRequest)
+    } catch (error) {
+      console.log(error)
+    }
+  } 
+  getToken()
+},[])
   
   const listPage = useRecoilValue(listPageState)
-  const URL = `http://52.78.56.229:8082/community/post/category?category=SHARE&page=0&size=1`
-  // const URL = `http://52.78.56.229:8082/community/post/category?category=SHARE&page={listPage}&size=1`
 
-  useEffect(()=> {
-    if(isLoading) return;
+  useLayoutEffect(()=> {
     const requestCommunityList = async() => {
+      setIsLoading(true)
       try {
-        setIsLoading(true)
-        console.log('listPage', listPage)
-        const {data} = await axios.get(URL);
-        setTimeout(()=> {
-          setIsLoading(false)
-          setRefreshing(false)
-          if(data._embedded === undefined) return
-          setCommunityList(data._embedded.postsModelList|| []);
-          console.log(communityList)
-        },1000)
+        // console.log('listPage', listPage)
+        const {data} = await instance.get(`/community/post/category?category=SHARE&page=${listPage}&size=10`);
+        // console.log('data', data) 
+         setCommunityList((list)=>[...list,...data._embedded.postsModelList]);
+        // console.log('communityList-main',communityList)
       } catch(e) {
         console.log(e)
       }
+      // setRefreshing(false)
+      setIsLoading(false)
     };
+    
     requestCommunityList();
-  }, [])
+  }, [listPage])
   return communityList;
 }

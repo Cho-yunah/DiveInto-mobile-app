@@ -1,4 +1,4 @@
-import {atom, atomFamily, selector} from 'recoil'
+import {atom, atomFamily, selector, selectorFamily} from 'recoil'
 
 export type ContentItem = {
   id: number;
@@ -9,8 +9,7 @@ export type ContentItem = {
   imageUrl?: string;
   commentCount: number;
   likeCount: number;
-  liked?: boolean;
-  onItemClick: ()=>void;
+  liked: boolean;
 }
 
 export const communityListState = atom<ContentItem[]>({
@@ -26,8 +25,40 @@ export const allCommunityListState = selector({
   }
 })
 
+export const atkState = atom<string | null>({
+  key: 'atk',
+  default: null,
+});
+
+export const postingFormSelector = selector ({
+  key: 'postingFormSelecotr',
+  get: ({get}) => {
+    const postingFormInfo ={
+      category: get(postingFormState('category')),
+      tags: get(postingFormState('tag')),
+      title: get(postingFormState('title')),
+      content: get(postingFormState('contents'))
+    };
+    return postingFormInfo;
+  }
+})
+
+export const postingFormState = atomFamily<Element, string>({
+  key: 'postingFormState',
+  default: ''
+})
+
+// const editingFormSelector = selectorFamily({
+//   key: 'editingFormSelector',
+//   get: (id) => async () => {
+//     const posts = await getPostList(id);
+//     return posts;
+//   }
+// }
+
 // export const communityListFamily = atomFamily({
-//   key: 'communityListFamily',
+//   key: 'communityListFamily'
+
 //   default: (id : string) => ({
 //     id, 
 //     title: '', 
@@ -63,3 +94,53 @@ export const refreshState = atom<boolean>({
   key: 'refreshState',
   default : false
 })
+
+// 게시물 좋아요 상태
+export const likeState= atomFamily<Element,number>({
+  key: 'likeState',
+  default: ''
+})
+
+export const pickerOpenState = atom({
+  key: 'pickerOpenState',
+  default: false
+})
+
+export const communityItemState = atom({
+  key: 'communityItem',
+  default: {
+      id: 1,
+      title: '',
+      category:'',
+      tag: [],
+      dateOfRegistration:'',
+      content:'',
+  }
+})
+
+export type communityItemSelectorType = {
+  id: number,
+  title: string,
+  category:string,
+  tag: string[],
+  dateOfRegistration:string,
+  content:string,
+}
+
+export const communityItemSelector= selector({
+  key: 'communityItemSelector',
+  get: ({get}) : communityItemSelectorType => {
+    const {id, title, category, tag, dateOfRegistration, content}
+  = get(communityItemState);
+
+  return {id, title, category, tag, dateOfRegistration, content}
+  }
+})
+
+export type DetailInfoType = {
+  id: number,
+  title: string,
+  category: string,
+  dateOfRegistration: string
+}
+

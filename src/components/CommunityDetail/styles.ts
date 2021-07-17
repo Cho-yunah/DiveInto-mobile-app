@@ -1,4 +1,3 @@
-import { Background } from './../../config/colors';
 import {StyleSheet} from 'react-native'
 
 export const DetailInfoStyle = StyleSheet.create({
@@ -40,7 +39,7 @@ export const DetailInfoStyle = StyleSheet.create({
     color: '#A9BBC9'
   },
   delete: {
-    color: '#E93A55'
+    color: '#E93A55',
   }
 })
 

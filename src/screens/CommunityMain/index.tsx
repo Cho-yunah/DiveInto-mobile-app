@@ -1,7 +1,6 @@
 import React, { ReactElement} from 'react'
 import { View , Text} from 'react-native';
 import styles  from './styles';
-
 import {CommunityMain } from '@components/CommunityMain';
 import {QuestionaryContentsList } from '@components/CommunityMain';
 import NextButton from '@components/CommunityMain/NextButton'
@@ -14,7 +13,6 @@ const Tab= createMaterialTopTabNavigator();
 
 export default function CommunityMainScreen({navigation}: CommunityPostingProps): ReactElement {
   const addContent = () => navigation.navigate('CommunityPosting')
-  const onItemClick = ()=> navigation.navigate('CommunityDetail')
 
   useEffect(()=> {
     navigation.setOptions({
@@ -34,7 +32,7 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
       <Tab.Screen 
         name="공유해요" 
         // component={SharedContents}
-        children={()=> <SharedContents onItemClick={onItemClick}/> }
+        children={()=> <SharedContents/> }
       />
       <Tab.Screen 
         name="궁금해요"
@@ -45,8 +43,8 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
   );
 }
 
-const SharedContents = ({onItemClick}):ReactElement => {
-  return (<CommunityMain onItemClick={onItemClick}/>)
+const SharedContents = ({onItemClick}:any):ReactElement => {
+  return (<CommunityMain />)
 }
 
 const QuestionaryContents = () => {
