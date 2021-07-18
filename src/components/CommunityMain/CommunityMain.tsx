@@ -1,29 +1,24 @@
-import React, { ReactElement, Suspense, useCallback, useRef} from 'react';
+import React, { ReactElement, Suspense, useRef} from 'react';
 import { Text, View, FlatList, ActivityIndicator } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import CommunityItem from './CommunityItem';
 import {styles} from './styles'
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useRequestCommunityList} from './useRequestCommunityList';
-import {loadingState, listPageState, refreshState, communityListState, allCommunityListState} from '@/src/recoil/CommunityStack'
-import { useLayoutEffect } from 'react';
-  // data 받아오기
-  // useLayoutEffect(()=> {
-    // },[])
-    
-export default function CommunityMain({onItemClick}: any):ReactElement  {
-      
+import {loadingState, listPageState, refreshState, communityListState} from '@/src/recoil/CommunityStack'
+
+export default function CommunityMain():ReactElement  {
+  // data 요청
   useRequestCommunityList()
+
   // focus 되어있는 tab click 하면 맨위로 이동
   const listRef= useRef(null)
   useScrollToTop(listRef)
   
-
-  // const communityList =
   const isLoading = useRecoilValue<boolean>(loadingState);
-  const [page, setPage] = useRecoilState<number>(listPageState) 
+  const [currentPage, setCurrentPage] = useRecoilState<number>(listPageState) 
   const [refreshing, setRefreshing] = useRecoilState(refreshState)
-  const list =useRecoilValue(allCommunityListState)
+  const list =useRecoilValue(communityListState)
 
   // data 받아올 때의 loader
   const renderLoader =() => {
@@ -36,21 +31,20 @@ export default function CommunityMain({onItemClick}: any):ReactElement  {
   }
 
   // contents 더 가져오기
-  const contentsLoadMore= useCallback(()=> { 
-    if(isLoading) return
-    // console.log(page)
-  }, [list])
+  const contentsLoadMore= ()=> { 
+    if(isLoading && refreshing ) return
+    setCurrentPage(currentPage +1 )
+    console.log('currentPage1', currentPage)
+  }
 
   // 새로고침
   const onFresh = () => {
     console.log('fresh!')
-    // setRefreshing(true)
-    setPage(0)
-        console.log(page)
-    // useRequestCommunityList()
+    setRefreshing(true)
+    setCurrentPage(0)
+    console.log('currentPage2', currentPage)
+    setRefreshing(false)  
   }
-
-  // console.log('mainpage', communityList)
   console.log('mainpage', list)
 
   return (
@@ -58,6 +52,7 @@ export default function CommunityMain({onItemClick}: any):ReactElement  {
       <Suspense fallback={<Text>Loading...</Text>}>
           <FlatList 
             ref={listRef}
+            data={list} // 렌더링데이터
             renderItem={({item})=> (
                 <CommunityItem
                   id={item.id}
@@ -69,10 +64,8 @@ export default function CommunityMain({onItemClick}: any):ReactElement  {
                   commentCount={item.commentCount}
                   likeCount={item.likeCount}
                   liked={item.liked}
-                  onItemClick={onItemClick}
                 />
              )}
-            data={list} // 렌더링데이터
             keyExtractor={(item, index) => item.id.toString()}
             onEndReached={contentsLoadMore}
             onEndReachedThreshold={0}

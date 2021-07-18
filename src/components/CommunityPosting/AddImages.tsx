@@ -1,38 +1,65 @@
 import React, { useState } from 'react'
-import { Pressable, Text, View, Image} from 'react-native'
+import { Pressable, Text, View, Image, TouchableOpacity} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {styles} from './styles'
 import {multiImageSelect} from '@lib/file/filePicker'
+import { useRecoilState } from 'recoil';
+import { ImageArrState } from '@/src/recoil/CommunityStack';
 
 export default function AddImages () {
-  const [imageUri, setImageUri]= useState<string[]>();
+  const [imageArr, setImageArr]= useRecoilState(ImageArrState);
+  const [isLoading, setIsLoading] = useState(false)
   
-  const getImage = async () => {
-    const result = await multiImageSelect()
-    const resultArray=(result?.map(item => item.uri))
-    setImageUri(resultArray)
-    return resultArray
-  }
-  // console.log(imageUri)
+  const selectImages = async () => {
+    try {
+      setIsLoading(true);
+      const images = (await multiImageSelect()) || [];
+      setImageArr(
+        images.map(img => ({
+          size: img.size,
+          uri: img.uri,
+          type: img.type,
+          name: img.name
+        }))
+      )
+    } catch(e) {
+      console.log(e)
+    }
+    setIsLoading(false)
+  };
     
   return (
-    <View style = {styles.inputContainer}>
-      <View style= {styles.addImageBox} >
-        <Pressable 
-          style={styles.imageUploadBtn}
-          onPress={()=>getImage()}
-          >
-            {imageUri === undefined
-              ? <FontAwesome name={'image'} size={16} color={'#fefefe'} /> 
-              : imageUri.map((result) => {
-                return (
-                  <Image source={{uri: result}}
-                  resizeMode='contain' />
-                )
-              })}
-        </Pressable> 
-        <Text style= {styles.text}> 사진을 업로드해주세요(최대 3장)</Text>
-      </View>
+    <View style={styles.imageContainer}>
+      {imageArr.length < 3 && (
+        <Pressable style={styles.imageUploadBtn} onPress={selectImages}>
+          <FontAwesome name={'photo'} size={16} color={'#fefefe'} />
+        </Pressable>
+      )}
+      {!imageArr.length ? (
+        <Text style={styles.imageUploadText}>
+          {isLoading ? 'loading' : '사진을 업로드 해주세요'}
+        </Text>
+      ) : (
+        <View style={styles.uploadedImagesContainer}>
+          {imageArr.map((img, index) => (
+            <TouchableOpacity
+              style={styles.uploadedImgBtn}
+              key={index}
+              onPress={() => {
+                setImageArr(
+                  imageArr.filter(img => img.uri !== imageArr[index].uri),
+                );
+              }}
+            >
+              <Image source={{ uri: img.uri }} style={styles.uploadedImg} />
+              <View style={styles.removeIconFilter}>
+                <FontAwesome name="remove" size={20} color={'white'} />
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
+      <Text style={styles.imageUploadLimit}>(최대 3장)</Text>
     </View>
   )
 }

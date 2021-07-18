@@ -1,5 +1,3 @@
-import { CommunityDetailProps } from '@navigators/CommunityStack/types';
-
 export type CommunityMainProps = {
   enterContenetDetail: () => void;
 };
@@ -14,7 +12,6 @@ export type ContentItem = {
   commentCount: number;
   likeCount: number;
   liked: boolean;
-  onItemClick: ()=>void;
 }
 
 export type CommentNumber = {

@@ -1,67 +1,38 @@
-import axios from 'axios';
+import instance from '@/src/lib/api/axios';
+import { commentState, communityItemState, ImageState, writerInfoState } from '@/src/recoil/CommunityStack';
 import { useEffect } from 'react';
-import  {atom, selector, useRecoilState, useSetRecoilState} from 'recoil';
+import  {atom, useSetRecoilState} from 'recoil';
 
-const communityItemState = atom({
-  key: 'communityItem',
-  default: {
-      id: '',
-      title: '',
-      category:'',
-      tag: [],
-      dateOfRegistration:'',
-      content:'',
-      // imageUrl: '', // api 추가요청 해야함
-      // commentCount:0,
-      // likeCount: 0,
-      // liked: false, // api 추가요청 해야함
-      // writerImage: // api 추가요청 해야함
-  }
-})
-
-type communityItemSelectorType = {
-  id: string,
-  title: string,
-  category:string,
-  tag: string[],
-  dateOfRegistration:string,
-  content:string,
-}
-
-export const communityItemSelector= selector({
-  key: 'communityItemSelector',
-  get: ({get}) : communityItemSelectorType => {
-    const {id, title, category, tag, dateOfRegistration, content}
-  = get(communityItemState);
-
-  return {id, title, category, tag, dateOfRegistration, content}
-  }
-})
-
-export const useRequestCommunityItem = () => {
+export const useRequestCommunityItem = (id: number) => {
   const setCommunityItem = useSetRecoilState(communityItemState);
-  const URL = `http://52.78.56.229:8082/community/post/1`
+  const setImageItem = useSetRecoilState(ImageState)
+  const setWriterInfo = useSetRecoilState(writerInfoState)
+  const setComment = useSetRecoilState(commentState)
 
   useEffect(()=> {
     const requestCommunityItem = async()=> {
       try {
-        const {data} = await axios.get(URL);
-        console.log(data)
+        // data & image 받아오기
+        const {data} = await instance.get(`/community/post/${id}`);
+        const writerResource= await instance.get(`/community/post/${id}/writer`)
+        const imageResource = await instance.get(`/community/post/${id}/post-image`)
+        const commentResource = await instance.get(`/community/comment/${id}`)
 
-       const {
-        id, title,
-        category,
-        tag,
-        dateOfRegistration,
-        content,
-      } = data.postResource;
-      setCommunityItem({
-        id, title,
-        category,
-        tag,
-        dateOfRegistration,
-        content,
-      });
+        const { title, category, tags, dateOfRegistration,content } = data.postResource;
+        const writerInfo = writerResource.data
+
+        imageResource.data._embedded 
+          ? setImageItem(imageResource.data._embedded.postImageModelList)
+          : setImageItem([])
+        commentResource && setComment(commentResource.data)
+        setWriterInfo(writerInfo)
+        setCommunityItem({
+          id, title,
+          category,
+          tags,
+          dateOfRegistration,
+          content,
+        });
       } catch(e) {
         console.log(e)
       }

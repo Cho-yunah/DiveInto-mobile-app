@@ -1,4 +1,3 @@
-import { Background } from './../../config/colors';
 import {StyleSheet} from 'react-native'
 
 export const DetailInfoStyle = StyleSheet.create({
@@ -40,12 +39,14 @@ export const DetailInfoStyle = StyleSheet.create({
     color: '#A9BBC9'
   },
   delete: {
-    color: '#E93A55'
+    color: '#E93A55',
   }
 })
 
 export const ContentsStyle = StyleSheet.create({
   contentsContainer : {
+    flex: 1,
+    justifyContent: 'center',
     paddingVertical: 30,
     borderWidth: 1,
     borderColor: '#CCD7DF',
@@ -64,7 +65,9 @@ export const ContentsStyle = StyleSheet.create({
     width: 320,
     height: 240,
     backgroundColor: '#E3CCCC',
-    marginRight: 15
+    marginRight: 15,
+    borderWidth: 0.2,
+    borderColor: '#6A6D70'
   },
 })
 

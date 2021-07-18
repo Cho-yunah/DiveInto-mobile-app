@@ -45,6 +45,46 @@ export const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
   },
+  imageContainer: {
+    width: 353,
+    height: 76,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 30
+  },
+  imageUploadBtn: {
+    width: 60,
+    height: 60,
+    backgroundColor: '#CCD7DF',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  imageUploadText: {
+    color: '#D8D8D8',
+  },
+  imageUploadLimit: {
+    color: '#D8D8D8',
+  },
+  uploadedImagesContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginRight: 38,
+  },
+  uploadedImgBtn: {},
+  uploadedImg: { width: 60, height: 60, borderRadius: 8, marginRight: 10 },
+  removeIconFilter: {
+    position: 'absolute',
+    backgroundColor: 'rgba(255,255,255,0.4)',
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   inputContainer: {
     marginTop: 30,
     width: 353,
