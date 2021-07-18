@@ -1,9 +1,9 @@
-import React from 'react'
-import {View, Text, Image, TouchableOpacity, Pressable} from 'react-native';
+import React from 'react';
+import { View, Text, Image, TouchableOpacity, Pressable } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { styles } from './styles'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { styles } from './styles';
 import * as colors from '@config/colors';
 import {ContentItem, CommentNumber} from './types'
 import {  useRecoilState  } from 'recoil';
@@ -34,16 +34,19 @@ export default function CommunityItem({id, title,dateOfRegistration, writerNickn
         <CommentNum commentNum={commentCount}/>
         <LikeBtn id={id} likeCount={likeCount} liked={liked}/>
       </View>
-      </TouchableOpacity>
-  )
+      <View style={styles.iconBox}>
+        <CommentNum commentNum={commentCount} />
+        <LikeBtn id={id} likeCount={likeCount} liked={liked} />
+      </View>
+    </TouchableOpacity>
+  );
 }
-
 // comment 갯수
-const CommentNum = ({commentNum}: CommentNumber ) => {
+const CommentNum = ({ commentNum }: CommentNumber) => {
   return (
-    <View style={styles.commentAndLike} >
-      <MaterialIcons name='comment' size={14} color={colors.Gray2}/>
-      <Text style={{color:colors.Gray2}}>{commentNum}</Text>
+    <View style={styles.commentAndLike}>
+      <MaterialIcons name="comment" size={14} color={colors.Gray2} />
+      <Text style={{ color: colors.Gray2 }}>{commentNum}</Text>
     </View>
   )
 }
@@ -65,13 +68,13 @@ const likeCountNumber = (
 // console.log(likeCountNumber)
 
   return (
-    <Pressable onPress={Clickedlike} style={styles.commentAndLike} >
-      <FontAwesome 
-        name='heart' 
-        size={14} 
-        color={like? colors.Selected : colors.Gray2}
+    <Pressable onPress={Clickedlike} style={styles.commentAndLike}>
+      <FontAwesome
+        name="heart"
+        size={14}
+        color={like ? colors.Selected : colors.Gray2}
       />
       <Text style={{color:colors.Gray2}}>{likeCountNumber}</Text>
     </Pressable>
-  )
-}
+  );
+};

@@ -14,7 +14,7 @@ export default function FAQContents({ subject, descList }: FAQContentsProps) {
         renderItem={({ item }) => {
           return <Text style={styles.descStyle}>{item.contents}</Text>;
         }}
-        keyExtractor={item => item.id}
+        keyExtractor={item => String(item.id)}
       />
     </View>
   );

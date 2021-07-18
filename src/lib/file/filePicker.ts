@@ -23,7 +23,7 @@ export async function singleFileSelect() {
       console.log('취소하였습니다.');
     } else {
       throw err;
-    } 
+    }
   }
 }
 
@@ -91,7 +91,7 @@ export async function multiImageSelect() {
       launchImageLibrary(
         {
           mediaType: 'photo',
-          selectionLimit: 0,
+          selectionLimit: 3,
         },
         async response => {
           if (response.didCancel) resolve(undefined);

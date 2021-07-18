@@ -18,13 +18,14 @@ export type LectureLikeProps = LectureLikeStaticProps & {
 };
 
 export type CommunityLikeProps = {
-  id: string;
+  id: number;
+  title: string;
   dateOfRegistration: string;
   category: string;
-  title: string;
-  likeCount: number;
+  writerNickname?: string;
+  imageUrl?: string;
   commentCount: number;
-  writerNickname: string;
-  imageUrl: string;
+  likeCount: number;
   liked: boolean;
+  onItemClick: () => void;
 };

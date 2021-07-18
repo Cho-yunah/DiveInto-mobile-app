@@ -10,6 +10,7 @@ import AuthEmailScreen from '@screens/AuthEmail';
 import MemberInfoScreen from '@screens/MemberInfo';
 import WriteReviewScreen from '@/src/screens/WriteReview';
 import LectureDetailScreen from '@/src/screens/LectureDetail';
+import ReserveLecture from '@/src/screens/ReserveLecture';
 
 const Stack = createStackNavigator<RootLoginStack>();
 
