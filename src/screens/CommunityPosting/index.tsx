@@ -6,7 +6,6 @@ import  { SelectBox, TitleAndContents, AddImages}  from '@components/CommunityPo
 import NextButton from '@components/common/NextButton';
 import {  useRecoilValue, useSetRecoilState } from 'recoil';
 import instance from '@/src/lib/api/axios';
-// import AsyncStorage from '@react-native-community/async-storage';
 import { atkState, communityListState, postingFormSelector, postingFormState } from '@/src/recoil/CommunityStack';
 
 export default function CommunityPostingScreen({route, navigation}: CommunityPostingProps): ReactElement {
@@ -84,7 +83,7 @@ export default function CommunityPostingScreen({route, navigation}: CommunityPos
    (<View style={styles.container}>
         <SelectBox id={id}/>
         <TitleAndContents id={id}/>
-        <AddImages/>
+        <AddImages />
       </View>)
   )
 }

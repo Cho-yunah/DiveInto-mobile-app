@@ -1,6 +1,6 @@
 import { ImageState } from '@/src/recoil/CommunityStack'
 import React from 'react'
-import { View , Text, ScrollView, Image, FlatList} from 'react-native'
+import { View , Text, Image, FlatList} from 'react-native'
 import { useRecoilValue } from 'recoil'
 import {ContentsStyle as styles} from './styles'
 

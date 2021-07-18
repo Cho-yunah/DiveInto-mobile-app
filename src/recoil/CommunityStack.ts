@@ -25,6 +25,24 @@ export const allCommunityListState = selector({
   }
 })
 
+export const writerInfoState = atom ({
+  key: 'writerInfoState',
+  default: {
+    id: '',
+    nickName:'',
+    profileImageUrl:''
+  }
+})
+
+export const commentState = atom({
+  key: 'commentState',
+  default: {
+    id: '',
+    dateOfWriting: '',
+    content:''
+  }
+})
+
 export const atkState = atom<string | null>({
   key: 'atk',
   default: null,
@@ -35,7 +53,7 @@ export const postingFormSelector = selector ({
   get: ({get}) => {
     const postingFormInfo ={
       category: get(postingFormState('category')),
-      tags: get(postingFormState('tag')),
+      tags: get(postingFormState('tags')),
       title: get(postingFormState('title')),
       content: get(postingFormState('contents'))
     };
@@ -112,7 +130,7 @@ export const communityItemState = atom({
       id: 1,
       title: '',
       category:'',
-      tag: [],
+      tags: [],
       dateOfRegistration:'',
       content:'',
   }
@@ -122,7 +140,7 @@ export type communityItemSelectorType = {
   id: number,
   title: string,
   category:string,
-  tag: string[],
+  tags: string[],
   dateOfRegistration:string,
   content:string,
 }
@@ -130,10 +148,10 @@ export type communityItemSelectorType = {
 export const communityItemSelector= selector({
   key: 'communityItemSelector',
   get: ({get}) : communityItemSelectorType => {
-    const {id, title, category, tag, dateOfRegistration, content}
+    const {id, title, category, tags, dateOfRegistration, content}
   = get(communityItemState);
 
-  return {id, title, category, tag, dateOfRegistration, content}
+  return {id, title, category, tags, dateOfRegistration, content}
   }
 })
 
@@ -148,3 +166,15 @@ export const ImageState = atom({
   key: 'ImageState',
   default : []
 })
+
+export type ImageArrStateType = {
+  size: number;
+  uri: string;
+  type: string;
+  name: string;
+};
+
+export const ImageArrState = atom<ImageArrStateType[]>({
+  key: 'ImageArrState',
+  default: [],
+});

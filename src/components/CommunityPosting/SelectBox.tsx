@@ -54,12 +54,12 @@ const Category= ({pickerOpen, setPickerOpen, category}: any) => {
 }
 
 // Tag Component
-const Tag=({pickerOpen, setPickerOpen, tag}: any) => {
+const Tag=({pickerOpen, setPickerOpen, tags}: any) => {
   const tagItem= [
     {label: '태그 1', value: '태그1', }, 
     {label: '태그 2', value: '태그 2'},
   ]
-  const [selectTag, setSelectTag] = useRecoilState(postingFormState('tag'))  
+  const [selectTag, setSelectTag] = useRecoilState(postingFormState('tags'))  
 
   return (
     <View style={{zIndex:100}}>
@@ -74,9 +74,9 @@ const Tag=({pickerOpen, setPickerOpen, tag}: any) => {
         placeholderStyle={{color: '#D8D8D8'}}
         onOpen={() => setPickerOpen(true)}
         onClose={() => setPickerOpen(false)}
-        defaultValue={tag? tag: ''}
+        defaultValue={tags? tags: ''}
         onChangeItem= {
-         ()=> setSelectTag(tag)
+         ()=> setSelectTag(tags)
         }      
        />
     </View>

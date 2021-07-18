@@ -19,7 +19,9 @@ export default function CommunityItem({id, title,dateOfRegistration, writerNickn
         activeOpacity={0.8}  
         onPress={()=> navigation.navigate('CommunityDetail',{id})}
         >
-          <Image style={styles.thumnailImage} source={{uri: imageUrl}}/>
+          {imageUrl
+            ? (<Image style={styles.thumnailImage} source={{uri: imageUrl}}/>)
+            : (<View style={styles.thumnailImage}></View>)}
           <View style={styles.contentInfo}>
             <Text>{title}</Text>
             <View style={styles.flexBox}>

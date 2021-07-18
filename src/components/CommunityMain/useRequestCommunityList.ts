@@ -31,7 +31,8 @@ export const useRequestCommunityList = (): ContentItem[] => {
       setIsLoading(true)
       try {
         // console.log('listPage', listPage)
-        const {data} = await instance.get(`/community/post/category?category=SHARE&page=${listPage}&size=10`);
+        const {data} = await instance.get(
+        `/community/post/category?category=SHARE&page=${listPage}&size=10&sort=id,desc`);
         // console.log('data', data) 
          setCommunityList((list)=>[...list,...data._embedded.postsModelList]);
         // console.log('communityList-main',communityList)

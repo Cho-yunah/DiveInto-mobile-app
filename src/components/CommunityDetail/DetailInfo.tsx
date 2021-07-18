@@ -1,5 +1,5 @@
 import instance from '@/src/lib/api/axios'
-import { atkState, communityItemSelector, communityListState, DetailInfoType } from '@/src/recoil/CommunityStack'
+import { atkState, communityItemSelector, communityListState, DetailInfoType, writerInfoState } from '@/src/recoil/CommunityStack'
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import {View, Image, Text, TouchableOpacity } from 'react-native'
@@ -9,11 +9,13 @@ import {DetailInfoStyle as styles} from './styles'
 export default function DetailInfo({id}) {
   const navigation = useNavigation()
   const token = useRecoilValue(atkState)
+  // console.log('detail',token)
   
   const [communityList, setCommunityList]= useRecoilState(communityListState)
   const {title, dateOfRegistration } = useRecoilValue(communityItemSelector)
+  const writer = useRecoilValue(writerInfoState)
+  console.log(writer.profileImageUrl)
 
-  // console.log('detail',token)
 
   const config = {
     headers: {
@@ -38,10 +40,10 @@ export default function DetailInfo({id}) {
   return (
     <View >
       <View style={styles.writerInfoBox}>
-      <Image style={styles.writerImage} source={{uri: '#'}}/>
+      <Image style={styles.writerImage} source={{uri: writer.profileImageUrl}}/>
       <View>
         <Text style={styles.title}>{title}</Text>
-        <Text style= {styles.dateStyle}>{dateOfRegistration}</Text>
+        <Text style= {styles.dateStyle}>{writer.nickName}</Text>
        </View>
     </View>
        <View style= {styles.buttons}>

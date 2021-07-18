@@ -65,7 +65,9 @@ export const ContentsStyle = StyleSheet.create({
     width: 320,
     height: 240,
     backgroundColor: '#E3CCCC',
-    marginRight: 15
+    marginRight: 15,
+    borderWidth: 0.2,
+    borderColor: '#6A6D70'
   },
 })
 
