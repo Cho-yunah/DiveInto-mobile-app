@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TextInput } from 'react-native';
 
-import { commonInput as styles } from './styles';
+import { inputStyle as styles } from './styles';
 import { placeholder } from '@/src/config/colors';
 import { CommonInputProps } from './types';
 

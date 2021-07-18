@@ -14,12 +14,7 @@ import {
 } from '@/src/recoil/ProfileStack';
 
 export default function NextLectureScreen() {
-  const reservationList = useRecoilValue(reservationLectureListState);
-  const nextReservationLectureList = useRecoilValue(
-    nextReservationLectureListState,
-  );
-
-  console.log(nextReservationLectureList);
+  const reservationList = useRecoilValue(nextReservationLectureListState);
 
   const ListEl = reservationList ? (
     <FlatList
@@ -33,6 +28,8 @@ export default function NextLectureScreen() {
                 title={item.lectureTitle}
                 level={item.level}
                 group={item.organization}
+                reservationDate={item.reservationDate}
+                nickname={item.instructorNickname}
               />
             }
             type="next"

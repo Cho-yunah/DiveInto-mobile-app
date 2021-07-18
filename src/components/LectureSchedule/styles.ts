@@ -10,7 +10,6 @@ export const TouchSwipeStyle = StyleSheet.create({
     width: SCREEN_WIDTH,
     backgroundColor: Color.White,
     flexDirection: 'row',
-
     borderBottomRightRadius: 10,
     borderTopRightRadius: 10,
   },

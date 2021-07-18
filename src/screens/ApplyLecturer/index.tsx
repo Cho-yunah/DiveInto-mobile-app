@@ -3,7 +3,11 @@ import { View } from 'react-native';
 
 import { styles } from './styles';
 import { HeaderContainer } from '@/src/components/ProfileMain';
-import { CommonInput, UploadCertificate } from '@/src/components/ApplyLecturer';
+import {
+  CommonInput,
+  OrganizationDropdown,
+  UploadCertificate,
+} from '@/src/components/ApplyLecturer';
 import useInputText from './useInputText';
 import { ApplyLecturerProps } from '@/src/navigators/ProfileStack/types';
 import NextButton from '@/src/components/common/NextButton';
@@ -15,7 +19,8 @@ import { useEffect } from 'react';
 export default function ApplyLecturerScreen({
   navigation,
 }: ApplyLecturerProps) {
-  const [group, onChangeGroup] = useInputText('');
+  // const [group, onChangeGroup] = useInputText('');
+  const [group, setGroup] = useState('');
   const [intro, onChangeIntro] = useInputText('');
   const [isCompleted, setIsCompleted] = useState(false);
   const atk = useRecoilValue(atkState);
@@ -64,11 +69,7 @@ export default function ApplyLecturerScreen({
         value={intro}
         handleInputText={onChangeIntro}
       />
-      <CommonInput
-        placeholderText="강사소속단체명"
-        value={group}
-        handleInputText={onChangeGroup}
-      />
+      <OrganizationDropdown setGroup={setGroup} />
       <UploadCertificate />
     </View>
   );

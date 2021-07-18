@@ -21,7 +21,7 @@ export type reservationLectureListType = {
   lectureImageUrl: string;
   instructorNickname: string;
   reservationDate: string;
-  remainingDate: string;
+  remainingDate: number;
 }[];
 
 export type lastReservationLectureListType = {
@@ -78,8 +78,27 @@ export const reservationLectureListState =
   });
 
 export const nextReservationLectureListState = selector({
+  key: 'nextReservationLectureList',
+  get: ({ get }) => {
+    const res = get(reservationLectureListState);
+
+    const nextReservationLectureInfo = res?.filter(data =>
+      data.remainingDate !== 365 ? data : null,
+    );
+
+    return nextReservationLectureInfo;
+  },
+});
+
+export const lastReservationLectureListState = selector({
   key: 'lastReservationLectureList',
   get: ({ get }) => {
     const res = get(reservationLectureListState);
+
+    const lastReservationLectureInfo = res?.filter(data =>
+      data.remainingDate === 365 ? data : null,
+    );
+
+    return lastReservationLectureInfo;
   },
 });

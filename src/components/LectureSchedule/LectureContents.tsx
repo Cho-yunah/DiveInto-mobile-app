@@ -9,12 +9,13 @@ export default function LectureContents({
   title,
   level,
   group,
+  reservationDate,
+  nickname,
 }: LectureContentsProps) {
   return (
     <View style={styles.container}>
       <View style={styles.commonLayout}>
-        <FontAwesome name="map-marker" size={10} />
-        <Text style={styles.smallTextStyle}>위치</Text>
+        <Text style={styles.smallTextStyle}>{nickname}</Text>
       </View>
       <View style={styles.commonLayout}>
         <Text style={styles.largeTextStyle}>{title}</Text>
@@ -24,8 +25,7 @@ export default function LectureContents({
         <Text style={styles.mediumTextStyle}>{level}</Text>
       </View>
       <View style={styles.commonLayout}>
-        <Text style={styles.mediumTextStyle}>운영 시간</Text>
-        <Text style={styles.mediumTextStyle}>수강 시간</Text>
+        <Text style={styles.mediumTextStyle}>{reservationDate} 예약</Text>
       </View>
     </View>
   );
