@@ -49,7 +49,10 @@ export default function LectureScheduleScreen() {
           labelStyle: { fontSize: 18 },
           activeTintColor: '#50CAD2',
           inactiveTintColor: '#6A6D70',
-          indicatorStyle: { borderColor: '#50CAD2', borderWidth: 1 },
+          indicatorStyle: {
+            borderColor: '#50CAD2',
+            borderWidth: 1,
+          },
         }}
       >
         <Tab.Screen

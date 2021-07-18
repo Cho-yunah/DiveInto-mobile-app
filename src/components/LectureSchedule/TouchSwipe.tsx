@@ -1,18 +1,11 @@
 import React, { useCallback, useState } from 'react';
-import { Modal } from 'react-native';
 import { View, Animated, TouchableOpacity, Text } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import CommonModal from '../common/CommonModal';
 
 import { TouchSwipeStyle as styles } from './styles';
-import { AuxProps } from './types';
-
-export type RightSwipeProps = {
-  progress: Animated.AnimatedInterpolation;
-  dragX: Animated.AnimatedInterpolation;
-  onPress: () => void;
-};
+import { AuxProps, RightSwipeProps } from './types';
 
 export default function TouchSwipe({
   imgComponent,
@@ -56,7 +49,7 @@ export default function TouchSwipe({
     type === 'last' ? onDeleteLastLecture : onDeleteNextLecture;
 
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => console.log('Click')}>
       <Swipeable
         renderRightActions={(progress, dragX) => (
           <RightSwipe
@@ -68,7 +61,8 @@ export default function TouchSwipe({
         overshootFriction={30}
         containerStyle={{
           borderRadius: 10,
-          marginBottom: 12,
+          marginVertical: 12,
+          // marginBottom: 12,
         }}
       >
         <View style={styles.container}>
