@@ -1,21 +1,24 @@
 import instance from '@/src/lib/api/axios'
-import { atkState, DetailInfoType } from '@/src/recoil/CommunityStack'
+import { atkState, communityItemSelector, communityListState, DetailInfoType } from '@/src/recoil/CommunityStack'
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import {View, Image, Text, TouchableOpacity } from 'react-native'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import {DetailInfoStyle as styles} from './styles'
 
-export default function DetailInfo({id, title, dateOfRegistration}: 
-  DetailInfoType) {
+export default function DetailInfo({id}) {
   const navigation = useNavigation()
   const token = useRecoilValue(atkState)
-  console.log('detail',token)
+  
+  const [communityList, setCommunityList]= useRecoilState(communityListState)
+  const {title, dateOfRegistration } = useRecoilValue(communityItemSelector)
+
+  // console.log('detail',token)
 
   const config = {
     headers: {
       Authorization: token,
-      // 'Content-Type': 'application/json'
+      'Content-Type': 'application/json'
     }
   }
 
@@ -25,6 +28,8 @@ export default function DetailInfo({id, title, dateOfRegistration}:
     try {
       const response = await instance.delete(`community/post/${id}`, config )
       // console.log(response)
+      setCommunityList(communityList.filter(item => item.id !== id))
+      navigation.navigate('CommunityMain')
     } catch(e) {
       console.log(e)
     }

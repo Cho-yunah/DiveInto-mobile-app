@@ -45,6 +45,8 @@ export const DetailInfoStyle = StyleSheet.create({
 
 export const ContentsStyle = StyleSheet.create({
   contentsContainer : {
+    flex: 1,
+    justifyContent: 'center',
     paddingVertical: 30,
     borderWidth: 1,
     borderColor: '#CCD7DF',

@@ -45,7 +45,7 @@ export default function CommunityMain():ReactElement  {
     console.log('currentPage2', currentPage)
     setRefreshing(false)  
   }
-  // console.log('mainpage', list)
+  console.log('mainpage', list)
 
   return (
     <View style={styles.container}>

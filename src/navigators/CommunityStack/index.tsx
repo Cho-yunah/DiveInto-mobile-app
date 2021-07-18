@@ -62,7 +62,7 @@ export default function CommunityStack({navigation,route}: any) {
           name="CommunityDetail"
           component={CommunityDetailScreen}
           options={{
-            title: '글 제목',
+            title: '',
           }}
         />
       </Stack.Navigator>

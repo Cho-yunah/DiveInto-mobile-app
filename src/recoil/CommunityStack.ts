@@ -144,3 +144,7 @@ export type DetailInfoType = {
   dateOfRegistration: string
 }
 
+export const ImageState = atom({
+  key: 'ImageState',
+  default : []
+})
