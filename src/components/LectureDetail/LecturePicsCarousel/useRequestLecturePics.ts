@@ -2,26 +2,26 @@ import instance from '@/src/lib/api/axios';
 import {
   lectureDetailPicsState,
   LectureDetailPicsType,
+  lectureIdState,
 } from '@/src/recoil/LectureStack';
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 const useRequestLecturePics = (): LectureDetailPicsType[] => {
   const [lecturePics, setLecturePics] = useRecoilState<LectureDetailPicsType[]>(
     lectureDetailPicsState,
   );
+  const lectureId = useRecoilValue(lectureIdState);
 
   useEffect(() => {
     const requestLectureImages = async () => {
       try {
         const { data } = await instance.get(
-          'http://52.79.225.4:8081/lectureImage/list?lectureId=1',
+          `http://52.79.225.4:8081/lectureImage/list?lectureId=${lectureId}`,
         );
 
-        setTimeout(() => {
-          setLecturePics(data._embedded.lectureImageUrlList || []);
-          console.log(lecturePics);
-        }, 2000);
+        setLecturePics(data._embedded.lectureImageUrlList || []);
+        console.log(lecturePics);
       } catch (e) {
         console.log(e);
       }

@@ -5,8 +5,7 @@ import {
   requestReservationEquipmentState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
-import React, { useEffect, useState } from 'react';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import { useRecoilValue } from 'recoil';
 import { ReserveBtn as styles } from './styles';

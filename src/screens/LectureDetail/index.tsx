@@ -10,17 +10,21 @@ import { LectureDetailProps } from '@/src/navigators/LectureStack/types';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { LectureDetailScreenStyle as styles } from './styles';
 import { useLayoutEffect } from 'react';
-import { useRecoilValue } from 'recoil';
-import { lectureDetailState } from '@/src/recoil/LectureStack';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { lectureDetailState, lectureIdState } from '@/src/recoil/LectureStack';
 import Entype from 'react-native-vector-icons/Entypo';
 import LeturePicsModal from '@/src/components/LectureDetail/LecturePicsModal';
 import SuspenseLocationInfo from '@/src/components/LectureDetail/LocationInfo/SuspenseLocationInfo';
 
 const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
   const { isMarked } = useRecoilValue(lectureDetailState);
+  const { lectureId } = route.params;
+  const setLectureId = useSetRecoilState(lectureIdState);
 
   const navigateToReserveLecture = () =>
-    navigation.navigate('ReserveLecture', { lectureId: 1 });
+    navigation.navigate('ReserveLecture', {
+      lectureId,
+    });
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -38,6 +42,8 @@ const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
         </TouchableOpacity>
       ),
     });
+
+    setLectureId(lectureId);
   }, []);
 
   return (

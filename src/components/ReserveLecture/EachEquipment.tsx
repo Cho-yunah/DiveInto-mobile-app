@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import {
   eachEquipmentState,
   requestReservationEquipmentState,
@@ -8,8 +8,6 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { RentEquipments as styles } from './styles';
 import addCashComma from '@/src/lib/utils/addCashComma';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import EachEquipController from './EachEquipController';
 
 const EachEquipment = ({ item, setIsOpen }: any) => {

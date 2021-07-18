@@ -12,7 +12,6 @@ import {
 import SuspenseCalendar from '@/src/components/ReserveLecture/SuspenseCalendar';
 import SuspenseReserveBtn from '@/src/components/ReserveLecture/SuspenseReserveBtn';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useEffect } from 'react';
 
 const index = ({ navigation }: ReserveLectureProps) => {
   const [isDisabled, setIsDisabled] = useState(false);

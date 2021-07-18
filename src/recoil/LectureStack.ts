@@ -78,6 +78,11 @@ export const searchText = atom({
   default: '',
 });
 
+export const lectureIdState = atom<null | number>({
+  key: 'lectureId',
+  default: null,
+});
+
 export const requestLocationInfoSelector = selectorFamily({
   key: 'requestLocationInfo',
   get:

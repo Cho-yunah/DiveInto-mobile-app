@@ -9,6 +9,7 @@ const WriteReviewScreen = ({ navigation }: WriteReviewProps) => {
   navigation.setOptions({
     headerRight: () => <UploadReviewHeaderBtn />,
   });
+
   return (
     <View style={styles.container}>
       <ScrollView>

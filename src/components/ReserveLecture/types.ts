@@ -16,3 +16,9 @@ export type ReserveBtnProps = {
   setIsDisabled: (isDisabled: boolean) => void;
   setModalMessage: (modalMessage: string) => void;
 };
+
+export type EachEquipInfo = {
+  id: number;
+  size: string;
+  quantity: number;
+};

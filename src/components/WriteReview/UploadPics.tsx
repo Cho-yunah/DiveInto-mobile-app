@@ -22,6 +22,8 @@ const UploadPics = () => {
       setIsLoading(true);
       const pics = (await multiImageSelect()) || [];
 
+      console.log(pics);
+
       setPicsArr(
         pics.map(pic => ({
           size: pic.size,

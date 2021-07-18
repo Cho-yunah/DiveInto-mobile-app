@@ -5,13 +5,16 @@ import Entype from 'react-native-vector-icons/Entypo';
 import NaverMapView, { Marker, Path } from 'react-native-nmap';
 import { useRecoilValue } from 'recoil';
 import {
+  lectureIdState,
   locationResponseType,
   requestLocationInfoSelector,
 } from '@/src/recoil/LectureStack';
 
 const LocationInfo = () => {
+  const lectureId = useRecoilValue(lectureIdState);
+
   const { address, latitude, longitude, id } = useRecoilValue(
-    requestLocationInfoSelector(1),
+    requestLocationInfoSelector(lectureId!),
   );
 
   return (

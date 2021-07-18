@@ -1,4 +1,3 @@
-import React from 'react';
 import { Modal, Pressable, ScrollView, View } from 'react-native';
 import { LoginWithEmailProps } from '@navigators/LoginStack/types';
 import { PwForgot, LoginButton, PWInput } from '@components/LoginWithEmail';
@@ -11,10 +10,11 @@ import { IsLogin, IsInstructor } from '@/src/recoil/Global';
 
 import jwt_decode from 'jwt-decode';
 import { JWToken } from './types';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ModalContainer } from '../ReserveLecture';
-
+import AsyncStorage from '@react-native-community/async-storage';
+// import { getToken } from '@/src/lib/firebase/FCM';
+import * as FCM from '@lib/firebase/FCM';
 
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   const setIsLogin = useSetRecoilState(IsLogin);
@@ -43,18 +43,17 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
 
         await AsyncStorage.setItem('token', atk);
         setIsLogin(true);
+        const fcm = await FCM.getToken();
+        console.log('fcm Token : ', fcm);
 
         if (decoded.authorities.includes('ROLE_INSTRUCTOR')) {
           setIsInstructor(true);
-<<<<<<< HEAD
-=======
           await AsyncStorage.setItem('instructor', 'instructor');
         } else {
           await AsyncStorage.setItem('instructor', 'student');
         }
 
         setIsLogin(true);
->>>>>>> 9ec36d88b10a3aab32883a0aa2ad538488f1a57d
       }
     } catch (e) {
       console.log(e.response.data);

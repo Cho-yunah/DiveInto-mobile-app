@@ -1,4 +1,4 @@
-import { lectureDetailState } from '@/src/recoil/LectureStack';
+import { lectureDetailState, lectureIdState } from '@/src/recoil/LectureStack';
 import React from 'react';
 import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 import { useRecoilValue } from 'recoil';
@@ -10,6 +10,7 @@ type ReserveBtnProps = {
 
 const ReserveBtn = ({ navigateToReserveLecture }: ReserveBtnProps) => {
   const lectureDetail = useRecoilValue(lectureDetailState);
+  const lectureId = useRecoilValue(lectureIdState);
 
   return (
     <View style={styles.reserveBtnContainer}>
