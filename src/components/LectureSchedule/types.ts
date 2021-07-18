@@ -20,4 +20,12 @@ export type LectureContentsProps = {
   title: string;
   level: string;
   group: string;
+  reservationDate: string;
+  nickname: string;
+};
+
+export type RightSwipeProps = {
+  progress: Animated.AnimatedInterpolation;
+  dragX: Animated.AnimatedInterpolation;
+  onPress: () => void;
 };

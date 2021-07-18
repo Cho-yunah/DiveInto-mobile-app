@@ -97,6 +97,7 @@ export default function ProfileStack<ProfileStak>() {
         <Stack.Screen
           name="LectureSchedule"
           component={LectureScheduleScreen}
+          options={{ title: '강의일정' }}
         />
 
         {/* 공지 사항 리스트, 상세 View */}
