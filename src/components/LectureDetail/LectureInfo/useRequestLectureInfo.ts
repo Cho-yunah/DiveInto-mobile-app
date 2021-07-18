@@ -1,14 +1,15 @@
 import instance from '@/src/lib/api/axios';
-import { lectureDetailState } from '@/src/recoil/LectureStack';
+import { lectureDetailState, lectureIdState } from '@/src/recoil/LectureStack';
 import { useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const useRequestLectureInfo = () => {
   const setLectureDetail = useSetRecoilState(lectureDetailState);
+  const lectureId = useRecoilValue(lectureIdState);
   useEffect(() => {
     const requestLectureDetail = async () => {
       try {
-        const res = await instance.get(`/lecture?id=${1}`);
+        const res = await instance.get(`/lecture?id=${lectureId}`);
 
         console.log(res.data);
 

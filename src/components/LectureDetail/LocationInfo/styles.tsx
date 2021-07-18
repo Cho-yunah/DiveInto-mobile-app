@@ -13,7 +13,6 @@ export const LocationInfoStyles = StyleSheet.create({
   locationMapContainer: {
     width: '100%',
     height: 180,
-    backgroundColor: '#DE8C8C',
     borderRadius: 10,
     marginTop: 8,
   },
