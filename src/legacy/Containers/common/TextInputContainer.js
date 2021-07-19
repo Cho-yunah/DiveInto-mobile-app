@@ -40,6 +40,7 @@ export default function TextInputContainer({
   style = {},
   multiline = false,
   hideCheckMark = 'true',
+  keyboardType = 'default',
 }) {
   const [input, setInput] = useState('');
 
@@ -61,6 +62,7 @@ export default function TextInputContainer({
             setInput(text); // 내부 상태값 갱신
             onTextChange(text); // 부모 컴포넌트에도 전달
           }}
+          keyboardType={keyboardType}
         />
         {/* 입력값이 있을 경우에만 체크 마크 띄우도록 */}
         {input && hideCheckMark === 'true' ? (
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
   textOneline: {
-    height: 45,
+    height: 35,
     padding: 10,
     flex: 1,
   },

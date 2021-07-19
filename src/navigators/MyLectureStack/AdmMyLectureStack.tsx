@@ -33,6 +33,7 @@ export default function AdmMyLectureStack() {
           },
           headerTintColor: '#fefefe',
         }}
+        initialRouteName="장비등록"
       >
         <Stack.Screen name="강의목록" component={AdmMyLectureList} />
         <Stack.Screen name="강의등록" component={AddLecture} />
