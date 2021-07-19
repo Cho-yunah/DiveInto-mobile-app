@@ -21,3 +21,8 @@ export const picsArrState = atom<PicsArrStateType[]>({
   key: 'picsArr',
   default: [],
 });
+
+export const isModalOpenState = atom({
+  key: 'isModalOpen',
+  default: false,
+});

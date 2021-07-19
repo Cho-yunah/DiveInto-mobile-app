@@ -21,7 +21,6 @@ const useRequestLecturePics = (): LectureDetailPicsType[] => {
         );
 
         setLecturePics(data._embedded.lectureImageUrlList || []);
-        console.log(lecturePics);
       } catch (e) {
         console.log(e);
       }
