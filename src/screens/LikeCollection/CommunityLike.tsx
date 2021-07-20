@@ -3,6 +3,7 @@ import { FlatList, View } from 'react-native';
 import { useRecoilValue } from 'recoil';
 import { useNavigation } from '@react-navigation/native';
 
+import { styles } from './styles';
 import { CommunityLikeProps } from './types';
 import instance from '@lib/api/axios';
 import { CommunityItem } from '@components/CommunityMain';
@@ -24,10 +25,6 @@ export default function CommunityLikeScreen() {
           },
         });
 
-        console.log(atk);
-
-        console.log(res);
-
         setCommunityList(res.data._embedded.postsModelList);
       } catch (err) {
         console.log(err);
@@ -38,13 +35,12 @@ export default function CommunityLikeScreen() {
   }, [atk]);
 
   return (
-    <View>
+    <View style={styles.eachContainer}>
       {communityList && (
         <FlatList
           data={communityList}
           renderItem={({ item }: { item: CommunityLikeProps }) => {
             const date = item.dateOfRegistration.split('T')[0];
-            console.log(item.imageUrl);
 
             return (
               <CommunityItem

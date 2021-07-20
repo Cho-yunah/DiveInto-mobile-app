@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View } from 'react-native';
 
 import { styles } from './styles';
 import {
@@ -7,11 +7,9 @@ import {
   TouchSwipe,
   LectureContents,
 } from '@components/LectureSchedule';
-import { useRecoilValue } from 'recoil';
-import {
-  nextReservationLectureListState,
-  reservationLectureListState,
-} from '@/src/recoil/ProfileStack';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { nextReservationLectureListState } from '@/src/recoil/ProfileStack';
+import CommonLoading from '@/src/components/common/CommonLoading';
 
 export default function NextLectureScreen() {
   const reservationList = useRecoilValue(nextReservationLectureListState);
@@ -39,7 +37,9 @@ export default function NextLectureScreen() {
       keyExtractor={item => String(item.reservationId)}
       showsVerticalScrollIndicator={false}
     />
-  ) : null;
+  ) : (
+    <CommonLoading />
+  );
 
   return <View style={styles.eachScreenContainerStyle}>{ListEl}</View>;
 }

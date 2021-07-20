@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState, useEffect } from 'react';
 import { View } from 'react-native';
 
 import { styles } from './styles';
@@ -9,17 +9,16 @@ import {
   UploadCertificate,
 } from '@/src/components/ApplyLecturer';
 import useInputText from './useInputText';
-import { ApplyLecturerProps } from '@/src/navigators/ProfileStack/types';
-import NextButton from '@/src/components/common/NextButton';
-import instance from '@/src/lib/api/axios';
+import { ApplyLecturerProps } from '@navigators/ProfileStack/types';
+import NextButton from '@components/common/NextButton';
+import instance from '@lib/api/axios';
 import { useRecoilValue } from 'recoil';
-import { atkState } from '@/src/recoil/ProfileStack';
-import { useEffect } from 'react';
+import { atkState } from '@recoil/ProfileStack';
+import ProfileImg from '@components/ProfileMain/HeaderContainer/ProfileImg';
 
 export default function ApplyLecturerScreen({
   navigation,
 }: ApplyLecturerProps) {
-  // const [group, onChangeGroup] = useInputText('');
   const [group, setGroup] = useState('');
   const [intro, onChangeIntro] = useInputText('');
   const [isCompleted, setIsCompleted] = useState(false);
@@ -54,11 +53,13 @@ export default function ApplyLecturerScreen({
     }
   }, [group, intro]);
 
-  navigation.setOptions({
-    headerRight: () => (
-      <NextButton onPress={onPress} text="완료" disable={isCompleted} />
-    ),
-  });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <NextButton onPress={onPress} text="완료" disable={isCompleted} />
+      ),
+    });
+  }, [isCompleted]);
 
   return (
     <View style={styles.container}>
