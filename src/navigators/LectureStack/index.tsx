@@ -35,7 +35,7 @@ export default function LectureStack() {
       >
         <Stack.Screen
           name="LectureDetail"
-          component={WriteReviewScreen}
+          component={LectureDetailScreen}
           options={{ title: '강의 제목' }}
         />
         <Stack.Screen

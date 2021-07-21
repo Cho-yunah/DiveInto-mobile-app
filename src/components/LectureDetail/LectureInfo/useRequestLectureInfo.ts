@@ -49,7 +49,7 @@ const useRequestLectureInfo = () => {
     };
 
     requestLectureDetail();
-  }, []);
+  }, [lectureId]);
 };
 
 export default useRequestLectureInfo;

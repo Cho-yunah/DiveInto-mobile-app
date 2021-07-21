@@ -15,6 +15,7 @@ export const getFormData = (
   body.append('reservationId', reservationId);
   body.append('reviewId', reviewId);
 
+  //
   pictures.forEach(pic => {
     body.append('reviewImages', {
       name: pic.name,

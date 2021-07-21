@@ -19,6 +19,7 @@ const useRequestLecturePics = (): LectureDetailPicsType[] => {
         const { data } = await instance.get(
           `http://52.79.225.4:8081/lectureImage/list?lectureId=${lectureId}`,
         );
+        console.log(data);
 
         setLecturePics(data._embedded.lectureImageUrlList || []);
       } catch (e) {
@@ -27,7 +28,7 @@ const useRequestLecturePics = (): LectureDetailPicsType[] => {
     };
 
     requestLectureImages();
-  }, []);
+  }, [lectureId]);
 
   return lecturePics;
 };
