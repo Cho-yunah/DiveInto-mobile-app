@@ -37,8 +37,8 @@ const index = ({ navigation }: ReserveLectureProps) => {
   return (
     <>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        {/* 달력 */}
         <Suspense fallback={<SuspenseCalendar />}>
-          {/* 달력 */}
           <LectureCalendar />
         </Suspense>
         {/* 인원선택 */}

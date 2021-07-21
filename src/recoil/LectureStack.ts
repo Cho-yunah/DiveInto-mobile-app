@@ -85,16 +85,14 @@ export const lectureIdState = atom<null | number>({
 
 export const requestLocationInfoSelector = selectorFamily({
   key: 'requestLocationInfo',
-  get:
-    (lectureId: number) =>
-    async ({ get }) => {
-      try {
-        const { data } = await instance.get(`/location?lectureId=${lectureId}`);
-        return data;
-      } catch (e) {
-        console.log(e);
-      }
-    },
+  get: (lectureId: number) => async () => {
+    try {
+      const { data } = await instance.get(`/location?lectureId=${lectureId}`);
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  },
 });
 
 export const lectureModalState = atom<LectureDetailPicsType[]>({
@@ -158,8 +156,13 @@ export const lectureReviewState = atom<lectureReviewType[]>({
 
 // lectureCalendar
 export const currMonthState = atom<number>({
-  key: 'currnMonth',
+  key: 'currMonth',
   default: new Date().getMonth() + 1,
+});
+
+export const currYearState = atom<number>({
+  key: 'currYear',
+  default: new Date().getFullYear(),
 });
 
 // selector caching 조절용 상태
@@ -175,16 +178,16 @@ export const lectureScheduleListsSelector = selectorFamily({
       get(cachingState); // caching 조절
       console.log('caching state changed.');
 
+      const year = get(currYearState);
       const month = get(currMonthState);
-      console.log(`현재 달${month}`);
+      console.log(`현재 ${year}년 ${month}월`);
 
       try {
         const { data } = await instance.get(
-          `/schedule?lectureId=${lectureId}&month=${month}`,
+          `/schedule?lectureId=${lectureId}&year=${year}&month=${month}`,
         );
 
         console.log(data._embedded?.scheduleInfoList);
-
         return data._embedded?.scheduleInfoList || [];
       } catch (e) {
         console.log(e);

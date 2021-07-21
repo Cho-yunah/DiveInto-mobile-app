@@ -1,4 +1,5 @@
 import {
+  EquipmentStocksType,
   requestReservationEquipmentState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
@@ -19,6 +20,8 @@ const EachEquipController = ({ item, equip }: any) => {
   );
   const studentsNumber = useRecoilValue(studentNumberState);
   let targetIndex: null | number = null;
+  console.log(equip, 'equip');
+  console.log(item, 'item');
 
   const controllStock = (type: 'Increase' | 'Decrease') => {
     // 지금 상태에서 현재 상태의 객체만 제외한 배열을 만들기 위해서 상태값을 담아둔다.
@@ -92,6 +95,16 @@ const EachEquipController = ({ item, equip }: any) => {
           </TouchableOpacity>
         </View>
       </View>
+      <Text>
+        (재고:{' '}
+        {
+          item.equipmentStocks.find(
+            (stock: EquipmentStocksType) =>
+              stock.id === equip.scheduleEquipmentStockId,
+          ).quantity
+        }
+        개)
+      </Text>
       <AntDesign
         name="close"
         size={20}
