@@ -1,5 +1,11 @@
 import {atom, atomFamily, selector, selectorFamily} from 'recoil'
+// 토큰 받기
+export const atkState = atom<string | null>({
+  key: 'atkState',
+  default: null,
+});
 
+// 커뮤니티 메인 리스트 
 export type ContentItem = {
   id: number;
   title: string;
@@ -24,80 +30,6 @@ export const allCommunityListState = selector({
     return list;
   }
 })
-
-export const writerInfoState = atom ({
-  key: 'writerInfoState',
-  default: {
-    id: '',
-    nickName:'',
-    profileImageUrl:''
-  }
-})
-
-export const commentState = atom({
-  key: 'commentState',
-  default: {
-    id: '',
-    dateOfWriting: '',
-    content:''
-  }
-})
-
-export const atkState = atom<string | null>({
-  key: 'atk',
-  default: null,
-});
-
-export const postingFormSelector = selector ({
-  key: 'postingFormSelecotr',
-  get: ({get}) => {
-    const postingFormInfo ={
-      category: get(postingFormState('category')),
-      tags: get(postingFormState('tags')),
-      title: get(postingFormState('title')),
-      content: get(postingFormState('contents'))
-    };
-    return postingFormInfo;
-  }
-})
-
-export const postingFormState = atomFamily<Element, string>({
-  key: 'postingFormState',
-  default: ''
-})
-
-// const editingFormSelector = selectorFamily({
-//   key: 'editingFormSelector',
-//   get: (id) => async () => {
-//     const posts = await getPostList(id);
-//     return posts;
-//   }
-// }
-
-// export const communityListFamily = atomFamily({
-//   key: 'communityListFamily'
-
-//   default: (id : string) => ({
-//     id, 
-//     title: '', 
-//     dateOfRegistration: '', 
-//     category: '', 
-//     writerNickname: '', 
-//     imageUrl: '',
-//     commentCount: 0,
-//     likeCount: 0,
-//     liked: false
-//   })
-// })
-
-// export const communityListSelector = selector({
-//   key: 'communityListSelector',
-//   get: ({get}) => {
-//     const allCommunityListItem = get(communityListState)
-//     return allCommunityListItem.map((id) => get(communityListFamily(id)))
-//   }
-// })
-
 export const loadingState = atom<boolean>({
   key: 'lodingState',
   default : false
@@ -113,17 +45,55 @@ export const refreshState = atom<boolean>({
   default : false
 })
 
-// 게시물 좋아요 상태
-export const likeState= atomFamily<Element,number>({
-  key: 'likeState',
+// 커뮤니티 포스팅
+export const postingFormSelector = selector ({
+  key: 'postingFormSelecotr',
+  get: ({get}) => {
+    const postingFormInfo ={
+      category: get(postingFormState('category')),
+      tags: get(postingFormState('tags')),
+      title: get(postingFormState('title')),
+      content: get(postingFormState('contents'))
+    };
+    return postingFormInfo;
+  }
+})
+
+export type PostingFormType = 'category' | 'tags' |'title' | 'contents'
+
+export const postingFormState = atomFamily<string, string>({
+  key: 'postingFormState',
   default: ''
 })
 
+// dropdown picker 상태
 export const pickerOpenState = atom({
   key: 'pickerOpenState',
   default: false
 })
 
+export const likeState= atomFamily<Element,number>({
+  key: 'likeState',
+  default: false
+})
+
+export type likeBtnPropsType = {
+  id: number,
+  likeCount: number , 
+  liked: boolean ,
+  mainList ?: string
+}
+
+export const writerInfoState = atom ({ 
+  key: 'writerInfoState',
+  default: {
+    id: '',
+    nickName:'',
+    profileImageUrl:''
+  } 
+})
+
+// 커뮤니티 상세 페이지 
 export const communityItemState = atom({
   key: 'communityItem',
   default: {
@@ -133,6 +103,8 @@ export const communityItemState = atom({
       tags: [],
       dateOfRegistration:'',
       content:'',
+      liked: false,
+      likeCount: 0
   }
 })
 
@@ -143,15 +115,17 @@ export type communityItemSelectorType = {
   tags: string[],
   dateOfRegistration:string,
   content:string,
+  liked: boolean,
+  likeCount: number
 }
 
 export const communityItemSelector= selector({
   key: 'communityItemSelector',
   get: ({get}) : communityItemSelectorType => {
-    const {id, title, category, tags, dateOfRegistration, content}
+    const {id, title, category, tags, dateOfRegistration, content,liked, likeCount}
   = get(communityItemState);
 
-  return {id, title, category, tags, dateOfRegistration, content}
+  return {id, title, category, tags, dateOfRegistration, content, liked, likeCount}
   }
 })
 
@@ -161,11 +135,6 @@ export type DetailInfoType = {
   category: string,
   dateOfRegistration: string
 }
-
-export const ImageState = atom({
-  key: 'ImageState',
-  default : []
-})
 
 export type ImageArrStateType = {
   size: number;
@@ -178,3 +147,51 @@ export const ImageArrState = atom<ImageArrStateType[]>({
   key: 'ImageArrState',
   default: [],
 });
+
+export const ImageState = atom({
+  key: 'ImageState',
+  default : []
+})
+
+// 상세 페이지 
+export const commentState = atom<commentListType[]>({
+  key: 'commentState',
+  default: []
+})
+
+export type commentListType = {
+  accountModel: {
+    id: number,
+    nickName: '',
+    profileImageUrl:  ''
+  },
+  commentModel:{
+    id: number,
+    dateOfWriting: '',
+    content: ''
+  }
+}
+
+export type commentItemType = {
+  nickName: string,
+  profileUrl: string,
+  dateOfWriting: string,
+  content: string
+}
+
+export const postIdState= atom({
+  key: 'postIdState', 
+  default: 1
+})
+
+export const commentTextState = atom({
+  key: 'commentTextState',
+  default: {
+    content: ''
+  }
+})
+
+export const showModalState = atom({
+  key: 'showModalState',
+  default: false
+})

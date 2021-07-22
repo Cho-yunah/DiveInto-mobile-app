@@ -1,15 +1,11 @@
-import { communityItemSelector, postingFormSelector } from '@/src/recoil/CommunityStack'
+import { communityItemSelector, postingFormState } from '@/src/recoil/CommunityStack'
 import React from 'react'
 import { useLayoutEffect } from 'react'
 import { View, TextInput } from 'react-native'
-import {atomFamily, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { useRequestCommunityItem } from '../CommunityDetail/useRequestCommunityItem'
 import {styles} from './styles'
 
-export const postingFormState = atomFamily<Element, string>({
-  key: 'postingFormState',
-  default: ''
-})
 export default function TitleAndContents({id}: any) {
 
   // 상세 페이지에서 수정 요청을 보낼때 해당 글 정보받아오기 
@@ -46,8 +42,8 @@ const Title = ({title}: any) => {
     </View>
   )
 }
+
 const Contents = ({content}:any) => {
-  
   const [fillContents, setFillContents] = useRecoilState(postingFormState('contents'));
 
   useLayoutEffect(() => {

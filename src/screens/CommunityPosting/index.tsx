@@ -6,13 +6,12 @@ import  { SelectBox, TitleAndContents, AddImages}  from '@components/CommunityPo
 import NextButton from '@components/common/NextButton';
 import {  useRecoilValue, useSetRecoilState } from 'recoil';
 import instance from '@/src/lib/api/axios';
-import { atkState, communityListState, postingFormSelector, postingFormState } from '@/src/recoil/CommunityStack';
+import { atkState, communityListState, postingFormSelector } from '@/src/recoil/CommunityStack';
 
 export default function CommunityPostingScreen({route, navigation}: CommunityPostingProps): ReactElement {
   const token = useRecoilValue(atkState)
   const [isCompleted, setIsCompleted] = useState(false);
   const setCommunityList = useSetRecoilState(communityListState)
-  const communityList = useRecoilValue(communityListState)
 
   // 수정버튼 눌러서 id 가 들어왔을때의 데이터 넣어주기
   let id
@@ -21,13 +20,13 @@ export default function CommunityPostingScreen({route, navigation}: CommunityPos
   }
   // console.log(id)
 
-// 게시물 작성 후 완료 버튼 눌렀을 때의 로직
   const config= { 
     headers: {
       Authorization: token,
       'Content-Type': 'application/json'
     }
   }
+  // 게시물 작성 후 완료 버튼 눌렀을 때의 로직
   const postingInfo = useRecoilValue(postingFormSelector) // data
   const allPostingFormFilled= Object.values(postingInfo).every(value => value) // 모든 posting filed에 값이 있는지 확인
 
@@ -56,7 +55,7 @@ export default function CommunityPostingScreen({route, navigation}: CommunityPos
     setIsCompleted(allPostingFormFilled);
     console.log(postingInfo)
     try{
-      const response = await instance.put('/community/post/${id}',postingInfo,config);
+      const response = await instance.put(`/community/post/${id}`,postingInfo,config);
       const postingData= response.data.postResource
       // console.log('response',response.data.postResource)
       setCommunityList((oldCommunityList) => [

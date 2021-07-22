@@ -1,24 +1,25 @@
-import React, { ReactElement, Suspense, useRef} from 'react';
+import React, { ReactElement, Suspense, useRef, useState} from 'react';
 import { Text, View, FlatList, ActivityIndicator } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import CommunityItem from './CommunityItem';
 import {styles} from './styles'
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useRequestCommunityList} from './useRequestCommunityList';
 import {loadingState, listPageState, refreshState, communityListState} from '@/src/recoil/CommunityStack'
 
-export default function CommunityMain():ReactElement  {
+export default function CommunityMain({share}: any):ReactElement  {
   // data 요청
-  useRequestCommunityList()
+  useRequestCommunityList({share})
 
   // focus 되어있는 tab click 하면 맨위로 이동
   const listRef= useRef(null)
   useScrollToTop(listRef)
   
+  const list =useRecoilValue(communityListState)
   const isLoading = useRecoilValue<boolean>(loadingState);
   const [currentPage, setCurrentPage] = useRecoilState<number>(listPageState) 
   const [refreshing, setRefreshing] = useRecoilState(refreshState)
-  const list =useRecoilValue(communityListState)
+  const [callOnScrollEnd, setCallOnScrollEnd] = useState(false)
 
   // data 받아올 때의 loader
   const renderLoader =() => {
@@ -34,7 +35,6 @@ export default function CommunityMain():ReactElement  {
   const contentsLoadMore= ()=> { 
     if(isLoading && refreshing ) return
     setCurrentPage(currentPage +1 )
-    console.log('currentPage1', currentPage)
   }
 
   // 새로고침
@@ -42,7 +42,6 @@ export default function CommunityMain():ReactElement  {
     console.log('fresh!')
     setRefreshing(true)
     setCurrentPage(0)
-    console.log('currentPage2', currentPage)
     setRefreshing(false)  
   }
   console.log('mainpage', list)
@@ -66,10 +65,19 @@ export default function CommunityMain():ReactElement  {
                   liked={item.liked}
                 />
              )}
-            keyExtractor={(item, index) => item.id.toString()}
-            onEndReached={contentsLoadMore}
+            
+            keyExtractor={
+              share 
+              ? (item, index) => `share${item.id}`
+              : (item, index) => `question${item.id}`
+            }
             onEndReachedThreshold={0}
-            ListFooterComponent={renderLoader} // footer에 도달하면 로딩 표시
+            onEndReached={() => setCallOnScrollEnd(true)}
+            onMomentumScrollEnd={() => {
+              callOnScrollEnd && contentsLoadMore()
+              setCallOnScrollEnd(false)
+            }}
+            ListFooterComponent={renderLoader} // footer 도달시 로더
             refreshing={refreshing} //새로고침 props
             onRefresh={onFresh}
             extraData={list} // communityList가 바뀌면 리렌더

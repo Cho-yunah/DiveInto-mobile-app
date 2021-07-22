@@ -1,21 +1,19 @@
-import instance from '@/src/lib/api/axios'
-import { atkState, communityItemSelector, communityListState, DetailInfoType, writerInfoState } from '@/src/recoil/CommunityStack'
+ import instance from '@/src/lib/api/axios'
+import { atkState, communityItemSelector, communityListState, showModalState, writerInfoState } from '@/src/recoil/CommunityStack'
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import {View, Image, Text, TouchableOpacity } from 'react-native'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import CommonModal from '@components/common/CommonModal';
 import {DetailInfoStyle as styles} from './styles'
 
 export default function DetailInfo({id}) {
   const navigation = useNavigation()
   const token = useRecoilValue(atkState)
-  // console.log('detail',token)
-  
   const [communityList, setCommunityList]= useRecoilState(communityListState)
   const {title, dateOfRegistration } = useRecoilValue(communityItemSelector)
   const writer = useRecoilValue(writerInfoState)
-  console.log(writer.profileImageUrl)
-
+  const [show, setShow] = useRecoilState(showModalState)
 
   const config = {
     headers: {
@@ -24,9 +22,13 @@ export default function DetailInfo({id}) {
     }
   }
 
+  const toggleShowModal = (): void => {
+    setShow(!show);
+  };
+
   const requestDelete = async() => {
-    console.log('delete!')
-    console.log(id)
+    // console.log('delete!')
+    // console.log(id)
     try {
       const response = await instance.delete(`community/post/${id}`, config )
       // console.log(response)
@@ -40,32 +42,45 @@ export default function DetailInfo({id}) {
   return (
     <View >
       <View style={styles.writerInfoBox}>
-      <Image style={styles.writerImage} source={{uri: writer.profileImageUrl}}/>
+        {writer.profileImageUrl? (
+          <Image style={styles.writerImage} source={{uri: writer.profileImageUrl}}/>
+          ):(
+          <Image style={styles.writerImage} source={{uri:'./src/assets/logo2.png'}}/>
+        )}
       <View>
         <Text style={styles.title}>{title}</Text>
         <Text style= {styles.dateStyle}>{writer.nickName}</Text>
        </View>
-    </View>
-       <View style= {styles.buttons}>
+      </View>
+      <View style= {styles.buttons}>
           <EditBtn style={styles.modify} navigation={navigation} id={id} />
-          <DeleteBtn style={styles.delete} requestDelete={requestDelete}/>
-       </View>
+          <DeleteBtn style={styles.delete} toggleShowModal={toggleShowModal}/>
+      </View>
+
+      {/* 삭제버튼 눌렀을 경우 확인 모달 */}
+      <CommonModal
+        show={show}
+        desc="게시글을 삭제하시겠습니까?"
+        toggleShowModal={toggleShowModal}
+        onClickConfirm={requestDelete}
+      />
     </View>
   )
 }
 
 const EditBtn=({navigation, id}: any) => {
-  console.log(id)
+  // console.log(id)
   return (
     <TouchableOpacity  onPress={()=> navigation.navigate('CommunityPosting', {id})} >
       <Text >수정</Text>
     </TouchableOpacity>
   )
 }
-const DeleteBtn= ({requestDelete}:any) => {
+
+const DeleteBtn= ({toggleShowModal}:any) => {
   return (
-    <TouchableOpacity onPress={requestDelete}>
-      <Text >삭제</Text>
+    <TouchableOpacity onPress={toggleShowModal}>
+      <Text>삭제</Text>
     </TouchableOpacity>
   )
 }
