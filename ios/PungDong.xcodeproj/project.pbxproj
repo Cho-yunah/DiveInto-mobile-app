@@ -19,6 +19,7 @@
 		3189EF2CB8C4169AD410BCB0 /* libPods-PungDong.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E8B139715FDFF462EED5732 /* libPods-PungDong.a */; };
 		61402BB980CE0F762DE1F08B /* libPods-PungDong-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F951A73D049282D9D16E9B55 /* libPods-PungDong-tvOS.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A934300626AA2FD7005E48D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A934300526AA2FD7005E48D5 /* GoogleService-Info.plist */; };
 		C2327A1845CBA08BE023C6A5 /* libPods-PungDong-PungDongTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 840ACDE7527789782E77ECFE /* libPods-PungDong-PungDongTests.a */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		840ACDE7527789782E77ECFE /* libPods-PungDong-PungDongTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PungDong-PungDongTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92BA10896D3C715D726CC11D /* Pods-PungDong-PungDongTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PungDong-PungDongTests.debug.xcconfig"; path = "Target Support Files/Pods-PungDong-PungDongTests/Pods-PungDong-PungDongTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A827B45F4C85959BE78A37D2 /* Pods-PungDong.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PungDong.debug.xcconfig"; path = "Target Support Files/Pods-PungDong/Pods-PungDong.debug.xcconfig"; sourceTree = "<group>"; };
+		A934300526AA2FD7005E48D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E33D3A45AFE25EB721CF057B /* Pods-PungDong.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PungDong.release.xcconfig"; path = "Target Support Files/Pods-PungDong/Pods-PungDong.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -157,6 +159,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A934300526AA2FD7005E48D5 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* PungDong */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* PungDongTests */,
@@ -344,6 +347,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				A934300626AA2FD7005E48D5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
