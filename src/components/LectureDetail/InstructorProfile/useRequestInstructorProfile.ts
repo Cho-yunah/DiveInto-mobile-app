@@ -11,6 +11,7 @@ const useRequestInstructorProfile = () => {
     lectureInstructorProfileState,
   );
   const lectureId = useRecoilValue(lectureIdState);
+  console.log(lectureId);
 
   useEffect(() => {
     const requestInstructorProfile = async () => {
@@ -34,6 +35,6 @@ const useRequestInstructorProfile = () => {
     };
 
     requestInstructorProfile();
-  }, []);
+  }, [lectureId]);
 };
 export default useRequestInstructorProfile;

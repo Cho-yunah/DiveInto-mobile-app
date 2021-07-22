@@ -7,7 +7,7 @@ const SuspenseCalendar = () => {
 
   return (
     <SkeletonPlaceholder>
-      <SkeletonPlaceholder.Item width={windowWidth} height={290} />
+      <SkeletonPlaceholder.Item width={windowWidth} height={300} />
     </SkeletonPlaceholder>
   );
 };

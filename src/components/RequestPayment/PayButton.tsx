@@ -1,4 +1,4 @@
-import instance from '@/src/lib/api/axios';
+import { getInstanceATK } from '@/src/lib/api/axios';
 import {
   cachingState,
   currScheduleIdState,
@@ -39,16 +39,14 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
     console.log(rentEquipmentInfos);
     setIsLoading(true);
 
-    const headers = {
-      headers: { Authorization: await AsyncStorage.getItem('atk') },
-    };
     const body = {
       scheduleId: currScheduleId,
       numberOfPeople,
       rentEquipmentInfos,
     };
     try {
-      const { data } = await instance.post('/reservation', body, headers);
+      const instanceAtk = await getInstanceATK();
+      const { data } = await instanceAtk.post('/reservation', body);
       console.log(data);
     } catch (e) {
       console.log(e.response.data);

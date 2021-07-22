@@ -19,7 +19,7 @@ const useGetSortedReviews = () => {
     const requestLectureReview = async (sortby: SortByType) => {
       try {
         const { data } = await instance.get(
-          `http://52.79.225.4:8081/review/list?lectureId=${lectureId}&page=0&size=20&sort=${sortby}`,
+          `http://52.79.225.4:8081/review/list?lectureId=${lectureId}&page=0&size=4&sort=${sortby}`,
         );
         setReviews(data?._embedded?.reviewInfoList || []);
       } catch (e) {
@@ -28,7 +28,7 @@ const useGetSortedReviews = () => {
     };
 
     requestLectureReview(sortBy);
-  }, [sortBy]);
+  }, [sortBy, lectureId]);
 
   return { sortBy, setSortBy, reviews };
 };

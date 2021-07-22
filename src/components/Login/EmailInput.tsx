@@ -48,9 +48,9 @@ export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
           checkedColor={'rgb(32, 122, 180)'}
           onPress={() => setToggleCheckBox(s => !s)}
         />
-        <Pressable onPress={onCheckboxPress} style={styles.button}>
+        <TouchableOpacity onPress={onCheckboxPress} style={styles.button}>
           <Text style={styles.checkBoxText}>이메일 저장</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
 
       {/* 이메일 입력, 검증 */}
