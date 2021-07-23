@@ -7,5 +7,5 @@ export default function useInputText(initialValue: string) {
     setInputText(text);
   };
 
-  return [inputText, handleTextInput, setInputText];
+  return [inputText, handleTextInput, setInputText] as const;
 }

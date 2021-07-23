@@ -6,7 +6,9 @@ import styles from './styles';
 export default function SocialLogin() {
   return (
     <View style={styles.socialLoginContainer}>
-      <Text style={styles.socialLoginText}>간편 시작</Text>
+      <View style={styles.socialLoginTextWrapper}>
+        <Text style={styles.socialLoginText}>간편 시작</Text>
+      </View>
       <View style={styles.iconView}>
         <Image
           source={require('../../assets/kakao_logo.png')}

@@ -13,6 +13,21 @@ export type lectureReviewAllType = {
   reviewImageUrls: string[];
 };
 
+export type reservationLectureListType = {
+  reservationId: number;
+  lectureTitle: string;
+  organization: string;
+  level: string;
+  lectureImageUrl: string;
+  instructorNickname: string;
+  reservationDate: string;
+  remainingDate: number;
+}[];
+
+export type lastReservationLectureListType = {
+  remainingDate: string;
+};
+
 export const userInfoAtom = atom<userInfoProps | null>({
   key: 'userInfoAtom',
   default: {
@@ -54,4 +69,36 @@ export const LectureListState = atom({
 export const lectureReviewAllState = atom<lectureReviewAllType[]>({
   key: 'lectureReview',
   default: [],
+});
+
+export const reservationLectureListState =
+  atom<reservationLectureListType | null>({
+    key: 'reservationLectureList',
+    default: null,
+  });
+
+export const nextReservationLectureListState = selector({
+  key: 'nextReservationLectureList',
+  get: ({ get }) => {
+    const res = get(reservationLectureListState);
+
+    const nextReservationLectureInfo = res?.filter(data =>
+      data.remainingDate !== 365 ? data : null,
+    );
+
+    return nextReservationLectureInfo;
+  },
+});
+
+export const lastReservationLectureListState = selector({
+  key: 'lastReservationLectureList',
+  get: ({ get }) => {
+    const res = get(reservationLectureListState);
+
+    const lastReservationLectureInfo = res?.filter(data =>
+      data.remainingDate === 365 ? data : null,
+    );
+
+    return lastReservationLectureInfo;
+  },
 });

@@ -1,22 +1,30 @@
 import React from 'react';
-import { WriteReviewProps } from '@/src/navigators/ReviewStack/types';
+import { WriteReviewScreenProps } from '@/src/navigators/ReviewStack/types';
 import styles from './styles';
 import { ScrollView, View } from 'react-native';
 import UploadReviewHeaderBtn from './UploadReviewHeaderBtn';
 import { Content, StarRatings, UploadPics } from '@/src/components/WriteReview';
+import WriteReviewLoadingModal from './WriteReviewLoadingModal';
 
-const WriteReviewScreen = ({ navigation }: WriteReviewProps) => {
+const WriteReviewScreen = ({ navigation, route }: WriteReviewScreenProps) => {
+  // const { reservationId } = route.params;
+
   navigation.setOptions({
+    // headerRight: () => <UploadReviewHeaderBtn reservationId={reservationId} />,
     headerRight: () => <UploadReviewHeaderBtn />,
   });
+
   return (
-    <View style={styles.container}>
-      <ScrollView>
-        <StarRatings />
-        <Content />
-        <UploadPics />
-      </ScrollView>
-    </View>
+    <>
+      <View style={styles.container}>
+        <ScrollView>
+          <StarRatings />
+          <Content />
+          <UploadPics />
+        </ScrollView>
+      </View>
+      <WriteReviewLoadingModal />
+    </>
   );
 };
 

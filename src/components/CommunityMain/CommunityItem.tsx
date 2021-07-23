@@ -46,16 +46,19 @@ export default function CommunityItem({id, title,dateOfRegistration, writerNickn
         <CommentNum commentNum={commentCount}/>
         <LikeBtn id={id} likeCount={likeCount} liked={liked} mainList={'mainList'} />
       </View>
-      </TouchableOpacity>
-  )
+      <View style={styles.iconBox}>
+        <CommentNum commentNum={commentCount} />
+        <LikeBtn id={id} likeCount={likeCount} liked={liked} />
+      </View>
+    </TouchableOpacity>
+  );
 }
-
 // comment 갯수
-const CommentNum = ({commentNum}: CommentNumber ) => {
+const CommentNum = ({ commentNum }: CommentNumber) => {
   return (
-    <View style={styles.commentAndLike} >
-      <MaterialIcons name='comment' size={14} color={colors.Gray2}/>
-      <Text style={{color:colors.Gray2}}>{commentNum}</Text>
+    <View style={styles.commentAndLike}>
+      <MaterialIcons name="comment" size={14} color={colors.Gray2} />
+      <Text style={{ color: colors.Gray2 }}>{commentNum}</Text>
     </View>
   )
 }

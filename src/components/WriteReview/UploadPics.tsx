@@ -1,7 +1,14 @@
 import { multiImageSelect } from '@/src/lib/file';
 import { picsArrState } from '@/src/recoil/ReviewStack';
 import React, { useState } from 'react';
-import { Image, Pressable, Text, View, TouchableOpacity } from 'react-native';
+import {
+  Image,
+  Pressable,
+  Text,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useRecoilState } from 'recoil';
 import styles from './styles';
@@ -14,6 +21,8 @@ const UploadPics = () => {
     try {
       setIsLoading(true);
       const pics = (await multiImageSelect()) || [];
+
+      console.log(pics);
 
       setPicsArr(
         pics.map(pic => ({
@@ -38,7 +47,7 @@ const UploadPics = () => {
       )}
       {!picsArr.length ? (
         <Text style={styles.photoUploadText}>
-          {isLoading ? 'loading' : '사진을 업로드 해주세요'}
+          {isLoading ? null : '사진을 업로드 해주세요'}
         </Text>
       ) : (
         <View style={styles.uploadedPicsContainer}>
@@ -60,6 +69,13 @@ const UploadPics = () => {
           ))}
         </View>
       )}
+      {isLoading ? (
+        <ActivityIndicator
+          size="small"
+          color="#50CAD2"
+          style={{ marginRight: 10 }}
+        />
+      ) : null}
       <Text style={styles.photoUploadLimit}>(최대 3장)</Text>
     </View>
   );

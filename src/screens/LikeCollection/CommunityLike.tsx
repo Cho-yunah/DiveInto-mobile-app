@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { useRecoilValue } from 'recoil';
+import { useNavigation } from '@react-navigation/native';
 
 import { CommunityLikeProps } from './types';
 import instance from '@lib/api/axios';
@@ -8,17 +9,24 @@ import { CommunityItem } from '@components/CommunityMain';
 import { atkState } from '@recoil/ProfileStack';
 
 export default function CommunityLikeScreen() {
+  const navigation = useNavigation();
   const atk = useRecoilValue(atkState);
   const [communityList, setCommunityList] = useState([]);
+
+  const moveDetailView = () => navigation.navigate('CommunityDetail');
 
   useEffect(() => {
     const getLikeCommunity = async () => {
       try {
-        const res = await instance.get('/community/post/like?page=0&size=5', {
+        const res = await instance.get('/community/post/like?page=0&size=1', {
           headers: {
             Authorization: atk,
           },
         });
+
+        console.log(atk);
+
+        console.log(res);
 
         setCommunityList(res.data._embedded.postsModelList);
       } catch (err) {
@@ -36,15 +44,19 @@ export default function CommunityLikeScreen() {
           data={communityList}
           renderItem={({ item }: { item: CommunityLikeProps }) => {
             const date = item.dateOfRegistration.split('T')[0];
+            console.log(item.imageUrl);
 
             return (
               <CommunityItem
                 id={item.id}
-                imageSrc={item.imageUrl}
                 title={item.title}
-                postAuthor={item.writerNickname}
-                postingDate={date}
-                commentNum={item.commentCount}
+                dateOfRegistration={date}
+                writerNickname={item.writerNickname}
+                imageUrl={item.imageUrl}
+                commentCount={item.commentCount}
+                likeCount={item.likeCount}
+                liked={item.liked}
+                onItemClick={moveDetailView}
               />
             );
           }}

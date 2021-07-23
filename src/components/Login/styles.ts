@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   transitionPressable: {
+    height: 50,
     borderWidth: 1,
     borderRadius: 10,
     marginTop: 70,
@@ -25,9 +26,11 @@ const styles = StyleSheet.create({
   middleContainer: {
     position: 'absolute',
     top: 300,
-    right: 20,
+    right: 0,
+    left: 0,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   emailInput: {
     borderBottomWidth: 1,
@@ -42,7 +45,7 @@ const styles = StyleSheet.create({
     color: 'rgb(32,122,180)',
   },
   checkBoxText: {
-    fontSize: 11,
+    fontSize: 14,
     color: '#c1c2c3',
   },
   socialLoginContainer: {
@@ -52,13 +55,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  socialLoginText: {
-    marginTop: 70,
-    borderColor: '#c1c2c3',
-    borderTopWidth: 1,
+  socialLoginTextWrapper: {
     position: 'absolute',
-    top: -80,
-    left: 155,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+  },
+  socialLoginText: {
+    borderColor: '#c1c2c3',
+    top: -10,
     textAlign: 'center',
     width: 80,
     backgroundColor: '#fefefe',

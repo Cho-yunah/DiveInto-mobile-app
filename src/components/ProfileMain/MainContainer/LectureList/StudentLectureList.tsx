@@ -8,8 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 export default function StudentLectureList() {
   const navigation = useNavigation();
 
-  const moveNavigaion1 = () => {
-    console.log('move1');
+  const moveNavLectureSchedule = () => {
+    navigation.navigate('LectureSchedule');
   };
 
   const moveNavLikeCollection = () => {
@@ -22,7 +22,7 @@ export default function StudentLectureList() {
 
   return (
     <View style={styles.container}>
-      <CommonBtn title="수강내역" moveNavigation={moveNavigaion1} />
+      <CommonBtn title="수강내역" moveNavigation={moveNavLectureSchedule} />
       <CommonBtn title="종아요목록" moveNavigation={moveNavLikeCollection} />
       <CommonBtn title="강사신청" moveNavigation={moveNavApplyLecturer} />
     </View>

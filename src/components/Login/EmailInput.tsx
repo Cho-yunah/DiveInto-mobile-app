@@ -13,6 +13,7 @@ import useTransitionColor from './useTransitionColor';
 
 import { CheckBox } from 'react-native-elements';
 import Entype from 'react-native-vector-icons/Entypo';
+import { ActivityIndicator } from 'react-native-paper';
 
 import { useRecoilState } from 'recoil';
 import { emailState } from '@recoil/LoginStack';
@@ -47,9 +48,9 @@ export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
           checkedColor={'rgb(32, 122, 180)'}
           onPress={() => setToggleCheckBox(s => !s)}
         />
-        <Pressable onPress={onCheckboxPress} style={styles.button}>
+        <TouchableOpacity onPress={onCheckboxPress} style={styles.button}>
           <Text style={styles.checkBoxText}>이메일 저장</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
 
       {/* 이메일 입력, 검증 */}
@@ -99,7 +100,11 @@ export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
             { color: interpolations.colorInterpolation },
           ]}
         >
-          {isLoading ? 'Loading...' : '이메일로 시작'}
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#fefefe" />
+          ) : (
+            '이메일로 시작'
+          )}
         </TransitionText>
       </TransitionPressable>
     </>
@@ -107,6 +112,7 @@ export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
 }
 
 function checkEmailValidation(email: string): boolean {
-  const regex = /^([a-zA-Z0-9\-._]+)@([a-zA-Z0-9-_]+).([a-z]{2,20})(.[a-z]{2,10})$/;
+  const regex =
+    /^([a-zA-Z0-9\-._]+)@([a-zA-Z0-9-_]+).([a-z]{2,20})(.[a-z]{2,10})$/;
   return regex.test(email);
 }
