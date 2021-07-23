@@ -15,7 +15,6 @@ import { lectureDetailState, lectureIdState } from '@/src/recoil/LectureStack';
 import Entype from 'react-native-vector-icons/Entypo';
 import LeturePicsModal from '@/src/components/LectureDetail/LecturePicsModal';
 import SuspenseLocationInfo from '@/src/components/LectureDetail/LocationInfo/SuspenseLocationInfo';
-import { useEffect } from 'react';
 
 const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
   const { isMarked } = useRecoilValue(lectureDetailState);
@@ -43,11 +42,10 @@ const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
         </TouchableOpacity>
       ),
     });
-  }, []);
-
-  useEffect(() => {
     setLectureId(1);
   }, []);
+
+  // useEffect(() => {}, []);
 
   return (
     <>

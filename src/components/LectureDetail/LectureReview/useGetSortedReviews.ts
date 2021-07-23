@@ -15,6 +15,7 @@ const useGetSortedReviews = () => {
   const lectureId = useRecoilValue(lectureIdState);
 
   useEffect(() => {
+    if (!lectureId) return;
     // writeDate,DESC(최신순), totalStarAvg,DESC(높은평점순), totalStarAvg,ASC(낮은평점순)
     const requestLectureReview = async (sortby: SortByType) => {
       try {

@@ -1,10 +1,10 @@
+import { ratingStarState } from '@/src/recoil/ProfileStack';
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
 import Entype from 'react-native-vector-icons/Entypo';
 import { useRecoilState } from 'recoil';
 import styles from './styles';
 import { StarProps, starRatingProps } from './types';
-import { ratingStarState } from '@recoil/ReviewStack';
 
 const Star = ({ num, setRate, color }: StarProps) => (
   <Pressable onPress={() => setRate(num)}>

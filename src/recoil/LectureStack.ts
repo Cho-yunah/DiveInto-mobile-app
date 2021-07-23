@@ -86,11 +86,12 @@ export const lectureIdState = atom<null | number>({
 export const requestLocationInfoSelector = selectorFamily({
   key: 'requestLocationInfo',
   get: (lectureId: number) => async () => {
+    if (!lectureId) return;
     try {
       const { data } = await instance.get(`/location?lectureId=${lectureId}`);
       return data;
     } catch (e) {
-      console.log(e);
+      console.log(e.response);
     }
   },
 });

@@ -1,4 +1,4 @@
-import { PicsArrStateType } from '@/src/recoil/ReviewStack';
+import { PicsArrStateType } from '@/src/recoil/ProfileStack';
 import { PostReviewBodyType } from '@/src/screens/WriteReview/types';
 import { getInstanceATK } from '../api/axios';
 
