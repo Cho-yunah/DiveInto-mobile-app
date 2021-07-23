@@ -78,7 +78,6 @@ export default function ProfileStack<ProfileStak>() {
           }}
         />
         {/* 리뷰 작성하기 스크린 */}
-
         <Stack.Screen
           name="WriteReview"
           component={WriteReviewScreen}
