@@ -18,7 +18,8 @@ import SuspenseLocationInfo from '@/src/components/LectureDetail/LocationInfo/Su
 
 const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
   const { isMarked } = useRecoilValue(lectureDetailState);
-  const { lectureId } = route.params;
+  // const { lectureId } = route.params;
+  const lectureId = 1;
   const setLectureId = useSetRecoilState(lectureIdState);
 
   const navigateToReserveLecture = () =>

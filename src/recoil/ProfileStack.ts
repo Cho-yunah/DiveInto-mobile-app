@@ -28,6 +28,13 @@ export type lastReservationLectureListType = {
   remainingDate: string;
 };
 
+export type instructorImageCollectionType = {
+  size: number;
+  uri: string;
+  type: string;
+  name: string;
+};
+
 export const userInfoAtom = atom<userInfoProps | null>({
   key: 'userInfoAtom',
   default: {
@@ -88,4 +95,12 @@ export const lastReservationLectureListState = selector({
 export const ProfileImageURIState = atom<string | null>({
   key: 'ProfileImageURI',
   default: null,
+});
+
+// 강사 자격증 사진 정보 배열 정보
+export const instructorImageCollectionState = atom<
+  instructorImageCollectionType[]
+>({
+  key: 'instructorImageCollection',
+  default: [],
 });
