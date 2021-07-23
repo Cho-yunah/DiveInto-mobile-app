@@ -3,7 +3,7 @@ import { ScrollView, View,TouchableOpacity } from 'react-native';
 import styles  from './styles';
 import { CommunityDetailProps } from '@navigators/CommunityStack/types';
 import { DetailInfo, DetailContents, CommentsInput, CommentDetail  } from '@components/CommunityDetail';
-import { useRequestCommunityItem } from '@/src/components/CommunityDetail/useRequestCommunityItem';
+import { useRequestCommunityItem } from '@components/CommunityDetail/useRequestCommunityItem';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { communityItemSelector, likeState } from '@/src/recoil/CommunityStack';
 import {LikeBtn} from '@components/CommunityMain/LikeBtn';
@@ -36,9 +36,9 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
       <DetailInfo id={id}/>
       <ScrollView>
           <DetailContents content={content}/>
-          <CommentDetail/>
+          <CommentDetail id={id}/>
       </ScrollView>
-      <CommentsInput />
+      <CommentsInput id={id}/>
     </View>
   );
 }

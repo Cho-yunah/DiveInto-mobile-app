@@ -14,6 +14,7 @@ export default function DetailInfo({id}) {
   const {title, dateOfRegistration } = useRecoilValue(communityItemSelector)
   const writer = useRecoilValue(writerInfoState)
   const [show, setShow] = useRecoilState(showModalState)
+  const basicProfilelUrl = 'https://img.freepik.com/free-vector/swimmer-dives-into-water-from-splash-watercolors-illustration-paints_291138-350.jpg?size=626&ext=jpg'
 
   const config = {
     headers: {
@@ -45,7 +46,7 @@ export default function DetailInfo({id}) {
         {writer.profileImageUrl? (
           <Image style={styles.writerImage} source={{uri: writer.profileImageUrl}}/>
           ):(
-          <Image style={styles.writerImage} source={{uri:'./src/assets/logo2.png'}}/>
+          <Image style={styles.writerImage} source={{uri:basicProfilelUrl}}/>
         )}
       <View>
         <Text style={styles.title}>{title}</Text>

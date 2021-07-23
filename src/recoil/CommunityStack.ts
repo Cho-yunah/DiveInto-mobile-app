@@ -176,7 +176,8 @@ export type commentItemType = {
   nickName: string,
   profileUrl: string,
   dateOfWriting: string,
-  content: string
+  content: string,
+  commentId: number
 }
 
 export const postIdState= atom({

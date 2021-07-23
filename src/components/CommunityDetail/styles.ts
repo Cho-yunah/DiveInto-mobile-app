@@ -123,7 +123,7 @@ export const CommentDetailStyles = StyleSheet.create({
   },
   commentBox: {
     width: 353,
-    height: 69,
+    height: 92,
     marginVertical: 12,
     marginHorizontal: 17,
     paddingVertical:10,
@@ -156,10 +156,22 @@ export const CommentDetailStyles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 20.4,
     color: '#6A6D70',
-    width: 35
+    width: 50
   },
   comment: {
     marginTop: 10,
     lineHeight: 14
+  },
+  commentsInComment: {
+    paddingVertical:7
+  },
+
+  edintingBtnBox: {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
+    width: 60,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   }
 })

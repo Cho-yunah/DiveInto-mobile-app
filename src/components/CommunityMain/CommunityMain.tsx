@@ -44,7 +44,7 @@ export default function CommunityMain({share}: any):ReactElement  {
     setCurrentPage(0)
     setRefreshing(false)  
   }
-  console.log('mainpage', list)
+  // console.log('mainpage', list)
 
   return (
     <View style={styles.container}>
