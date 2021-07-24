@@ -1,4 +1,4 @@
-import { atom, selector, selectorFamily } from 'recoil';
+import { atom, atomFamily, selector, selectorFamily } from 'recoil';
 import instance from '../lib/api/axios';
 import { userInfoProps } from '../screens/ProfileMain/types';
 
@@ -101,4 +101,32 @@ export const lastReservationLectureListState = selector({
 
     return lastReservationLectureInfo;
   },
+});
+
+// 후기작성 스크린
+export type PicsArrStateType = {
+  size: number;
+  uri: string;
+  type: string;
+  name: string;
+};
+
+export const ratingStarState = atomFamily<number, string>({
+  key: 'ratingStar',
+  default: 0,
+});
+
+export const contentState = atom<string>({
+  key: 'content',
+  default: '',
+});
+
+export const picsArrState = atom<PicsArrStateType[]>({
+  key: 'picsArr',
+  default: [],
+});
+
+export const isModalOpenState = atom({
+  key: 'isModalOpen',
+  default: false,
 });

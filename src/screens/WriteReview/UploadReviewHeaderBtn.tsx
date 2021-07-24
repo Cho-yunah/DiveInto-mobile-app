@@ -1,6 +1,4 @@
 import {
-  requestPostReviewContent,
-  requestPostReviewImages,
   requestPostReviewContentOrImages,
   getFormData,
 } from '@/src/lib/utils/requestPostReview';
@@ -9,7 +7,7 @@ import {
   isModalOpenState,
   picsArrState,
   ratingStarState,
-} from '@/src/recoil/ReviewStack';
+} from '@/src/recoil/ProfileStack';
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -42,7 +40,6 @@ const UploadReviewHeaderBtn = ({}: UploadReviewHeaderBtnProps) => {
         description: content,
       };
 
-      // const res = await requestPostReviewContent(body);
       const reviewId = await requestPostReviewContentOrImages(body);
       console.log(reviewId);
 

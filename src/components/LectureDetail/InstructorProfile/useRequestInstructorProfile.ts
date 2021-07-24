@@ -14,6 +14,8 @@ const useRequestInstructorProfile = () => {
   console.log(lectureId);
 
   useEffect(() => {
+    if (!lectureId) return;
+
     const requestInstructorProfile = async () => {
       try {
         const res = await instance.get(

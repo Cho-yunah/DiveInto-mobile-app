@@ -1,4 +1,4 @@
-import { isModalOpenState } from '@/src/recoil/ReviewStack';
+import { isModalOpenState } from '@/src/recoil/ProfileStack';
 import React from 'react';
 import { ActivityIndicator, useWindowDimensions } from 'react-native';
 import { Modal, SafeAreaView, Text } from 'react-native';

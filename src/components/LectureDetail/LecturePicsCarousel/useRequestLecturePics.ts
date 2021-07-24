@@ -14,6 +14,7 @@ const useRequestLecturePics = (): LectureDetailPicsType[] => {
   const lectureId = useRecoilValue(lectureIdState);
 
   useEffect(() => {
+    if (!lectureId) return;
     const requestLectureImages = async () => {
       try {
         const { data } = await instance.get(
