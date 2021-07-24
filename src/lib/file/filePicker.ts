@@ -91,7 +91,7 @@ export async function multiImageSelect() {
       launchImageLibrary(
         {
           mediaType: 'photo',
-          selectionLimit: 0,
+          selectionLimit: 3,
         },
         async response => {
           if (response.didCancel) resolve(undefined);

@@ -10,3 +10,5 @@ export const BlackText = '#343434';
 export const White = '#FEFEFE';
 export const Gray2 = '#D8D8D8';
 export const Background = '#F3F5F7';
+export const lightPlaceholder: string = '#929292';
+export const lightPlaceholderBack: string = '#F4F4F4';

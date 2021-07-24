@@ -11,6 +11,7 @@ import { IsLogin, IsInstructor } from '@/src/recoil/Global';
 
 import jwt_decode from 'jwt-decode';
 import { JWToken } from './types';
+import axios from 'axios';
 
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   const setIsLogin = useSetRecoilState(IsLogin);
@@ -30,6 +31,7 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
       });
       if (login?.data?.access_token) {
         const atk = login.data.access_token;
+        axios.defaults.headers.common.Authorization = atk;
         const decoded: JWToken = jwt_decode(atk);
         console.log('atk : ', atk);
 
