@@ -58,7 +58,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   commentAndLike: {
-    width: 27,
+    width: 28,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -70,8 +70,13 @@ export const styles = StyleSheet.create({
     color: '#D8D8D8',
     fontSize: 14,
     paddingRight: 17,
+    paddingVertical: 5 , 
   },
   ActivationButtonText: {
     color: '#F5DAAC',
+  },
+  likeBtn: {
+    marginRight: 12,
+    flexDirection: 'row'
   },
 })

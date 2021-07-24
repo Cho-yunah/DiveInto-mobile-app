@@ -1,20 +1,36 @@
 import { commentState } from '@/src/recoil/CommunityStack';
 import React from 'react';
-import { View, Text, Image} from 'react-native';
+import { FlatList } from 'react-native';
+import { View,} from 'react-native';
 import { useRecoilValue } from 'recoil';
-import {CommentDetailStyles as styles} from './styles'
+import { useRequestComments } from './useRequestComments';
+import {CommentItem} from './CommentItem'
 
-export default function CommentDetail() {
-  const commentInfo = useRecoilValue(commentState)
-  console.log(commentInfo)
+export default function CommentDetail({id}) { 
+  useRequestComments({id})
+  const commentList = useRecoilValue(commentState)
+  console.log(commentList)
+
   return (
-    <View style={styles.commentBox}>
-      <View style={styles.commentWriterInfo}>
-        <Image style={styles.image} source={{uri: '#'}}/>
-        <Text style={styles.nicknameStyle}>{commentInfo.id}</Text>
-       </View>
-        <Text style= {styles.dateStyle}>{commentInfo.dateOfWriting}</Text>
-        <Text style= {styles.comment}>{commentInfo.content}</Text>
+    <View >
+    {commentList
+    ? (
+      <FlatList
+        data= {commentList}
+        keyExtractor={(item,index)=> `${item.accountModel.id}${item.accountModel.nickName}${index}`}
+        nestedScrollEnabled={true}
+        renderItem={({item}) => (
+          <CommentItem
+            nickName= {item.accountModel.nickName}
+            profileUrl={item.accountModel.profileImageUrl}
+            dateOfWriting={item.commentModel.dateOfWriting}
+            content={item.commentModel.content}
+            commentId= {item.commentModel.id}
+          />
+        )}
+      />
+    )
+    : (<View></View>)}
     </View>
   )
 }

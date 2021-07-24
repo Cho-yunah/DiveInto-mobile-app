@@ -1,13 +1,12 @@
 import instance from '@/src/lib/api/axios';
-import { commentState, communityItemState, ImageState, writerInfoState } from '@/src/recoil/CommunityStack';
+import { communityItemState, ImageState, writerInfoState } from '@/src/recoil/CommunityStack';
 import { useEffect } from 'react';
-import  {atom, useSetRecoilState} from 'recoil';
+import  {useSetRecoilState} from 'recoil';
 
 export const useRequestCommunityItem = (id: number) => {
   const setCommunityItem = useSetRecoilState(communityItemState);
   const setImageItem = useSetRecoilState(ImageState)
   const setWriterInfo = useSetRecoilState(writerInfoState)
-  const setComment = useSetRecoilState(commentState)
 
   useEffect(()=> {
     const requestCommunityItem = async()=> {
@@ -16,15 +15,14 @@ export const useRequestCommunityItem = (id: number) => {
         const {data} = await instance.get(`/community/post/${id}`);
         const writerResource= await instance.get(`/community/post/${id}/writer`)
         const imageResource = await instance.get(`/community/post/${id}/post-image`)
-        const commentResource = await instance.get(`/community/comment/${id}`)
 
-        const { title, category, tags, dateOfRegistration,content } = data.postResource;
+        const { title, category, tags, dateOfRegistration,content, liked, likeCount } = data.postResource;
         const writerInfo = writerResource.data
 
-        imageResource.data._embedded 
+        imageResource.data._embedded
           ? setImageItem(imageResource.data._embedded.postImageModelList)
           : setImageItem([])
-        commentResource && setComment(commentResource.data)
+
         setWriterInfo(writerInfo)
         setCommunityItem({
           id, title,
@@ -32,6 +30,7 @@ export const useRequestCommunityItem = (id: number) => {
           tags,
           dateOfRegistration,
           content,
+          liked, likeCount
         });
       } catch(e) {
         console.log(e)
