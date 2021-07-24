@@ -10,6 +10,8 @@ import {
   AddLecture,
   AddLecture2,
   AddEqipments,
+  AddLocation,
+  NMapSearch,
 } from '@screens/Instructor';
 
 export default function AdmMyLectureStack() {
@@ -33,12 +35,13 @@ export default function AdmMyLectureStack() {
           },
           headerTintColor: '#fefefe',
         }}
-        initialRouteName="장비등록"
       >
         <Stack.Screen name="강의목록" component={AdmMyLectureList} />
         <Stack.Screen name="강의등록" component={AddLecture} />
         <Stack.Screen name="강의등록2" component={AddLecture2} />
         <Stack.Screen name="장비등록" component={AddEqipments} />
+        <Stack.Screen name="위치등록" component={AddLocation} />
+        <Stack.Screen name="위치검색" component={NMapSearch} />
       </Stack.Navigator>
     </RecoilRoot>
   );

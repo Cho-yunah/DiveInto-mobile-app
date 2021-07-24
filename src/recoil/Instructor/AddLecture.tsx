@@ -1,4 +1,4 @@
-import { atom, atomFamily } from 'recoil';
+import { atom, atomFamily, selector } from 'recoil';
 import { Region, ClassKind, Organization, Level } from '@typing/common';
 import { DocumentPickerResponse } from 'react-native-document-picker';
 
@@ -80,15 +80,34 @@ export const EquipmentList = atomFamily<EquipmentInfo, number>({
   },
 });
 
-// export const UploadedBucketList = selector({
-//   key: 'UploadedBucketList',
-//   get: ({ get }) => {
-//     const list = [];
-//     for (let i = 0; get(UploadedBucket(i)).bucket !== ''; i++) {
-//       const s3info = get(UploadedBucket(i));
-//       list.push(JSON.parse(s3info.toString()));
-//     }
+export const EquipmentListAll = selector({
+  key: 'AddLectureEquipmentListAll',
+  get: ({ get }) => {
+    const list = [];
+    for (let i = 0; get(EquipmentList(i)).name !== ''; i++) {
+      const equip = get(EquipmentList(i));
+      list.push(equip);
+    }
 
-//     return list;
-//   },
-// });
+    return list;
+  },
+});
+
+type Location = {
+  latitude: number;
+  longitude: number;
+};
+export const LectureGeoLocation = atom<Location | undefined>({
+  key: 'AddLectureLocation',
+  default: undefined,
+});
+
+export const LectureRoadAddress = atom({
+  key: 'AddLectureRoadAddress',
+  default: '',
+});
+
+export const LectureLocationAlias = atom({
+  key: 'AddLectureLocationAlias',
+  default: '',
+});

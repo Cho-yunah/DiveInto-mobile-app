@@ -7,6 +7,16 @@ export type RootAdmMyLectureStack = {
   장비등록: undefined;
   일정등록: undefined;
   전체일정: undefined;
+  위치등록: undefined;
+  위치검색: {
+    baseLocationChange: ({
+      latitude,
+      longitude,
+    }: {
+      latitude: number;
+      longitude: number;
+    }) => void;
+  };
 };
 export type MyLectureListProps = StackScreenProps<
   RootAdmMyLectureStack,
@@ -28,4 +38,14 @@ export type AddScheduleProps = StackScreenProps<
 export type AllScheduleProps = StackScreenProps<
   RootAdmMyLectureStack,
   '전체일정'
+>;
+
+export type AddLocationProps = StackScreenProps<
+  RootAdmMyLectureStack,
+  '위치등록'
+>;
+
+export type NMapSearchProps = StackScreenProps<
+  RootAdmMyLectureStack,
+  '위치검색'
 >;

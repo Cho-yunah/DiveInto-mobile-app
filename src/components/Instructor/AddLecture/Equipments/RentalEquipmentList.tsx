@@ -10,7 +10,7 @@ export const RentalEquipmentList = () => {
   const [len, setLen] = useState(1);
 
   for (let i = 0; i < len; i += 1) {
-    equipList.push(<SingleEquipInfo key={i} idx={i} />);
+    equipList.push(<SingleEquipInfo key={`SingleEquip${i}`} idx={i} />);
   }
 
   const onPlusPress = () => setLen(len + 1);

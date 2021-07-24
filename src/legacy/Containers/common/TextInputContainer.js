@@ -23,7 +23,7 @@ export function TextInputStatic({
         {title == null || hideTitle ? null : (
           <Text style={styles.titleText}>{title}</Text>
         )}
-        <View style={styles.staticTextContainer}>
+        <View style={[styles.textContainer, { ...style }]}>
           <Text style={{ color: 'grey' }}>{text}</Text>
         </View>
       </View>
@@ -32,8 +32,7 @@ export function TextInputStatic({
 }
 
 export default function TextInputContainer({
-  // input,
-  onTextChange = () => {},
+  onTextChange,
   title = 'test',
   hideTitle = false,
   placeholder = 'test',

@@ -16,10 +16,10 @@ import Entypo from 'react-native-vector-icons/Entypo';
 
 export function AddEqipments({ navigation }: AddEquipProps) {
   useLayoutEffect(() => {
-    const onPress = () => {};
+    const onPress = () => navigation.navigate('위치등록');
     navigation.setOptions({
       title: '강의등록',
-      headerRight: () => <NextButton onPress={onPress} text="완료" />,
+      headerRight: () => <NextButton onPress={onPress} text="다음" />,
     });
   }, []);
 

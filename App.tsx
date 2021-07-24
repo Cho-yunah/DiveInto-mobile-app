@@ -31,8 +31,8 @@ export default function App() {
 
         {/* 리뉴얼 */}
         <RecoilRoot>
-          <AdmMyLectureStack />
-          {/* <SelectNavigator /> */}
+          {/* <AdmMyLectureStack /> */}
+          <SelectNavigator />
         </RecoilRoot>
       </NavigationContainer>
     </Provider>
