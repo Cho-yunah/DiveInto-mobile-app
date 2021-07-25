@@ -1,31 +1,34 @@
-import React from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { MyLectureStyle as styles, shadow } from './styles';
 import { Organization, Level, Region } from '@typing/common';
+import { InstructorMyLecture } from './types';
 
 import TagList from '@components/MainList/Lecture/Tags';
-import Cost from './Cost';
+import Price from './Price';
 import MainImage from './MainImage';
 
+import axios from 'axios';
+
 export function MyLecture({
-  title = '프리다이빙',
-  organization = 'AIDA',
-  level = 'level1',
-  region = '서울',
-  image,
-  cost = 120000,
-}: {
-  title: string;
-  organization: Organization;
-  level: Level;
-  region: Region;
-  image: string;
-  cost: number;
-}) {
+  id,
+  title,
+  organization,
+  level,
+  region,
+  imageUrl,
+  price,
+  maxNumber,
+  period,
+  lectureTime,
+  equipmentNames,
+  leftScheduleDate,
+  isClosed,
+}: InstructorMyLecture) {
   return (
     <TouchableOpacity style={[shadow, { marginRight: 5 }]} activeOpacity={0.7}>
       <View style={styles.lectureContainer}>
-        <MainImage image={image} />
+        <MainImage image={imageUrl} />
 
         {/* 강의 요약 정보 */}
         <View style={styles.infoContainer}>
@@ -44,7 +47,7 @@ export function MyLecture({
             hideSeparator
           />
 
-          <Cost cost={cost} />
+          <Price cost={price} />
         </View>
       </View>
     </TouchableOpacity>
@@ -52,18 +55,48 @@ export function MyLecture({
 }
 
 export default function MyLectureList() {
+  const [lectures, setLectures] = useState<InstructorMyLecture[]>();
+  useLayoutEffect(() => {
+    try {
+      const fetch = async () => {
+        const res = await axios.get(
+          'http://52.79.225.4:8081/lecture/manage/list?page=0&size=5',
+        );
+
+        const status = res.status;
+        if (status !== 200) throw new Error('강사 내강의 조회 에러');
+        setLectures(res.data._embedded.myLectureInfoList);
+      };
+      fetch();
+    } catch (e) {
+      console.log('강사 내강의 조회 에러');
+    }
+  }, []);
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={{ marginBottom: 80 }}
     >
-      <MyLecture />
-      <MyLecture />
-      <MyLecture />
-      <MyLecture />
-      <MyLecture />
-      <MyLecture />
-      <MyLecture />
+      {lectures &&
+        lectures.map((lecture, idx) => (
+          <MyLecture
+            key={idx}
+            id={lecture.id}
+            title={lecture.title}
+            organization={lecture.organization}
+            level={lecture.level}
+            region={lecture.region}
+            maxNumber={lecture.maxNumber}
+            lectureTime={lecture.lectureTime}
+            equipmentNames={lecture.equipmentNames}
+            imageUrl={lecture.imageUrl}
+            price={lecture.price}
+            period={lecture.period}
+            leftScheduleDate={lecture.leftScheduleDate}
+            isClosed={lecture.isClosed}
+          />
+        ))}
     </ScrollView>
   );
 }
