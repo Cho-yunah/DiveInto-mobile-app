@@ -1,71 +1,102 @@
-import instance from '@/src/lib/api/axios'
-import { atkState, communityItemSelector, communityListState, DetailInfoType, writerInfoState } from '@/src/recoil/CommunityStack'
-import { useNavigation } from '@react-navigation/native'
-import React from 'react'
-import {View, Image, Text, TouchableOpacity } from 'react-native'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import {DetailInfoStyle as styles} from './styles'
+import instance from '@/src/lib/api/axios';
+import {
+  atkState,
+  communityItemSelector,
+  communityListState,
+  showModalState,
+  writerInfoState,
+} from '@/src/recoil/CommunityStack';
+import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import CommonModal from '@components/common/CommonModal';
+import { DetailInfoStyle as styles } from './styles';
 
-export default function DetailInfo({id}) {
-  const navigation = useNavigation()
-  const token = useRecoilValue(atkState)
-  // console.log('detail',token)
-  
-  const [communityList, setCommunityList]= useRecoilState(communityListState)
-  const {title, dateOfRegistration } = useRecoilValue(communityItemSelector)
-  const writer = useRecoilValue(writerInfoState)
-  console.log(writer.profileImageUrl)
-
+export default function DetailInfo({ id }) {
+  const navigation = useNavigation();
+  const token = useRecoilValue(atkState);
+  const [communityList, setCommunityList] = useRecoilState(communityListState);
+  const { title, dateOfRegistration } = useRecoilValue(communityItemSelector);
+  const writer = useRecoilValue(writerInfoState);
+  const [show, setShow] = useRecoilState(showModalState);
+  const basicProfilelUrl =
+    'https://img.freepik.com/free-vector/swimmer-dives-into-water-from-splash-watercolors-illustration-paints_291138-350.jpg?size=626&ext=jpg';
 
   const config = {
     headers: {
       Authorization: token,
-      'Content-Type': 'application/json'
-    }
-  }
+      'Content-Type': 'application/json',
+    },
+  };
 
-  const requestDelete = async() => {
-    console.log('delete!')
-    console.log(id)
+  const toggleShowModal = (): void => {
+    setShow(!show);
+  };
+
+  const requestDelete = async () => {
+    // console.log('delete!')
+    // console.log(id)
     try {
-      const response = await instance.delete(`community/post/${id}`, config )
+      const response = await instance.delete(`community/post/${id}`, config);
       // console.log(response)
-      setCommunityList(communityList.filter(item => item.id !== id))
-      navigation.navigate('CommunityMain')
-    } catch(e) {
-      console.log(e)
+      setCommunityList(communityList.filter(item => item.id !== id));
+      navigation.navigate('CommunityMain');
+    } catch (e) {
+      console.log(e);
     }
-  }
-    
+  };
+
   return (
-    <View >
+    <View>
       <View style={styles.writerInfoBox}>
-      <Image style={styles.writerImage} source={{uri: writer.profileImageUrl}}/>
-      <View>
-        <Text style={styles.title}>{title}</Text>
-        <Text style= {styles.dateStyle}>{writer.nickName}</Text>
-       </View>
+        {writer.profileImageUrl ? (
+          <Image
+            style={styles.writerImage}
+            source={{ uri: writer.profileImageUrl }}
+          />
+        ) : (
+          <Image
+            style={styles.writerImage}
+            source={{ uri: basicProfilelUrl }}
+          />
+        )}
+        <View>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.dateStyle}>{writer.nickName}</Text>
+        </View>
+      </View>
+      <View style={styles.buttons}>
+        <EditBtn style={styles.modify} navigation={navigation} id={id} />
+        <DeleteBtn style={styles.delete} toggleShowModal={toggleShowModal} />
+      </View>
+
+      {/* 삭제버튼 눌렀을 경우 확인 모달 */}
+      <CommonModal
+        show={show}
+        desc="게시글을 삭제하시겠습니까?"
+        toggleShowModal={toggleShowModal}
+        onClickConfirm={requestDelete}
+      />
     </View>
-       <View style= {styles.buttons}>
-          <EditBtn style={styles.modify} navigation={navigation} id={id} />
-          <DeleteBtn style={styles.delete} requestDelete={requestDelete}/>
-       </View>
-    </View>
-  )
+  );
 }
 
-const EditBtn=({navigation, id}: any) => {
-  console.log(id)
+const EditBtn = ({ navigation, id }: any) => {
+  // console.log(id)
   return (
-    <TouchableOpacity  onPress={()=> navigation.navigate('CommunityPosting', {id})} >
-      <Text >수정</Text>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('CommunityPosting', { id })}
+    >
+      <Text>수정</Text>
     </TouchableOpacity>
-  )
-}
-const DeleteBtn= ({requestDelete}:any) => {
+  );
+};
+
+const DeleteBtn = ({ toggleShowModal }: any) => {
   return (
-    <TouchableOpacity onPress={requestDelete}>
-      <Text >삭제</Text>
+    <TouchableOpacity onPress={toggleShowModal}>
+      <Text>삭제</Text>
     </TouchableOpacity>
-  )
-}
+  );
+};

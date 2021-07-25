@@ -34,14 +34,14 @@ export default function LectureStack() {
         }}
       >
         <Stack.Screen
-          name="LectureDetail"
-          component={LectureDetailScreen}
-          options={{ title: '강의 제목' }}
-        />
-        <Stack.Screen
           name="MainList"
           component={MainList}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="LectureDetail"
+          component={LectureDetailScreen}
+          options={{ title: '강의 제목' }}
         />
         <Stack.Screen
           name="ReserveLecture"

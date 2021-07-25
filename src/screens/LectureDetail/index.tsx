@@ -18,13 +18,11 @@ import SuspenseLocationInfo from '@/src/components/LectureDetail/LocationInfo/Su
 
 const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
   const { isMarked } = useRecoilValue(lectureDetailState);
-  // const { lectureId } = route.params;
+  const { lectureId } = route.params;
   const setLectureId = useSetRecoilState(lectureIdState);
 
   const navigateToReserveLecture = () =>
-    navigation.navigate('ReserveLecture', {
-      lectureId: 1,
-    });
+    navigation.navigate('ReserveLecture', { lectureId });
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -42,7 +40,7 @@ const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
         </TouchableOpacity>
       ),
     });
-    setLectureId(1);
+    setLectureId(lectureId);
   }, []);
 
   return (

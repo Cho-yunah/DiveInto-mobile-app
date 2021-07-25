@@ -12,10 +12,11 @@ export default function InfoTags({
   region,
   maxNumber,
   lectureTime,
-  reviewAvg,
+  starAvg,
   reviewCount,
   containerStyle,
 }: InfoTagsProps) {
+  console.log('startAvg : ', starAvg, reviewCount);
   const equipTags: TagListType = equipmentNames.map((tag, i) => ({
     icon: i === 0 ? 'Plus' : undefined,
     tagName: tag,
@@ -27,12 +28,13 @@ export default function InfoTags({
       icon: 'Person',
       tagName: maxNumber === 1 ? '1명' : `1~${maxNumber}명`,
     },
-    { icon: 'Time', tagName: `${lectureTime}시간` },
+    { icon: 'Time', tagName: `${lectureTime}` },
   ];
 
-  const avgStarTag: TagListType | undefined = reviewAvg
-    ? [{ icon: 'Star', tagName: `${reviewAvg}점  (${reviewCount}건의 평가)` }]
-    : undefined;
+  const avgStarTag: TagListType | undefined =
+    starAvg !== undefined
+      ? [{ icon: 'Star', tagName: `${starAvg}점  (${reviewCount}건의 평가)` }]
+      : undefined;
 
   return (
     <View>
@@ -56,7 +58,7 @@ export default function InfoTags({
       </View>
 
       {/* 평점, 리뷰개수 */}
-      {reviewAvg && (
+      {starAvg !== undefined && (
         <View style={containerStyle}>
           <TagList tags={avgStarTag!} />
         </View>

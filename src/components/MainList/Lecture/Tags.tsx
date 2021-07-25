@@ -42,6 +42,7 @@ export default function TagList({
   listContainerStyle,
   tagContainerStyle,
   tagTextStyle,
+  hideSeparator,
 }: TagListProps) {
   const tagList = tags.map((tag, i) => (
     <View key={i} style={{ flexDirection: 'row' }}>
@@ -51,7 +52,11 @@ export default function TagList({
         containerStyle={tagContainerStyle}
         textStyle={tagTextStyle}
       />
-      {i !== tags.length - 1 && <Separator style={styles.separate} />}
+      {hideSeparator ? (
+        <View style={styles.separate}></View>
+      ) : (
+        i !== tags.length - 1 && <Separator style={styles.separate} />
+      )}
     </View>
   ));
 
