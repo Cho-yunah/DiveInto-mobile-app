@@ -17,17 +17,20 @@ import {
   LecturePriceInput,
   LectureImages,
 } from '@recoil/Instructor/AddLecture';
+
+// import { lectureImageUpload } from '@lib/file/fileFetch';
+
 export function AddLecture({ navigation }: AddLectureProps) {
   // 여기서 설정해야하는 값
   const [title, setTitle] = useRecoilState(LectureTitleInput);
   const [description, setDescription] = useRecoilState(LectureDescriptionInput);
   const [price, setPrice] = useRecoilState(LecturePriceInput);
-  const setImages = useSetRecoilState(LectureImages);
+  const [images, setImages] = useRecoilState(LectureImages);
 
   useLayoutEffect(() => {
     const onPress = () => {
       navigation.navigate('강의등록2');
-      console.log(title, description, price);
+      console.log('images : ', images);
     };
     navigation.setOptions({
       title: '강의등록',
