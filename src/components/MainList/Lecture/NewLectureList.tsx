@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { NewLectures as styles, shadow } from './styles';
 import { NewLectureProps } from './types';
+import { useNavigation } from '@react-navigation/native';
 
 import Heart from './Heart';
 import InfoTags from './InfoTags';
@@ -23,8 +24,13 @@ const NewLecture = ({
   isMarked,
   price,
 }: NewLectureProps) => {
+  const navigation = useNavigation();
   return (
-    <View style={[styles.lectureContainer, shadow]}>
+    <TouchableOpacity
+      style={[styles.lectureContainer, shadow]}
+      activeOpacity={0.7}
+      onPress={() => navigation.navigate('LectureDetail', { lectureId: id })}
+    >
       {/* 강의이미지, 찜 아이콘 */}
       <Image
         source={imageUrl ? { uri: imageUrl } : lectureExm}
@@ -45,7 +51,7 @@ const NewLecture = ({
           containerStyle={styles.tagContainer}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

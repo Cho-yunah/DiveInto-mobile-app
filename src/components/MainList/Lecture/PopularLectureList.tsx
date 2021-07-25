@@ -9,6 +9,7 @@ import InfoTags from './InfoTags';
 const lectureExm = require('@assets/LectureExm.png');
 
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 const PopularLecture = ({
   id,
@@ -25,8 +26,14 @@ const PopularLecture = ({
   starAvg = 0,
   reviewCount = 0,
 }: PopularLectureProps) => {
+  const navigation = useNavigation();
+
   return (
-    <View style={[shadow, { marginRight: 5 }]}>
+    <TouchableOpacity
+      style={[shadow, { marginRight: 5 }]}
+      activeOpacity={0.7}
+      onPress={() => navigation.navigate('LectureDetail', { lectureId: id })}
+    >
       <View style={styles.lectureContainer}>
         {/* 이미지 */}
         <View style={styles.imageContainer}>
@@ -55,7 +62,7 @@ const PopularLecture = ({
           <Heart containerStyle={styles.heart} />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
