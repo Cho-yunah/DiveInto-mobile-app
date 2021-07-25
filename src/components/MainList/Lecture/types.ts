@@ -4,17 +4,21 @@ import { Organization, Level, Region } from '@typing/common';
 
 // 강의목록
 export type NewLectureProps = {
+  id: number;
   title: string;
   organization: Organization;
   level: Level;
   region: Region;
   maxNumber: number;
+  period: number;
   lectureTime: number;
   equipmentNames: string[];
-  image: string;
+  imageUrl: string;
+  isMarked: boolean;
+  price: number;
 };
 export type PopularLectureProps = NewLectureProps & {
-  reviewAvg: number;
+  starAvg: number;
   reviewCount: number;
 };
 
@@ -44,7 +48,7 @@ export type InfoTagsProps = {
   region: Region;
   maxNumber: number;
   lectureTime: number;
-  reviewAvg?: number;
+  starAvg?: number;
   reviewCount?: number;
   containerStyle: ViewStyle;
 };
