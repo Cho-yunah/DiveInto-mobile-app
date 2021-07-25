@@ -10,10 +10,11 @@ import { IsLogin, IsInstructor } from '@/src/recoil/Global';
 
 import jwt_decode from 'jwt-decode';
 import { JWToken } from './types';
+import axios from 'axios';
+
 import React, { useState } from 'react';
 import { ModalContainer } from '../ReserveLecture';
 import AsyncStorage from '@react-native-community/async-storage';
-// import { getToken } from '@/src/lib/firebase/FCM';
 import * as FCM from '@lib/firebase/FCM';
 
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
@@ -35,6 +36,7 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
       });
       if (login?.data?.access_token) {
         const atk = login.data.access_token;
+        axios.defaults.headers.common.Authorization = atk;
         const decoded: JWToken = jwt_decode(atk);
         await AsyncStorage.setItem('atk', atk);
         const fcmToken = await FCM.getToken();
