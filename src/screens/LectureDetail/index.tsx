@@ -45,8 +45,6 @@ const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
     setLectureId(1);
   }, []);
 
-  // useEffect(() => {}, []);
-
   return (
     <>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>

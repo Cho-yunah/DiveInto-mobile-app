@@ -5,6 +5,7 @@ import {
   ScrollView,
   Text,
   View,
+  Image,
 } from 'react-native';
 import { LectureReviewStyles as styles } from './styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -17,6 +18,14 @@ import useGetSortedReviews from './useGetSortedReviews';
 const LectureReview = () => {
   const { reviewTotalAvg } = useRecoilValue(lectureDetailState);
   const { sortBy, setSortBy, reviews } = useGetSortedReviews();
+
+  if (!reviews.length)
+    return (
+      <View style={{}}>
+        <Image source={{ uri: './assets/logo1.png' }} />
+        <Text>아직 등록된 후기가 없습니다.</Text>
+      </View>
+    );
 
   return (
     <>

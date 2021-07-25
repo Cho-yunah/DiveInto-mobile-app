@@ -15,6 +15,8 @@ import { ModalContainer } from '../ReserveLecture';
 import AsyncStorage from '@react-native-community/async-storage';
 // import { getToken } from '@/src/lib/firebase/FCM';
 import * as FCM from '@lib/firebase/FCM';
+import { ImageArrStateType } from '@/src/recoil/CommunityStack';
+import { getFormData } from '@/src/lib/utils/requestPostReview';
 
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   const setIsLogin = useSetRecoilState(IsLogin);
@@ -89,3 +91,47 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   );
 };
 export default LoginWithEmailScreen;
+
+// type PostingBodyType = {
+//   [key: string]: string;
+// };
+// type RequestPostCommunityType = {
+//   (body: FormData, postingId: number): Promise<undefined>;
+//   (body: PostingBodyType): Promise<number>;
+// };
+
+// export const requestPostCommunity: RequestPostCommunityType = async (
+//   body: FormData | PostingBodyType,
+//   postingId?: number,
+// ) => {
+//   const instanceAtk = await getInstanceATK();
+
+//   try {
+//     if (body instanceof FormData) {
+//       // 이미지 전송시
+//       const { data } = await instanceAtk.post(
+//         `/community/post${postingId}/post-image`,
+//         body,
+//       );
+//       console.log(data);
+//     } else {
+//       // 게시글 전송시
+//       const { data } = await instanceAtk.post('/community/post', body);
+//       console.log(data);
+
+//       return data.postResource.id;
+//     }
+//   } catch (e) {
+//     console.log(e);
+//   }
+// };
+
+// // 개시글 요청 할 경우
+// const body = postingInfo
+// const postingId = await reqeustPostCommunity(body)
+// typeof postingId === 'number' && setPostImageId(postingId)
+
+// // 게시글 요청을 완료 하고 나서 사진 요청하는경우
+// if (typeof postingId === 'number' && imagesArr.length) {
+//   const imagesRes = await requestPostCommunity(getFormData(imagesArr), postingId)
+// }
