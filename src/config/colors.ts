@@ -1,6 +1,5 @@
 export const deepBlue = '#207AB4';
 export const placeholder = '#D8D8D8';
-
 export const PointBlue = '#50CAD2';
 export const Selected = '#E93A55';
 export const UnSelected = '#E0E0E1';
@@ -12,3 +11,5 @@ export const Gray2 = '#D8D8D8';
 export const Background = '#F3F5F7';
 export const lightPlaceholder: string = '#929292';
 export const lightPlaceholderBack: string = '#F4F4F4';
+export const underLine = '#CCD7DF';
+export const BasicText = '#202020';

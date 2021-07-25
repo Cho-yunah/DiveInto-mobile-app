@@ -1,7 +1,7 @@
 import DocumentPicker, {
   DocumentPickerResponse,
 } from 'react-native-document-picker';
-import { launchImageLibrary, Asset } from 'react-native-image-picker';
+import { launchImageLibrary, Asset } from 'react-native-image-picker/src';
 
 export async function singleFileSelect() {
   // Pick a single file

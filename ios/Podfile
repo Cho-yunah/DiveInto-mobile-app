@@ -3,17 +3,20 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'DiveInto' do
+target 'PungDong' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
 
   pod 'NMapsMap'
+  pod 'Firebase/Analytics'
+  # add the Firebase pod for Google Analytics
+  # or pod ‘Firebase/AnalyticsWithoutAdIdSupport’
+  # for Analytics without IDFA collection capability
+  # add pods for any other desired Firebase products
+  # https://firebase.google.com/docs/ios/setup#available-pods
 
-  pod 'rn-fetch-blob',
-  :path => '../node_modules/rn-fetch-blob'
-  
-  target 'DiveIntoTests' do
+  target 'PungDongTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -35,10 +38,10 @@ target 'DiveInto' do
   
 end
 
-target 'DiveInto-tvOS' do
-  # Pods for DiveInto-tvOS
+target 'PungDong-tvOS' do
+  # Pods for PungDong-tvOS
 
-  target 'DiveInto-tvOSTests' do
+  target 'PungDong-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

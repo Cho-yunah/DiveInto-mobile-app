@@ -1,0 +1,25 @@
+{
+  "shared" : [
+    {"id": "1a", "title": "hi", "postAuthor": "yuna","postingDate":"6/1",  "imageSrc": "https://source.unsplash.com/random", "commentNum": "3" },
+    {"id": "2a", "title": "hello", "postAuthor": "yoon","postingDate":"6/2",  "imageSrc": " https://source.unsplash.com/random", "commentNum": "2" },
+    {"id": "3a", "title": "world", "postAuthor": "you", "postingDate":"6/3", "imageSrc": "https://source.unsplash.com/random", "commentNum": "5" },
+    {"id": "4a", "title": "hey", "postAuthor": "woo", "postingDate":"6/5", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "5a", "title": "hey", "postAuthor": "wi", "postingDate":"6/5", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "6a", "title": "hey", "postAuthor": "no", "postingDate":"6/5", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "7a", "title": "hey", "postAuthor": "wow", "postingDate":"6/5", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "8a", "title": "hey", "postAuthor": "yoeah", "postingDate":"6/5", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "9a", "title": "hey", "postAuthor": "noon", "postingDate":"6/5", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "10a", "title": "hey", "postAuthor": "dlds", "postingDate":"6/5", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "11a", "title": "wow", "postAuthor": "dldl", "postingDate":"6/1", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "12a", "title": "wow", "postAuthor": "alal", "postingDate":"6/1", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "13a", "title": "wow", "postAuthor": "misooomi", "postingDate":"6/1", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "14a", "title": "wow", "postAuthor": "hiso", "postingDate":"6/1", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "15a", "title": "ahhh", "postAuthor": "yoyo", "postingDate":"6/1", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "16a", "title": "정말", "postAuthor": "soso", "postingDate":"6/1", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "17a", "title": "왜 안되는 거지", "postAuthor": "haha", "postingDate":"6/1", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "18a", "title": "후", "postAuthor": "yooo", "postingDate":"6/1", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "19a", "title": "렌더가 계속 됩니다", "postAuthor": "nana", "postingDate":"6/1", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" },
+    {"id": "20a", "title": "control이 안되요", "postAuthor": "momo", "postingDate":"6/1", "imageSrc": "https://source.unsplash.com/random", "commentNum": "1" }
+    
+  ]
+}

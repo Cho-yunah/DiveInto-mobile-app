@@ -4,10 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { RootLectureStack } from './types';
 
 import MainList from '@screens/MainList';
+import LectureDetailScreen from '@/src/screens/LectureDetail';
+import ReserveLectureScreen from '@/src/screens/ReserveLecture';
+import RequestPaymentScreen from '@/src/screens/RequestPayment';
+import WriteReviewScreen from '@/src/screens/WriteReview';
 
 const Stack = createStackNavigator<RootLectureStack>();
 
-export default function LoginStack() {
+export default function LectureStack() {
   return (
     <RecoilRoot>
       <Stack.Navigator
@@ -30,9 +34,24 @@ export default function LoginStack() {
         }}
       >
         <Stack.Screen
+          name="LectureDetail"
+          component={LectureDetailScreen}
+          options={{ title: '강의 제목' }}
+        />
+        <Stack.Screen
           name="MainList"
           component={MainList}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ReserveLecture"
+          component={ReserveLectureScreen}
+          options={{ title: '강의 예약' }}
+        />
+        <Stack.Screen
+          name="RequestPayment"
+          component={RequestPaymentScreen}
+          options={{ title: '결제 요청' }}
         />
       </Stack.Navigator>
     </RecoilRoot>

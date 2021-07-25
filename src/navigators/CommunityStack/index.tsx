@@ -3,14 +3,26 @@ import { RecoilRoot } from 'recoil';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootCommunityStack } from './types';
 
-import CommunityMainScreen from '@/src/screens/CommunityMain';
-import CommunityPostingScreen from '@/src/screens/CommunityPosting';
-import SetPasswordScreen from '@/src/screens/SetPassword';
-import { CommunityDetail } from '@/src/components/CommunityDetail';
+import CommunityMainScreen from '@screens/CommunityMain';
+import CommunityPostingScreen from '@screens/CommunityPosting';
+import CommunityDetailScreen from '@screens/CommunityDetail';
+import { useEffect } from 'react';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 const Stack = createStackNavigator<RootCommunityStack>();
 
-export default function CommunityStack() {
+export default function CommunityStack({navigation,route}: any) {
+
+  // community posting, community detail page 일때,
+  // bottom navigation bar hiding
+  useEffect (()=> {
+    const routeName = getFocusedRouteNameFromRoute(route);
+    navigation.setOptions(
+      (routeName && routeName === 'CommunityDetail'? { tabBarVisible: false} : {tabBarVisible: true}) ||
+      (routeName && routeName === 'CommunityPosting'? {tabBarVisible: false} : {tabBarVisible: true})
+    )
+  },[navigation, route]) 
+
   return (
     <RecoilRoot>
       <Stack.Navigator
@@ -48,9 +60,9 @@ export default function CommunityStack() {
         />
         <Stack.Screen
           name="CommunityDetail"
-          component={CommunityDetail}
+          component={CommunityDetailScreen}
           options={{
-            title: '글 제목',
+            title: '',
           }}
         />
       </Stack.Navigator>

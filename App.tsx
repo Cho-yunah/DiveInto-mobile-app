@@ -13,11 +13,22 @@ import AdmMyLectureStack from '@navigators/MyLectureStack/AdmMyLectureStack';
 
 import UploadTest from '@screens/UploadTest';
 
+import * as FCM from '@lib/firebase/FCM';
+
 // redux
 import initStore from '@legacy_lib/redux/store';
 const store = initStore();
 
 export default function App() {
+  useEffect(() => {
+    const init = async () => {
+      const fcm = await FCM.getToken();
+      console.log('fcm Token : ', fcm);
+    };
+
+    init();
+  }, []);
+
   return (
     <Provider store={store}>
       <NavigationContainer>
@@ -25,9 +36,9 @@ export default function App() {
         {/* <LegacyStack /> */}
 
         {/* 파일업로드 테스트 */}
-        {/* <RecoilRoot>
-          <UploadTest />
-        </RecoilRoot> */}
+        {/* <RecoilRoot> */}
+        {/* <UploadTest /> */}
+        {/* </RecoilRoot> */}
 
         {/* 리뉴얼 */}
         <RecoilRoot>

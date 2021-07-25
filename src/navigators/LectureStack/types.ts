@@ -4,5 +4,23 @@ export type fadeEffectProp = { current: { progress: any } };
 
 export type RootLectureStack = {
   MainList: undefined;
+  LectureDetail: { lectureId: number };
+  ReserveLecture: { lectureId: number };
+  RequestPayment: undefined;
 };
 export type MainListProps = StackScreenProps<RootLectureStack, 'MainList'>;
+
+export type LectureDetailProps = StackScreenProps<
+  RootLectureStack,
+  'LectureDetail'
+>;
+
+export type ReserveLectureProps = StackScreenProps<
+  RootLectureStack,
+  'ReserveLecture'
+>;
+
+export type RequestPaymentProps = StackScreenProps<
+  RootLectureStack,
+  'RequestPayment'
+>;
