@@ -1,22 +1,19 @@
-import instance from '@/src/lib/api/axios';
-import { lectureInstructorProfileState } from '@/src/recoil/LectureStack';
-import React, { useEffect } from 'react';
+import { lectureCommonSelectorFamily } from '@/src/recoil/LectureStack';
+import React from 'react';
 import { Image, Text, useWindowDimensions, View } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValueLoadable } from 'recoil';
 import { InstructorProfileStyles as styles } from './styles';
-import useRequestInstructorProfile from './useRequestInstructorProfile';
 
 const InstructorProfile = () => {
-  const { nickName, selfIntroduction, profilePhotoUrl } = useRecoilValue(
-    lectureInstructorProfileState,
+  const { state, contents } = useRecoilValueLoadable(
+    lectureCommonSelectorFamily('InstructorProfile'),
   );
   const windowWidth = useWindowDimensions().width;
-  useRequestInstructorProfile();
 
   return (
     <View style={styles.container}>
-      {profilePhotoUrl ? (
+      {state === 'hasValue' ? (
         <Text style={styles.instructorInfoTitle}>강사 프로필</Text>
       ) : (
         <SkeletonPlaceholder>
@@ -24,10 +21,10 @@ const InstructorProfile = () => {
         </SkeletonPlaceholder>
       )}
       <View style={styles.profileInfoContainer}>
-        {profilePhotoUrl ? (
+        {state === 'hasValue' ? (
           <Image
             source={{
-              uri: profilePhotoUrl,
+              uri: contents.profilePhotoUrl,
             }}
             style={styles.profilePic}
           />
@@ -43,10 +40,12 @@ const InstructorProfile = () => {
         <View
           style={[styles.instructorInfoContainer, { width: windowWidth - 85 }]}
         >
-          {nickName ? (
+          {state === 'hasValue' ? (
             <>
-              <Text style={styles.nickname}>{nickName}</Text>
-              <Text style={styles.instructorBrief}>{selfIntroduction}</Text>
+              <Text style={styles.nickname}>{contents.nickName}</Text>
+              <Text style={styles.instructorBrief}>
+                {contents.selfIntroduction}
+              </Text>
             </>
           ) : (
             <SkeletonPlaceholder>

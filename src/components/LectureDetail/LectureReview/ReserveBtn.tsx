@@ -1,7 +1,7 @@
-import { lectureDetailState, lectureIdState } from '@/src/recoil/LectureStack';
+import { lectureCommonSelectorFamily } from '@/src/recoil/LectureStack';
 import React from 'react';
 import { ActivityIndicator, Pressable, Text, View } from 'react-native';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValueLoadable } from 'recoil';
 import { ReviewListStyles as styles } from './styles';
 
 type ReserveBtnProps = {
@@ -9,17 +9,18 @@ type ReserveBtnProps = {
 };
 
 const ReserveBtn = ({ navigateToReserveLecture }: ReserveBtnProps) => {
-  const lectureDetail = useRecoilValue(lectureDetailState);
-  const lectureId = useRecoilValue(lectureIdState);
+  const { state, contents } = useRecoilValueLoadable(
+    lectureCommonSelectorFamily('Info'),
+  );
 
   return (
     <View style={styles.reserveBtnContainer}>
       <Pressable
         style={styles.reserveBtn}
         onPress={() => navigateToReserveLecture()}
-        disabled={!lectureDetail.title}
+        disabled={!contents.title}
       >
-        {lectureDetail.title ? (
+        {state === 'hasValue' ? (
           <Text style={styles.reserveBtnText}>강의 예약하기</Text>
         ) : (
           <ActivityIndicator size="small" color="#fefefe" />

@@ -8,9 +8,10 @@ import {
 } from 'react-native';
 import { LecturePicsStyles as styles } from './styles';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import useRequestLecturePics from './useRequestLecturePics';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValueLoadable, useSetRecoilState } from 'recoil';
 import {
+  lectureCommonSelectorFamily,
+  LectureDetailPicsType,
   lectureModalState,
   lecutureModalSelectedIdxState,
 } from '@/src/recoil/LectureStack';
@@ -19,7 +20,10 @@ const LecturePicsCarousel = () => {
   const [activeDotIdx, setActiveDotIdx] = useState(0);
   const setModalPics = useSetRecoilState(lectureModalState);
   const setSelectedIdx = useSetRecoilState(lecutureModalSelectedIdxState);
-  const lecturePics = useRequestLecturePics();
+  const { state, contents } = useRecoilValueLoadable(
+    lectureCommonSelectorFamily('LecturePics'),
+  );
+
   const windowWidth = useWindowDimensions().width;
   const viewabilityConfRef = useRef({
     viewAreayCoveragePercentThreshold: 50,
@@ -30,7 +34,7 @@ const LecturePicsCarousel = () => {
     if (viewableItems.length === 1) setActiveDotIdx(viewableItems[0].index);
   });
 
-  if (!lecturePics.length)
+  if (state === 'loading')
     return (
       <SkeletonPlaceholder>
         <SkeletonPlaceholder.Item width={windowWidth} height={195} />
@@ -46,7 +50,7 @@ const LecturePicsCarousel = () => {
             onPress={() => {
               console.log('hey', index);
 
-              setModalPics(lecturePics);
+              setModalPics(contents._embedded.lectureImageUrlList);
               setSelectedIdx(index);
             }}
           >
@@ -56,7 +60,7 @@ const LecturePicsCarousel = () => {
             />
           </Pressable>
         )}
-        data={lecturePics}
+        data={contents._embedded.lectureImageUrlList || []}
         horizontal
         showsHorizontalScrollIndicator={false}
         snapToAlignment={'center'}
@@ -66,15 +70,17 @@ const LecturePicsCarousel = () => {
         onViewableItemsChanged={viewableItemsCallbackRef.current}
       />
       <View style={styles.dotIndicatorContainer}>
-        {lecturePics.map((_, index) => (
-          <View
-            style={
-              index === activeDotIdx
-                ? styles.dotIndicatorActive
-                : styles.dotIndicator
-            }
-          />
-        ))}
+        {contents._embedded.lectureImageUrlList.map(
+          (_: LectureDetailPicsType, index: number) => (
+            <View
+              style={
+                index === activeDotIdx
+                  ? styles.dotIndicatorActive
+                  : styles.dotIndicator
+              }
+            />
+          ),
+        )}
       </View>
     </View>
   );

@@ -10,13 +10,15 @@ import {
 import { LectureReviewStyles as styles } from './styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import PersonalReview from './PersonalReview';
-import { lectureDetailState } from '@/src/recoil/LectureStack';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValueLoadable } from 'recoil';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import useGetSortedReviews from './useGetSortedReviews';
+import { lectureCommonSelectorFamily } from '@/src/recoil/LectureStack';
 
 const LectureReview = () => {
-  const { reviewTotalAvg } = useRecoilValue(lectureDetailState);
+  const { contents } = useRecoilValueLoadable(
+    lectureCommonSelectorFamily('Info'),
+  );
   const { sortBy, setSortBy, reviews } = useGetSortedReviews();
 
   if (!reviews.length)
@@ -31,14 +33,14 @@ const LectureReview = () => {
     <>
       <ScrollView style={styles.container}>
         <View style={styles.topContainer}>
-          {reviewTotalAvg ? (
+          {contents && contents.reviewTotalAvg ? (
             <>
               <Text style={styles.title}>후기</Text>
               <View style={styles.totalAvgRateContainer}>
                 <FontAwesome name="star" size={16} color={'rgb(248,194,93)'} />
 
                 <Text style={styles.totalAvgRateText}>
-                  {reviewTotalAvg.toFixed(1)} / 5점
+                  {contents.reviewTotalAvg.toFixed(1)} / 5점
                 </Text>
               </View>
             </>
@@ -96,7 +98,7 @@ const LectureReview = () => {
           style={styles.seeMoreBtn}
           onPress={() => console.warn('더보기클릭')}
         >
-          {!!reviewTotalAvg && (
+          {contents && !!contents.reviewTotalAvg && (
             <Text style={styles.seeMoreBtnText}>더보기</Text>
           )}
         </TouchableOpacity>

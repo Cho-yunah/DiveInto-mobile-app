@@ -1,24 +1,26 @@
 import addCashComma from '@/src/lib/utils/addCashComma';
-import { lectureInfoSelector } from '@/src/recoil/LectureStack';
-import React from 'react';
+import { lectureCommonSelectorFamily } from '@/src/recoil/LectureStack';
+import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValueLoadable } from 'recoil';
 import { LectureInfoStyles as styles } from './styles';
-import useRequestLectureInfo from './useRequestLectureInfo';
 
 const LectureInfo = () => {
-  const { title, organization, level, description, price } =
-    useRecoilValue(lectureInfoSelector);
+  const { state, contents } = useRecoilValueLoadable(
+    lectureCommonSelectorFamily('Info'),
+  );
 
-  useRequestLectureInfo();
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
 
   return (
     <View style={styles.container}>
       <View style={styles.topInfo}>
         <Text style={styles.lectureTitle}>
-          {title ? (
-            `${title}`
+          {state === 'hasValue' ? (
+            `${contents.title}`
           ) : (
             <SkeletonPlaceholder>
               <SkeletonPlaceholder.Item width={360} height={20} />
@@ -27,10 +29,10 @@ const LectureInfo = () => {
         </Text>
         <View style={styles.lectureTagContainer}>
           <View style={styles.lectureTagInnerContainer}>
-            {organization ? (
+            {state === 'hasValue' ? (
               <>
-                <Text style={styles.lectureTag}>#{organization}</Text>
-                <Text style={styles.lectureTag}>#LV{level[5]}</Text>
+                <Text style={styles.lectureTag}>#{contents.organization}</Text>
+                <Text style={styles.lectureTag}>#LV{contents.level[5]}</Text>
               </>
             ) : (
               <SkeletonPlaceholder>
@@ -39,9 +41,11 @@ const LectureInfo = () => {
             )}
           </View>
           <View style={styles.lecturePriceContainer}>
-            {price ? (
+            {state === 'hasValue' ? (
               <>
-                <Text style={styles.lecturePrice}>{addCashComma(price)}</Text>
+                <Text style={styles.lecturePrice}>
+                  {addCashComma(contents.price)}
+                </Text>
                 <Text style={styles.lecturePriceUnit}>원</Text>
               </>
             ) : (
@@ -52,9 +56,9 @@ const LectureInfo = () => {
           </View>
         </View>
       </View>
-      {description ? (
+      {state === 'hasValue' ? (
         <View style={styles.bottomInfo}>
-          <Text style={styles.bottomInfoText}>{description}</Text>
+          <Text style={styles.bottomInfoText}>{contents.description}</Text>
         </View>
       ) : (
         <SkeletonPlaceholder>

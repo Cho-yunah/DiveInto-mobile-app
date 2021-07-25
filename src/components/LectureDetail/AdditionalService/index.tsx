@@ -1,17 +1,24 @@
+import { lectureCommonSelectorFamily } from '@/src/recoil/LectureStack';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
 import { ScrollView, Text, View } from 'react-native';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import { useRecoilValueLoadable } from 'recoil';
 import { AdditionalServiceStyles as styles } from './styles';
-const serviceTags = [
-  '주차가능',
-  '그룹가능',
-  '장비대여',
-  '추가예약가능',
-  '결석가능',
-];
 
 const AdditionalService = () => {
+  const { state, contents } = useRecoilValueLoadable(
+    lectureCommonSelectorFamily('Info'),
+  );
   const windowWidth = useWindowDimensions().width;
+
+  if (state === 'loading')
+    return (
+      <SkeletonPlaceholder>
+        <SkeletonPlaceholder.Item width={windowWidth} height={30} />
+      </SkeletonPlaceholder>
+    );
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>부가서비스</Text>
@@ -24,7 +31,7 @@ const AdditionalService = () => {
         showsHorizontalScrollIndicator={false}
       >
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-          {serviceTags.map(tag => (
+          {contents.serviceTags.map((tag: string) => (
             <View style={styles.serviceTag} key={tag}>
               <Text style={styles.serviceTagText}>#{tag}</Text>
             </View>

@@ -1,20 +1,24 @@
 import addCashComma from '@/src/lib/utils/addCashComma';
 import {
   getEquipmentsState,
-  lectureDetailState,
+  lectureCommonSelectorFamily,
+  lectureIdState,
   requestReservationEquipmentDetailType,
   requestReservationEquipmentState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
 import React from 'react';
 import { View, Text } from 'react-native';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import { totalSumOfMoney as styles } from './styles';
 
 const TotalSumOfMoney = () => {
   const peopleNumber = useRecoilValue(studentNumberState);
-  const { price } = useRecoilValue(lectureDetailState);
-  const equipmentsState = useRecoilValue(getEquipmentsState(1)); // 강의 id -> 제공되는 대여장비, name,id, price
+  const { contents } = useRecoilValueLoadable(
+    lectureCommonSelectorFamily('Info'),
+  );
+  const lectureId = useRecoilValue(lectureIdState);
+  const equipmentsState = useRecoilValue(getEquipmentsState(lectureId!)); // 강의 id -> 제공되는 대여장비, name,id, price
   const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
   let rentalPrice = 0;
   equipmentsState.forEach(equip =>
@@ -34,7 +38,7 @@ const TotalSumOfMoney = () => {
           프리다이빙 수강료 ( {peopleNumber}명 )
         </Text>
         <Text style={styles.lecturePriceText}>
-          {addCashComma(price * peopleNumber)} 원
+          {addCashComma(contents.price * peopleNumber)} 원
         </Text>
       </View>
       <View style={styles.textContainer}>
@@ -48,7 +52,7 @@ const TotalSumOfMoney = () => {
         <View style={styles.totalPriceTextcontainer}>
           <Text style={styles.totalPriceText}>
             {' '}
-            {addCashComma(price * peopleNumber + rentalPrice)}{' '}
+            {addCashComma(contents.price * peopleNumber + rentalPrice)}
           </Text>
           <Text>원</Text>
         </View>

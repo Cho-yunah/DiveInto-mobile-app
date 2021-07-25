@@ -1,8 +1,10 @@
+import { AxiosResponse } from 'axios';
 import { atom, atomFamily, selector, selectorFamily } from 'recoil';
 import instance from '../lib/api/axios';
 
 export type LectureDetailPicsType = {
   url: string;
+  lectureImageId: number;
 };
 export type lectureReviewType = {
   id: number;
@@ -73,6 +75,12 @@ export type EquipmentsType = {
   price: number;
   equipmentStocks: EquipmentStocksType[];
 };
+
+type TargetInfoType =
+  | 'Info'
+  | 'InstructorProfile'
+  | 'LocationInfo'
+  | 'LecturePics';
 export const searchText = atom({
   key: 'searchText',
   default: '',
@@ -81,19 +89,6 @@ export const searchText = atom({
 export const lectureIdState = atom<null | number>({
   key: 'lectureId',
   default: null,
-});
-
-export const requestLocationInfoSelector = selectorFamily({
-  key: 'requestLocationInfo',
-  get: (lectureId: number) => async () => {
-    if (!lectureId) return;
-    try {
-      const { data } = await instance.get(`/location?lectureId=${lectureId}`);
-      return data;
-    } catch (e) {
-      console.log(e.response);
-    }
-  },
 });
 
 export const lectureModalState = atom<LectureDetailPicsType[]>({
@@ -106,48 +101,34 @@ export const lecutureModalSelectedIdxState = atom<number>({
   default: 0,
 });
 
-export const lectureDetailPicsState = atom<LectureDetailPicsType[]>({
-  key: 'lectrueDetailPics',
-  default: [],
-});
+// common selectorFamily
+export const lectureCommonSelectorFamily = selectorFamily({
+  key: 'lectureCommonSelectorFamily',
+  get:
+    (targetInfo: TargetInfoType) =>
+    async ({ get }) => {
+      const lectureId = get(lectureIdState);
+      if (!lectureId) return;
 
-export const lectureDetailState = atom({
-  key: 'lectureDetail',
-  default: {
-    id: 0, // 강의 id
-    title: '', // 강의 제목
-    classKind: '',
-    organization: '', // AIDA
-    level: '',
-    maxNumber: 0, // 최대 가능 인원
-    period: 0,
-    description: '', // 강의 설명
-    price: 0, // 가격
-    region: '', // 지역
-    reviewTotalAvg: 0, // 리뷰 전체 평점
-    reviewCount: 0, // 리뷰 개수
-    isMarked: false, // 찜하기 여부
-  },
-});
+      const url =
+        targetInfo === 'Info'
+          ? `/lecture?id=${lectureId}`
+          : targetInfo === 'InstructorProfile'
+          ? `/lecture/instructor/info/creator?lectureId=${lectureId}`
+          : targetInfo === 'LocationInfo'
+          ? `/location?lectureId=${lectureId}`
+          : `/lectureImage/list?lectureId=${lectureId}`;
 
-export const lectureInstructorProfileState = atom({
-  key: 'lectureInstructorDetail',
-  default: {
-    instructorId: 0,
-    nickName: '',
-    selfIntroduction: '',
-    profilePhotoUrl: '',
-  },
-});
+      try {
+        const { data }: AxiosResponse = await instance.get(url);
 
-export const lectureInfoSelector = selector({
-  key: 'lectureInfoSelector',
-  get: ({ get }): LectureInfoSelectorType => {
-    const { title, organization, level, description, price } =
-      get(lectureDetailState);
+        console.log(data);
 
-    return { title, organization, level, description, price };
-  },
+        return data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
 });
 
 export const lectureReviewState = atom<lectureReviewType[]>({

@@ -3,13 +3,13 @@ import {
   cachingState,
   currScheduleIdState,
   getEquipmentsState,
+  lectureIdState,
   rentEquipmentInfosType,
   requestReservationEquipmentDetailType,
   requestReservationEquipmentState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
 import { PayButtonProps } from '@/src/screens/RequestPayment/types';
-import AsyncStorage from '@react-native-community/async-storage';
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
@@ -19,7 +19,8 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { payButton as styles } from './styles';
 
 const PayButton = ({ setErrorMsg }: PayButtonProps) => {
-  const equipmentsState = useRecoilValue(getEquipmentsState(1)); // 강의 id -> 제공되는 대여장비, name,id, price
+  const lectureId = useRecoilValue(lectureIdState);
+  const equipmentsState = useRecoilValue(getEquipmentsState(lectureId!)); // 강의 id -> 제공되는 대여장비, name,id, price
   const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
   const currScheduleId = useRecoilValue(currScheduleIdState);
   const numberOfPeople = useRecoilValue(studentNumberState);
@@ -31,12 +32,10 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
       ...useRecoilValue(requestReservationEquipmentState(equip.id)),
     ),
   );
-  console.log(reservedEquipmentsArray);
 
   const requestReservation = async (
     rentEquipmentInfos: rentEquipmentInfosType[],
   ) => {
-    console.log(rentEquipmentInfos);
     setIsLoading(true);
 
     const body = {
