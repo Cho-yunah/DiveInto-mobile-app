@@ -22,8 +22,8 @@ const PopularLecture = ({
   imageUrl,
   isMarked,
   price,
-  starAvg = 4.5,
-  reviewCount = 56,
+  starAvg = 0,
+  reviewCount = 0,
 }: PopularLectureProps) => {
   return (
     <View style={[shadow, { marginRight: 5 }]}>
@@ -61,7 +61,7 @@ const PopularLecture = ({
 
 export default function PopularLectureList() {
   const [lectures, setLectures] = useState<PopularLectureProps[]>();
-  useEffect(() => {
+  useLayoutEffect(() => {
     try {
       const fetch = async () => {
         const res = await axios.get(
@@ -96,32 +96,24 @@ export default function PopularLectureList() {
       {/* 인기 강의 리스트 */}
       <ScrollView>
         {lectures &&
-          lectures.map(lecture => {
-            console.log(
-              'avg : ',
-              lecture.starAvg,
-              'count : ',
-              lecture.reviewCount,
-            );
-            return (
-              <PopularLecture
-                id={lecture.id}
-                title={lecture.title}
-                organization={lecture.organization}
-                level={lecture.level}
-                region={lecture.region}
-                maxNumber={lecture.maxNumber}
-                lectureTime={lecture.lectureTime}
-                equipmentNames={lecture.equipmentNames}
-                imageUrl={lecture.imageUrl}
-                isMarked={lecture.isMarked}
-                price={lecture.price}
-                period={lecture.period}
-                starAvg={lecture.starAvg}
-                reviewCount={lecture.reviewCount}
-              />
-            );
-          })}
+          lectures.map(lecture => (
+            <PopularLecture
+              id={lecture.id}
+              title={lecture.title}
+              organization={lecture.organization}
+              level={lecture.level}
+              region={lecture.region}
+              maxNumber={lecture.maxNumber}
+              lectureTime={lecture.lectureTime}
+              equipmentNames={lecture.equipmentNames}
+              imageUrl={lecture.imageUrl}
+              isMarked={lecture.isMarked}
+              price={lecture.price}
+              period={lecture.period}
+              starAvg={lecture.starAvg}
+              reviewCount={lecture.reviewCount}
+            />
+          ))}
       </ScrollView>
     </View>
   );
