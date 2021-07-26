@@ -1,57 +1,36 @@
 import { lectureCommonSelectorFamily } from '@/src/recoil/LectureStack';
 import React from 'react';
 import { Image, Text, useWindowDimensions, View } from 'react-native';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import { useRecoilValueLoadable } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { InstructorProfileStyles as styles } from './styles';
 
 const InstructorProfile = () => {
-  const { state, contents } = useRecoilValueLoadable(
+  const instructorProfile = useRecoilValue(
     lectureCommonSelectorFamily('InstructorProfile'),
   );
   const windowWidth = useWindowDimensions().width;
 
   return (
     <View style={styles.container}>
-      {state === 'hasValue' ? (
-        <Text style={styles.instructorInfoTitle}>강사 프로필</Text>
-      ) : (
-        <SkeletonPlaceholder>
-          <SkeletonPlaceholder.Item width={40} height={20} />
-        </SkeletonPlaceholder>
-      )}
+      <Text style={styles.instructorInfoTitle}>강사 프로필</Text>
+
       <View style={styles.profileInfoContainer}>
-        {state === 'hasValue' ? (
-          <Image
-            source={{
-              uri: contents.profilePhotoUrl,
-            }}
-            style={styles.profilePic}
-          />
-        ) : (
-          <SkeletonPlaceholder>
-            <SkeletonPlaceholder.Item
-              width={40}
-              height={40}
-              borderRadius={50}
-            />
-          </SkeletonPlaceholder>
-        )}
+        <Image
+          source={{
+            uri: instructorProfile?.profilePhotoUrl || '',
+          }}
+          style={styles.profilePic}
+        />
+
         <View
           style={[styles.instructorInfoContainer, { width: windowWidth - 85 }]}
         >
-          {state === 'hasValue' ? (
-            <>
-              <Text style={styles.nickname}>{contents.nickName}</Text>
-              <Text style={styles.instructorBrief}>
-                {contents.selfIntroduction}
-              </Text>
-            </>
-          ) : (
-            <SkeletonPlaceholder>
-              <SkeletonPlaceholder.Item width={'100%'} height={40} />
-            </SkeletonPlaceholder>
-          )}
+          <Text style={styles.nickname}>
+            {instructorProfile?.nickName || '닉네임이 없습니다.'}
+          </Text>
+          <Text style={styles.instructorBrief}>
+            {instructorProfile?.selfIntroduction || '자기소개 내용이 없습니다.'}
+          </Text>
         </View>
       </View>
     </View>

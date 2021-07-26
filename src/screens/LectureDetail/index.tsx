@@ -14,6 +14,11 @@ import { useSetRecoilState } from 'recoil';
 import { lectureIdState } from '@/src/recoil/LectureStack';
 import Entype from 'react-native-vector-icons/Entypo';
 import LeturePicsModal from '@/src/components/LectureDetail/LecturePicsModal';
+import AdditionalServiceSuspense from '@/src/components/LectureDetail/AdditionalService/AdditionalServiceSuspense';
+import LectureInfoSuspense from '@/src/components/LectureDetail/LectureInfo/LectureInfoSuspense';
+import LecturePicsCarouselSuspense from '@/src/components/LectureDetail/LecturePicsCarousel/LecturePicsCarouselSuspense';
+import InstructorProfileSuspense from '@/src/components/LectureDetail/InstructorProfile/InstructorProfileSuspense';
+import SuspenseLocationInfo from '@/src/components/LectureDetail/LocationInfo/SuspenseLocationInfo';
 
 const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
   const { lectureId } = route.params;
@@ -46,15 +51,30 @@ const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
     <>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* 강의 사진 캐러셀 */}
-        <LecturePicsCarousel />
+        <Suspense fallback={<LecturePicsCarouselSuspense />}>
+          <LecturePicsCarousel />
+        </Suspense>
+
         {/* 강의 정보/ 제목/태그/가격/강의설명 */}
-        <LectureInfo />
+        <Suspense fallback={<LectureInfoSuspense />}>
+          <LectureInfo />
+        </Suspense>
+
         {/* 강사 프로필 */}
-        <InstructorProfile />
+        <Suspense fallback={<InstructorProfileSuspense />}>
+          <InstructorProfile />
+        </Suspense>
+
         {/* 위치 정보, 지도 */}
-        <LocationInfo />
+        <Suspense fallback={<SuspenseLocationInfo />}>
+          <LocationInfo />
+        </Suspense>
+
         {/* 부가서비스, 주차가능, 그룹, 장비대여 여부  */}
-        <AdditionalService />
+        <Suspense fallback={<AdditionalServiceSuspense />}>
+          <AdditionalService />
+        </Suspense>
+
         {/* 후기보기 영역 */}
         <LectureReview />
 

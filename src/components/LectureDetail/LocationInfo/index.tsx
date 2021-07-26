@@ -3,18 +3,16 @@ import { Text, View } from 'react-native';
 import { LocationInfoStyles as styles } from './styles';
 import Entype from 'react-native-vector-icons/Entypo';
 import NaverMapView, { Marker } from 'react-native-nmap';
-import { useRecoilValueLoadable } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import {
   lectureCommonSelectorFamily,
   locationResponseType,
 } from '@/src/recoil/LectureStack';
-import SuspenseLocationInfo from './SuspenseLocationInfo';
 
 const LocationInfo = () => {
-  const { state, contents } = useRecoilValueLoadable(
+  const locationInfo = useRecoilValue(
     lectureCommonSelectorFamily('LocationInfo'),
   );
-  if (state === 'loading') return <SuspenseLocationInfo />;
 
   return (
     <View style={styles.container}>
@@ -22,14 +20,16 @@ const LocationInfo = () => {
       <View style={styles.locationMapContainer}>
         <View style={styles.locationTextContainer}>
           <Entype name="location-pin" size={14} color={'#FEFEFE'} />
-          <Text style={styles.locationAddress}>{contents.address} </Text>
+          <Text style={styles.locationAddress}>
+            {locationInfo?.address || '주소가 없습니다.'}{' '}
+          </Text>
         </View>
         <View style={styles.locationMap}>
           <Map
-            id={contents.id}
-            address={contents.address}
-            latitude={contents.latitude}
-            longitude={contents.longitude}
+            id={locationInfo?.id}
+            address={locationInfo?.address}
+            latitude={locationInfo?.latitude}
+            longitude={locationInfo?.longitude}
           />
         </View>
       </View>
@@ -37,7 +37,7 @@ const LocationInfo = () => {
   );
 };
 
-function Map({ latitude, longitude }: locationResponseType) {
+function Map({ latitude = 0, longitude = 0 }: locationResponseType) {
   const posCoords = { latitude, longitude };
 
   return (

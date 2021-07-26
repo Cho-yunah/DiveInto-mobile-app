@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   FlatList,
   TouchableOpacity,
   ScrollView,
   Text,
   View,
-  Image,
 } from 'react-native';
 import { LectureReviewStyles as styles } from './styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -16,93 +15,87 @@ import useGetSortedReviews from './useGetSortedReviews';
 import { lectureCommonSelectorFamily } from '@/src/recoil/LectureStack';
 
 const LectureReview = () => {
-  const { contents } = useRecoilValueLoadable(
+  const { state, contents } = useRecoilValueLoadable(
     lectureCommonSelectorFamily('Info'),
   );
   const { sortBy, setSortBy, reviews } = useGetSortedReviews();
 
-  if (!reviews.length)
+  if (state === 'loading')
     return (
-      <View style={{}}>
-        <Image source={{ uri: './assets/logo1.png' }} />
-        <Text>아직 등록된 후기가 없습니다.</Text>
-      </View>
-    );
-
-  return (
-    <>
       <ScrollView style={styles.container}>
         <View style={styles.topContainer}>
-          {contents && contents.reviewTotalAvg ? (
-            <>
-              <Text style={styles.title}>후기</Text>
-              <View style={styles.totalAvgRateContainer}>
-                <FontAwesome name="star" size={16} color={'rgb(248,194,93)'} />
-
-                <Text style={styles.totalAvgRateText}>
-                  {contents.reviewTotalAvg.toFixed(1)} / 5점
-                </Text>
-              </View>
-            </>
-          ) : (
-            <SkeletonPlaceholder>
-              <SkeletonPlaceholder.Item width={360} height={35} />
-            </SkeletonPlaceholder>
-          )}
+          <SkeletonPlaceholder>
+            <SkeletonPlaceholder.Item width={360} height={35} />
+          </SkeletonPlaceholder>
         </View>
+      </ScrollView>
+    );
+  else
+    return (
+      <>
+        <ScrollView style={styles.container}>
+          <View style={styles.topContainer}>
+            <Text style={styles.title}>후기</Text>
+            <View style={styles.totalAvgRateContainer}>
+              <FontAwesome name="star" size={16} color={'rgb(248,194,93)'} />
 
-        <View style={styles.orderBySelectorsContainer}>
-          <TouchableOpacity
-            style={
-              sortBy === 'writeDate,DESC'
-                ? styles.orderBySelectorBtnActive
-                : styles.orderBySelectorBtn
-            }
-            onPress={() => setSortBy('writeDate,DESC')}
-          >
-            <Text style={sortBy === 'writeDate,DESC' ? { color: 'white' } : {}}>
-              최신순
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={
-              sortBy === 'totalStarAvg,ASC'
-                ? styles.orderBySelectorBtnActive
-                : styles.orderBySelectorBtn
-            }
-            onPress={() => setSortBy('totalStarAvg,ASC')}
-          >
-            <Text
-              style={sortBy === 'totalStarAvg,ASC' ? { color: 'white' } : {}}
-            >
-              낮은평순
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={
-              sortBy === 'totalStarAvg,DESC'
-                ? styles.orderBySelectorBtnActive
-                : styles.orderBySelectorBtn
-            }
-            onPress={() => setSortBy('totalStarAvg,DESC')}
-          >
-            <Text
-              style={sortBy === 'totalStarAvg,DESC' ? { color: 'white' } : {}}
-            >
-              높은평순
-            </Text>
-          </TouchableOpacity>
-        </View>
+              <Text style={styles.totalAvgRateText}>
+                {contents?.reviewTotalAvg.toFixed(1)} / 5점
+              </Text>
+            </View>
+          </View>
 
-        <TouchableOpacity
-          style={styles.seeMoreBtn}
-          onPress={() => console.warn('더보기클릭')}
-        >
-          {contents && !!contents.reviewTotalAvg && (
+          <View style={styles.orderBySelectorsContainer}>
+            <TouchableOpacity
+              style={
+                sortBy === 'writeDate,DESC'
+                  ? styles.orderBySelectorBtnActive
+                  : styles.orderBySelectorBtn
+              }
+              onPress={() => setSortBy('writeDate,DESC')}
+            >
+              <Text
+                style={sortBy === 'writeDate,DESC' ? { color: 'white' } : {}}
+              >
+                최신순
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={
+                sortBy === 'totalStarAvg,ASC'
+                  ? styles.orderBySelectorBtnActive
+                  : styles.orderBySelectorBtn
+              }
+              onPress={() => setSortBy('totalStarAvg,ASC')}
+            >
+              <Text
+                style={sortBy === 'totalStarAvg,ASC' ? { color: 'white' } : {}}
+              >
+                낮은평순
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={
+                sortBy === 'totalStarAvg,DESC'
+                  ? styles.orderBySelectorBtnActive
+                  : styles.orderBySelectorBtn
+              }
+              onPress={() => setSortBy('totalStarAvg,DESC')}
+            >
+              <Text
+                style={sortBy === 'totalStarAvg,DESC' ? { color: 'white' } : {}}
+              >
+                높은평순
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity
+            style={styles.seeMoreBtn}
+            onPress={() => console.warn('더보기클릭')}
+          >
             <Text style={styles.seeMoreBtnText}>더보기</Text>
-          )}
-        </TouchableOpacity>
-        {reviews.length ? (
+          </TouchableOpacity>
           <View>
             <FlatList
               renderItem={({ item }) => (
@@ -111,25 +104,9 @@ const LectureReview = () => {
               data={reviews}
             />
           </View>
-        ) : (
-          <SkeletonPlaceholder>
-            <SkeletonPlaceholder.Item
-              width={'100%'}
-              height={60}
-              marginBottom={12}
-              marginTop={5}
-            />
-            <SkeletonPlaceholder.Item
-              width={'100%'}
-              height={60}
-              marginBottom={12}
-              marginTop={5}
-            />
-          </SkeletonPlaceholder>
-        )}
-      </ScrollView>
-    </>
-  );
+        </ScrollView>
+      </>
+    );
 };
 
 export default LectureReview;
