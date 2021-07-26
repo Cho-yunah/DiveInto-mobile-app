@@ -81,6 +81,12 @@ type TargetInfoType =
   | 'InstructorProfile'
   | 'LocationInfo'
   | 'LecturePics';
+
+export type SortByType =
+  | 'writeDate,DESC'
+  | 'totalStarAvg,DESC'
+  | 'totalStarAvg,ASC';
+
 export const searchText = atom({
   key: 'searchText',
   default: '',
@@ -129,6 +135,29 @@ export const lectureCommonSelectorFamily = selectorFamily({
         console.log(e);
       }
     },
+});
+
+export const sortByState = atom<SortByType>({
+  key: 'sortBy',
+  default: 'writeDate,DESC',
+});
+
+export const lectureSortedReviewSelector = selector<lectureReviewType[]>({
+  key: 'lectureSortedReview',
+  get: async ({ get }) => {
+    const lectureId = get(lectureIdState);
+    const sortBy = get(sortByState);
+
+    try {
+      const { data }: AxiosResponse = await instance.get(
+        `/review/list?lectureId=${lectureId}&page=0&size=4&sort=${sortBy}`,
+      );
+      console.log(data, '리뷰 ㅂ열');
+      return data?._embedded?.reviewInfoList || [];
+    } catch (e) {
+      console.log(e);
+    }
+  },
 });
 
 export const lectureReviewState = atom<lectureReviewType[]>({

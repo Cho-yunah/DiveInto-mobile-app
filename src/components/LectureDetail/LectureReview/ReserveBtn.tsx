@@ -18,7 +18,7 @@ const ReserveBtn = ({ navigateToReserveLecture }: ReserveBtnProps) => {
       <Pressable
         style={styles.reserveBtn}
         onPress={() => navigateToReserveLecture()}
-        disabled={!contents?.title || true}
+        disabled={!contents?.title}
       >
         {state === 'hasValue' ? (
           <Text style={styles.reserveBtnText}>강의 예약하기</Text>

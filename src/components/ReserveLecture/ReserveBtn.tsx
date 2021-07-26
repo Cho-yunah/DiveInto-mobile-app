@@ -1,6 +1,7 @@
 import {
   getEquipmentsState,
   getTheSameClassScheduleState,
+  lectureIdState,
   requestReservationEquipmentDetailType,
   requestReservationEquipmentState,
   studentNumberState,
@@ -21,7 +22,8 @@ const ReserveBtn = ({
   setIsDisabled,
   setModalMessage,
 }: ReserveBtnProps) => {
-  const equipmentsState = useRecoilValue(getEquipmentsState(1)); // 강의 id -> 제공되는 대여장비, name,id, price
+  const lectureId = useRecoilValue(lectureIdState);
+  const equipmentsState = useRecoilValue(getEquipmentsState(lectureId!)); // 강의 id -> 제공되는 대여장비, name,id, price
   const classSchedule = useRecoilValue(getTheSameClassScheduleState);
   const studentNumber = useRecoilValue(studentNumberState); // 원하는 수강 인원
   const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
@@ -32,6 +34,8 @@ const ReserveBtn = ({
     );
     let sumOfEquip = 0;
     eachEquipmentArr.forEach(itemBySize => {
+      console.log(itemBySize, '우우우우우우ㅜ우우우');
+
       sumOfEquip += itemBySize.rentNumber;
     });
     if (sumOfEquip > studentNumber) {

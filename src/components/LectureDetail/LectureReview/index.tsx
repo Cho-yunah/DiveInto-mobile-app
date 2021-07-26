@@ -5,28 +5,50 @@ import {
   ScrollView,
   Text,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import { LectureReviewStyles as styles } from './styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import PersonalReview from './PersonalReview';
-import { useRecoilValueLoadable } from 'recoil';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import useGetSortedReviews from './useGetSortedReviews';
-import { lectureCommonSelectorFamily } from '@/src/recoil/LectureStack';
+import { useRecoilValueLoadable, useSetRecoilState } from 'recoil';
+import {
+  lectureCommonSelectorFamily,
+  lectureReviewType,
+  lectureSortedReviewSelector,
+  sortByState,
+  SortByType,
+} from '@/src/recoil/LectureStack';
+import SortBySelector from './SortBySelector';
+import NoReviewComponent from './NoReviewComponent';
 
 const LectureReview = () => {
   const { state, contents } = useRecoilValueLoadable(
     lectureCommonSelectorFamily('Info'),
   );
-  const { sortBy, setSortBy, reviews } = useGetSortedReviews();
+  const lectureReviews = useRecoilValueLoadable<lectureReviewType[]>(
+    lectureSortedReviewSelector,
+  );
+  const setSortBy = useSetRecoilState<SortByType>(sortByState);
 
-  if (state === 'loading')
+  useEffect(() => setSortBy('writeDate,DESC'), []);
+
+  if (
+    state === 'loading' ||
+    lectureReviews.state === 'loading' ||
+    lectureReviews.state === 'hasError'
+  )
     return (
       <ScrollView style={styles.container}>
         <View style={styles.topContainer}>
-          <SkeletonPlaceholder>
-            <SkeletonPlaceholder.Item width={360} height={35} />
-          </SkeletonPlaceholder>
+          <Text style={styles.title}>후기</Text>
+          <View style={styles.totalAvgRateContainer}>
+            <FontAwesome name="star" size={16} color={'rgb(248,194,93)'} />
+
+            <Text style={styles.totalAvgRateText}>0.0 / 5점</Text>
+          </View>
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <ActivityIndicator size={25} color={'#50CAD2'} />
         </View>
       </ScrollView>
     );
@@ -46,63 +68,41 @@ const LectureReview = () => {
           </View>
 
           <View style={styles.orderBySelectorsContainer}>
-            <TouchableOpacity
-              style={
-                sortBy === 'writeDate,DESC'
-                  ? styles.orderBySelectorBtnActive
-                  : styles.orderBySelectorBtn
-              }
-              onPress={() => setSortBy('writeDate,DESC')}
-            >
-              <Text
-                style={sortBy === 'writeDate,DESC' ? { color: 'white' } : {}}
-              >
-                최신순
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={
-                sortBy === 'totalStarAvg,ASC'
-                  ? styles.orderBySelectorBtnActive
-                  : styles.orderBySelectorBtn
-              }
-              onPress={() => setSortBy('totalStarAvg,ASC')}
-            >
-              <Text
-                style={sortBy === 'totalStarAvg,ASC' ? { color: 'white' } : {}}
-              >
-                낮은평순
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={
-                sortBy === 'totalStarAvg,DESC'
-                  ? styles.orderBySelectorBtnActive
-                  : styles.orderBySelectorBtn
-              }
-              onPress={() => setSortBy('totalStarAvg,DESC')}
-            >
-              <Text
-                style={sortBy === 'totalStarAvg,DESC' ? { color: 'white' } : {}}
-              >
-                높은평순
-              </Text>
-            </TouchableOpacity>
+            <SortBySelector
+              sortByText={'writeDate,DESC'}
+              sortByTextKr={'최신순'}
+              isDisabled={!lectureReviews.contents.length}
+            />
+            <SortBySelector
+              sortByText={'totalStarAvg,ASC'}
+              sortByTextKr={'낮은평순'}
+              isDisabled={!lectureReviews.contents.length}
+            />
+            <SortBySelector
+              sortByText={'totalStarAvg,DESC'}
+              sortByTextKr={'높은평순'}
+              isDisabled={!lectureReviews.contents.length}
+            />
           </View>
 
           <TouchableOpacity
             style={styles.seeMoreBtn}
             onPress={() => console.warn('더보기클릭')}
+            disabled={!lectureReviews.contents.length}
           >
             <Text style={styles.seeMoreBtnText}>더보기</Text>
           </TouchableOpacity>
           <View>
-            <FlatList
-              renderItem={({ item }) => (
-                <PersonalReview item={item} key={item.id} />
-              )}
-              data={reviews}
-            />
+            {!!lectureReviews?.contents?.length ? (
+              <FlatList
+                renderItem={({ item }) => (
+                  <PersonalReview item={item} key={item.id} />
+                )}
+                data={lectureReviews.contents as lectureReviewType[]}
+              />
+            ) : (
+              <NoReviewComponent />
+            )}
           </View>
         </ScrollView>
       </>

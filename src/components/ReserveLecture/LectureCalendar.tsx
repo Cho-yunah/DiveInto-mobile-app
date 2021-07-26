@@ -62,6 +62,7 @@ const LectureCalendar = () => {
       setCurrYear(date.getFullYear());
       setCurrMonth(date.getMonth() + 1);
       setCaching(caching => caching + 1);
+      setMarkedDate({});
     };
   }, []);
 
