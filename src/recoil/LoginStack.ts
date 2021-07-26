@@ -84,3 +84,8 @@ export const passwordLoginState = atom({
   key: 'passwordLogin',
   default: '',
 });
+
+export const isCheckedSaveEmailState = atom({
+  key: 'isCheckedSaveEmail',
+  default: false,
+});

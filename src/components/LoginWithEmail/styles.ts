@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   TextInputIconContainer: {
     position: 'absolute',
     top: 121,
-    right: 19,
+    right: 0,
   },
   TextInputIcons: {},
   transitionPressable: {

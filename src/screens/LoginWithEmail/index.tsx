@@ -5,24 +5,27 @@ import styles from './styles';
 import instance, { getInstanceATK } from '@/src/lib/api/axios';
 import { LoginButtonProps } from '@/src/components/LoginWithEmail/types';
 
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { IsLogin, IsInstructor } from '@/src/recoil/Global';
 
 import jwt_decode from 'jwt-decode';
 import { JWToken } from './types';
 import axios from 'axios';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ModalContainer } from '../ReserveLecture';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as FCM from '@lib/firebase/FCM';
-import { ImageArrStateType } from '@/src/recoil/CommunityStack';
-import { getFormData } from '@/src/lib/utils/requestPostReview';
+import { emailState, isCheckedSaveEmailState } from '@/src/recoil/LoginStack';
 
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   const setIsLogin = useSetRecoilState(IsLogin);
   const setIsInstructor = useSetRecoilState(IsInstructor);
   const [isError, setIsError] = useState<boolean>(false);
+  const [toggleCheckBox, setToggleCheckBox] = useRecoilState(
+    isCheckedSaveEmailState,
+  ); // true 이면 로그인시 asyncStorage에 이메일 저장.
+  const email = useRecoilValue(emailState);
 
   const requestLogin: LoginButtonProps['requestLogin'] = async (
     email,
@@ -51,27 +54,17 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
         } else {
           await AsyncStorage.setItem('instructor', 'student');
         }
-
         await requestFireBase(fcmToken);
         setIsLogin(true);
+
+        if (toggleCheckBox) await AsyncStorage.setItem('savedEmail', email);
+        else await AsyncStorage.removeItem('savedEmail');
       }
     } catch (e) {
       console.log(e.response.data);
       setIsError(true);
     }
     setIsLoading(false);
-  };
-
-  const requestFireBase = async (fcmToken: string) => {
-    try {
-      const instanceATK = await getInstanceATK();
-      const body = { token: fcmToken };
-      const { data } = await instanceATK.post('/sign/firebase-token', body);
-      console.log(data);
-    } catch (e) {
-      console.log(e);
-      throw Error(e);
-    }
   };
 
   return (
@@ -94,46 +87,14 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
 };
 export default LoginWithEmailScreen;
 
-// type PostingBodyType = {
-//   [key: string]: string;
-// };
-// type RequestPostCommunityType = {
-//   (body: FormData, postingId: number): Promise<undefined>;
-//   (body: PostingBodyType): Promise<number>;
-// };
-
-// export const requestPostCommunity: RequestPostCommunityType = async (
-//   body: FormData | PostingBodyType,
-//   postingId?: number,
-// ) => {
-//   const instanceAtk = await getInstanceATK();
-
-//   try {
-//     if (body instanceof FormData) {
-//       // 이미지 전송시
-//       const { data } = await instanceAtk.post(
-//         `/community/post${postingId}/post-image`,
-//         body,
-//       );
-//       console.log(data);
-//     } else {
-//       // 게시글 전송시
-//       const { data } = await instanceAtk.post('/community/post', body);
-//       console.log(data);
-
-//       return data.postResource.id;
-//     }
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
-
-// // 개시글 요청 할 경우
-// const body = postingInfo
-// const postingId = await reqeustPostCommunity(body)
-// typeof postingId === 'number' && setPostImageId(postingId)
-
-// // 게시글 요청을 완료 하고 나서 사진 요청하는경우
-// if (typeof postingId === 'number' && imagesArr.length) {
-//   const imagesRes = await requestPostCommunity(getFormData(imagesArr), postingId)
-// }
+const requestFireBase = async (fcmToken: string) => {
+  try {
+    const instanceATK = await getInstanceATK();
+    const body = { token: fcmToken };
+    const { data } = await instanceATK.post('/sign/firebase-token', body);
+    console.log(data);
+  } catch (e) {
+    console.log(e);
+    throw Error(e);
+  }
+};
