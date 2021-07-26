@@ -50,7 +50,7 @@ export const PopularLectures = StyleSheet.create({
 
   lectureContainer: {
     flexDirection: 'row',
-    width: '100%',
+    width: 375,
     height: 125,
     backgroundColor: colors.White,
     borderRadius: 10,

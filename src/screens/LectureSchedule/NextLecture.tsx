@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
+import { useRecoilValue } from 'recoil';
 
 import { styles } from './styles';
 import {
@@ -7,36 +8,44 @@ import {
   TouchSwipe,
   LectureContents,
 } from '@components/LectureSchedule';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { nextReservationLectureListState } from '@/src/recoil/ProfileStack';
-import CommonLoading from '@/src/components/common/CommonLoading';
+import { nextReservationLectureListState } from '@recoil/ProfileStack';
+import CommonLoading from '@components/common/CommonLoading';
+import CommonEmptyView from '@components/common/CommonEmptyView';
 
 export default function NextLectureScreen() {
   const reservationList = useRecoilValue(nextReservationLectureListState);
 
   const ListEl = reservationList ? (
-    <FlatList
-      data={reservationList}
-      renderItem={({ item }) => {
-        return (
-          <TouchSwipe
-            imgComponent={<LectureImg img={item.lectureImageUrl} />}
-            contentsComponents={
-              <LectureContents
-                title={item.lectureTitle}
-                level={item.level}
-                group={item.organization}
-                reservationDate={item.reservationDate}
-                nickname={item.instructorNickname}
-              />
-            }
-            type="next"
-          ></TouchSwipe>
-        );
-      }}
-      keyExtractor={item => String(item.reservationId)}
-      showsVerticalScrollIndicator={false}
-    />
+    reservationList.length !== 0 ? (
+      <FlatList
+        data={reservationList}
+        renderItem={({ item }) => {
+          return (
+            <TouchSwipe
+              imgComponent={<LectureImg img={item.lectureImageUrl} />}
+              contentsComponents={
+                <LectureContents
+                  title={item.lectureTitle}
+                  level={item.level}
+                  group={item.organization}
+                  reservationDate={item.reservationDate}
+                  nickname={item.instructorNickname}
+                />
+              }
+              type="next"
+            ></TouchSwipe>
+          );
+        }}
+        keyExtractor={item => String(item.reservationId)}
+        showsVerticalScrollIndicator={false}
+      />
+    ) : (
+      <CommonEmptyView
+        guideText="예약한 강의가 없습니다."
+        buttonText="강의 둘러보기"
+        moveViewName="ProfileMain"
+      />
+    )
   ) : (
     <CommonLoading />
   );
