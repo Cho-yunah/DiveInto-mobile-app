@@ -65,13 +65,23 @@ export const selectbox = StyleSheet.create({
 
 // 강사 자격증 선택 관련 스타일
 export const UploadCertificate = StyleSheet.create({
+  loadingContainer: {
+    height: 76,
+    marginTop: 50,
+    padding: 8,
+    borderRadius: 8,
+  },
+
   container: {
     height: 76,
     marginTop: 40,
     padding: 8,
     borderRadius: 8,
     backgroundColor: Color.White,
+    flexDirection: 'row',
   },
+
+  // 사진 업로드 전 스타일
   uploadButton: {
     flex: 1,
     flexDirection: 'row',
@@ -90,5 +100,15 @@ export const UploadCertificate = StyleSheet.create({
     color: '#F3F5F7',
     textAlign: 'center',
     lineHeight: 55,
+  },
+
+  // 사진 업로드 후 관련 이미지 보여주는 스타일
+  picsArrButton: {
+    marginRight: 10,
+  },
+  picsArrImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 8,
   },
 });

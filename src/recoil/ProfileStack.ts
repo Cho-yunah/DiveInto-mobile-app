@@ -28,6 +28,13 @@ export type lastReservationLectureListType = {
   remainingDate: string;
 };
 
+export type instructorImageCollectionType = {
+  size: number;
+  uri: string;
+  type: string;
+  name: string;
+};
+
 export const userInfoAtom = atom<userInfoProps | null>({
   key: 'userInfoAtom',
   default: {
@@ -46,25 +53,6 @@ export const LectureListState = atom({
   key: 'LectureList',
   default: [],
 });
-
-// export const lectureDetailState = atom({
-//   key: 'lectureDetail',
-//   default: {
-//     id: 0, // 강의 id
-//     title: '', // 강의 제목
-//     classKind: '',
-//     organization: '', // AIDA
-//     level: '',
-//     maxNumber: 0, // 최대 가능 인원
-//     period: 0,
-//     description: '', // 강의 설명
-//     price: 0, // 가격
-//     region: '', // 지역
-//     reviewTotalAvg: 0, // 리뷰 전체 평점
-//     reviewCount: 0, // 리뷰 개수
-//     isMarked: false, // 찜하기 여부
-//   },
-// });
 
 export const lectureReviewAllState = atom<lectureReviewAllType[]>({
   key: 'lectureReview',
@@ -103,6 +91,19 @@ export const lastReservationLectureListState = selector({
   },
 });
 
+// 프로필 유저 이미지 상태 공유
+export const ProfileImageURIState = atom<string | null>({
+  key: 'ProfileImageURI',
+  default: null,
+});
+
+// 강사 자격증 사진 정보 배열 정보
+export const instructorImageCollectionState = atom<
+  instructorImageCollectionType[]
+>({
+  key: 'instructorImageCollection',
+  default: [],
+});
 // 후기작성 스크린
 export type PicsArrStateType = {
   size: number;

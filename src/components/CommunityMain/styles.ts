@@ -1,32 +1,35 @@
-import {StyleSheet} from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native';
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGTH = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    flex: 1
+    flex: 1,
   },
   tabContainer: {
-    backgroundColor: "#fefefe",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    height:46,
-    alignItems: "center",
+    backgroundColor: '#fefefe',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    height: 46,
+    alignItems: 'center',
   },
   tab: {
     paddingHorizontal: 66,
     paddingVertical: 13,
-    borderColor: '#50CAD2', 
-    borderBottomWidth: 2, 
-  }, 
+    borderColor: '#50CAD2',
+    borderBottomWidth: 2,
+  },
   tabText: {
     color: '#6A6D70',
     fontWeight: 'bold',
-    fontSize:  18,
+    fontSize: 18,
   },
   listItem: {
     flexDirection: 'row',
     marginTop: 12,
-    width:370,
+    width: WIDTH - 34,
     height: 70,
     backgroundColor: '#FEFEFE',
     borderRadius: 10,
@@ -35,16 +38,16 @@ export const styles = StyleSheet.create({
     position: 'relative',
   },
   thumnailImage: {
-    width: 46, 
+    width: 46,
     height: 46,
     borderRadius: 10,
-    backgroundColor: '#D8D8D8'
+    backgroundColor: '#D8D8D8',
   },
   contentInfo: {
     marginLeft: 10,
     height: 46,
     flexDirection: 'column',
-    justifyContent: 'space-around' 
+    justifyContent: 'space-around',
   },
   flexBox: {
     flexDirection: 'row',
@@ -79,4 +82,4 @@ export const styles = StyleSheet.create({
     marginRight: 12,
     flexDirection: 'row'
   },
-})
+});

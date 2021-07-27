@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 
-import { PopularLecture } from '@/src/components/MainList/Lecture/PopularLectureList';
 import { styles } from './styles';
-import instance from '@/src/lib/api/axios';
-import { useRecoilValue } from 'recoil';
-import { atkState } from '@/src/recoil/ProfileStack';
 import { LectureLikeProps } from './types';
+import { PopularLecture } from '@components/MainList/Lecture/PopularLectureList';
+import instance from '@lib/api/axios';
+import { useRecoilValue } from 'recoil';
+import { atkState } from '@recoil/ProfileStack';
+import CommonLoading from '@components/common/CommonLoading';
+import CommonEmptyView from '@components/common/CommonEmptyView';
 
 export default function LectureLikeScreen() {
   const atk = useRecoilValue(atkState);
-  const [lectureList, setLectureList] = useState([]);
+  const [lectureList, setLectureList] = useState<[] | null>(null);
 
   useEffect(() => {
     const getLikeLecture = async () => {
@@ -21,7 +23,11 @@ export default function LectureLikeScreen() {
           },
         });
 
-        setLectureList(res.data._embedded.likeLectureInfoList);
+        if (res.data._embedded) {
+          setLectureList(res.data._embedded.likeLectureInfoList);
+        } else {
+          setLectureList([]);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -30,30 +36,38 @@ export default function LectureLikeScreen() {
     getLikeLecture();
   }, [atk]);
 
-  return (
-    <View style={styles.container}>
-      {lectureList && (
-        <FlatList
-          data={lectureList}
-          renderItem={({ item }: { item: LectureLikeProps }) => {
-            return (
-              <PopularLecture
-                title={item.title}
-                organization={item.organization}
-                level={item.level}
-                region={item.region}
-                maxNumber={item.maxNumber}
-                lectureTime={item.lectureTime}
-                equipmentNames={item.equipmentNames}
-                image={item.imageUrl}
-                reviewAvg={2.5}
-                reviewCount={item.reviewCount}
-              />
-            );
-          }}
-          keyExtractor={item => item.id.toString()}
-        />
-      )}
-    </View>
+  const ListEl = lectureList ? (
+    lectureList.length !== 0 ? (
+      <FlatList
+        data={lectureList}
+        renderItem={({ item }: { item: LectureLikeProps }) => {
+          return (
+            <PopularLecture
+              title={item.title}
+              organization={item.organization}
+              level={item.level}
+              region={item.region}
+              maxNumber={item.maxNumber}
+              lectureTime={item.lectureTime}
+              equipmentNames={item.equipmentNames}
+              image={item.imageUrl}
+              reviewAvg={2.5}
+              reviewCount={item.reviewCount}
+            />
+          );
+        }}
+        keyExtractor={item => item.id.toString()}
+      />
+    ) : (
+      <CommonEmptyView
+        guideText="강의가 없습니다."
+        buttonText="강의 둘러보기"
+        moveViewName="ProfileMain"
+      />
+    )
+  ) : (
+    <CommonLoading />
   );
+
+  return <View style={styles.eachContainer}>{ListEl}</View>;
 }
