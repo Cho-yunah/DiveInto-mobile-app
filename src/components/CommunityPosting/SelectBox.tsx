@@ -12,12 +12,12 @@ export default function SelectBox({id}:any) {
 
   // 상세 페이지에서 수정 요청을 보낼때 해당 글 정보받아오기 
   id && useRequestCommunityItem(id) 
-  const {category, tag} = useRecoilValue(communityItemSelector)
+  const {category, tags} = useRecoilValue(communityItemSelector)
 
   return (
     <>
       <Category pickerOpen={pickerOpen} setPickerOpen={setPickerOpen} category={category} />
-      <Tag pickerOpen={pickerOpen} setPickerOpen={setPickerOpen} tag={tag} />
+      <Tag pickerOpen={pickerOpen} setPickerOpen={setPickerOpen} tags={tags} />
     </>
   )
 }

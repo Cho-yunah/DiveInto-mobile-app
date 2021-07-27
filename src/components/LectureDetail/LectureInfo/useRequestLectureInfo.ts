@@ -8,6 +8,7 @@ const useRequestLectureInfo = () => {
   const lectureId = useRecoilValue(lectureIdState);
   useEffect(() => {
     const requestLectureDetail = async () => {
+      if (!lectureId) return;
       try {
         const res = await instance.get(`/lecture?id=${lectureId}`);
 
@@ -49,7 +50,7 @@ const useRequestLectureInfo = () => {
     };
 
     requestLectureDetail();
-  }, []);
+  }, [lectureId]);
 };
 
 export default useRequestLectureInfo;

@@ -1,40 +1,33 @@
 import instance from "@/src/lib/api/axios"
-import { atkState, communityListState, listPageState, loadingState, refreshState } from "@/src/recoil/CommunityStack"
-import AsyncStorage from "@react-native-community/async-storage"
-import { useLayoutEffect } from "react"
-import { useRecoilState, useRecoilValue,  } from "recoil"
+import { communityListState, listPageState, loadingState, refreshState } from "@/src/recoil/CommunityStack"
+import { useEffect, useLayoutEffect } from "react"
+import { useRecoilState, useRecoilValue } from "recoil"
 import { ContentItem } from "./types"
 
-export const useRequestCommunityList = (): ContentItem[] => {
-  const [token, setToken] = useRecoilState(atkState)
+export const useRequestCommunityList = ({share}): ContentItem[] => {
+  
   const [isLoading, setIsLoading] = useRecoilState<boolean>(loadingState);
   const [communityList, setCommunityList]= useRecoilState<ContentItem[]>(communityListState)
   const [refreshing, setRefreshing] = useRecoilState(refreshState)
-
-  // token 받아오기 - main list page로 옮기기
-  useLayoutEffect(()=> {
-    const getToken = async() => {
-    try{
-      const getTokenRequest= await AsyncStorage.getItem('token');
-      setToken(getTokenRequest)
-    } catch (error) {
-      console.log(error)
-    }
-  } 
-  getToken()
-},[])
-  
   const listPage = useRecoilValue(listPageState)
-
-  useLayoutEffect(()=> {
+  
+  const url = share
+    ? `/community/post/category?category=SHARE&page=${listPage}&size=10&sort=id,desc` 
+    : `/community/post/category?category=Question&page=${listPage}&size=10&sort=id,desc`
+  
+  useEffect(()=> {
+    console.log(url)
     const requestCommunityList = async() => {
       setIsLoading(true)
       try {
         // console.log('listPage', listPage)
-        const {data} = await instance.get(
-        `/community/post/category?category=SHARE&page=${listPage}&size=10&sort=id,desc`);
-        // console.log('data', data) 
-         setCommunityList((list)=>[...list,...data._embedded.postsModelList]);
+        const {data} = await instance.get(url);
+        console.log('data', data) 
+
+        data._embedded 
+        && setCommunityList((list)=>
+            [...list,...data._embedded.postsModelList]
+          );
         // console.log('communityList-main',communityList)
       } catch(e) {
         console.log(e)
@@ -44,6 +37,6 @@ export const useRequestCommunityList = (): ContentItem[] => {
     };
     
     requestCommunityList();
-  }, [listPage])
+  }, [listPage, refreshing])
   return communityList;
 }

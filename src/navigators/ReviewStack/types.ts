@@ -1,9 +1,11 @@
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 
 export type ReviewStack = {
+  // WriteReview: { reservationId: number };
   WriteReview: undefined;
 };
 
-export type WriteReviewProps = {
-  navigation: StackNavigationProp<ReviewStack, 'WriteReview'>;
-};
+export type WriteReviewScreenProps = StackScreenProps<
+  ReviewStack,
+  'WriteReview'
+>;

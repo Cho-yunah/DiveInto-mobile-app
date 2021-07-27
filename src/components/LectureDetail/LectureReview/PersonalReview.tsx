@@ -26,7 +26,9 @@ const PersonalReview = ({ item }: { item: lectureReviewType }) => {
         </>
       ) : (
         <>
-          <Text style={RS.avgRateText}>평점 {item.totalStarAvg}점</Text>
+          <Text style={RS.avgRateText}>
+            평점 {item.totalStarAvg.toFixed(1)}점
+          </Text>
           <CloseStars avgRate={item.totalStarAvg} />
           <FontAwesome size={16} style={RS.upDownIcon} name="angle-down" />
         </>

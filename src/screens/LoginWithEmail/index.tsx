@@ -2,7 +2,7 @@ import { Modal, Pressable, ScrollView, View } from 'react-native';
 import { LoginWithEmailProps } from '@navigators/LoginStack/types';
 import { PwForgot, LoginButton, PWInput } from '@components/LoginWithEmail';
 import styles from './styles';
-import instance from '@/src/lib/api/axios';
+import instance, { getInstanceATK } from '@/src/lib/api/axios';
 import { LoginButtonProps } from '@/src/components/LoginWithEmail/types';
 
 import { useSetRecoilState } from 'recoil';
@@ -10,10 +10,11 @@ import { IsLogin, IsInstructor } from '@/src/recoil/Global';
 
 import jwt_decode from 'jwt-decode';
 import { JWToken } from './types';
+import axios from 'axios';
+
 import React, { useState } from 'react';
 import { ModalContainer } from '../ReserveLecture';
 import AsyncStorage from '@react-native-community/async-storage';
-// import { getToken } from '@/src/lib/firebase/FCM';
 import * as FCM from '@lib/firebase/FCM';
 
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
@@ -35,16 +36,12 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
       });
       if (login?.data?.access_token) {
         const atk = login.data.access_token;
+        axios.defaults.headers.common.Authorization = atk;
         const decoded: JWToken = jwt_decode(atk);
-
         await AsyncStorage.setItem('atk', atk);
+        const fcmToken = await FCM.getToken();
 
-        console.log('atk : ', atk);
-
-        await AsyncStorage.setItem('token', atk);
-        setIsLogin(true);
-        const fcm = await FCM.getToken();
-        console.log('fcm Token : ', fcm);
+        console.log('fcm Token : ', fcmToken);
 
         if (decoded.authorities.includes('ROLE_INSTRUCTOR')) {
           setIsInstructor(true);
@@ -53,6 +50,7 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
           await AsyncStorage.setItem('instructor', 'student');
         }
 
+        await requestFireBase(fcmToken);
         setIsLogin(true);
       }
     } catch (e) {
@@ -60,6 +58,18 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
       setIsError(true);
     }
     setIsLoading(false);
+  };
+
+  const requestFireBase = async (fcmToken: string) => {
+    try {
+      const instanceATK = await getInstanceATK();
+      const body = { token: fcmToken };
+      const { data } = await instanceATK.post('/sign/firebase-token', body);
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+      throw Error(e);
+    }
   };
 
   return (

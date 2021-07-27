@@ -45,13 +45,12 @@ export const DetailInfoStyle = StyleSheet.create({
 
 export const ContentsStyle = StyleSheet.create({
   contentsContainer : {
-    flex: 1,
     justifyContent: 'center',
     paddingVertical: 30,
     borderWidth: 1,
     borderColor: '#CCD7DF',
     backgroundColor: '#fefefe',
-    marginBottom: 5
+    marginBottom: 5,
   },
   textStyle: {
     lineHeight: 25,
@@ -72,15 +71,22 @@ export const ContentsStyle = StyleSheet.create({
 })
 
 export const CommentInputStyle = StyleSheet.create({
-  CommentInputBox: {
+  keyboardAvoidingStyle: {
+    position: 'absolute',
+    left: 0, 
+    right: 0, 
+    bottom: 0, 
+    backgroundColor: '#F3F5F7'
+  },
+  commentInputBox: {
     width: 353,
     height: 46,
     paddingRight: 38,
     paddingLeft: 15, 
     paddingTop: 10,
-    marginTop: 8,
+    marginTop: 10,
     marginBottom: 30,
-    marginHorizontal: 20,
+    marginHorizontal: 19,
     backgroundColor: '#fff',
     borderRadius: 10,
     shadowOffset: {
@@ -92,29 +98,32 @@ export const CommentInputStyle = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
     lineHeight: 20,
-    // flex:1,
-    // alignItems: 'center',
   },
   arrowIcon: {
     position: 'absolute',
-    bottom: 41,
+    bottom: 35,
     right: 25,
     fontSize:24,
-    color: '#D8D8D8'
+    color: '#D8D8D8',
+    padding: 5
   },
   activeArrowIcon: {
     position: 'absolute',
-    bottom: 41,
+    bottom: 35,
     right: 25,
     fontSize:24,
-    color: '#207AB4'
+    color: '#207AB4',
+    padding: 5
   },
 })
 
 export const CommentDetailStyles = StyleSheet.create({
+  flatlistContainer: {
+    flexGrow: 1
+  },
   commentBox: {
     width: 353,
-    height: 69,
+    height: 92,
     marginVertical: 12,
     marginHorizontal: 17,
     paddingVertical:10,
@@ -147,10 +156,22 @@ export const CommentDetailStyles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 20.4,
     color: '#6A6D70',
-    width: 35
+    width: 50
   },
   comment: {
     marginTop: 10,
     lineHeight: 14
+  },
+  commentsInComment: {
+    paddingVertical:7
+  },
+
+  edintingBtnBox: {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
+    width: 60,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   }
 })

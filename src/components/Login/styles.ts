@@ -26,9 +26,11 @@ const styles = StyleSheet.create({
   middleContainer: {
     position: 'absolute',
     top: 300,
-    right: 20,
+    right: 0,
+    left: 0,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   emailInput: {
     borderBottomWidth: 1,
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
     color: 'rgb(32,122,180)',
   },
   checkBoxText: {
-    fontSize: 11,
+    fontSize: 14,
     color: '#c1c2c3',
   },
   socialLoginContainer: {

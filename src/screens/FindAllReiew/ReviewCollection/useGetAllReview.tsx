@@ -16,6 +16,7 @@ const useGetSortedReviews = (id: number) => {
 
   useEffect(() => {
     // writeDate,DESC(최신순), totalStarAvg,DESC(높은평점순), totalStarAvg,ASC(낮은평점순)
+    if (!id) return;
     const requestLectureReview = async (sortby: SortByType) => {
       try {
         const { data } = await instance.get(

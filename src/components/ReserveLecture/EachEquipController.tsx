@@ -1,4 +1,5 @@
 import {
+  EquipmentStocksType,
   requestReservationEquipmentState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
@@ -58,8 +59,6 @@ const EachEquipController = ({ item, equip }: any) => {
     }
   };
 
-  console.log(item);
-
   useEffect(() => {
     const adjustEquipsNumber = () => {
       setThisEquipmentArr(thisEquipmentArr =>
@@ -92,6 +91,16 @@ const EachEquipController = ({ item, equip }: any) => {
           </TouchableOpacity>
         </View>
       </View>
+      <Text>
+        (재고:{' '}
+        {
+          item.equipmentStocks.find(
+            (stock: EquipmentStocksType) =>
+              stock.id === equip.scheduleEquipmentStockId,
+          ).quantity
+        }
+        개)
+      </Text>
       <AntDesign
         name="close"
         size={20}

@@ -3,6 +3,7 @@ import {
   currMonthState,
   currScheduleIdState,
   currSelectedDateState,
+  currYearState,
   lectureScheduleListsSelector,
   markedDateState,
 } from '@/src/recoil/LectureStack';
@@ -13,15 +14,15 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 const LectureCalendar = () => {
-  const [currMonth, setCurrMonth] = useRecoilState(currMonthState);
   const ScheduleInfoLists = useRecoilValue(lectureScheduleListsSelector(1));
   const [markedDate, setMarkedDate] = useRecoilState(markedDateState);
   const [currSelectedDate, setCurrSelectedDate] = useRecoilState(
     currSelectedDateState,
   );
   const setCaching = useSetRecoilState(cachingState);
-  const [currScheduleId, setCurrScheduleId] =
-    useRecoilState(currScheduleIdState);
+  const setCurrScheduleId = useSetRecoilState(currScheduleIdState);
+  const setCurrYear = useSetRecoilState(currYearState);
+  const setCurrMonth = useSetRecoilState(currMonthState);
 
   useEffect(() => {
     if (currSelectedDate in markedDate)
@@ -31,9 +32,9 @@ const LectureCalendar = () => {
   useEffect(() => {
     if (ScheduleInfoLists.length)
       ScheduleInfoLists.forEach((schedule: any) => {
-        const obj: any = {};
+        const markedDatesObj: any = {};
         schedule.dateTimeInfos.forEach((s: any) => {
-          obj[s.date] = {
+          markedDatesObj[s.date] = {
             selectedColor: '#50CAD2',
             selected: true,
             currentNumber: schedule.currentNumber,
@@ -45,15 +46,17 @@ const LectureCalendar = () => {
             date: s.date,
           };
         });
-        setMarkedDate({ ...markedDate, ...obj });
+        setMarkedDate({ ...markedDate, ...markedDatesObj });
       });
   }, [ScheduleInfoLists]);
 
   useEffect(() => {
     return () => {
       // 선택한 일정의 수업 정보 배열 초기화를 위한 clean up
+      const date = new Date();
       setCurrSelectedDate('');
-      setCurrMonth(new Date().getMonth() + 1);
+      setCurrYear(date.getFullYear());
+      setCurrMonth(date.getMonth() + 1);
       setCaching(caching => caching + 1);
     };
   }, []);
@@ -85,10 +88,11 @@ const LectureCalendar = () => {
             );
         }}
         onMonthChange={monthInfo => {
+          setCurrYear(monthInfo.year);
           setCurrMonth(monthInfo.month);
         }}
         minDate={new Date()}
-        monthFormat={'MM' + '월'}
+        monthFormat={'yyyy' + '년 ' + 'MM' + '월'}
         onDayPress={day => {
           console.log(day);
           setCurrSelectedDate(day.dateString);

@@ -24,6 +24,9 @@ export type RootProfileStack = {
     title: string;
     type: string;
   };
+  WriteReview: {
+    reservationId: number;
+  };
 };
 
 //  공통 타입
@@ -71,4 +74,10 @@ export type ApplyLecturerProps = StackScreenProps<
 export type ReviewCollectionProps = StackScreenProps<
   RootProfileStack,
   'ReviewCollection'
+>;
+
+// 후기작성 타입
+export type WriteReviewProps = StackScreenProps<
+  RootProfileStack,
+  'WriteReview'
 >;

@@ -23,9 +23,7 @@ const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
   const setLectureId = useSetRecoilState(lectureIdState);
 
   const navigateToReserveLecture = () =>
-    navigation.navigate('ReserveLecture', {
-      lectureId,
-    });
+    navigation.navigate('ReserveLecture', { lectureId });
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -43,9 +41,10 @@ const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
         </TouchableOpacity>
       ),
     });
-
     setLectureId(lectureId);
   }, []);
+
+  // useEffect(() => {}, []);
 
   return (
     <>

@@ -1,38 +1,50 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, Pressable } from 'react-native';
+import React from 'react'
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { styles } from './styles';
+import { styles } from './styles'
 import * as colors from '@config/colors';
 import {ContentItem, CommentNumber} from './types'
-import {  useRecoilState  } from 'recoil';
 import { useNavigation } from '@react-navigation/native';
-import { likeState } from '@/src/recoil/CommunityStack';
+import moment from 'moment';
+import { LikeBtn } from './LikeBtn';
 
 export default function CommunityItem({id, title,dateOfRegistration, writerNickname, imageUrl, commentCount, likeCount, liked }: ContentItem) { 
   const navigation = useNavigation();
-  
+  const basicThumnailUrl = 'https://png.pngtree.com/png-clipart/20190516/original/pngtree-warm-color-cool-in-summer-cartoon-swimming-goggles-cool-png-image_3774944.jpg'
+
+  // moment 시간 계산
+    const monthInterval = moment().diff(moment(dateOfRegistration), 'months')
+    const dayInterval = moment().diff(moment(dateOfRegistration), 'days')
+    const hoursInterval = moment().diff(moment(dateOfRegistration), 'hours')
+    const minutesInterval = moment().diff(moment(dateOfRegistration), 'minutes')
+
+    const timeOfWriting = 
+      (dayInterval === 0) 
+        ? (hoursInterval === 0 ? `${minutesInterval}분 전` : `${hoursInterval}시간 전`)
+        : (0 < dayInterval && dayInterval <= 30 ? `${dayInterval}일 전` : `${monthInterval}달 전`)
+
   return (
       <TouchableOpacity 
         style={styles.listItem} 
         activeOpacity={0.8}  
         onPress={()=> navigation.navigate('CommunityDetail',{id})}
-        >
+      >
           {imageUrl
             ? (<Image style={styles.thumnailImage} source={{uri: imageUrl}}/>)
-            : (<View style={styles.thumnailImage}></View>)}
+            : (<Image style={styles.thumnailImage} source={{uri: basicThumnailUrl }}></Image >)
+          }
           <View style={styles.contentInfo}>
             <Text>{title}</Text>
             <View style={styles.flexBox}>
               <Text>{writerNickname}</Text>
                   <Entypo name='dot-single' size={14} color={colors.BlackText}/>
-              <Text>{dateOfRegistration}</Text>
+              <Text>{timeOfWriting}</Text>
             </View>
           </View>
       <View style= {styles.iconBox}>
         <CommentNum commentNum={commentCount}/>
-        <LikeBtn id={id} likeCount={likeCount} liked={liked}/>
+        <LikeBtn id={id} likeCount={likeCount} liked={liked} mainList={'mainList'} />
       </View>
       <View style={styles.iconBox}>
         <CommentNum commentNum={commentCount} />
@@ -51,30 +63,14 @@ const CommentNum = ({ commentNum }: CommentNumber) => {
   )
 }
 
-// 좋아요 버튼 
-const LikeBtn = ({id,likeCount, liked}:{id: number,likeCount: number, liked: boolean}) => {
-  const [like, setLike] = useRecoilState(likeState(id))
-  const Clickedlike=() => {
-    setLike(!like)
-  }
-
-const likeCountNumber = (
-  liked ? (like? likeCount: likeCount-1)
-        :(like? likeCount +1 
-              : likeCount ===0 
-              ? 0 
-              : likeCount)
-)
-// console.log(likeCountNumber)
-
-  return (
-    <Pressable onPress={Clickedlike} style={styles.commentAndLike}>
-      <FontAwesome
-        name="heart"
-        size={14}
-        color={like ? colors.Selected : colors.Gray2}
-      />
-      <Text style={{color:colors.Gray2}}>{likeCountNumber}</Text>
-    </Pressable>
-  );
-};
+// let time
+    // if (dayInterval === 0) {
+    //     return (
+    //       hoursInterval === 0 
+    //       ? time=`${minutesInterval}분 전`
+    //       : tim`${hoursInterval}시간 전`)
+    // } 
+    // else if (0 < dayInterval && dayInterval <= 30){
+    //   return `${dayInterval}일 전`
+    // }
+    // else {return `${monthInterval}달 전` }

@@ -29,7 +29,7 @@ const LectureReview = () => {
                 <FontAwesome name="star" size={16} color={'rgb(248,194,93)'} />
 
                 <Text style={styles.totalAvgRateText}>
-                  {reviewTotalAvg} / 5점
+                  {reviewTotalAvg.toFixed(1)} / 5점
                 </Text>
               </View>
             </>
