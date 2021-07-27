@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, View, ActivityIndicator } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { useSetRecoilState } from 'recoil';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -12,9 +12,6 @@ import { HeaderContainer, MainContainer } from '@components/ProfileMain';
 
 export default function ProfileMain({ navigation }: ProfileMainProps) {
   const [isInstructor, setIsInstructor] = useState<string | null>(null);
-
-  console.log(isInstructor);
-
   const setAtk = useSetRecoilState(atkState);
   const [userInfo, setUserInfo] = useState<userInfoProps | undefined>({
     email: '',
@@ -25,7 +22,7 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        const token = await AsyncStorage.getItem('token');
+        const token = await AsyncStorage.getItem('atk');
         const instructor = await AsyncStorage.getItem('instructor');
 
         setAtk(token);
