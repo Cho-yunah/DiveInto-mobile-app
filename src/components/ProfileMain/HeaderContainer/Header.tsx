@@ -13,7 +13,7 @@ export default function Header({
   currScreen,
   buttonText,
 }: HeaderContainerProps) {
-  const [imageURI, setImageURI1] = useRecoilState(ProfileImageURIState);
+  const [imageURI, setImageURI] = useRecoilState(ProfileImageURIState);
   const atk = useRecoilValue(atkState);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function Header({
           },
         });
 
-        setImageURI1(res.data.imageUrl);
+        setImageURI(res.data.imageUrl);
       } catch (err) {
         console.log(err);
       }
