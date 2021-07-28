@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, View, ActivityIndicator } from 'react-native';
 import { useSetRecoilState } from 'recoil';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -61,6 +61,7 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
             nickname={userInfo?.nickname}
             phone={userInfo?.phone}
             type={isInstructor === 'instructor' ? 'instructor' : 'student'}
+            // type={true ? 'instructor' : 'student'}
           />
         </SafeAreaView>
       )}
