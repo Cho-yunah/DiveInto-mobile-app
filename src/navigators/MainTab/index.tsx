@@ -36,7 +36,6 @@ export default function LoginStack() {
           tabBarIcon: ({ focused, color, size }) =>
             IconSelector({ focused, color, size, routeName: route.name }),
         })}
-        initialRouteName="프로필"
       >
         {/* 탭 이름은 같더라도 강사와 수강생 뷰가 다를 수 있어서 구분해놨으나, 동일하라면 강의후기에만 조건문 걸면 됨. */}
         {isInstructor ? (

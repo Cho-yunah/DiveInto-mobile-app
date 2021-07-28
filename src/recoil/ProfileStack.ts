@@ -131,3 +131,8 @@ export const isModalOpenState = atom({
   key: 'isModalOpen',
   default: false,
 });
+
+export const outputViewModalOpenState = atom({
+  key: 'outputViewModalOpen',
+  default: false,
+});
