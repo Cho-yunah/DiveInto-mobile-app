@@ -1,8 +1,10 @@
+import { AxiosResponse } from 'axios';
 import { atom, atomFamily, selector, selectorFamily } from 'recoil';
 import instance from '../lib/api/axios';
 
 export type LectureDetailPicsType = {
   url: string;
+  lectureImageId: number;
 };
 export type lectureReviewType = {
   id: number;
@@ -11,7 +13,7 @@ export type lectureReviewType = {
   locationStar: number;
   totalStarAvg: number;
   description: string;
-  writeDate: Date;
+  writeDate: string;
   reviewImageUrls: string[];
 };
 
@@ -73,6 +75,18 @@ export type EquipmentsType = {
   price: number;
   equipmentStocks: EquipmentStocksType[];
 };
+
+type TargetInfoType =
+  | 'Info'
+  | 'InstructorProfile'
+  | 'LocationInfo'
+  | 'LecturePics';
+
+export type SortByType =
+  | 'writeDate,DESC'
+  | 'totalStarAvg,DESC'
+  | 'totalStarAvg,ASC';
+
 export const searchText = atom({
   key: 'searchText',
   default: '',
@@ -81,19 +95,6 @@ export const searchText = atom({
 export const lectureIdState = atom<null | number>({
   key: 'lectureId',
   default: null,
-});
-
-export const requestLocationInfoSelector = selectorFamily({
-  key: 'requestLocationInfo',
-  get: (lectureId: number) => async () => {
-    if (!lectureId) return;
-    try {
-      const { data } = await instance.get(`/location?lectureId=${lectureId}`);
-      return data;
-    } catch (e) {
-      console.log(e.response);
-    }
-  },
 });
 
 export const lectureModalState = atom<LectureDetailPicsType[]>({
@@ -106,47 +107,56 @@ export const lecutureModalSelectedIdxState = atom<number>({
   default: 0,
 });
 
-export const lectureDetailPicsState = atom<LectureDetailPicsType[]>({
-  key: 'lectrueDetailPics',
-  default: [],
+// common selectorFamily
+export const lectureCommonSelectorFamily = selectorFamily({
+  key: 'lectureCommonSelectorFamily',
+  get:
+    (targetInfo: TargetInfoType) =>
+    async ({ get }) => {
+      const lectureId = get(lectureIdState);
+      if (!lectureId) return;
+
+      const url =
+        targetInfo === 'Info'
+          ? `/lecture?id=${lectureId}`
+          : targetInfo === 'InstructorProfile'
+          ? `/lecture/instructor/info/creator?lectureId=${lectureId}`
+          : targetInfo === 'LocationInfo'
+          ? `/location?lectureId=${lectureId}`
+          : `/lectureImage/list?lectureId=${lectureId}`;
+
+      try {
+        const { data }: AxiosResponse = await instance.get(url);
+
+        console.log(data);
+
+        return data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
 });
 
-export const lectureDetailState = atom({
-  key: 'lectureDetail',
-  default: {
-    id: 0, // 강의 id
-    title: '', // 강의 제목
-    classKind: '',
-    organization: '', // AIDA
-    level: '',
-    maxNumber: 0, // 최대 가능 인원
-    period: 0,
-    description: '', // 강의 설명
-    price: 0, // 가격
-    region: '', // 지역
-    reviewTotalAvg: 0, // 리뷰 전체 평점
-    reviewCount: 0, // 리뷰 개수
-    isMarked: false, // 찜하기 여부
-  },
+export const sortByState = atom<SortByType>({
+  key: 'sortBy',
+  default: 'writeDate,DESC',
 });
 
-export const lectureInstructorProfileState = atom({
-  key: 'lectureInstructorDetail',
-  default: {
-    instructorId: 0,
-    nickName: '',
-    selfIntroduction: '',
-    profilePhotoUrl: '',
-  },
-});
+export const lectureSortedReviewSelector = selector<lectureReviewType[]>({
+  key: 'lectureSortedReview',
+  get: async ({ get }) => {
+    const lectureId = get(lectureIdState);
+    const sortBy = get(sortByState);
 
-export const lectureInfoSelector = selector({
-  key: 'lectureInfoSelector',
-  get: ({ get }): LectureInfoSelectorType => {
-    const { title, organization, level, description, price } =
-      get(lectureDetailState);
-
-    return { title, organization, level, description, price };
+    try {
+      const { data }: AxiosResponse = await instance.get(
+        `/review/list?lectureId=${lectureId}&page=0&size=4&sort=${sortBy}`,
+      );
+      console.log(data, '리뷰 ㅂ열');
+      return data?._embedded?.reviewInfoList || [];
+    } catch (e) {
+      console.log(e);
+    }
   },
 });
 

@@ -5,22 +5,27 @@ import styles from './styles';
 import instance, { getInstanceATK } from '@/src/lib/api/axios';
 import { LoginButtonProps } from '@/src/components/LoginWithEmail/types';
 
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { IsLogin, IsInstructor } from '@/src/recoil/Global';
 
 import jwt_decode from 'jwt-decode';
 import { JWToken } from './types';
 import axios from 'axios';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ModalContainer } from '../ReserveLecture';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as FCM from '@lib/firebase/FCM';
+import { emailState, isCheckedSaveEmailState } from '@/src/recoil/LoginStack';
 
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   const setIsLogin = useSetRecoilState(IsLogin);
   const setIsInstructor = useSetRecoilState(IsInstructor);
   const [isError, setIsError] = useState<boolean>(false);
+  const [toggleCheckBox, setToggleCheckBox] = useRecoilState(
+    isCheckedSaveEmailState,
+  ); // true 이면 로그인시 asyncStorage에 이메일 저장.
+  const email = useRecoilValue(emailState);
 
   const requestLogin: LoginButtonProps['requestLogin'] = async (
     email,
@@ -49,27 +54,17 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
         } else {
           await AsyncStorage.setItem('instructor', 'student');
         }
-
         await requestFireBase(fcmToken);
         setIsLogin(true);
+
+        if (toggleCheckBox) await AsyncStorage.setItem('savedEmail', email);
+        else await AsyncStorage.removeItem('savedEmail');
       }
     } catch (e) {
       console.log(e.response.data);
       setIsError(true);
     }
     setIsLoading(false);
-  };
-
-  const requestFireBase = async (fcmToken: string) => {
-    try {
-      const instanceATK = await getInstanceATK();
-      const body = { token: fcmToken };
-      const { data } = await instanceATK.post('/sign/firebase-token', body);
-      console.log(data);
-    } catch (e) {
-      console.log(e);
-      throw Error(e);
-    }
   };
 
   return (
@@ -91,3 +86,15 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   );
 };
 export default LoginWithEmailScreen;
+
+const requestFireBase = async (fcmToken: string) => {
+  try {
+    const instanceATK = await getInstanceATK();
+    const body = { token: fcmToken };
+    const { data } = await instanceATK.post('/sign/firebase-token', body);
+    console.log(data);
+  } catch (e) {
+    console.log(e);
+    throw Error(e);
+  }
+};

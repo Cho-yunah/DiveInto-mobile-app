@@ -60,7 +60,7 @@ export default function NewLectureList() {
   useLayoutEffect(() => {
     const fetch = async () => {
       const res = await axios.get(
-        'http://52.79.225.4:8081/lecture/new/list?page=0&size=2',
+        'http://52.79.225.4:8081/lecture/new/list?page=0&size=10',
         {
           headers: {
             // IsRefreshToken: 'false',

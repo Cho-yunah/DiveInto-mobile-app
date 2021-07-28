@@ -1,6 +1,7 @@
 import {
   eachEquipmentState,
   getEquipmentsState,
+  lectureIdState,
   requestReservationEquipmentState,
   selectedEquipmentsIdState,
 } from '@/src/recoil/LectureStack';
@@ -20,7 +21,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const SizeModal = ({ setIsOpen }: SizeModalProps) => {
   const selectedEquipmentsId = useRecoilValue(selectedEquipmentsIdState);
-  const getEquipments = useRecoilValue(getEquipmentsState(1));
+  const lectureId = useRecoilValue(lectureIdState);
+  const getEquipments = useRecoilValue(getEquipmentsState(lectureId!));
   const eachEquipment = useRecoilValue(
     eachEquipmentState(selectedEquipmentsId.id),
   );
