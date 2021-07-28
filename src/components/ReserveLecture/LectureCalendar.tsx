@@ -4,6 +4,7 @@ import {
   currScheduleIdState,
   currSelectedDateState,
   currYearState,
+  lectureIdState,
   lectureScheduleListsSelector,
   markedDateState,
 } from '@/src/recoil/LectureStack';
@@ -14,7 +15,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 const LectureCalendar = () => {
-  const ScheduleInfoLists = useRecoilValue(lectureScheduleListsSelector(1));
+  const lectureId = useRecoilValue(lectureIdState);
+  const ScheduleInfoLists = useRecoilValue(
+    lectureScheduleListsSelector(lectureId!),
+  );
   const [markedDate, setMarkedDate] = useRecoilState(markedDateState);
   const [currSelectedDate, setCurrSelectedDate] = useRecoilState(
     currSelectedDateState,
@@ -58,6 +62,7 @@ const LectureCalendar = () => {
       setCurrYear(date.getFullYear());
       setCurrMonth(date.getMonth() + 1);
       setCaching(caching => caching + 1);
+      setMarkedDate({});
     };
   }, []);
 

@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 16,
   },
-  checkIcon: { position: 'absolute', top: 265, right: 20 },
+  checkIcon: { position: 'absolute', top: 265, right: 0 },
   middleContainer: {
     position: 'absolute',
     top: 300,
@@ -39,14 +39,19 @@ const styles = StyleSheet.create({
     marginTop: 80,
     borderBottomColor: '#c1c2c3',
   },
-  button: {},
+  button: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  checkBoxText: {
+    marginLeft: 6,
+    fontSize: 16,
+    color: '#c1c2c3',
+  },
   buttonText: {
     fontSize: 18,
     color: 'rgb(32,122,180)',
-  },
-  checkBoxText: {
-    fontSize: 14,
-    color: '#c1c2c3',
   },
   socialLoginContainer: {
     marginTop: 70,
@@ -87,8 +92,8 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     fontSize: 14,
   },
-  guideTextValid: { marginTop: 3, color: '#38D1A8', height: 15 },
-  guideTextInvalid: { marginTop: 3, color: '#E93A55', height: 15 },
+  guideTextValid: { marginTop: 10, color: '#38D1A8', height: 15 },
+  guideTextInvalid: { marginTop: 10, color: '#E93A55', height: 15 },
   checkboxContainer: {
     width: 20,
     height: 20,
