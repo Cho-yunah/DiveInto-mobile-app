@@ -1,10 +1,9 @@
 import { AxiosResponse } from 'axios';
 import { atom, atomFamily, selector, selectorFamily } from 'recoil';
 import instance from '../lib/api/axios';
-
 export type LectureDetailPicsType = {
   url: string;
-  lectureImageId: number;
+  // lectureImageId: number;
 };
 export type lectureReviewType = {
   id: number;
