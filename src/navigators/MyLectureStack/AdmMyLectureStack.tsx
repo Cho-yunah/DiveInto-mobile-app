@@ -12,7 +12,10 @@ import {
   AddEqipments,
   AddLocation,
   NMapSearch,
+  EditLecture,
+  AddSchedule,
 } from '@screens/Instructor';
+import { LectureInfoTab } from './LectureInfoTab';
 
 export default function AdmMyLectureStack() {
   return (
@@ -42,6 +45,9 @@ export default function AdmMyLectureStack() {
         <Stack.Screen name="장비등록" component={AddEqipments} />
         <Stack.Screen name="위치등록" component={AddLocation} />
         <Stack.Screen name="위치검색" component={NMapSearch} />
+        <Stack.Screen name="일정관리" component={LectureInfoTab} />
+        <Stack.Screen name="강의수정" component={EditLecture} />
+        <Stack.Screen name="일정추가" component={AddSchedule} />
       </Stack.Navigator>
     </RecoilRoot>
   );
