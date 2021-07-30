@@ -32,13 +32,14 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
   },[like])
 
   return (
-    <View style={styles.container}>
-      <DetailInfo id={id}/>
-      <ScrollView>
-          <DetailContents content={content}/>
-          <CommentDetail id={id}/>
-      </ScrollView>
-      <CommentsInput id={id}/>
-    </View>
+    <ScrollView style={styles.container}>
+        <DetailInfo id={id} />
+        <ScrollView>
+            <DetailContents content={content}/>
+            <CommentDetail id={id}/>
+        </ScrollView>
+        <CommentsInput id={id}/>
+    
+    </ScrollView>
   );
 }

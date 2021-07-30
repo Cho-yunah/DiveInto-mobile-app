@@ -29,6 +29,7 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
   } 
   getToken()
   },[])
+  console.log(token)
   
   // header 글쓰기 버튼  
   useLayoutEffect(()=> {
