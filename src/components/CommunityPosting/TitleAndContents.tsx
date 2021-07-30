@@ -1,26 +1,28 @@
 import { communityItemSelector, postingFormState } from '@/src/recoil/CommunityStack'
-import React from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import { View, TextInput } from 'react-native'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { useRequestCommunityItem } from '../CommunityDetail/useRequestCommunityItem'
 import {styles} from './styles'
 
 export default function TitleAndContents({id}: any) {
-
-  // 상세 페이지에서 수정 요청을 보낼때 해당 글 정보받아오기 
-  id && useRequestCommunityItem(id) 
-  const {title, content} = id? useRecoilValue(communityItemSelector) : {title: '', content:''}
-
+ 
+  const {title, content} = useRecoilValue(communityItemSelector)
+  console.log(title)
+  console.log(content)
   return (
     <>
-      <Title title={title}/>
-      <Content content={content}/>
+      <Title title={title} id={id}/>
+      <Content content={content} id={id}/>
     </>
   )
 }
 
-const Title = ({title}: any) => {
-  const [fillTitle, setFillTitle] = useRecoilState(postingFormState('title'))
+const Title = ({title, id}: any) => {
+  const [fillTitle, setFillTitle] = useRecoilState(postingFormState('title')) 
+  
+  useEffect(() => {
+     id? setFillTitle(title) : setFillTitle('')
+  }, [])
  
   return (
     <View style={styles.inputContainer} >
@@ -38,8 +40,11 @@ const Title = ({title}: any) => {
   )
 }
 
-const Content = ({content}:any) => {
+const Content = ({content, id}:any) => {
   const [fillContent, setFillContent] = useRecoilState(postingFormState('content'));
+  useEffect(() => {
+    id? setFillContent(content) : setFillContent('')
+  }, [])
 
   return (
     <View style={styles.inputContainer} >

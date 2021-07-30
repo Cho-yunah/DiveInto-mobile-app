@@ -79,12 +79,6 @@ export type PostingItemType = {
 //   default : 1
 // })
 
-// dropdown picker 상태
-export const pickerOpenState = atom({
-  key: 'pickerOpenState',
-  default: false
-})
-
 export const likeState= atomFamily<Element,number>({
   key: 'likeState',
   default: false

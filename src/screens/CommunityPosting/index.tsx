@@ -4,10 +4,11 @@ import styles  from './styles';
 import { CommunityPostingProps } from '@navigators/CommunityStack/types';
 import  { SelectBox, TitleAndContents, AddImages}  from '@components/CommunityPosting';
 import NextButton from '@components/common/NextButton';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { communityListState, ImageArrState, postingFormSelector, postingFormState } from '@/src/recoil/CommunityStack';
 import { getFormData, requestPostCommunity } from '@components/CommunityPosting/requestPostCommunityImages';
 import instance from '@/src/lib/api/axios';
+import { useEffect } from 'react';
 
 export default function CommunityPostingScreen({route, navigation}: CommunityPostingProps): ReactElement {
   const [isCompleted, setIsCompleted] = useState(false);
@@ -20,9 +21,7 @@ export default function CommunityPostingScreen({route, navigation}: CommunityPos
     id = route.params.id
   }
 
-  // 게시물 작성 후 완료 버튼 눌렀을 때의 로직
   const postingInfo = useRecoilValue(postingFormSelector) 
-  console.log(postingInfo) 
 
   const allPostingFormFilled= Object.values(postingInfo).every(value => value) // 모든 posting filed에 값이 있는지 확인
   
@@ -47,7 +46,6 @@ export default function CommunityPostingScreen({route, navigation}: CommunityPos
         postingData
       ]); 
       navigation.navigate('CommunityMain');
-      useSetRecoilState(postingFormState(''))
     } catch(e) {
       console.log(e)
     }
@@ -55,6 +53,7 @@ export default function CommunityPostingScreen({route, navigation}: CommunityPos
 
  // 글 수정 완료
   const editingComplete = async() => {
+    console.log(id)
     setIsCompleted(allPostingFormFilled);
     try{
       const response = await instance.put(`/community/post/${id}`,);
@@ -71,11 +70,13 @@ export default function CommunityPostingScreen({route, navigation}: CommunityPos
   }
 
   useLayoutEffect(()=> {
+    
     navigation.setOptions({
      headerRight: id
      ? () => <NextButton text='수정완료' onPress={editingComplete}  disable={!isCompleted}/>
      : () => <NextButton text='완료' onPress={onComplete}  disable={!isCompleted}/>
     }) // id 가 있으면 게시물 수정 로직, 없으면 업로드 로직
+
   },[isCompleted, postingInfo])
 
   return (
@@ -83,7 +84,7 @@ export default function CommunityPostingScreen({route, navigation}: CommunityPos
       <View style={styles.contentsAll}>
         <SelectBox id={id}/>
         <TitleAndContents id={id}/>
-        <AddImages />
+        <AddImages id={id} />
       </View>
   </ScrollView>
   )

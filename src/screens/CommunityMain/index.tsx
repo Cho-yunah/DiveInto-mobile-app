@@ -8,15 +8,15 @@ import { CommunityPostingProps, CommunityDetailProps } from '@navigators/Communi
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useRecoilState } from 'recoil';
-import { atkState } from '@/src/recoil/CommunityStack';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { atkState, postingFormState } from '@/src/recoil/CommunityStack';
 
 const Tab= createMaterialTopTabNavigator();
 
 export default function CommunityMainScreen({navigation}: CommunityPostingProps): ReactElement {
 
   const [token, setToken] = useRecoilState(atkState)
-
+  console.log(token)
   // token 받아오기 
   useEffect(()=> {
     const getToken = async() => {
@@ -24,12 +24,13 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
       const getTokenRequest= await AsyncStorage.getItem('token');
       setToken(getTokenRequest)
     } catch (error) {
-        console.log(error)
+      console.log(error)
     }
   } 
   getToken()
   },[])
-  console.log(token)
+ 
+  
   
   // header 글쓰기 버튼  
   useLayoutEffect(()=> {
