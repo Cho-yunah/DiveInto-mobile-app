@@ -33,6 +33,8 @@ const RentEquipmentsMain = () => {
       ? true
       : false;
 
+  console.log(getEquipments);
+
   if (!sameClassScheduleArr.length || !isAvailableClass)
     return (
       <View>

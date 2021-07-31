@@ -6,6 +6,7 @@ import {
   currScheduleIdState,
   currSelectedDateState,
   getTheSameClassScheduleState,
+  scheduleIdObjState,
 } from '@/src/recoil/LectureStack';
 import Entype from 'react-native-vector-icons/Entypo';
 
@@ -16,7 +17,6 @@ const SelectLectureSchedule = () => {
   );
   const [currScheduleId, setCurrScheduleId] =
     useRecoilState(currScheduleIdState);
-
   useEffect(() => {
     setCurrScheduleId(null);
   }, [currSelectedDate]);
@@ -33,11 +33,11 @@ const SelectLectureSchedule = () => {
       <View style={styles.dateWrapper}>
         <Text style={styles.date}>{currSelectedDate}</Text>
       </View>
-      <ScrollView
-        style={[styles.schedulesWrapper]}
-        showsHorizontalScrollIndicator={false}
-      >
-        <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
+      <View style={[styles.schedulesWrapper]}>
+        <ScrollView
+          style={{ flexWrap: 'wrap', flexDirection: 'row' }}
+          showsHorizontalScrollIndicator={false}
+        >
           {getTheSameClassSchedulesArray.length ? (
             <>
               <Text style={styles.classGuideText}>
@@ -111,8 +111,8 @@ const SelectLectureSchedule = () => {
           ) : (
             <Text style={styles.date}>선택한 날짜에 일정이 없습니다.</Text>
           )}
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </View>
   );
 };

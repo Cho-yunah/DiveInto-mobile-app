@@ -235,12 +235,23 @@ export const schedulesByIdState = atom<SchedulesById[]>({
   default: [],
 });
 
+export const cachingStateFormClassScheduleState = atom({
+  key: 'cachingStateFormClassScheduleState',
+  default: 0,
+});
 export const getTheSameClassScheduleState = selector<SchedulesById[]>({
   key: 'getAllClassByDates',
   get: ({ get }) => {
-    const scheduleIdObj = get(scheduleIdObjState); // 날짜별 수업id담은 객체
+    get(cachingStateFormClassScheduleState);
     const currSelectedDate = get(currSelectedDateState); // 선택한 날짜
-    const scheduleById = get(schedulesByIdState);
+    console.log(currSelectedDate);
+
+    if (!currSelectedDate) return [];
+
+    const scheduleIdObj = get(scheduleIdObjState); // 날짜별 수업id담은 객체
+    const scheduleById = [...get(schedulesByIdState)].reverse();
+    console.log(scheduleById, 'scheduleById');
+
     let idArray: any[] = [];
 
     // 선택한 날짜의 배열에 담긴 id값들을 저장.
@@ -274,17 +285,20 @@ export const selectedClassByIdSelector = selector({
 // 현재 강의에서 제공해주는 대여 장비 목록
 export const getEquipmentsState = selectorFamily<EquipmentsType[], number>({
   key: 'getEquipments',
-  get: (lectureId: number) => async () => {
-    try {
-      const { data } = await instance.get(
-        `/equipment/list?lectureId=${lectureId}`,
-      );
+  get:
+    (lectureId: number) =>
+    async ({ get }) => {
+      get(cachingState);
+      try {
+        const { data } = await instance.get(
+          `/equipment/list?lectureId=${lectureId}`,
+        );
 
-      return data._embedded.equipmentDtoList;
-    } catch (e) {
-      console.log(e);
-    }
-  },
+        return data._embedded.equipmentDtoList;
+      } catch (e) {
+        console.log(e);
+      }
+    },
 });
 
 // 현재 선택된 대여 장비 정보

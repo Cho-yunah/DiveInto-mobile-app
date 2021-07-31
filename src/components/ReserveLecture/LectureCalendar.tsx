@@ -1,5 +1,6 @@
 import {
   cachingState,
+  cachingStateFormClassScheduleState,
   currMonthState,
   currSelectedDateState,
   currYearState,
@@ -28,6 +29,9 @@ const LectureCalendar = () => {
   const setCurrMonth = useSetRecoilState(currMonthState);
   const setScheduleIdObj = useSetRecoilState(scheduleIdObjState);
   const setScheduleById = useSetRecoilState(schedulesByIdState);
+  const setCachingSchedule = useSetRecoilState(
+    cachingStateFormClassScheduleState,
+  );
 
   useEffect(() => {
     console.log(ScheduleInfoLists, 'ScheduleInfoLists');
@@ -91,6 +95,8 @@ const LectureCalendar = () => {
       setCurrMonth(date.getMonth() + 1);
       setMarkedDate({});
       setCaching(caching => caching + 1);
+      setCachingSchedule(caching => caching + 1);
+      setScheduleById([]);
     };
   }, []);
 
