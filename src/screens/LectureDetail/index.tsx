@@ -25,6 +25,8 @@ const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
   // const { isMarked } = useRecoilValue(lectureDetailState);
   const setLectureId = useSetRecoilState(lectureIdState);
 
+  console.log(lectureId);
+
   const navigateToReserveLecture = () =>
     navigation.navigate('ReserveLecture', { lectureId });
 
@@ -44,6 +46,7 @@ const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
         </TouchableOpacity>
       ),
     });
+
     setLectureId(lectureId);
   }, []);
 

@@ -104,6 +104,12 @@ export const instructorImageCollectionState = atom<
   key: 'instructorImageCollection',
   default: [],
 });
+
+export const WaitingCERTInstructorState = atom<'none' | 'done'>({
+  key: 'WaitingCERTInstructor',
+  default: 'none',
+});
+
 // 후기작성 스크린
 export type PicsArrStateType = {
   size: number;

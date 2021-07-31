@@ -1,7 +1,6 @@
-import React, { Suspense } from 'react';
-import { Text } from 'react-native';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { RecoilRoot, useRecoilValue } from 'recoil';
+import { RecoilRoot } from 'recoil';
 
 import ProfileWithoutLoginScreen from '@screens/ProfileWithoutLogin';
 import ProfileMainScreen from '@screens/ProfileMain';

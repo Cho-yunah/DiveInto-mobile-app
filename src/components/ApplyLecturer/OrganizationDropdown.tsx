@@ -1,40 +1,25 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { View } from 'react-native';
 
+import { DropDownPicker } from '@components/common';
 import { selectbox as styles } from './styles';
+import { OrganizationType } from './types';
 
-export default function Temp({
+const Organizations = ['AIDA', 'PADI', 'SSI'];
+
+export default function OrganizationDropdown({
   setGroup,
 }: {
   setGroup: (item: string) => void;
 }) {
-  const [pickerOpen, setPickerOpen] = useState(false);
-
-  const categoryItem = [
-    { label: 'AIDA', value: 'AIDA' },
-    { label: 'PADI', value: 'PADI' },
-    { label: 'SSI', value: 'SSI' },
-  ];
+  const label = Organizations.map(org => ({ label: org, value: org }));
 
   return (
-    <View style={{ zIndex: 200 }}>
+    <View style={styles.container}>
       <DropDownPicker
-        containerStyle={
-          pickerOpen ? styles.shadowContainer : styles.selectContainer
-        }
-        placeholder={'카테고리를 선택해주세요'}
-        placeholderStyle={{ color: '#D8D8D8' }}
-        items={categoryItem}
-        itemStyle={styles.itemStyle}
-        style={styles.pickerStyle}
-        dropDownStyle={styles.dropDown}
-        labelStyle={styles.labelStyle}
-        onOpen={() => setPickerOpen(true)}
-        onClose={() => setPickerOpen(false)}
-        onChangeItem={({ value }) => {
-          setGroup(value);
-        }}
+        items={label}
+        placeholder="자격 단체명을 선택해주세요"
+        onChangeValue={value => setGroup(value as OrganizationType)}
       />
     </View>
   );
