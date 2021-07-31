@@ -442,7 +442,7 @@ PODS:
     - React-perflogger (= 0.64.2)
   - rn-fetch-blob (0.12.0):
     - React-Core
-  - RNCAsyncStorage (1.12.1):
+  - RNCAsyncStorage (1.15.5):
     - React-Core
   - RNCCheckbox (0.5.8):
     - React-Core
