@@ -6,8 +6,8 @@ import EachEquipment from './EachEquipment';
 import { useRecoilValue } from 'recoil';
 import {
   getEquipmentsState,
-  getTheSameClassScheduleState,
   lectureIdState,
+  selectedClassByIdSelector,
 } from '@/src/recoil/LectureStack';
 
 const RentEquipments = () => {
@@ -25,7 +25,7 @@ const RentEquipmentsMain = () => {
   const lectureId = useRecoilValue(lectureIdState);
   const [isOpen, setIsOpen] = useState(false);
   const getEquipments = useRecoilValue(getEquipmentsState(lectureId!));
-  const sameClassScheduleArr = useRecoilValue(getTheSameClassScheduleState);
+  const sameClassScheduleArr = useRecoilValue(selectedClassByIdSelector);
   const isAvailableClass =
     sameClassScheduleArr[0]?.maxNumber -
       sameClassScheduleArr[0]?.currentNumber >
@@ -39,8 +39,6 @@ const RentEquipmentsMain = () => {
         <Text>예약 가능한 일정을 선택해주세요</Text>
       </View>
     );
-
-  console.log('hele', getEquipments);
 
   return (
     <>

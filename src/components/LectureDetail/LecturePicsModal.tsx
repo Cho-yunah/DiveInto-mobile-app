@@ -3,20 +3,13 @@ import {
   lecutureModalSelectedIdxState,
 } from '@/src/recoil/LectureStack';
 import React, { Ref, useEffect, useRef, useState } from 'react';
-import {
-  useWindowDimensions,
-  Modal,
-  Text,
-  ScrollView,
-  FlatListProps,
-} from 'react-native';
+import { useWindowDimensions, Modal, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRecoilState } from 'recoil';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { FlatList } from 'react-native-gesture-handler';
 import { Image } from 'react-native-animatable';
 import styles from './styles';
-import { scrollTo } from 'react-native-reanimated';
 
 const LeturePicsModal = () => {
   const [modalPics, setModalPics] = useRecoilState(lectureModalState);

@@ -5,6 +5,7 @@ import {
   lectureIdState,
   requestReservationEquipmentDetailType,
   requestReservationEquipmentState,
+  selectedClassByIdSelector,
 } from '@/src/recoil/LectureStack';
 import React from 'react';
 import { View, Text, FlatList } from 'react-native';
@@ -17,7 +18,7 @@ const AboutReservationDetail = () => {
   const { contents } = useRecoilValueLoadable(
     lectureCommonSelectorFamily('Info'),
   );
-  const classSchedule = useRecoilValue(getTheSameClassScheduleState);
+  const classSchedule = useRecoilValue(selectedClassByIdSelector);
   const lectureId = useRecoilValue(lectureIdState);
   const equipmentsState = useRecoilValue(getEquipmentsState(lectureId!)); // 강의 id -> 제공되는 대여장비, name,id, price
   const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
@@ -26,9 +27,6 @@ const AboutReservationDetail = () => {
       ...useRecoilValue(requestReservationEquipmentState(equip.id)),
     ),
   );
-
-  console.log(classSchedule);
-  console.log(reservedEquipmentsArray, ';sdfsdkfjsdlkfj');
 
   return (
     <View style={styles.container}>
@@ -39,7 +37,7 @@ const AboutReservationDetail = () => {
       </View>
       <View style={styles.scheduleInfoContainer}>
         <FlatList
-          data={classSchedule}
+          data={classSchedule[1]}
           renderItem={({ item }) => <EachSchedule item={item} />}
         />
         <FlatList

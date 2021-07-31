@@ -1,18 +1,25 @@
-import React from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SelectLectureSchedule as styles } from './styles';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
+  currScheduleIdState,
   currSelectedDateState,
   getTheSameClassScheduleState,
 } from '@/src/recoil/LectureStack';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entype from 'react-native-vector-icons/Entypo';
 
 const SelectLectureSchedule = () => {
   const currSelectedDate = useRecoilValue(currSelectedDateState);
   const getTheSameClassSchedulesArray = useRecoilValue(
     getTheSameClassScheduleState,
   );
+  const [currScheduleId, setCurrScheduleId] =
+    useRecoilState(currScheduleIdState);
+
+  useEffect(() => {
+    setCurrScheduleId(null);
+  }, [currSelectedDate]);
 
   if (!currSelectedDate)
     return (
@@ -20,11 +27,11 @@ const SelectLectureSchedule = () => {
         <Text style={styles.date}>일정을 선택해 주세요.</Text>
       </View>
     );
+
   return (
     <View style={styles.container}>
       <View style={styles.dateWrapper}>
         <Text style={styles.date}>{currSelectedDate}</Text>
-        <AntDesign name="caretdown" size={13} color={'#A9BBC9'} />
       </View>
       <ScrollView
         style={[styles.schedulesWrapper]}
@@ -34,34 +41,72 @@ const SelectLectureSchedule = () => {
           {getTheSameClassSchedulesArray.length ? (
             <>
               <Text style={styles.classGuideText}>
-                선택하신 날짜에 아래 {getTheSameClassSchedulesArray.length}일 간
-                진행되는 강의가 있습니다.
+                선택하신 날짜에 {getTheSameClassSchedulesArray.length}개의
+                강의가 있습니다.
               </Text>
-              {getTheSameClassSchedulesArray.map(sch => {
-                const conditionalBorderStyle = {
-                  borderColor:
-                    sch.currentNumber === sch.maxNumber ? '#CCD7DF' : '#A9BBC9',
-                };
-                const conditionalColorStyle = {
-                  color:
-                    sch.currentNumber === sch.maxNumber ? '#CCD7DF' : '#343434',
-                };
-                return (
-                  <TouchableOpacity
-                    key={sch.scheduleDateTimeId}
-                    style={[styles.schedule, conditionalBorderStyle]}
-                    disabled={sch.currentNumber === sch.maxNumber}
-                  >
-                    <Text style={conditionalColorStyle}>{sch.date}</Text>
-                    <Text style={conditionalColorStyle}>
-                      {sch.startTime.split(':').slice(0, 2).join(':')}
-                    </Text>
-                    <Text style={conditionalColorStyle}>
-                      {sch.currentNumber}명 / {sch.maxNumber}명
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
+              <View style={{ alignItems: 'center' }}>
+                {getTheSameClassSchedulesArray.map(schedule => {
+                  const conditionalBorderStyle = {
+                    borderColor:
+                      schedule[0].currentNumber === schedule[0].maxNumber
+                        ? '#CCD7DF'
+                        : '#A9BBC9',
+                  };
+                  const conditionalColorStyle = {
+                    color:
+                      schedule[0].currentNumber === schedule[0].maxNumber
+                        ? '#CCD7DF'
+                        : '#343434',
+                  };
+                  return (
+                    <>
+                      <View
+                        style={{ flexDirection: 'row', alignItems: 'center' }}
+                      >
+                        <Entype name="dot-single" size={20} />
+                        {schedule[1]?.map(dateTime => (
+                          <Pressable
+                            key={dateTime.scheduleDateTimeId}
+                            onPress={() => {
+                              setCurrScheduleId(schedule[0].scheduleId);
+                            }}
+                            style={[
+                              styles.schedule,
+                              conditionalBorderStyle,
+                              {
+                                backgroundColor:
+                                  currScheduleId === schedule[0].scheduleId &&
+                                  schedule[0].currentNumber !==
+                                    schedule[0].maxNumber
+                                    ? '#50CAD2'
+                                    : '#fefefe',
+                              },
+                            ]}
+                            disabled={
+                              schedule[0].currentNumber ===
+                              schedule[0].maxNumber
+                            }
+                          >
+                            <Text style={conditionalColorStyle}>
+                              {dateTime.date}
+                            </Text>
+                            <Text style={conditionalColorStyle}>
+                              {dateTime?.startTime
+                                ?.split(':')
+                                .slice(0, 2)
+                                .join(':')}
+                            </Text>
+                            <Text style={conditionalColorStyle}>
+                              {schedule[0].currentNumber}명 /{' '}
+                              {schedule[0].maxNumber}명
+                            </Text>
+                          </Pressable>
+                        ))}
+                      </View>
+                    </>
+                  );
+                })}
+              </View>
             </>
           ) : (
             <Text style={styles.date}>선택한 날짜에 일정이 없습니다.</Text>
