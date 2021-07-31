@@ -5,11 +5,15 @@ export type Region =
   | '경기'
   | '인천'
   | '부산'
-  | '경상, 대구, 울산'
-  | '대전, 충청'
+  | '경상'
+  | '대구'
+  | '울산'
+  | '대전'
+  | '충청'
   | '강원'
-  | '광주, 전라, 제주'
-  | '온라인';
+  | '광주'
+  | '전라'
+  | '제주';
 export type CostCondition = {
   max: number;
   min: number;

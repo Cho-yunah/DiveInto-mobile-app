@@ -12,9 +12,6 @@ import { HeaderContainer, MainContainer } from '@components/ProfileMain';
 
 export default function ProfileMain({ navigation }: ProfileMainProps) {
   const [isInstructor, setIsInstructor] = useState<string | null>(null);
-
-  console.log(isInstructor);
-
   const setAtk = useSetRecoilState(atkState);
   const [userInfo, setUserInfo] = useState<userInfoProps | undefined>({
     email: '',
@@ -25,7 +22,7 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        const token = await AsyncStorage.getItem('token');
+        const token = await AsyncStorage.getItem('atk');
         const instructor = await AsyncStorage.getItem('instructor');
 
         setAtk(token);
@@ -61,6 +58,7 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
             nickname={userInfo?.nickname}
             phone={userInfo?.phone}
             type={isInstructor === 'instructor' ? 'instructor' : 'student'}
+            // type={true ? 'instructor' : 'student'}
           />
         </SafeAreaView>
       )}

@@ -20,8 +20,6 @@ const EachEquipController = ({ item, equip }: any) => {
   );
   const studentsNumber = useRecoilValue(studentNumberState);
   let targetIndex: null | number = null;
-  console.log(equip, 'equip');
-  console.log(item, 'item');
 
   const controllStock = (type: 'Increase' | 'Decrease') => {
     // 지금 상태에서 현재 상태의 객체만 제외한 배열을 만들기 위해서 상태값을 담아둔다.
@@ -60,8 +58,6 @@ const EachEquipController = ({ item, equip }: any) => {
       setThisEquipmentArr([...filteredEquips]); // 정보를 수정한 270사이즈 객체와, 270을 제외한 정보를 가진 배열을 합쳐서 새 상태로 만든다.
     }
   };
-
-  console.log(item);
 
   useEffect(() => {
     const adjustEquipsNumber = () => {

@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { SelectStudentNumber as styles } from './styles';
 import Entype from 'react-native-vector-icons/Entypo';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import {
   getTheSameClassScheduleState,
-  lectureInfoSelector,
+  lectureCommonSelectorFamily,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
 import addCashComma from '@/src/lib/utils/addCashComma';
@@ -13,7 +13,9 @@ import addCashComma from '@/src/lib/utils/addCashComma';
 const SelectStudentsNumber = () => {
   const [studentNumber, setStudentNumber] = useRecoilState(studentNumberState);
   const classScheduleState = useRecoilValue(getTheSameClassScheduleState);
-  const { price } = useRecoilValue(lectureInfoSelector);
+  const { contents } = useRecoilValueLoadable(
+    lectureCommonSelectorFamily('Info'),
+  );
   const limitNumber =
     classScheduleState[0]?.maxNumber - classScheduleState[0]?.currentNumber;
   const increaseNumber = () => {
@@ -63,7 +65,9 @@ const SelectStudentsNumber = () => {
             <Entype name="plus" size={20} color={'#207AB4'} />
           </TouchableOpacity>
         </View>
-        <Text>{addCashComma(price * studentNumber)}원</Text>
+        <Text>
+          {contents ? addCashComma(contents.price * studentNumber) : 0}원
+        </Text>
       </View>
     </View>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { PopularLectures as styles, shadow } from './styles';
 import { PopularLectureProps } from './types';
@@ -8,7 +8,11 @@ import InfoTags from './InfoTags';
 
 const lectureExm = require('@assets/LectureExm.png');
 
-export const PopularLecture = ({
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
+
+const PopularLecture = ({
+  id,
   title = '프리다이빙',
   organization = 'AIDA',
   level = 'level1',
@@ -16,17 +20,25 @@ export const PopularLecture = ({
   maxNumber = 4,
   lectureTime = 8,
   equipmentNames = ['아쿠아슈즈', '잠수복'],
-  image,
-  reviewAvg = 4.5,
-  reviewCount = 56,
+  imageUrl,
+  isMarked,
+  price,
+  starAvg = 0,
+  reviewCount = 0,
 }: PopularLectureProps) => {
+  const navigation = useNavigation();
+
   return (
-    <View style={[shadow, { marginRight: 5 }]}>
+    <TouchableOpacity
+      style={[shadow, { marginRight: 5 }]}
+      activeOpacity={0.7}
+      onPress={() => navigation.navigate('LectureDetail', { lectureId: id })}
+    >
       <View style={styles.lectureContainer}>
         {/* 이미지 */}
         <View style={styles.imageContainer}>
           <Image
-            source={image ? { uri: image } : lectureExm}
+            source={imageUrl ? { uri: imageUrl } : lectureExm}
             style={styles.image}
           />
         </View>
@@ -41,7 +53,7 @@ export const PopularLecture = ({
             region={region}
             maxNumber={maxNumber}
             lectureTime={lectureTime}
-            reviewAvg={reviewAvg}
+            starAvg={starAvg}
             reviewCount={reviewCount}
             containerStyle={styles.tagContainer}
           />
@@ -50,11 +62,35 @@ export const PopularLecture = ({
           <Heart containerStyle={styles.heart} />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 export default function PopularLectureList() {
+  const [lectures, setLectures] = useState<PopularLectureProps[]>();
+  useLayoutEffect(() => {
+    try {
+      const fetch = async () => {
+        const res = await axios.get(
+          'http://52.79.225.4:8081/lecture/popular/list?page=0&size=5',
+          {
+            headers: {
+              // IsRefreshToken: false,
+              Authorization: null,
+            },
+          },
+        );
+
+        const status = res.status;
+        if (status !== 200) throw new Error('인기강의 조회 에러');
+        setLectures(res.data._embedded.lectureInfoList);
+      };
+      fetch();
+    } catch (e) {
+      console.log('인기강의 조회 에러');
+    }
+  }, []);
+
   return (
     <View style={styles.container}>
       {/* 헤더 */}
@@ -66,11 +102,25 @@ export default function PopularLectureList() {
       </View>
       {/* 인기 강의 리스트 */}
       <ScrollView>
-        <PopularLecture />
-        <PopularLecture />
-        <PopularLecture />
-        <PopularLecture />
-        <PopularLecture />
+        {lectures &&
+          lectures.map(lecture => (
+            <PopularLecture
+              id={lecture.id}
+              title={lecture.title}
+              organization={lecture.organization}
+              level={lecture.level}
+              region={lecture.region}
+              maxNumber={lecture.maxNumber}
+              lectureTime={lecture.lectureTime}
+              equipmentNames={lecture.equipmentNames}
+              imageUrl={lecture.imageUrl}
+              isMarked={lecture.isMarked}
+              price={lecture.price}
+              period={lecture.period}
+              starAvg={lecture.starAvg}
+              reviewCount={lecture.reviewCount}
+            />
+          ))}
       </ScrollView>
     </View>
   );

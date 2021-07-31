@@ -2,24 +2,30 @@ import { Modal, Pressable, ScrollView, View } from 'react-native';
 import { LoginWithEmailProps } from '@navigators/LoginStack/types';
 import { PwForgot, LoginButton, PWInput } from '@components/LoginWithEmail';
 import styles from './styles';
-import instance from '@/src/lib/api/axios';
+import instance, { getInstanceATK } from '@/src/lib/api/axios';
 import { LoginButtonProps } from '@/src/components/LoginWithEmail/types';
 
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { IsLogin, IsInstructor } from '@/src/recoil/Global';
 
 import jwt_decode from 'jwt-decode';
 import { JWToken } from './types';
-import React, { useState } from 'react';
+import axios from 'axios';
+
+import React, { useEffect, useState } from 'react';
 import { ModalContainer } from '../ReserveLecture';
 import AsyncStorage from '@react-native-community/async-storage';
-// import { getToken } from '@/src/lib/firebase/FCM';
 import * as FCM from '@lib/firebase/FCM';
+import { emailState, isCheckedSaveEmailState } from '@/src/recoil/LoginStack';
 
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   const setIsLogin = useSetRecoilState(IsLogin);
   const setIsInstructor = useSetRecoilState(IsInstructor);
   const [isError, setIsError] = useState<boolean>(false);
+  const [toggleCheckBox, setToggleCheckBox] = useRecoilState(
+    isCheckedSaveEmailState,
+  ); // true 이면 로그인시 asyncStorage에 이메일 저장.
+  const email = useRecoilValue(emailState);
 
   const requestLogin: LoginButtonProps['requestLogin'] = async (
     email,
@@ -35,16 +41,12 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
       });
       if (login?.data?.access_token) {
         const atk = login.data.access_token;
+        axios.defaults.headers.common.Authorization = atk;
         const decoded: JWToken = jwt_decode(atk);
-
         await AsyncStorage.setItem('atk', atk);
+        const fcmToken = await FCM.getToken();
 
-        console.log('atk : ', atk);
-
-        await AsyncStorage.setItem('token', atk);
-        setIsLogin(true);
-        const fcm = await FCM.getToken();
-        console.log('fcm Token : ', fcm);
+        console.log('fcm Token : ', fcmToken);
 
         if (decoded.authorities.includes('ROLE_INSTRUCTOR')) {
           setIsInstructor(true);
@@ -52,8 +54,11 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
         } else {
           await AsyncStorage.setItem('instructor', 'student');
         }
-
+        await requestFireBase(fcmToken);
         setIsLogin(true);
+
+        if (toggleCheckBox) await AsyncStorage.setItem('savedEmail', email);
+        else await AsyncStorage.removeItem('savedEmail');
       }
     } catch (e) {
       console.log(e.response.data);
@@ -81,3 +86,15 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   );
 };
 export default LoginWithEmailScreen;
+
+const requestFireBase = async (fcmToken: string) => {
+  try {
+    const instanceATK = await getInstanceATK();
+    const body = { token: fcmToken };
+    const { data } = await instanceATK.post('/sign/firebase-token', body);
+    console.log(data);
+  } catch (e) {
+    console.log(e);
+    throw Error(e);
+  }
+};

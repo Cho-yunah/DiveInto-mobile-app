@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useRecoilState } from 'recoil';
 
 import { commonButton as styles } from '../styles';
 import { ShowOutputModalProps } from './types';
 import CommonModal from '@components/common/CommonModal';
+import { outputViewModalOpenState } from '@recoil/ProfileStack';
 
-export default function ShowOutpuModal({ title, desc }: ShowOutputModalProps) {
-  const [show, setShow] = useState(false);
+export default function ShowOutpuModal({
+  title,
+  desc,
+  onExecute,
+}: ShowOutputModalProps) {
+  const [show, setShow] = useRecoilState(outputViewModalOpenState);
 
-  const toggleShowModal = (): void => {
+  const toggleShowModal = () => {
     setShow(!show);
   };
 
@@ -28,6 +34,7 @@ export default function ShowOutpuModal({ title, desc }: ShowOutputModalProps) {
         mode="output"
         desc={desc}
         toggleShowModal={toggleShowModal}
+        onClickConfirm={onExecute}
       />
     </View>
   );

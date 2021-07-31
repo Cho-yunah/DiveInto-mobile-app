@@ -1,5 +1,5 @@
 import { multiImageSelect } from '@/src/lib/file';
-import { picsArrState } from '@/src/recoil/ReviewStack';
+import { picsArrState } from '@/src/recoil/ProfileStack';
 import React, { useState } from 'react';
 import {
   Image,
