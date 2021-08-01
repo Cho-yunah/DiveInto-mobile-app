@@ -58,7 +58,7 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
       <Tab.Screen 
         name="궁금해요"
         component={QuestionaryContents}
-        
+        initialParams={{question: 'question'}}
         />
     </Tab.Navigator>
     </View>
@@ -70,8 +70,9 @@ const SharedContents = ({route}: any) => {
   return (<CommunityMain share={share} /> )
 }
 
-const QuestionaryContents = () => {
-  // return (<CommunityMain />)
+const QuestionaryContents = ({route}: any) => {
+  const question = route.params.question
+  // return (<CommunityMain question={question} />)
 return (<>
   <Text>not yet</Text>
 </>

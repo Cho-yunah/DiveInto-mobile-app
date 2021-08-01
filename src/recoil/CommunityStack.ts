@@ -199,6 +199,15 @@ export const commentTextState = atom({
   }
 })
 
+export const CommentTextSelector= selector({
+  key: 'CommentTextSelector',
+  get: ({get})  => {
+    const {content} = get(commentTextState);
+
+  return {content}
+  }
+})
+
 export const showModalState = atom({
   key: 'showModalState',
   default: false

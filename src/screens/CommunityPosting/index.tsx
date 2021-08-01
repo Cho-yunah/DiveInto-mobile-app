@@ -4,11 +4,12 @@ import styles  from './styles';
 import { CommunityPostingProps } from '@navigators/CommunityStack/types';
 import  { SelectBox, TitleAndContents, AddImages}  from '@components/CommunityPosting';
 import NextButton from '@components/common/NextButton';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { communityListState, ImageArrState, postingFormSelector, postingFormState } from '@/src/recoil/CommunityStack';
-import { getFormData, requestPostCommunity } from '@components/CommunityPosting/requestPostCommunityImages';
-import instance from '@/src/lib/api/axios';
-import { useEffect } from 'react';
+import {useRecoilValue, useSetRecoilState } from 'recoil';
+import { communityListState, ImageArrState, postingFormSelector } from '@/src/recoil/CommunityStack';
+import { getFormData, requestEditCommunity, requestPostCommunity } from '@components/CommunityPosting/requestPostCommunityImages';
+
+
+type IdType = number
 
 export default function CommunityPostingScreen({route, navigation}: CommunityPostingProps): ReactElement {
   const [isCompleted, setIsCompleted] = useState(false);
@@ -53,15 +54,17 @@ export default function CommunityPostingScreen({route, navigation}: CommunityPos
 
  // 글 수정 완료
   const editingComplete = async() => {
-    console.log(id)
+    // console.log(id)
     setIsCompleted(allPostingFormFilled);
+
     try{
-      const response = await instance.put(`/community/post/${id}`,);
-      const postingData= response.data.postResource
-      // console.log('response',response.data.postResource)
+      const body= postingInfo
+      const editingData = await requestEditCommunity(body, id)
+      console.log(editingData)
+
       setCommunityList((oldCommunityList) => [
         ...oldCommunityList,
-        postingData
+        editingData
       ]);
       navigation.navigate('CommunityMain');
     } catch(e) {
@@ -84,7 +87,8 @@ export default function CommunityPostingScreen({route, navigation}: CommunityPos
       <View style={styles.contentsAll}>
         <SelectBox id={id}/>
         <TitleAndContents id={id}/>
-        <AddImages id={id} />
+        {id? <View></View> : <AddImages id={id} />}
+        {/* <AddImages id={id} /> */}
       </View>
   </ScrollView>
   )

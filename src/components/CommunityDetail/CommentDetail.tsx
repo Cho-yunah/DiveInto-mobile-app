@@ -1,5 +1,5 @@
 import { commentState } from '@/src/recoil/CommunityStack';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FlatList } from 'react-native';
 import { View,} from 'react-native';
 import { useRecoilValue } from 'recoil';
@@ -8,8 +8,9 @@ import {CommentItem} from './CommentItem'
 
 export default function CommentDetail({id}) { 
   useRequestComments({id})
+
   const commentList = useRecoilValue(commentState)
-  console.log(commentList)
+  // console.log(commentList)
 
   return (
     <View >

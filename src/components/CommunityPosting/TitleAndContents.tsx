@@ -1,14 +1,12 @@
 import { communityItemSelector, postingFormState } from '@/src/recoil/CommunityStack'
-import React, { useEffect, useLayoutEffect } from 'react'
+import React, { useEffect } from 'react'
 import { View, TextInput } from 'react-native'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import {styles} from './styles'
 
 export default function TitleAndContents({id}: any) {
- 
   const {title, content} = useRecoilValue(communityItemSelector)
-  console.log(title)
-  console.log(content)
+
   return (
     <>
       <Title title={title} id={id}/>

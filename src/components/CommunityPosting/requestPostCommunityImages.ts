@@ -10,6 +10,10 @@ type RequestPostCommunityType = {
   (body: PostingBodyType):Promise<ContentItem>
 }
 
+type RequestEditCommunityType= {
+  (body: PostingBodyType, id: number) : Promise<ContentItem>
+}
+
 export const getFormData = (
   images: ImageArrStateType[],
 ): FormData => {
@@ -49,3 +53,27 @@ export const requestPostCommunity: RequestPostCommunityType =
       console.log(e.response)
     }
   };
+
+  export const requestEditCommunity: RequestEditCommunityType = async (body: PostingBodyType, id: number) => {
+    const instanceAtk = await getInstanceATK();
+    console.log(body)
+    console.log(id)
+
+    try {
+      const {data} = await instanceAtk.put(`/community/post/${id}`, body)
+      return data.postResource
+    } catch(e) {
+      console.log(e.response)
+    }
+  }
+
+  export const requestDeleteCommunity= async (id: number) => {
+    const instanceAtk = await getInstanceATK();
+    console.log(id)
+  
+    try{
+      const res = await instanceAtk.delete(`/community/post/${id}`)
+    } catch(e) {
+      console.log(e.response)
+    }
+  }
