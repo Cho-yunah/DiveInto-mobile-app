@@ -161,6 +161,10 @@ export const ImageState = atom({
 })
 
 // 상세 페이지 
+export const showModalState = atom({
+  key: 'showModalState',
+  default: false
+})
 export const commentState = atom<commentListType[]>({
   key: 'commentState',
   default: []
@@ -208,7 +212,7 @@ export const CommentTextSelector= selector({
   }
 })
 
-export const showModalState = atom({
-  key: 'showModalState',
+export const commentRequestState = atom({
+  key: 'commentRequestState',
   default: false
 })

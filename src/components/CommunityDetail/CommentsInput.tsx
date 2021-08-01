@@ -1,28 +1,22 @@
-import instance, { getInstanceATK } from '@/src/lib/api/axios';
-import { commentTextState } from '@/src/recoil/CommunityStack';
-import React, { useRef } from 'react'
+import { getInstanceATK } from '@/src/lib/api/axios';
+import { commentRequestState, commentTextState } from '@/src/recoil/CommunityStack';
+import React, { useRef, useState } from 'react'
 import {KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import {CommentInputStyle as styles} from './styles'
 
 export default function CommentsInput({id}) {
   const [comment, setComment] = useRecoilState(commentTextState)
   const postId = id
+  const [RequestSuccess, setRequestSuccess] = useRecoilState(commentRequestState)
 
+  // 댓글 추가
   const addComment= async()=> {
     const instanceAtk = await getInstanceATK();
     try{
-      // 댓글 post
       const data = await instanceAtk.post(`/community/comment/post/${postId}`, comment)
-      // console.log(data)
-
-      // 댓글 목록 조회 재요청
-      const commentResource = await instance.get(`/community/comment/post/${id}?page=0&size=5`)
-      console.log(commentResource)
-      commentResource.data._embedded
-      && setComment(commentResource.data._embedded.commentsModelList)
-   
+      setRequestSuccess(true)  
     } catch(e) {
       console.log(e)
     }

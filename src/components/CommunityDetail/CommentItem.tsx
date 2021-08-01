@@ -1,31 +1,23 @@
 import React from 'react'
-import { atkState, commentItemType, commentState, commentTextState } from "@/src/recoil/CommunityStack"
+import { commentItemType, commentRequestState, commentState, commentTextState } from "@/src/recoil/CommunityStack"
 import { Image, View, Text, TouchableOpacity } from "react-native"
 import {CommentDetailStyles as styles} from './styles'
 import { TimeOfWriting } from '@components/CommunityMain/TimeOfWriting'
-import instance, { getInstanceATK } from '@/src/lib/api/axios'
+import { getInstanceATK } from '@/src/lib/api/axios'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, commentId }: commentItemType)=> {
   const editingComment= useRecoilValue(commentTextState)
   const [commentList, setCommentList] = useRecoilState(commentState)
-  
-  // const token = useRecoilValue(atkState)
-  // const config = {
-  //   headers: {
-  //     Authorization: token,
-  //     'Content-Type': 'application/json'
-  //   }
-  // }
+  const [RequestSuccess, setRequestSuccess] = useRecoilState(commentRequestState)
 
+  // 댓글 삭제
   const requestDelete = async() => {
     const instanceAtk = await getInstanceATK();
-    console.log('delete!')
     console.log(commentId)
     try {
       await instanceAtk.delete(`/community/comment/${commentId}`)
-      setCommentList(commentList.filter(item => item.accountModel.id !== commentId))
-   
+      setRequestSuccess(true) 
     } catch(e) {
       console.log(e)
     }
