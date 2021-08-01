@@ -1,21 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Pressable, Text, View, Image, TouchableOpacity} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {styles} from './styles'
 import {multiImageSelect} from '@lib/file/filePicker'
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { ImageArrState, ImageState } from '@/src/recoil/CommunityStack';
+import { useRecoilState } from 'recoil';
+import { ImageArrState } from '@/src/recoil/CommunityStack';
 
-export default function AddImages ({id}) {
+export default function AddImages () {
   const [imageArr, setImageArr]= useRecoilState(ImageArrState);
   const [isLoading, setIsLoading] = useState(false)
-
-  const beforeEditingImageArr = useRecoilValue(ImageState)
-  console.log(beforeEditingImageArr)
-  
-  // useEffect(()=> {
-  //   beforeEditingImageArr && setImageArr(...beforeEditingImageArr)
-  // }, [])
   
   const selectImages = async () => {
     try {

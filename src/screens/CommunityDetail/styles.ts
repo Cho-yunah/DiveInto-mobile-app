@@ -6,6 +6,10 @@ import { StyleSheet } from 'react-native';
     flex: 1,
     position: 'relative',
   },
+  // likeButton: {
+  //   padding: 5,
+  //   marginRight: 12
+  // },
 
 });
 

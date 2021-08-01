@@ -3,32 +3,34 @@ import { atkState, commentItemType, commentState, commentTextState } from "@/src
 import { Image, View, Text, TouchableOpacity } from "react-native"
 import {CommentDetailStyles as styles} from './styles'
 import { TimeOfWriting } from '@components/CommunityMain/TimeOfWriting'
-import instance, { getInstanceATK } from '@/src/lib/api/axios'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import instance from '@/src/lib/api/axios'
+import { useRecoilValue } from 'recoil'
 
 export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, commentId }: commentItemType)=> {
   const editingComment= useRecoilValue(commentTextState)
-  const [commentList, setCommentList] = useRecoilState(commentState)
-  
-  // const token = useRecoilValue(atkState)
-  // const config = {
-  //   headers: {
-  //     Authorization: token,
-  //     'Content-Type': 'application/json'
-  //   }
-  // }
+  const token = useRecoilValue(atkState)
+  const config = {
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/json'
+    }
+  }
 
   const requestDelete = async() => {
-    const instanceAtk = await getInstanceATK();
     console.log('delete!')
     console.log(commentId)
     try {
-      await instanceAtk.delete(`/community/comment/${commentId}`)
-      setCommentList(commentList.filter(item => item.accountModel.id !== commentId))
-   
+      const response = await instance.delete(`/community/comment/${commentId}`, config )
     } catch(e) {
       console.log(e)
     }
+  }
+  const requestEdit = async() => {
+    // try{
+    //   const response = await instance.put(`/community/post/${commentId}`,editingComment,config);
+    // } catch(e) {
+    //   console.log(e)
+    // }
   }
 
   return (

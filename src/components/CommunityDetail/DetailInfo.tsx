@@ -1,4 +1,6 @@
+import instance from '@/src/lib/api/axios';
 import {
+  atkState,
   communityItemSelector,
   communityListState,
   showModalState,
@@ -7,13 +9,13 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import CommonModal from '@components/common/CommonModal';
 import { DetailInfoStyle as styles } from './styles';
-import { requestDeleteCommunity } from '../CommunityPosting/requestPostCommunityImages';
 
 export default function DetailInfo({ id }) {
   const navigation = useNavigation();
+  const token = useRecoilValue(atkState);
   const [communityList, setCommunityList] = useRecoilState(communityListState);
   const { title, dateOfRegistration } = useRecoilValue(communityItemSelector);
   const writer = useRecoilValue(writerInfoState);
@@ -21,18 +23,25 @@ export default function DetailInfo({ id }) {
   const basicProfilelUrl =
     'https://img.freepik.com/free-vector/swimmer-dives-into-water-from-splash-watercolors-illustration-paints_291138-350.jpg?size=626&ext=jpg';
 
+  const config = {
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/json',
+    },
+  };
+
   const toggleShowModal = (): void => {
     setShow(!show);
   };
 
   const requestDelete = async () => {
     // console.log('delete!')
+    // console.log(id)
     try {
-      console.log(id)
-      requestDeleteCommunity(id)
+      const response = await instance.delete(`community/post/${id}`, config);
+      // console.log(response)
       setCommunityList(communityList.filter(item => item.id !== id));
       navigation.navigate('CommunityMain');
-      setShow(!show); //모달 닫기
     } catch (e) {
       console.log(e);
     }

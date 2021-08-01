@@ -22,7 +22,7 @@ export const useRequestCommunityList = ({share}): ContentItem[] => {
       try {
         // console.log('listPage', listPage)
         const {data} = await instance.get(url);
-        // console.log('data', data) 
+        console.log('data', data) 
 
         data._embedded 
         && setCommunityList((list)=>

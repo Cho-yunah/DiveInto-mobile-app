@@ -1,25 +1,30 @@
 import { communityItemSelector, postingFormState } from '@/src/recoil/CommunityStack'
-import React, { useEffect } from 'react'
+import React from 'react'
+import { useLayoutEffect } from 'react'
 import { View, TextInput } from 'react-native'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRequestCommunityItem } from '../CommunityDetail/useRequestCommunityItem'
 import {styles} from './styles'
 
 export default function TitleAndContents({id}: any) {
+
+  // 상세 페이지에서 수정 요청을 보낼때 해당 글 정보받아오기 
+  id && useRequestCommunityItem(id) 
   const {title, content} = useRecoilValue(communityItemSelector)
 
   return (
     <>
-      <Title title={title} id={id}/>
-      <Content content={content} id={id}/>
+      <Title title={title}/>
+      <Contents content={content}/>
     </>
   )
 }
 
-const Title = ({title, id}: any) => {
-  const [fillTitle, setFillTitle] = useRecoilState(postingFormState('title')) 
-  
-  useEffect(() => {
-     id? setFillTitle(title) : setFillTitle('')
+const Title = ({title}: any) => {
+  const [fillTitle, setFillTitle] = useRecoilState(postingFormState('title'))
+
+  useLayoutEffect(() => {
+    setFillTitle(title)
   }, [])
  
   return (
@@ -38,10 +43,11 @@ const Title = ({title, id}: any) => {
   )
 }
 
-const Content = ({content, id}:any) => {
-  const [fillContent, setFillContent] = useRecoilState(postingFormState('content'));
-  useEffect(() => {
-    id? setFillContent(content) : setFillContent('')
+const Contents = ({content}:any) => {
+  const [fillContents, setFillContents] = useRecoilState(postingFormState('contents'));
+
+  useLayoutEffect(() => {
+    setFillContents(content)
   }, [])
 
   return (
@@ -54,8 +60,8 @@ const Content = ({content, id}:any) => {
         numberOfLines={10}
         placeholderTextColor='#D8D8D8' 
         multiline={true}
-        onChangeText={text => setFillContent( text )}
-        value={ fillContent.toString()}
+        onChangeText={text => setFillContents( text )}
+        value={ fillContents.toString()}
         />
     </View>
   )
