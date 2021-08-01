@@ -1,35 +1,31 @@
-import instance from '@/src/lib/api/axios';
-import { atkState, commentState, commentTextState } from '@/src/recoil/CommunityStack';
+import instance, { getInstanceATK } from '@/src/lib/api/axios';
+import { commentTextState } from '@/src/recoil/CommunityStack';
 import React, { useRef } from 'react'
 import {KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {CommentInputStyle as styles} from './styles'
-import { useRequestComments } from './useRequestComments';
 
 export default function CommentsInput({id}) {
-  const token = useRecoilValue(atkState)
-  const [commentText, setCommentText] = useRecoilState(commentTextState)
+  const [comment, setComment] = useRecoilState(commentTextState)
   const postId = id
 
-
-  const config= { 
-    headers: {
-      Authorization: token,
-      'Content-Type': 'application/json'
-    }
-  }
-
-  console.log(postId)
   const addComment= async()=> {
-    console.log('comment added!')
+    const instanceAtk = await getInstanceATK();
     try{
-      const response = await instance.post(`/community/comment/post/${postId}`, commentText, config);
-      console.log(response)
+      // 댓글 post
+      const data = await instanceAtk.post(`/community/comment/post/${postId}`, comment)
+      // console.log(data)
+
+      // 댓글 목록 조회 재요청
+      const commentResource = await instance.get(`/community/comment/post/${id}?page=0&size=5`)
+      console.log(commentResource)
+      commentResource.data._embedded
+      && setComment(commentResource.data._embedded.commentsModelList)
+   
     } catch(e) {
       console.log(e)
     }
-    useRequestComments({id})
   }
 
   return (
@@ -40,12 +36,12 @@ export default function CommentsInput({id}) {
       <TextInput 
         placeholder='댓글을 입력하세요' 
         style={styles.commentInputBox}
-        onChangeText={text => setCommentText({content: text})} 
+        onChangeText={text => setComment({content: text})} 
         multiline
-        value={commentText.content}
+        value={comment.content}
       />
       <TouchableOpacity onPress={addComment}>
-        <AntDesign name='arrowright' style={commentText? styles.activeArrowIcon:styles.arrowIcon}/>  
+        <AntDesign name='arrowright' style={comment? styles.activeArrowIcon:styles.arrowIcon}/>  
       </TouchableOpacity>
     </KeyboardAvoidingView>
   )}
