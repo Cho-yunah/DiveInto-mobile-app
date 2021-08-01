@@ -4,14 +4,15 @@ import {
   TotalSumOfMoney,
 } from '@/src/components/RequestPayment';
 import { RequestPaymentProps } from '@/src/navigators/LectureStack/types';
+import { smallModalMessageState } from '@/src/recoil/LectureStack';
 import React from 'react';
-import { useState } from 'react';
-import { Modal, Pressable, View } from 'react-native';
-import { ModalContainer } from '../ReserveLecture';
+import { View } from 'react-native';
+import { useSetRecoilState } from 'recoil';
+import { AlertModal } from '../ReserveLecture';
 import styles from './styles';
 
 const index = ({ navigation }: RequestPaymentProps) => {
-  const [errorMsg, setErrorMsg] = useState('');
+  const setErrorMsg = useSetRecoilState(smallModalMessageState);
   return (
     <View style={styles.container}>
       {/* 강의 제목, 예약 일정 내용, 대여장비 */}
@@ -20,18 +21,7 @@ const index = ({ navigation }: RequestPaymentProps) => {
       <TotalSumOfMoney />
       {/* 결제하기 버튼 */}
       <PayButton setErrorMsg={setErrorMsg} />
-      {!!errorMsg && (
-        <>
-          <Modal visible={!!errorMsg} transparent={true} animationType={'fade'}>
-            <Pressable
-              onPress={() => setErrorMsg('')}
-              style={styles.modalOuterContainer}
-            >
-              <ModalContainer message={errorMsg} />
-            </Pressable>
-          </Modal>
-        </>
-      )}
+      <AlertModal />
     </View>
   );
 };

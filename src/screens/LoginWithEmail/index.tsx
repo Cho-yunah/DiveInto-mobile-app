@@ -47,6 +47,7 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
         const fcmToken = await FCM.getToken();
 
         console.log('fcm Token : ', fcmToken);
+        console.log(await AsyncStorage.getItem('atk'));
 
         if (decoded.authorities.includes('ROLE_INSTRUCTOR')) {
           setIsInstructor(true);

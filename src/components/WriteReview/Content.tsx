@@ -19,6 +19,7 @@ const Content = () => {
           if (e.length > 150) return;
           setContent(e);
         }}
+        maxLength={150}
         spellCheck={false}
       />
       <View style={styles.textLengthView}>

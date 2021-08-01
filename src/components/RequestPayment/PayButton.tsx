@@ -1,12 +1,15 @@
 import { getInstanceATK } from '@/src/lib/api/axios';
 import {
   cachingState,
+  cachingStateFormClassScheduleState,
   currScheduleIdState,
+  currSelectedDateState,
   getEquipmentsState,
   lectureIdState,
   rentEquipmentInfosType,
   requestReservationEquipmentDetailType,
   requestReservationEquipmentState,
+  schedulesByIdState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
 import { PayButtonProps } from '@/src/screens/RequestPayment/types';
@@ -25,6 +28,12 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
   const currScheduleId = useRecoilValue(currScheduleIdState);
   const numberOfPeople = useRecoilValue(studentNumberState);
   const setCaching = useSetRecoilState(cachingState);
+  const setCachingSchedule = useSetRecoilState(
+    cachingStateFormClassScheduleState,
+  );
+  const setScheduleById = useSetRecoilState(schedulesByIdState);
+  const setCurrSelectedDate = useSetRecoilState(currSelectedDateState);
+
   const [isLoading, setIsLoading] = useState(false);
   let flag = useRef(false);
   equipmentsState.forEach(equip =>
@@ -47,6 +56,7 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
       const instanceAtk = await getInstanceATK();
       const { data } = await instanceAtk.post('/reservation', body);
       console.log(data);
+      flag.current = true;
     } catch (e) {
       console.log(e.response.data);
       if (e.response.data.success === false) {
@@ -59,7 +69,13 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
 
   useEffect(() => {
     return () => {
-      if (flag.current) setCaching(cache => cache + 1);
+      if (flag.current) {
+        // 에러 발생해서 뒤로가기 할 경우 & 강의 예약이 성공한 경우 최신 강의정보(일정, 인원)를 다시 받아온다.
+        // 에러 발생시 강의 일정 선택으로 보내기. 성공시 메인화면으로 보낸다.
+        setCurrSelectedDate('');
+        setCaching(cache => cache + 1);
+        setCachingSchedule(cache => cache + 1);
+      }
     };
   }, []);
 
