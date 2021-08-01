@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { mainHeaderStyles as styles, lecturerHeaderStyles } from './styles';
 import { HeaderContainerProps } from './types';
@@ -13,7 +13,7 @@ export default function Header({
   currScreen,
   buttonText,
 }: HeaderContainerProps) {
-  const [imageURI, setImageURI] = useRecoilState(ProfileImageURIState);
+  const setImageURI = useSetRecoilState(ProfileImageURIState);
   const atk = useRecoilValue(atkState);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function Header({
           currScreen === 'lecturer' && lecturerHeaderStyles.headerContainer,
         ]}
       >
-        {imageURI && <ProfileImg />}
+        <ProfileImg />
         <UploadImgBtn buttonText={buttonText} />
       </View>
     </View>
