@@ -58,7 +58,6 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
             nickname={userInfo?.nickname}
             phone={userInfo?.phone}
             type={isInstructor === 'instructor' ? 'instructor' : 'student'}
-            // type={true ? 'instructor' : 'student'}
           />
         </SafeAreaView>
       )}

@@ -35,6 +35,11 @@ export type instructorImageCollectionType = {
   name: string;
 };
 
+export type deleteReasonStateType =
+  | '원하는 정보가 존재하지 않아서'
+  | '사용하기 불편해서'
+  | '현재 사용하지 않는 앱이라서';
+
 export const userInfoAtom = atom<userInfoProps | null>({
   key: 'userInfoAtom',
   default: {
@@ -110,6 +115,52 @@ export const WaitingCERTInstructorState = atom<'none' | 'done'>({
   default: 'none',
 });
 
+// 로그아웃 모달 on/off 상태
+export const logoutModalOpenState = atom({
+  key: 'logoutModalOpenState',
+  default: false,
+});
+
+// 회원탈퇴 모달 on/off 상태
+export const deleteModalOpenState = atom({
+  key: 'deleteModalOpenState',
+  default: false,
+});
+
+// 탈퇴 이유 dropdown 배열 상태
+export const deleteReasonState = atom<deleteReasonStateType | null>({
+  key: 'deleteReason',
+  default: null,
+});
+
+// 기타 탈퇴 이유 textInput 상태
+export const etcDeleteReasonState = atom<string>({
+  key: 'EtcDeleteReason',
+  default: '',
+});
+
+// 회원 탈퇴를 위한 PW 확인 상태
+export const deletePasswordState = atom<string>({
+  key: 'deletePassword',
+  default: '',
+});
+
+// 회원 탈퇴 전에 작성해야 하는 조건 selector
+export const deleteUserConditionSelector = selector({
+  key: 'deleteUserCondition',
+  get: ({ get }) => {
+    const password = get(deletePasswordState);
+    const selectOption = get(deleteReasonState);
+    const etcOption = get(etcDeleteReasonState);
+
+    if ((etcOption || selectOption) && password) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+});
+
 // 후기작성 스크린
 export type PicsArrStateType = {
   size: number;
@@ -135,10 +186,5 @@ export const picsArrState = atom<PicsArrStateType[]>({
 
 export const isModalOpenState = atom({
   key: 'isModalOpen',
-  default: false,
-});
-
-export const outputViewModalOpenState = atom({
-  key: 'outputViewModalOpen',
   default: false,
 });

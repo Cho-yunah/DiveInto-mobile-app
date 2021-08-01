@@ -6,20 +6,29 @@ import { useNavigation } from '@react-navigation/native';
 
 import { styles } from './styles';
 import ShowOutputModal from './ShowOutputModal';
-import { outputViewModalOpenState } from '@/src/recoil/ProfileStack';
+import {
+  logoutModalOpenState,
+  deleteModalOpenState,
+} from '@/src/recoil/ProfileStack';
 
 export default function Output() {
   const navigation = useNavigation();
-  const setShow = useSetRecoilState(outputViewModalOpenState);
+  const setLogoutShow = useSetRecoilState(logoutModalOpenState);
+  const setDeleteShow = useSetRecoilState(deleteModalOpenState);
 
   const onExecuteLogout = async () => {
     try {
       await AsyncStorage.removeItem('atk');
-      setShow(false);
+      setLogoutShow(false);
     } catch (err) {
       console.log(err);
     }
     console.log('logout');
+  };
+
+  const onExecuteDelete = () => {
+    navigation.navigate('DeleteAccount');
+    setDeleteShow(false);
   };
 
   return (
@@ -32,7 +41,7 @@ export default function Output() {
       <ShowOutputModal
         title="회원탈퇴"
         desc="회원탈퇴 하시겠습니까?"
-        onExecute={onExecuteLogout}
+        onExecute={onExecuteDelete}
       />
     </View>
   );
