@@ -11,17 +11,20 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 const Stack = createStackNavigator<RootCommunityStack>();
 
-export default function CommunityStack({navigation,route}: any) {
-
+export default function CommunityStack({ navigation, route }: any) {
   // community posting, community detail page 일때,
   // bottom navigation bar hiding
-  useEffect (()=> {
+  useEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
     navigation.setOptions(
-      (routeName && routeName === 'CommunityDetail'? { tabBarVisible: false} : {tabBarVisible: true}) ||
-      (routeName && routeName === 'CommunityPosting'? {tabBarVisible: false} : {tabBarVisible: true})
-    )
-  },[navigation, route]) 
+      (routeName && routeName === 'CommunityDetail'
+        ? { tabBarVisible: false }
+        : { tabBarVisible: true }) ||
+        (routeName && routeName === 'CommunityPosting'
+          ? { tabBarVisible: false }
+          : { tabBarVisible: true }),
+    );
+  }, [navigation, route]);
 
   return (
     <RecoilRoot>
@@ -41,7 +44,7 @@ export default function CommunityStack({navigation,route}: any) {
             fontWeight: 'bold',
             backgroundColor: '#50CAD2',
           },
-          headerTintColor: '#fefefe',          
+          headerTintColor: '#fefefe',
         }}
       >
         <Stack.Screen
@@ -62,7 +65,7 @@ export default function CommunityStack({navigation,route}: any) {
           name="CommunityDetail"
           component={CommunityDetailScreen}
           options={{
-            title: '',
+            title: '커뮤니티 상세',
           }}
         />
       </Stack.Navigator>

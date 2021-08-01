@@ -33,7 +33,8 @@ export default function LastLectureScreen() {
                   nickname={item.instructorNickname}
                 />
               }
-              type="next"
+              type="last"
+              reservationId={item.reservationId}
             ></TouchSwipe>
           );
         }}

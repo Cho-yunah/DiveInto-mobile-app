@@ -33,6 +33,7 @@ export default function NextLectureScreen() {
                 />
               }
               type="next"
+              reservationId={item.reservationId}
             ></TouchSwipe>
           );
         }}

@@ -25,6 +25,8 @@ const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
   const { lectureId } = route.params;
   const setLectureId = useSetRecoilState(lectureIdState);
 
+  console.log(lectureId);
+
   const navigateToReserveLecture = () =>
     navigation.navigate('ReserveLecture', { lectureId });
 

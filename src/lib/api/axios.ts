@@ -15,4 +15,17 @@ export const getInstanceATK = async (): Promise<AxiosInstance> => {
 
   return instaceATK;
 };
+
+// 사용 가능한가 ??
+// export const requestDeleteInBody = async (payload: {
+//   string: any;
+// }): Promise<AxiosInstance> => {
+//   const instancePayload = axios.create({
+//     baseURL,
+//     headers: { Authorization: await AsyncStorage.getItem('atk') },
+//     data: payload,
+//   });
+
+//   return instancePayload;
+// };
 export default instance;

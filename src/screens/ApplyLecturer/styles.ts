@@ -12,3 +12,21 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+export const CERTInstructorStyle = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: Color.BlackText,
+    lineHeight: 30,
+  },
+  desc: {
+    lineHeight: 30,
+    color: Color.BlackText,
+  },
+});
