@@ -40,12 +40,27 @@ export type deleteReasonStateType =
   | '사용하기 불편해서'
   | '현재 사용하지 않는 앱이라서';
 
+export type modifyNumViewStateAtomType = {
+  phoneNumber: string;
+  birth: string;
+  gender: string;
+};
+
 export const userInfoAtom = atom<userInfoProps | null>({
   key: 'userInfoAtom',
   default: {
     email: '',
     nickname: '',
     phone: '',
+  },
+});
+
+export const modifyNumViewStateAtom = atom<modifyNumViewStateAtomType | null>({
+  key: 'userInfoAtom',
+  default: {
+    phoneNumber: '',
+    birth: '',
+    gender: '',
   },
 });
 
@@ -159,6 +174,12 @@ export const deleteUserConditionSelector = selector({
       return false;
     }
   },
+});
+
+
+export const PhoneNumState = atom<string>({
+  key: 'PhoneNum',
+  default: '',
 });
 
 // 후기작성 스크린

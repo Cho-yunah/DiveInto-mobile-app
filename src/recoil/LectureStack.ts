@@ -1,10 +1,14 @@
 import { AxiosResponse } from 'axios';
 import { atom, atomFamily, selector, selectorFamily } from 'recoil';
-import instance from '../lib/api/axios';
-
+import {
+  DateTimeInfoType,
+  MarkedDatesType,
+  ScheduleInfoType,
+} from '../components/ReserveLecture/types';
+import instance, { getInstanceATK } from '../lib/api/axios';
 export type LectureDetailPicsType = {
   url: string;
-  lectureImageId: number;
+  // lectureImageId: number;
 };
 export type lectureReviewType = {
   id: number;
@@ -15,14 +19,6 @@ export type lectureReviewType = {
   description: string;
   writeDate: string;
   reviewImageUrls: string[];
-};
-
-export type LectureInfoSelectorType = {
-  title: string;
-  organization: string;
-  level: string;
-  description: string;
-  price: number;
 };
 
 export type EquipmentStocksType = {
@@ -126,9 +122,8 @@ export const lectureCommonSelectorFamily = selectorFamily({
           : `/lectureImage/list?lectureId=${lectureId}`;
 
       try {
-        const { data }: AxiosResponse = await instance.get(url);
-
-        console.log(data);
+        const instanceATK = await getInstanceATK();
+        const { data }: AxiosResponse = await instanceATK.get(url);
 
         return data;
       } catch (e) {
@@ -152,17 +147,11 @@ export const lectureSortedReviewSelector = selector<lectureReviewType[]>({
       const { data }: AxiosResponse = await instance.get(
         `/review/list?lectureId=${lectureId}&page=0&size=4&sort=${sortBy}`,
       );
-      console.log(data, '리뷰 ㅂ열');
       return data?._embedded?.reviewInfoList || [];
     } catch (e) {
       console.log(e);
     }
   },
-});
-
-export const lectureReviewState = atom<lectureReviewType[]>({
-  key: 'lectureReview',
-  default: [],
 });
 
 // lectureCalendar
@@ -191,14 +180,12 @@ export const lectureScheduleListsSelector = selectorFamily({
 
       const year = get(currYearState);
       const month = get(currMonthState);
-      console.log(`현재 ${year}년 ${month}월`);
 
       try {
         const { data } = await instance.get(
           `/schedule?lectureId=${lectureId}&year=${year}&month=${month}`,
         );
 
-        console.log(data._embedded?.scheduleInfoList);
         return data._embedded?.scheduleInfoList || [];
       } catch (e) {
         console.log(e);
@@ -206,8 +193,13 @@ export const lectureScheduleListsSelector = selectorFamily({
     },
 });
 
+export const totalLectureScheduleListState = atom<any[]>({
+  key: 'totalLectureScheduleListState',
+  default: [],
+});
+
 // 달력에 스케쥴 표시되는 날짜 정보들
-export const markedDateState = atom<any>({
+export const markedDateState = atom<MarkedDatesType>({
   key: 'markedDate',
   default: {},
 });
@@ -224,43 +216,89 @@ export const currSelectedDateState = atom<string>({
   default: '',
 });
 
-// 같은 수업의 일정이 담긴 배열만 반환해주는 셀렉터
-export const getTheSameClassScheduleState = selector<
-  GetTheSameClassScheduleStateType[]
->({
-  key: 'getTheSameClassSchedule',
+// 날짜별 담은 배열 {'2021-01-01': [scheduleId, scheduleId, ...]}
+export type ScheduleIdObjType = {
+  [date: string]: number[];
+};
+export const scheduleIdObjState = atom<ScheduleIdObjType>({
+  key: 'scheduleArrayByIdState',
+  default: {},
+});
+
+export type SchedulesById = [
+  { scheduleId: number; currentNumber: number; maxNumber: number },
+  DateTimeInfoType[],
+];
+
+export const schedulesByIdState = atom<SchedulesById[]>({
+  key: 'schedulesByIdState',
+  default: [],
+});
+
+export const cachingStateFormClassScheduleState = atom({
+  key: 'cachingStateFormClassScheduleState',
+  default: 0,
+});
+export const getTheSameClassScheduleState = selector<SchedulesById[]>({
+  key: 'getAllClassByDates',
   get: ({ get }) => {
-    const markedDates = get(markedDateState);
-    let scheduleId = get(currScheduleIdState);
-    const currSelectedDate = get(currSelectedDateState);
-    const sameClassArr = [];
+    get(cachingStateFormClassScheduleState);
+    const currSelectedDate = get(currSelectedDateState); // 선택한 날짜
+    console.log(currSelectedDate);
 
-    if (!(currSelectedDate in markedDates)) return [];
+    if (!currSelectedDate) return [];
 
-    for (const s in markedDates) {
-      if (markedDates[s].scheduleId === scheduleId)
-        sameClassArr.push(markedDates[s]);
+    const scheduleIdObj = get(scheduleIdObjState); // 날짜별 수업id담은 객체
+    const scheduleById = [...get(schedulesByIdState)].reverse();
+    console.log(scheduleById, 'scheduleById');
+
+    let idArray: any[] = [];
+
+    // 선택한 날짜의 배열에 담긴 id값들을 저장.
+    if (scheduleIdObj[currSelectedDate]) {
+      idArray = [...new Set([...scheduleIdObj[currSelectedDate]])];
+
+      const result = idArray.map(id => {
+        return scheduleById.find(schedule => {
+          return schedule[0].scheduleId === id;
+        });
+      });
+      return result || [];
     }
+    return [];
+  },
+});
 
-    return sameClassArr;
+export const selectedClassByIdSelector = selector({
+  key: 'selectedClassByIdSelector',
+  get: ({ get }) => {
+    const scheduleId = get(currScheduleIdState);
+    const scheduleByIdObj = get(schedulesByIdState);
+
+    return (
+      scheduleByIdObj.find(schedule => schedule[0].scheduleId === scheduleId) ||
+      []
+    );
   },
 });
 
 // 현재 강의에서 제공해주는 대여 장비 목록
 export const getEquipmentsState = selectorFamily<EquipmentsType[], number>({
   key: 'getEquipments',
-  get: (lectureId: number) => async () => {
-    try {
-      const { data } = await instance.get(
-        `/equipment/list?lectureId=${lectureId}`,
-      );
-      console.log(data);
+  get:
+    (lectureId: number) =>
+    async ({ get }) => {
+      get(cachingState);
+      try {
+        const { data } = await instance.get(
+          `/equipment/list?lectureId=${lectureId}`,
+        );
 
-      return data._embedded.equipmentDtoList;
-    } catch (e) {
-      console.log(e);
-    }
-  },
+        return data._embedded.equipmentDtoList;
+      } catch (e) {
+        console.log(e);
+      }
+    },
 });
 
 // 현재 선택된 대여 장비 정보
@@ -302,4 +340,9 @@ export const requestReservationEquipmentState = atomFamily<
 export const studentNumberState = atom<number>({
   key: 'studentNumber',
   default: 1,
+});
+
+export const smallModalMessageState = atom<string>({
+  key: 'smallModalMessageState',
+  default: '',
 });

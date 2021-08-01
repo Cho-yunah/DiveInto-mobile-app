@@ -36,7 +36,7 @@ export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
     checkEmailValidation(text) ? setIsValid(true) : setIsValid(false);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const getSavedEmail = async () => {
       const savedEmail = await checkSavedEmail();
       console.log(savedEmail);

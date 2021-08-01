@@ -3,16 +3,20 @@ import { FlatList, View } from 'react-native';
 
 import { styles } from './styles';
 import { LectureLikeProps } from './types';
-import { PopularLecture } from '@components/MainList/Lecture/PopularLectureList';
+
 import instance from '@lib/api/axios';
 import { useRecoilValue } from 'recoil';
 import { atkState } from '@recoil/ProfileStack';
 import CommonLoading from '@components/common/CommonLoading';
 import CommonEmptyView from '@components/common/CommonEmptyView';
+import { PopularLecture } from '@components/MainList/Lecture/PopularLectureList';
 
 export default function LectureLikeScreen() {
   const atk = useRecoilValue(atkState);
   const [lectureList, setLectureList] = useState<[] | null>(null);
+
+  // isMarked, price, period 값이 lectureList에 있는지 확인 후 props로 넣어주기
+  console.log(lectureList);
 
   useEffect(() => {
     const getLikeLecture = async () => {

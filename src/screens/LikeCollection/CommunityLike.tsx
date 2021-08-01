@@ -15,7 +15,9 @@ export default function CommunityLikeScreen() {
   const atk = useRecoilValue(atkState);
   const [communityList, setCommunityList] = useState([]);
 
-  const moveDetailView = () => navigation.navigate('CommunityDetail');
+  const moveDetailView = () => {
+    navigation.navigate('CommunityDetail');
+  };
 
   useEffect(() => {
     const getLikeCommunity = async () => {

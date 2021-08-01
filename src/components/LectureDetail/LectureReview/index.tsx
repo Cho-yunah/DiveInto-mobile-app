@@ -71,24 +71,24 @@ const LectureReview = () => {
             <SortBySelector
               sortByText={'writeDate,DESC'}
               sortByTextKr={'최신순'}
-              isDisabled={!lectureReviews.contents.length}
+              isDisabled={!lectureReviews?.contents?.length}
             />
             <SortBySelector
               sortByText={'totalStarAvg,ASC'}
               sortByTextKr={'낮은평순'}
-              isDisabled={!lectureReviews.contents.length}
+              isDisabled={!lectureReviews?.contents?.length}
             />
             <SortBySelector
               sortByText={'totalStarAvg,DESC'}
               sortByTextKr={'높은평순'}
-              isDisabled={!lectureReviews.contents.length}
+              isDisabled={!lectureReviews?.contents?.length}
             />
           </View>
 
           <TouchableOpacity
             style={styles.seeMoreBtn}
             onPress={() => console.warn('더보기클릭')}
-            disabled={!lectureReviews.contents.length}
+            disabled={!lectureReviews?.contents?.length}
           >
             <Text style={styles.seeMoreBtnText}>더보기</Text>
           </TouchableOpacity>
