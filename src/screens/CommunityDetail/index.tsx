@@ -12,7 +12,7 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
   
   const {id} =route.params;
   useRequestCommunityItem(id)
-
+  
   const {content, liked, likeCount } = useRecoilValue(communityItemSelector)
 
   //  좋아요 post 요청 함수 가져와서 호출하기
@@ -33,10 +33,10 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
 
   return (
     <View style={styles.container}>
-      <DetailInfo id={id}/>
+      <DetailInfo id={id} />
       <ScrollView>
-          <DetailContents content={content}/>
-          <CommentDetail id={id}/>
+        <DetailContents content={content}/>
+        <CommentDetail id={id}/>
       </ScrollView>
       <CommentsInput id={id}/>
     </View>

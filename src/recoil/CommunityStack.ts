@@ -51,26 +51,33 @@ export const postingFormSelector = selector ({
   get: ({get}) => {
     const postingFormInfo ={
       category: get(postingFormState('category')),
-      tags: get(postingFormState('tags')),
+      tags: [get(postingFormState('tags'))],
       title: get(postingFormState('title')),
-      content: get(postingFormState('contents'))
+      content: get(postingFormState('content'))
     };
     return postingFormInfo;
   }
 })
 
-export type PostingFormType = 'category' | 'tags' |'title' | 'contents'
+
+export type PostingFormType = 'category' | 'tags' |'title' | 'content'
 
 export const postingFormState = atomFamily<string, string>({
   key: 'postingFormState',
   default: ''
 })
 
-// dropdown picker 상태
-export const pickerOpenState = atom({
-  key: 'pickerOpenState',
-  default: false
-})
+export type PostingItemType = {
+  
+  category: string,
+  tags: string[],
+  title: string,
+  content: string
+}
+// export const postingIdState= atom ({
+//   key: 'postingIdState',
+//   default : 1
+// })
 
 export const likeState= atomFamily<Element,number>({
   key: 'likeState',
@@ -189,6 +196,15 @@ export const commentTextState = atom({
   key: 'commentTextState',
   default: {
     content: ''
+  }
+})
+
+export const CommentTextSelector= selector({
+  key: 'CommentTextSelector',
+  get: ({get})  => {
+    const {content} = get(commentTextState);
+
+  return {content}
   }
 })
 
