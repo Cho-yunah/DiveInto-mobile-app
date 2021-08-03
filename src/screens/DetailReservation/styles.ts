@@ -1,14 +1,10 @@
 import { StyleSheet } from 'react-native';
+import * as Color from '@config/colors';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F5F7',
-  },
-
-  eachContainer: {
-    flex: 1,
-    marginTop: 20,
-    paddingHorizontal: 15,
+    paddingHorizontal: 25,
+    backgroundColor: Color.White,
   },
 });

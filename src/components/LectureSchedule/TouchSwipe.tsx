@@ -42,7 +42,7 @@ export default function TouchSwipe({
 
   const onMoveLectureDetailView = () => {
     console.log(reservationId);
-    navigation.navigate('LectureDetail', { lectureId: reservationId });
+    navigation.navigate('DetailReservation');
   };
 
   const onDeleteLastLecture = useCallback(() => {

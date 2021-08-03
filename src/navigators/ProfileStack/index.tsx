@@ -20,6 +20,7 @@ import LikeCollectionScreen from '@screens/LikeCollection';
 import LectureScheduleScreen from '@screens/LectureSchedule';
 import WriteReviewScreen from '@screens/WriteReview';
 import DeleteAccountScreen from '@screens/DeleteAccount';
+import DetailReservationScreen from '@/src/screens/DetailReservation';
 // import DetailPoliciesScreen from '@/src/screens/DetailPolicies';
 
 const Stack = createStackNavigator();
@@ -106,6 +107,13 @@ export default function ProfileStack<ProfileStak>() {
           name="LectureSchedule"
           component={LectureScheduleScreen}
           options={{ title: '강의일정' }}
+        />
+
+        {/* 예약한 강의 세부 사항 View */}
+        <Stack.Screen
+          name="DetailReservation"
+          component={DetailReservationScreen}
+          options={{ title: '예약 상세 정보' }}
         />
 
         {/* 공지 사항 리스트, 상세 View */}

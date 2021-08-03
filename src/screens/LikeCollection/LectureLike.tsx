@@ -11,7 +11,7 @@ import CommonLoading from '@components/common/CommonLoading';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 import { PopularLecture } from '@components/MainList/Lecture/PopularLectureList';
 
-export default function LectureLikeScreen() {
+export default function LectureLikeScreen({ navigation }) {
   const atk = useRecoilValue(atkState);
   const [lectureList, setLectureList] = useState<[] | null>(null);
 
