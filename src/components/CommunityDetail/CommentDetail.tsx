@@ -10,7 +10,6 @@ export default function CommentDetail({id}) {
   useRequestComments({id})
 
   const commentList = useRecoilValue(commentState)
-  // console.log(commentList)
 
   return (
     <View >
@@ -27,6 +26,7 @@ export default function CommentDetail({id}) {
             dateOfWriting={item.commentModel.dateOfWriting}
             content={item.commentModel.content}
             commentId= {item.commentModel.id}
+            // editing={editing}
           />
         )}
       />

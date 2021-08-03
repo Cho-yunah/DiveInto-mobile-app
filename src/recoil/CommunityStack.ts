@@ -68,7 +68,6 @@ export const postingFormState = atomFamily<string, string>({
 })
 
 export type PostingItemType = {
-  
   category: string,
   tags: string[],
   title: string,
@@ -188,7 +187,8 @@ export type commentItemType = {
   profileUrl: string,
   dateOfWriting: string,
   content: string,
-  commentId: number
+  commentId: number,
+  // editing: void
 }
 
 export const postIdState= atom({
@@ -216,3 +216,35 @@ export const commentRequestState = atom({
   key: 'commentRequestState',
   default: false
 })
+
+export const commentInputFocusState = atom({
+  key: 'commentInputFocusState',
+  default: false
+})
+
+export const commentIdState = atom({
+  key: 'commentIdState',
+  default: 0
+})
+export const commentInputButtonState= atom({
+  key: 'commentInputButtonState',
+  default: false
+})
+
+// export const commentSelector = selector ({
+//   key: 'commentSelecotr',
+//   get: ({get}) => {
+//     const commentInfo ={
+//       category: get(postingFormState('category')),
+//       tags: [get(postingFormState('tags'))],
+//       title: get(postingFormState('title')),
+//       content: get(postingFormState('content'))
+//     };
+//     return commentInfo;
+//   }
+// })
+
+// export const State = atomFamily<string, string>({
+//   key: 'postingFormState',
+//   default: ''
+// })

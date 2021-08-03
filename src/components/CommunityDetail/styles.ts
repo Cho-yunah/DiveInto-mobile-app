@@ -115,6 +115,12 @@ export const CommentInputStyle = StyleSheet.create({
     color: '#207AB4',
     padding: 5
   },
+  editButton: {
+    color: '#207AB4',
+    position: 'absolute',
+    bottom: 45,
+    right: 25,
+  }
 })
 
 export const CommentDetailStyles = StyleSheet.create({

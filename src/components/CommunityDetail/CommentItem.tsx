@@ -1,15 +1,17 @@
-import React from 'react'
-import { commentItemType, commentRequestState, commentState, commentTextState } from "@/src/recoil/CommunityStack"
+import React, { useRef } from 'react'
+import { commentIdState, commentInputButtonState, commentInputFocusState, commentItemType, commentRequestState, commentState } from "@/src/recoil/CommunityStack"
 import { Image, View, Text, TouchableOpacity } from "react-native"
 import {CommentDetailStyles as styles} from './styles'
 import { TimeOfWriting } from '@components/CommunityMain/TimeOfWriting'
 import { getInstanceATK } from '@/src/lib/api/axios'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
-export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, commentId }: commentItemType)=> {
-  const editingComment= useRecoilValue(commentTextState)
+export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, commentId}: commentItemType)=> {
   const [commentList, setCommentList] = useRecoilState(commentState)
   const [RequestSuccess, setRequestSuccess] = useRecoilState(commentRequestState)
+  const [isFocus, setIsFocus] = useRecoilState(commentInputFocusState) 
+  const [selectCommentId, setSelectCommentId] = useRecoilState(commentIdState)
+  const [editButton, setEditButton] = useRecoilState(commentInputButtonState)
 
   // 댓글 삭제
   const requestDelete = async() => {
@@ -21,6 +23,15 @@ export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, comme
     } catch(e) {
       console.log(e)
     }
+  }
+
+  // 댓글 수정
+  const editing = () => {
+    console.log('editing!')
+    console.log(commentId)
+    setIsFocus(true)
+    setSelectCommentId(commentId)
+    setEditButton(true)
   }
 
   return (
@@ -39,16 +50,16 @@ export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, comme
         <Text style={{color: '#207AB4', fontSize: 12}}>대댓글 쓰기</Text>
       </TouchableOpacity>
       <View style={styles.edintingBtnBox}>
-        <EditBtn />
+        <EditBtn editing={editing}/>
         <DeleteBtn requestDelete={requestDelete}/>
       </View>
     </View>
   )
 }
 
-const EditBtn=({navigation, id}: any) => {
+const EditBtn=({navigation, id, editing}: any) => {
   return (
-    <TouchableOpacity >
+    <TouchableOpacity onPress={editing}>
       <Text style={{color: '#A9BBC9', fontSize: 12 }}>수정</Text>
     </TouchableOpacity>
   )
