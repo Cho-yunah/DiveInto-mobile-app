@@ -3,7 +3,6 @@ import { atom, atomFamily, selector, selectorFamily } from 'recoil';
 import {
   DateTimeInfoType,
   MarkedDatesType,
-  ScheduleInfoType,
 } from '../components/ReserveLecture/types';
 import instance, { getInstanceATK } from '../lib/api/axios';
 export type LectureDetailPicsType = {
@@ -19,12 +18,6 @@ export type lectureReviewType = {
   description: string;
   writeDate: string;
   reviewImageUrls: string[];
-};
-
-export type EquipmentStocksType = {
-  id: number;
-  size: string;
-  quantity: number;
 };
 
 export type EquipmentStocksByScheduleIdType = {
@@ -72,13 +65,6 @@ export type locationResponseType = {
   address: string;
   latitude: number;
   longitude: number;
-};
-
-export type EquipmentsType = {
-  id: number;
-  name: string;
-  price: number;
-  equipmentStocks: EquipmentStocksType[];
 };
 
 export type EquipmentsByScheduleIdType = {
@@ -299,25 +285,6 @@ export const selectedClassByIdSelector = selector({
   },
 });
 
-// 현재 강의에서 제공해주는 대여 장비 목록
-export const getEquipmentsState = selectorFamily<EquipmentsType[], number>({
-  key: 'getEquipments',
-  get:
-    (lectureId: number) =>
-    async ({ get }) => {
-      get(cachingState);
-      try {
-        const { data } = await instance.get(
-          `/equipment/list?lectureId=${lectureId}`,
-        );
-
-        return data._embedded.equipmentDtoList;
-      } catch (e) {
-        console.log(e);
-      }
-    },
-});
-
 // 현재 scheduleId에서 제공해주는 대여 장비 목록, 재고
 export const getEquipmentsStateByScheduleId = selectorFamily<
   EquipmentsByScheduleIdType[],
@@ -362,21 +329,6 @@ export const providedEquipmentsState = atomFamily<
     id: 0,
     stocks: [],
   },
-});
-
-// modal에 표시할 장비 이름과, 사이즈 정보 배열
-export const selectedEquipmentsState = atom({
-  key: 'selectedEquipments',
-  default: [],
-});
-
-// 한 장비와 그 장비의 사이즈들의 예약 정보를 담고있는 배열
-export const requestReservationEquipmentState = atomFamily<
-  requestReservationEquipmentDetailType[],
-  number
->({
-  key: 'requestReservationEquipment',
-  default: [],
 });
 
 // 수강 인원
