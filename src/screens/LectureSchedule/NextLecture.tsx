@@ -15,8 +15,6 @@ import CommonEmptyView from '@components/common/CommonEmptyView';
 export default function NextLectureScreen() {
   const reservationList = useRecoilValue(nextReservationLectureListState);
 
-  console.log(reservationList);
-
   const ListEl = reservationList ? (
     reservationList.length !== 0 ? (
       <FlatList

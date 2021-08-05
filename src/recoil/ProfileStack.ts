@@ -1,6 +1,6 @@
 import { atom, atomFamily, selector, selectorFamily } from 'recoil';
-import instance from '../lib/api/axios';
 import { userInfoProps } from '../screens/ProfileMain/types';
+import { sliceTimeString, sliceDateString } from '@lib/utils/sliceNewString';
 
 export type lectureReviewAllType = {
   id: number;
@@ -45,6 +45,38 @@ export type modifyNumViewStateAtomType = {
   birth: string;
   gender: string;
 };
+
+export type reserveDetailListAtomType = {
+  reservationId: number;
+  dateOfReservation: string;
+  numberOfPeople: number;
+  paymentDetail:
+    | {
+        lectureCost: number;
+        equipmentRentCost: number;
+      }
+    | undefined;
+};
+
+export type reserveLocationAtomType = {
+  address: string;
+  latitude: number;
+  longitude: number;
+};
+
+export type reserveScheduleAtomType = {
+  startTime: string;
+  endTime: string;
+  date: string;
+}[];
+
+export type reserveEquipmentsAtomType = {
+  equipmentName: string;
+  size: string;
+  rentNumber: number;
+}[];
+
+export type reserveCostInfoTypesType = 'total' | 'lecture' | 'equipment';
 
 export const userInfoAtom = atom<userInfoProps | null>({
   key: 'userInfoAtom',
@@ -176,10 +208,86 @@ export const deleteUserConditionSelector = selector({
   },
 });
 
-
+// 유저 프로필 정보와 번호 변경에 필요한 전화번호 상태
 export const PhoneNumState = atom<string>({
   key: 'PhoneNum',
   default: '',
+});
+
+// 예약한 강의 상세 정보 상태
+export const reserveDetailListState = atom<reserveDetailListAtomType | null>({
+  key: 'ReserveDetailList',
+  default: null,
+});
+// 예약한 강의 일정 정보 상태
+export const reserveScheduleState = atom<reserveScheduleAtomType>({
+  key: 'reserveSchedule',
+  default: [],
+});
+
+// 예약한 강의 상세 위치
+export const reserveLocationState = atom<reserveLocationAtomType | null>({
+  key: 'reserveLocation',
+  default: null,
+});
+
+// 예약한 강의에서 사용하는 대여 장비 상세 정보
+export const reserveEquipmentsState = atom<reserveEquipmentsAtomType>({
+  key: 'reserveEquipments',
+  default: [],
+});
+
+// 가격 타입 param에 따라서 가격 결과를 보내주는 셀렉터
+export const totalCostSelector = selectorFamily({
+  key: 'totalCost',
+  get:
+    (costType: reserveCostInfoTypesType) =>
+    ({ get }) => {
+      const paymentDetail = get(reserveDetailListState)?.paymentDetail;
+
+      if (!paymentDetail) return 0;
+
+      switch (costType) {
+        case 'total':
+          return paymentDetail?.equipmentRentCost + paymentDetail?.lectureCost;
+        case 'lecture':
+          return paymentDetail?.lectureCost;
+        case 'equipment':
+          return paymentDetail.equipmentRentCost;
+        default:
+          return 0;
+      }
+    },
+});
+
+// // 같은 목록이면서 같은 사이즈 장비 수량 합을 구하는 셀렉터
+// export const sumOfSameListSelector = selector({
+//   key: 'sumOfSameList',
+//   get: ({ get }) => {
+//     const equipmentList = get(reserveEquipmentsState);
+
+//     if (!equipmentList.length) return [];
+//   },
+// });
+
+// 강의 일정 관련 데이터 문자열 새로운 조합으로 바꾸는 셀렉터
+export const dateOrTimeOfNewStringSelector = selector({
+  key: 'dateOrTimeOfNewString',
+  get: ({ get }) => {
+    const schedules = get(reserveScheduleState);
+
+    if (!schedules.length) return [];
+
+    const scheduleNewString = schedules.map(schedule => {
+      const startTime = sliceTimeString(schedule.startTime);
+      const endTime = sliceTimeString(schedule.endTime);
+      const date = sliceDateString(schedule.date, 'yy.M.dd (E)');
+
+      return { date, startTime, endTime };
+    });
+
+    return scheduleNewString;
+  },
 });
 
 // 후기작성 스크린

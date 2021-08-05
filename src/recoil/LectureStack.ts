@@ -59,8 +59,8 @@ export type requestReservationEquipmentDetailType = {
 };
 
 export type locationResponseType = {
-  id: number;
-  address: string;
+  id?: number;
+  address?: string;
   latitude: number;
   longitude: number;
 };

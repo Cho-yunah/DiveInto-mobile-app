@@ -14,8 +14,6 @@ export default function TouchSwipe({
   type,
   reservationId,
 }: TouchSwipeProps) {
-  console.log(reservationId);
-
   const [show, setShow] = useState(false);
   const navigation = useNavigation();
 
@@ -41,8 +39,7 @@ export default function TouchSwipe({
   };
 
   const onMoveLectureDetailView = () => {
-    console.log(reservationId);
-    navigation.navigate('DetailReservation');
+    navigation.navigate('DetailReservation', { reservationId });
   };
 
   const onDeleteLastLecture = useCallback(() => {

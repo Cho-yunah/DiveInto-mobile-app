@@ -28,27 +28,85 @@ export const RserveHeaderStyles = StyleSheet.create({
     paddingLeft: 10,
   },
 });
-export const ReserveInfoStyles = StyleSheet.create({
+
+export const ReserveLocationInfoStyles = StyleSheet.create({
   container: {
     marginBottom: 30,
+  },
+  infonTitle: {
+    fontSize: 17.5,
+    fontWeight: '600',
+    color: Color.BlackText,
+    paddingBottom: 10,
+  },
+  addressContainer: {
+    backgroundColor: 'rgb(239, 198, 198)',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  itemContainer: {
-    width: WIDTH * 0.25,
-    height: HEIGHT * 0.1,
-    justifyContent: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
     alignItems: 'center',
-    backgroundColor: '#E0E0E1',
-    borderRadius: 7.5,
   },
-  itemTitle: {
-    fontWeight: '500',
-    paddingTop: 7.5,
+  addressText: {
+    color: Color.White,
   },
 });
 
-export const ReserveUserOrCostStyles = StyleSheet.create({
+export const ReserveScheduleStyles = StyleSheet.create({
+  container: {
+    marginBottom: 25,
+  },
+  title: {
+    fontSize: 17.5,
+    fontWeight: '600',
+    color: Color.BlackText,
+    paddingBottom: 10,
+  },
+
+  outerContainer: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#F3F5F7',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginBottom: 7.5,
+    backgroundColor: '#F3F5F7',
+  },
+  innerContainer: {
+    paddingRight: 10,
+  },
+  ceterRountTextContainer: {
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 30,
+    backgroundColor: '#A9BBC9',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 2,
+  },
+  roundText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: Color.White,
+  },
+  scheduleTitle: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#6A6D70',
+    lineHeight: 15,
+  },
+  dateOrTimeText: {
+    fontSize: 13,
+    lineHeight: 18,
+    color: '#6A6D70',
+  },
+});
+
+export const ReserveCommonStyles = StyleSheet.create({
   // RserveUser Style
   outerContainer: {
     paddingTop: 25,
@@ -83,6 +141,10 @@ export const ReserveUserOrCostStyles = StyleSheet.create({
     fontSize: 15,
     color: Color.BlackText,
   },
+  emphasis: {
+    color: Color.Selected,
+    fontWeight: '600',
+  },
 });
 
 export const CancelBtnStyles = StyleSheet.create({
@@ -90,7 +152,7 @@ export const CancelBtnStyles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: Color.underLine,
     paddingTop: 25,
-    marginBottom: 40,
+    marginBottom: 80,
   },
   title: {
     fontSize: 17.5,
