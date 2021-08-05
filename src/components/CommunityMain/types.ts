@@ -6,20 +6,21 @@ export type ContentItem = {
   id: number;
   title: string;
   dateOfRegistration: string;
-  category: string;
+  category?: string;
   writerNickname?: string;
   imageUrl?: string;
   commentCount: number;
   likeCount: number;
   liked: boolean;
-}
+  type: 'profile' | 'community';
+};
 
 export type CommentNumber = {
-  commentNum: number
-}
+  commentNum: number;
+};
 export type likeCount = {
-  likeCount: number
-}
+  likeCount: number;
+};
 export type nextButtonProps = {
   onPress: () => void;
   text?: string;

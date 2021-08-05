@@ -3,16 +3,16 @@ import {StyleSheet} from 'react-native'
 export const SelectStyle = StyleSheet.create({
   selectContainer: {
     marginTop: 30 ,
-    width: 353,
     height: 40,
+    borderWidth: 0
   },
   shadowContainer: {
     marginTop: 30 ,
-    width: 353,
     height: 40,
-    shadowOffset:{width: 2, height: -2},
+    shadowOffset:{width: 2, height: 2},
     shadowColor: '#566B7E33',
     shadowOpacity: 0.5,
+    borderWidth: 0,
   },
   itemStyle: {
     justifyContent: 'flex-start',
@@ -28,16 +28,12 @@ export const SelectStyle = StyleSheet.create({
     borderTopWidth: 1,
     borderWidth: 0,
     borderTopColor: '#A9BBC9',
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8, 
-    shadowOffset:{width: 2, height: 2},
-    shadowColor: '#566B7E33',
-    shadowOpacity: 0.5,
   },
   labelStyle: { 
     fontSize: 15,
     textAlign: 'left', 
     color: '#6A6D70' ,
+    borderWidth: 0,
   },
 })
 

@@ -1,7 +1,6 @@
-import React, { Suspense } from 'react';
-import { Text } from 'react-native';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { RecoilRoot, useRecoilValue } from 'recoil';
+import { RecoilRoot } from 'recoil';
 
 import ProfileWithoutLoginScreen from '@screens/ProfileWithoutLogin';
 import ProfileMainScreen from '@screens/ProfileMain';
@@ -19,8 +18,8 @@ import LectureCollectionScreen from '@screens/FindAllReiew/LectureCollection';
 import ReviewCollectionScreen from '@screens/FindAllReiew/ReviewCollection';
 import LikeCollectionScreen from '@screens/LikeCollection';
 import LectureScheduleScreen from '@screens/LectureSchedule';
-import { IsInstructor } from '@recoil/Global';
-import WriteReviewScreen from '@/src/screens/WriteReview';
+import WriteReviewScreen from '@screens/WriteReview';
+import DeleteAccountScreen from '@screens/DeleteAccount';
 // import DetailPoliciesScreen from '@/src/screens/DetailPolicies';
 
 const Stack = createStackNavigator();
@@ -168,6 +167,14 @@ export default function ProfileStack<ProfileStak>() {
           component={PrivacyPolicyScreen}
           options={{
             title: '개인정보 처리방침',
+          }}
+        />
+
+        <Stack.Screen
+          name="DeleteAccount"
+          component={DeleteAccountScreen}
+          options={{
+            title: '회원탈퇴',
           }}
         />
 

@@ -67,7 +67,7 @@ export default function LectureLikeScreen() {
       <CommonEmptyView
         guideText="강의가 없습니다."
         buttonText="강의 둘러보기"
-        moveViewName="ProfileMain"
+        moveViewName="홈"
       />
     )
   ) : (

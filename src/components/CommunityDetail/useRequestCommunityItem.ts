@@ -13,10 +13,12 @@ export const useRequestCommunityItem = (id: number) => {
       try {
         // data & image 받아오기
         const {data} = await instance.get(`/community/post/${id}`);
+        console.log(data)
         const writerResource= await instance.get(`/community/post/${id}/writer`)
         const imageResource = await instance.get(`/community/post/${id}/post-image`)
+        console.log(imageResource)
 
-        const { title, category, tags, dateOfRegistration,content, liked, likeCount } = data.postResource;
+        const { title, category, tags, dateOfRegistration, content, liked, likeCount } = data.postResource;
         const writerInfo = writerResource.data
 
         imageResource.data._embedded

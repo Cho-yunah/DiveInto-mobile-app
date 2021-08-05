@@ -1,7 +1,7 @@
 import { ReactChild, ReactChildren } from 'react';
 import { Animated } from 'react-native';
 
-export type AuxProps = {
+export type TouchSwipeProps = {
   imgComponent: ReactChild | ReactChild[] | ReactChildren | ReactChildren[];
   contentsComponents?:
     | ReactChild
@@ -9,6 +9,7 @@ export type AuxProps = {
     | ReactChildren
     | ReactChildren[];
   type: 'last' | 'next';
+  reservationId: number;
 };
 
 export type SwipeAnimatedProps = {

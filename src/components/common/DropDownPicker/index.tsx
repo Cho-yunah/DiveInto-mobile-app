@@ -3,6 +3,8 @@ import {} from 'react-native';
 import DropDownPickerLib, { ValueType } from 'react-native-dropdown-picker';
 import * as color from '@config/colors';
 
+import { styles } from './styles';
+
 export function DropDownPicker({
   items = [
     { label: 'Apple', value: 'apple' },
@@ -13,6 +15,7 @@ export function DropDownPicker({
   multiple = false,
   defaultIndex,
   zIndex = 1,
+  type,
 }: {
   items?: { label: string; value: string }[];
   onChangeValue: (value: ValueType | ValueType[] | null) => void;
@@ -20,6 +23,7 @@ export function DropDownPicker({
   multiple?: boolean;
   defaultIndex?: number;
   zIndex?: number;
+  type?: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState<null | string | string[]>(null);
@@ -39,7 +43,7 @@ export function DropDownPicker({
       setOpen={setIsOpen}
       setValue={setValue}
       onChangeValue={value => {
-        console.log('selected value : ', value);
+        // console.log('selected value : ', value);
         onChangeValue(value);
       }}
       multiple={multiple}
@@ -47,32 +51,15 @@ export function DropDownPicker({
       max={5}
       placeholder={placeholder}
       placeholderStyle={{ color: color.lightPlaceholder, fontSize: 14 }}
-      style={{
-        borderWidth: 1.3,
-        borderColor: color.White,
-        backgroundColor: color.White,
-        marginBottom: 18,
-        ...shadow,
-      }}
-      dropDownContainerStyle={{
-        borderWidth: 1,
-        borderColor: color.Gray2,
-        backgroundColor: color.White,
-        ...shadow,
-      }}
+      style={[
+        type !== 'none' ? styles.container : styles.noneContainer,
+        type !== 'none' && styles.commonShadow,
+      ]}
+      dropDownContainerStyle={[
+        styles.dropDownContainer,
+        type !== 'none' && styles.commonShadow,
+      ]}
       zIndex={zIndex}
     />
   );
 }
-
-export const shadow = {
-  shadowColor: '#000',
-  shadowOffset: {
-    width: 3,
-    height: 3,
-  },
-  shadowOpacity: 0.1,
-  shadowRadius: 2,
-
-  elevation: 3,
-};
