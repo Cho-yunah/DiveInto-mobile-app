@@ -390,7 +390,7 @@ export const smallModalMessageState = atom<string>({
   default: '',
 });
 
-type ReservationEquipmentObjType = {
+export type ReservationEquipmentObjType = {
   [key: number]: LargerEquipmentType;
 };
 type LargerEquipmentType = {
