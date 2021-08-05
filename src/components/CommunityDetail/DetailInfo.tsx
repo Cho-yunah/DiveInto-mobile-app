@@ -1,6 +1,7 @@
 import {
   communityItemSelector,
   communityListState,
+  listPageState,
   showModalState,
   writerInfoState,
 } from '@/src/recoil/CommunityStack';
@@ -18,13 +19,15 @@ export default function DetailInfo({ id }) {
   const { title, dateOfRegistration } = useRecoilValue(communityItemSelector);
   const writer = useRecoilValue(writerInfoState);
   const [show, setShow] = useRecoilState(showModalState);
+  
   const basicProfilelUrl =
     'https://img.freepik.com/free-vector/swimmer-dives-into-water-from-splash-watercolors-illustration-paints_291138-350.jpg?size=626&ext=jpg';
 
+  // 삭제 확인 모달
   const toggleShowModal = (): void => {
     setShow(!show);
   };
-
+  // 삭제 요청
   const requestDelete = async () => {
     // console.log('delete!')
     try {

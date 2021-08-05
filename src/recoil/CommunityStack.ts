@@ -211,7 +211,6 @@ export const CommentTextSelector= selector({
   return {content}
   }
 })
-
 export const commentRequestState = atom({
   key: 'commentRequestState',
   default: false
@@ -230,21 +229,20 @@ export const commentInputButtonState= atom({
   key: 'commentInputButtonState',
   default: false
 })
+export const commentListPageState = atom({
+  key: 'commentListPageState',
+  default : 0
+})
+export const commentLoadingState = atom({
+  key: 'commentLoadingState',
+  default: false
+})
+export const haveDataState= atom({
+  key: 'haveDataState',
+  default: false
+})
 
-// export const commentSelector = selector ({
-//   key: 'commentSelecotr',
-//   get: ({get}) => {
-//     const commentInfo ={
-//       category: get(postingFormState('category')),
-//       tags: [get(postingFormState('tags'))],
-//       title: get(postingFormState('title')),
-//       content: get(postingFormState('content'))
-//     };
-//     return commentInfo;
-//   }
-// })
-
-// export const State = atomFamily<string, string>({
-//   key: 'postingFormState',
-//   default: ''
-// })
+export const isEditedState = atom({
+  key: 'isEditedState',
+  default : false
+})

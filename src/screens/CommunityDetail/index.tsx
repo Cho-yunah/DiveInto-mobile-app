@@ -5,7 +5,7 @@ import { CommunityDetailProps } from '@navigators/CommunityStack/types';
 import { DetailInfo, DetailContents, CommentsInput, CommentDetail  } from '@components/CommunityDetail';
 import { useRequestCommunityItem } from '@components/CommunityDetail/useRequestCommunityItem';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { commentInputFocusState, commentState, communityItemSelector, likeState } from '@/src/recoil/CommunityStack';
+import { commentState, communityItemSelector, likeState } from '@/src/recoil/CommunityStack';
 import {LikeBtn} from '@components/CommunityMain/LikeBtn';
 
 
@@ -21,13 +21,6 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
   const Clickedlike=() => {
     setLike(!like)
   }
-  
-  // // 댓글 수정
-  // const textInputRef= useRef<HTMLInputElement|null >(null)
-  // const editing = ()=> {
-  //   console.log('editing click!')
-  //   textInputRef.current && textInputRef.current.focus()
-  // }
  
   // 헤더에 좋아요 하트 버튼
   useEffect(()=> {
@@ -42,9 +35,9 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
   return (
     <View style={styles.container}>
       <DetailInfo id={id} />
-      <ScrollView>
+      <ScrollView style={styles.detailContents}>
         <DetailContents content={content}/>
-        <CommentDetail id={id}/>
+        <CommentDetail id={id} />
       </ScrollView>
       <CommentsInput id={id} />
     </View>

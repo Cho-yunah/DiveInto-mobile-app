@@ -1,6 +1,6 @@
 import { getInstanceATK } from '@/src/lib/api/axios';
 import { commentIdState, commentInputButtonState, commentInputFocusState, commentRequestState, commentTextState } from '@/src/recoil/CommunityStack';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect } from 'react'
 import {KeyboardAvoidingView, TextInput, TouchableOpacity, Text } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -73,21 +73,3 @@ export default function CommentsInput({id }) {
       )}
     </KeyboardAvoidingView>
   )}
-
-  // export const CommentTextInput = forwardRef<MutableRefObject<HTMLInputElement>((props, ref) => {
-  //   const [comment,setComment] = useRecoilState(commentTextState)
-  //   console.log(ref);
-  
-  //   return (
-  //     <>
-  //      <TextInput 
-  //         placeholder='댓글을 입력하세요' 
-  //         style={styles.commentInputBox}
-  //         onChangeText={text => setComment({content: text})} 
-  //         multiline
-  //         value={comment.content}
-  //         ref={ref}
-  //       />
-  //     </>
-  //   )
-  // })

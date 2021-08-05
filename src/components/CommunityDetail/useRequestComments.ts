@@ -1,17 +1,20 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import instance from '@/src/lib/api/axios';
 import { useEffect } from 'react';
-import { commentListType, commentRequestState, commentState } from '@/src/recoil/CommunityStack';
+import { commentListPageState, commentListType, commentLoadingState, commentRequestState, commentState } from '@/src/recoil/CommunityStack';
 
 export const useRequestComments =({id}) => {
   const [commentList, setCommentList]= useRecoilState<commentListType[]>(commentState)
   const [RequestSuccess, setRequestSuccess] = useRecoilState(commentRequestState)
+  const [commentLoading, setCommentLoading] = useRecoilState(commentLoadingState)
+  const [ commentListPage , setCommentListPage ] = useRecoilState(commentListPageState)
  
   useEffect(()=> {
     const requestComments= async() => {
+      setCommentLoading(true)
       try{
         console.log('hh')
-        const commentResource = await instance.get(`/community/comment/post/${id}?page=0&size=5`)
+        const commentResource = await instance.get(`/community/comment/post/${id}?page=${commentListPage}&size=6`)
          commentResource.data._embedded
          ? setCommentList(commentResource.data._embedded.commentsModelList)
          : setCommentList([])
@@ -20,6 +23,7 @@ export const useRequestComments =({id}) => {
       catch(e) {
         console.log(e)
       }
+      setCommentLoading(false)
     }
     requestComments()
   },[ id, RequestSuccess])

@@ -1,12 +1,13 @@
 import instance from '@/src/lib/api/axios';
-import { communityItemState, ImageState, writerInfoState } from '@/src/recoil/CommunityStack';
+import { communityItemState, ImageState, isEditedState, writerInfoState } from '@/src/recoil/CommunityStack';
 import { useEffect } from 'react';
-import  {useSetRecoilState} from 'recoil';
+import  {useRecoilState, useSetRecoilState} from 'recoil';
 
 export const useRequestCommunityItem = (id: number) => {
   const setCommunityItem = useSetRecoilState(communityItemState);
   const setImageItem = useSetRecoilState(ImageState)
   const setWriterInfo = useSetRecoilState(writerInfoState)
+  const [editRequestSuccess, setEditRequestSuccess] = useRecoilState(isEditedState)
 
   useEffect(()=> {
     const requestCommunityItem = async()=> {
@@ -34,10 +35,11 @@ export const useRequestCommunityItem = (id: number) => {
           content,
           liked, likeCount
         });
+        setEditRequestSuccess(false)
       } catch(e) {
         console.log(e)
       }
     };
     requestCommunityItem();
-  }, [])
+  }, [editRequestSuccess])
 }
