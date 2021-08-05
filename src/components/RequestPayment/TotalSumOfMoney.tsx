@@ -1,10 +1,8 @@
 import addCashComma from '@/src/lib/utils/addCashComma';
 import {
-  getEquipmentsState,
   lectureCommonSelectorFamily,
-  lectureIdState,
+  requestReservationEquipmentArrayState,
   requestReservationEquipmentDetailType,
-  requestReservationEquipmentState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
 import React from 'react';
@@ -17,17 +15,13 @@ const TotalSumOfMoney = () => {
   const { contents } = useRecoilValueLoadable(
     lectureCommonSelectorFamily('Info'),
   );
-  const lectureId = useRecoilValue(lectureIdState);
-  const equipmentsState = useRecoilValue(getEquipmentsState(lectureId!)); // 강의 id -> 제공되는 대여장비, name,id, price
-  const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
-  let rentalPrice = 0;
-  equipmentsState.forEach(equip =>
-    reservedEquipmentsArray.push(
-      ...useRecoilValue(requestReservationEquipmentState(equip.id)),
-    ),
+  const reservingEquipmentArray = useRecoilValue(
+    requestReservationEquipmentArrayState,
   );
 
-  reservedEquipmentsArray.forEach(equip => {
+  let rentalPrice = 0;
+
+  reservingEquipmentArray.forEach(equip => {
     rentalPrice += equip.price * equip.rentNumber;
   });
 

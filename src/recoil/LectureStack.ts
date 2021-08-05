@@ -27,6 +27,13 @@ export type EquipmentStocksType = {
   quantity: number;
 };
 
+export type EquipmentStocksByScheduleIdType = {
+  scheduleEquipmentStockId: number;
+  size: string;
+  quantity: number; // 전체 등록된 수량
+  totalRentNumber: number; // 현재 대여 된 수량
+};
+
 export type selectedEquipmentsStateType = {
   id: number;
   name: string;
@@ -56,6 +63,8 @@ export type requestReservationEquipmentDetailType = {
   size: string; // 사이즈
   name: string; // 장비 이름
   price: number;
+  totalRentNumber: number;
+  quantity: number;
 };
 
 export type locationResponseType = {
@@ -72,6 +81,13 @@ export type EquipmentsType = {
   equipmentStocks: EquipmentStocksType[];
 };
 
+export type EquipmentsByScheduleIdType = {
+  scheduleEquipmentId: number;
+  name: string;
+  price: number;
+  stockInfoList: EquipmentStocksByScheduleIdType[];
+};
+
 type TargetInfoType =
   | 'Info'
   | 'InstructorProfile'
@@ -82,6 +98,12 @@ export type SortByType =
   | 'writeDate,DESC'
   | 'totalStarAvg,DESC'
   | 'totalStarAvg,ASC';
+
+export type ProvidedEquipmentsType = {
+  name: string;
+  id: number;
+  stocks: EquipmentStocksByScheduleIdType[];
+};
 
 export const searchText = atom({
   key: 'searchText',
@@ -193,11 +215,6 @@ export const lectureScheduleListsSelector = selectorFamily({
     },
 });
 
-export const totalLectureScheduleListState = atom<any[]>({
-  key: 'totalLectureScheduleListState',
-  default: [],
-});
-
 // 달력에 스케쥴 표시되는 날짜 정보들
 export const markedDateState = atom<MarkedDatesType>({
   key: 'markedDate',
@@ -301,6 +318,30 @@ export const getEquipmentsState = selectorFamily<EquipmentsType[], number>({
     },
 });
 
+// 현재 scheduleId에서 제공해주는 대여 장비 목록, 재고
+export const getEquipmentsStateByScheduleId = selectorFamily<
+  EquipmentsByScheduleIdType[],
+  number | null
+>({
+  key: 'getEquipments',
+  get:
+    (scheduleId: number | null) =>
+    async ({ get }) => {
+      if (!scheduleId) return [];
+
+      get(cachingState);
+      try {
+        const { data } = await instance.get(
+          `/schedule/equipments?scheduleId=${scheduleId}`,
+        );
+
+        return data._embedded.rentEquipmentInfoList;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+});
+
 // 현재 선택된 대여 장비 정보
 export const selectedEquipmentsIdState = atom<selectedEquipmentsStateType>({
   key: 'selectedEquipmentsId',
@@ -310,8 +351,11 @@ export const selectedEquipmentsIdState = atom<selectedEquipmentsStateType>({
   },
 });
 
-// 장비 id값을 넣어서 수량, 사이즈 정보 관리.
-export const eachEquipmentState = atomFamily({
+// 장비 id값 별로 이름,수량, 사이즈 정보베열.
+export const providedEquipmentsState = atomFamily<
+  ProvidedEquipmentsType,
+  number
+>({
   key: 'eachEquipment',
   default: {
     name: '',
@@ -327,7 +371,6 @@ export const selectedEquipmentsState = atom({
 });
 
 // 한 장비와 그 장비의 사이즈들의 예약 정보를 담고있는 배열
-
 export const requestReservationEquipmentState = atomFamily<
   requestReservationEquipmentDetailType[],
   number
@@ -345,4 +388,30 @@ export const studentNumberState = atom<number>({
 export const smallModalMessageState = atom<string>({
   key: 'smallModalMessageState',
   default: '',
+});
+
+type ReservationEquipmentObjType = {
+  [key: number]: LargerEquipmentType;
+};
+type LargerEquipmentType = {
+  name: string;
+  price: number;
+  equipmentStocks: SmallerEquipmentType;
+};
+
+type SmallerEquipmentType = {
+  [key: number]: requestReservationEquipmentDetailType;
+};
+
+// rentEquipment.tsx에서 빈객체로 상태 초기화 해준다 => 언제? -> scheduleId값이 바뀔때마다.
+export const reservationEquipmentObjState = atom<ReservationEquipmentObjType>({
+  key: 'reservationEquipmentObjState',
+  default: {},
+});
+
+export const requestReservationEquipmentArrayState = atom<
+  requestReservationEquipmentDetailType[]
+>({
+  key: 'requestReservationEquipmentArrayState',
+  default: [],
 });

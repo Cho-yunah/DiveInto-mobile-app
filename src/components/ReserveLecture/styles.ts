@@ -178,6 +178,14 @@ export const RentEquipments = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: '#fefefe',
   },
+  modalSizeViewDisabled: {
+    marginRight: 8,
+    marginBottom: 8,
+    borderRadius: 10,
+    paddingVertical: 4,
+    paddingHorizontal: 16,
+    backgroundColor: 'gray',
+  },
   modalSize: {
     color: '#50cad2',
   },

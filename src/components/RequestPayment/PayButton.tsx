@@ -4,12 +4,8 @@ import {
   cachingStateFormClassScheduleState,
   currScheduleIdState,
   currSelectedDateState,
-  getEquipmentsState,
-  lectureIdState,
   rentEquipmentInfosType,
-  requestReservationEquipmentDetailType,
-  requestReservationEquipmentState,
-  schedulesByIdState,
+  requestReservationEquipmentArrayState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
 import { PayButtonProps } from '@/src/screens/RequestPayment/types';
@@ -22,25 +18,18 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { payButton as styles } from './styles';
 
 const PayButton = ({ setErrorMsg }: PayButtonProps) => {
-  const lectureId = useRecoilValue(lectureIdState);
-  const equipmentsState = useRecoilValue(getEquipmentsState(lectureId!)); // 강의 id -> 제공되는 대여장비, name,id, price
-  const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
   const currScheduleId = useRecoilValue(currScheduleIdState);
   const numberOfPeople = useRecoilValue(studentNumberState);
   const setCaching = useSetRecoilState(cachingState);
   const setCachingSchedule = useSetRecoilState(
     cachingStateFormClassScheduleState,
   );
-  const setScheduleById = useSetRecoilState(schedulesByIdState);
   const setCurrSelectedDate = useSetRecoilState(currSelectedDateState);
-
+  const reservingEquipmentArray = useRecoilValue(
+    requestReservationEquipmentArrayState,
+  );
   const [isLoading, setIsLoading] = useState(false);
   let flag = useRef(false);
-  equipmentsState.forEach(equip =>
-    reservedEquipmentsArray.push(
-      ...useRecoilValue(requestReservationEquipmentState(equip.id)),
-    ),
-  );
 
   const requestReservation = async (
     rentEquipmentInfos: rentEquipmentInfosType[],
@@ -85,7 +74,7 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
         style={styles.button}
         onPress={() =>
           requestReservation(
-            reservedEquipmentsArray.map(equip => ({
+            reservingEquipmentArray.map(equip => ({
               scheduleEquipmentStockId: equip.scheduleEquipmentStockId,
               rentNumber: equip.rentNumber,
             })),

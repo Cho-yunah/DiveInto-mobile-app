@@ -14,6 +14,7 @@ import SuspenseReserveBtn from '@/src/components/ReserveLecture/SuspenseReserveB
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRecoilState } from 'recoil';
 import { smallModalMessageState } from '@/src/recoil/LectureStack';
+import { View } from 'react-native-animatable';
 
 const index = ({ navigation }: ReserveLectureProps) => {
   const navigateToRequestPayment = () => {
@@ -64,9 +65,9 @@ export const AlertModal = () => {
         onPress={() => setSmallModalMessage('')}
         style={styles.modalOuterContainer}
       ></Pressable>
-      <SafeAreaView style={styles.modalContainer}>
+      <View style={styles.modalContainer}>
         <Text style={styles.modalText}>{smallModalMessage}</Text>
-      </SafeAreaView>
+      </View>
     </Modal>
   );
 };

@@ -3,6 +3,7 @@ import {
   getTheSameClassScheduleState,
   lectureCommonSelectorFamily,
   lectureIdState,
+  requestReservationEquipmentArrayState,
   requestReservationEquipmentDetailType,
   requestReservationEquipmentState,
   selectedClassByIdSelector,
@@ -19,14 +20,8 @@ const AboutReservationDetail = () => {
     lectureCommonSelectorFamily('Info'),
   );
   const classSchedule = useRecoilValue(selectedClassByIdSelector);
-  const lectureId = useRecoilValue(lectureIdState);
-  const equipmentsState = useRecoilValue(getEquipmentsState(lectureId!)); // 강의 id -> 제공되는 대여장비, name,id, price
-  const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
-  equipmentsState.forEach(equip =>
-    reservedEquipmentsArray.push(
-      ...useRecoilValue(requestReservationEquipmentState(equip.id)),
-    ),
-  );
+  const reservedEquipmentsArray: requestReservationEquipmentDetailType[] =
+    useRecoilValue(requestReservationEquipmentArrayState);
 
   return (
     <View style={styles.container}>
