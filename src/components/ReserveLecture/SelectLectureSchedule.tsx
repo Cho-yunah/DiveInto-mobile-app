@@ -6,7 +6,6 @@ import {
   currScheduleIdState,
   currSelectedDateState,
   getTheSameClassScheduleState,
-  reservationEquipmentObjState,
 } from '@/src/recoil/LectureStack';
 import Entype from 'react-native-vector-icons/Entypo';
 

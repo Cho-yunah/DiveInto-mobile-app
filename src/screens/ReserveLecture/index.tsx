@@ -11,7 +11,6 @@ import {
 } from '@components/ReserveLecture';
 import SuspenseCalendar from '@/src/components/ReserveLecture/SuspenseCalendar';
 import SuspenseReserveBtn from '@/src/components/ReserveLecture/SuspenseReserveBtn';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRecoilState } from 'recoil';
 import { smallModalMessageState } from '@/src/recoil/LectureStack';
 import { View } from 'react-native-animatable';
