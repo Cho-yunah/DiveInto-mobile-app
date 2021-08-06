@@ -25,14 +25,15 @@ export default function CommunityItem({
     'https://png.pngtree.com/png-clipart/20190516/original/pngtree-warm-color-cool-in-summer-cartoon-swimming-goggles-cool-png-image_3774944.jpg';
 
   const whenCommunityTypeNaviagtion = () => {
-    if (type === 'community') {
-      navigation.navigate('CommunityDetail', { id });
-    } else {
-      navigation.navigate('커뮤니티', {
-        screen: 'CommunityDetail',
-        params: { id },
-      });
-    }
+    // if (type === 'community') {
+    navigation.navigate('CommunityDetail', { id });
+    // } else {
+    // navigation.navigate('커뮤니티', {
+    //   screen: 'CommunityDetail',
+    //   initial: false,
+    //   params: { id },
+    // });
+    // }
   };
 
   // moment 시간 계산
