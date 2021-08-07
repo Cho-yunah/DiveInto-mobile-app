@@ -23,15 +23,6 @@ const ChangePwBtn = () => {
     const authCode = await snapshot.getPromise(AuthCodeState);
     const email = await snapshot.getPromise(emailState);
 
-    console.log(
-      isAuthenticated,
-      isCodeRequested,
-      newPassword,
-      reNewPassword,
-      authCode,
-      email,
-    );
-
     if (!isAuthenticated || !isCodeRequested || !authCode) return;
     else if (!newPassword || !reNewPassword) {
       set(isAlertedState, '새 비밀번호를 4글자 이상 입력해주세요.');

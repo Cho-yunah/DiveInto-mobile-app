@@ -40,8 +40,6 @@ export const AuthenticationCodeAreaStyle = StyleSheet.create({
 export const NewPasswordAreaStyle = StyleSheet.create({
   codeInputContainer: {
     paddingBottom: 4,
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
   },
   codeInput: {
     marginTop: 30,
