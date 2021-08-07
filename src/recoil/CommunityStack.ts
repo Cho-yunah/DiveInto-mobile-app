@@ -148,7 +148,6 @@ export type ImageArrStateType = {
   type: string;
   name: string;
 };
-
 export const ImageArrState = atom<ImageArrStateType[]>({
   key: 'ImageArrState',
   default: [],
@@ -202,15 +201,6 @@ export const commentTextState = atom({
     content: ''
   }
 })
-
-export const CommentTextSelector= selector({
-  key: 'CommentTextSelector',
-  get: ({get})  => {
-    const {content} = get(commentTextState);
-
-  return {content}
-  }
-})
 export const commentRequestState = atom({
   key: 'commentRequestState',
   default: false
@@ -237,12 +227,61 @@ export const commentLoadingState = atom({
   key: 'commentLoadingState',
   default: false
 })
-export const haveDataState= atom({
-  key: 'haveDataState',
-  default: false
-})
 
 export const isEditedState = atom({
   key: 'isEditedState',
   default : false
+})
+
+/// 대댓글///
+export const writingRecommentState = atom({
+  key: 'writingRecommentState',
+  default: false
+})
+
+export const recommentTextState = atom({
+  key: 'recommentTextState',
+  default: {
+    content:''
+  }
+})
+
+export const recommentState = atom<recommentListType[]>({
+  key: 'recommentState',
+  default: []
+})
+
+export type recommentListType = {
+  accountModel: {
+    id: number,
+    nickName: '',
+    profileImageUrl:  ''
+  },
+  commentCommentModel:{
+    id: number,
+    dateOfWriting: '',
+    content: ''
+  }
+}
+export type recommentItemType = {
+  nickName: string,
+  profileUrl: string,
+  dateOfWriting: string,
+  content: string,
+  recommentId: number,
+}
+
+export const recommentLoadingState = atom({
+  key: 'recommentLoadingState',
+  default: false
+})
+
+export const recommentListPageState= atom({
+  key: 'recommentListPageState',
+  default: 0
+})
+
+export const showRecommentState = atom({
+  key: 'showRecommentState',
+  default: false
 })

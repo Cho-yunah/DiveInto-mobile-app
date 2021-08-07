@@ -99,6 +99,27 @@ export const CommentInputStyle = StyleSheet.create({
     elevation: 3,
     lineHeight: 20,
   },
+  recommentInput: {
+    width: 353,
+    height: 46,
+    paddingRight: 38,
+    paddingLeft: 15, 
+    paddingTop: 10,
+    marginTop: 10,
+    marginBottom: 30,
+    marginHorizontal: 19,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowColor: "#b2f2bb",
+    shadowOpacity: 0.8,
+    shadowRadius: 8,
+    elevation: 3,
+    lineHeight: 20,
+  },
   arrowIcon: {
     position: 'absolute',
     bottom: 35,
@@ -115,6 +136,14 @@ export const CommentInputStyle = StyleSheet.create({
     color: '#207AB4',
     padding: 5
   },
+  recommentArrowIcon: {
+    position: 'absolute',
+    bottom: 35,
+    right: 25,
+    fontSize:24,
+    color: '#38d9a9',
+    padding: 5
+  },
   editButton: {
     color: '#207AB4',
     position: 'absolute',
@@ -129,8 +158,7 @@ export const CommentDetailStyles = StyleSheet.create({
   },
   commentBox: {
     width: 353,
-    height: 92,
-    marginVertical: 12,
+    marginVertical: 6,
     marginHorizontal: 17,
     paddingVertical:10,
     paddingHorizontal: 16,
@@ -138,7 +166,7 @@ export const CommentDetailStyles = StyleSheet.create({
     backgroundColor: '#fff',
     color: '#202020'
   },
-  commentWriterInfo: {
+  commentInfo: {
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -148,36 +176,66 @@ export const CommentDetailStyles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 0,
     backgroundColor: 'pink',
-    marginRight: 5
+    marginRight: 10
   },
   nicknameStyle: {
     fontSize: 12,
     lineHeight: 20,
-    width: 260
+    flexGrow: 1,
   },
   dateStyle: {
-    position: 'absolute',
-    top: 11,
-    right: 15,
     fontSize: 12,
-    lineHeight: 20.4,
+    lineHeight: 20,
     color: '#6A6D70',
-    width: 50
   },
   comment: {
     marginTop: 10,
-    lineHeight: 14
+    // lineHeight: 14
   },
-  commentsInComment: {
-    paddingVertical:7
-  },
-
-  edintingBtnBox: {
-    position: 'absolute',
-    bottom: 16,
-    right: 16,
-    width: 60,
+  buttonBox: {
+    paddingVertical:10,
+    marginBottom: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  edintingBtnBox: {
+    width: 55,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  }
+})
+
+export const RecommentDetailStyles = StyleSheet.create({
+  recommentBox: {
+    borderWidth: 1,
+    borderColor: '#F0F0F0',
+    borderRadius: 10,
+    padding: 10,
+    marginVertical: 6
+  },
+  writerInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  profileImg:{
+    width: 16,
+    height: 16,
+    borderRadius: 50,
+    borderWidth: 0,
+    backgroundColor: 'pink',
+    marginRight: 7
+  },
+  nickname: {
+    fontSize: 12,
+    lineHeight: 20,
+    flexGrow: 1
+  },
+  date: {
+    fontSize: 12,
+    color: '#6A6D70',
+  }, 
+  recomment: {
+    marginTop: 10,
+    // lineHeight: 14
   }
 })

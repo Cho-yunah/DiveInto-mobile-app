@@ -28,10 +28,9 @@ export default function CommunityMain({share}: any):ReactElement  {
   const renderLoader =() => {
     return (
       (isLoading===true)
-      ? <View style={styles.loaderStyle}>
+        ? <View style={styles.loaderStyle}>
           <ActivityIndicator size="large" color="#50CAD2" />
-        </View> 
-      : null
+        </View> : null
     )
   }
 
@@ -51,7 +50,7 @@ export default function CommunityMain({share}: any):ReactElement  {
 
   return (
     <View style={styles.container}>
-      <Suspense fallback={<Text>Loading...</Text>}>
+      {/* <Suspense fallback={<Text>Loading...</Text>}> */}
           <FlatList 
             ref={listRef}
             data={list} // 렌더링데이터
@@ -85,7 +84,7 @@ export default function CommunityMain({share}: any):ReactElement  {
             // extraData={list} // communityList가 바뀌면 리렌더
             windowSize={2}
           />
-      </Suspense>
+      {/* </Suspense> */}
     </View>
   )
 };
