@@ -6,6 +6,7 @@ import {
   currSelectedDateState,
   rentEquipmentInfosType,
   requestReservationEquipmentArrayState,
+  smallModalMessageState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
 import { PayButtonProps } from '@/src/screens/RequestPayment/types';
@@ -28,6 +29,7 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
   const reservingEquipmentArray = useRecoilValue(
     requestReservationEquipmentArrayState,
   );
+
   const [isLoading, setIsLoading] = useState(false);
   let flag = useRef(false);
 
@@ -45,6 +47,7 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
       const instanceAtk = await getInstanceATK();
       const { data } = await instanceAtk.post('/reservation', body);
       console.log(data);
+      setErrorMsg('결제가 완료되었습니다.');
       flag.current = true;
     } catch (e) {
       console.log(e.response.data);
