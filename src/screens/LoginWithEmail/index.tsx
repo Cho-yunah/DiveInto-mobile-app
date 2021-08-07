@@ -68,12 +68,14 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
     setIsLoading(false);
   };
 
+  const navigateToForgotPassword = () => navigation.navigate('ForgotPassword');
+
   return (
     <View style={styles.container}>
       <ScrollView>
         <PWInput />
         <LoginButton requestLogin={requestLogin} />
-        <PwForgot />
+        <PwForgot navigateToForgotPassword={navigateToForgotPassword} />
       </ScrollView>
       <Modal visible={isError} transparent={true} animationType={'fade'}>
         <Pressable
