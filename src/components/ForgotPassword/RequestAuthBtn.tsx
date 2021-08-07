@@ -23,6 +23,12 @@ const RequestAuthBtn = () => {
           email,
           code,
         };
+
+        if (!code) {
+          set(isAlertedState, '인증 번호를 입력해주세요.');
+          return;
+        }
+
         try {
           const { data } = await instance.post('/email/code/verify', body);
           data.success === true && setIsAuthenticated(true);
