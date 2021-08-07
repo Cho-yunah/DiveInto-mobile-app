@@ -3,7 +3,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import { useRecoilState } from 'recoil';
 
-import { UploadCertificate as styles } from './styles';
+import { UploadCertificate as styles, containerShadowBox } from './styles';
 import { multiImageSelect } from '@lib/file';
 import { instructorImageCollectionState } from '@recoil/ProfileStack';
 import { Image } from 'react-native-animatable';
@@ -45,7 +45,7 @@ export default function UploadCertificate() {
     );
   } else {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, containerShadowBox.container]}>
         {picsArr.length !== 0 ? (
           // 사진 업로드 후 사진 보여주는 View
           picsArr.map((pic, index) => (

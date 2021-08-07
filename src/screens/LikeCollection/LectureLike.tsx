@@ -3,16 +3,20 @@ import { FlatList, View } from 'react-native';
 
 import { styles } from './styles';
 import { LectureLikeProps } from './types';
-import { PopularLecture } from '@components/MainList/Lecture/PopularLectureList';
+
 import instance from '@lib/api/axios';
 import { useRecoilValue } from 'recoil';
 import { atkState } from '@recoil/ProfileStack';
 import CommonLoading from '@components/common/CommonLoading';
 import CommonEmptyView from '@components/common/CommonEmptyView';
+import { PopularLecture } from '@components/MainList/Lecture/PopularLectureList';
 
 export default function LectureLikeScreen() {
   const atk = useRecoilValue(atkState);
   const [lectureList, setLectureList] = useState<[] | null>(null);
+
+  // isMarked, price, period 값이 lectureList에 있는지 확인 후 props로 넣어주기
+  console.log(lectureList);
 
   useEffect(() => {
     const getLikeLecture = async () => {
@@ -43,6 +47,7 @@ export default function LectureLikeScreen() {
         renderItem={({ item }: { item: LectureLikeProps }) => {
           return (
             <PopularLecture
+              id={item.id}
               title={item.title}
               organization={item.organization}
               level={item.level}
@@ -50,8 +55,8 @@ export default function LectureLikeScreen() {
               maxNumber={item.maxNumber}
               lectureTime={item.lectureTime}
               equipmentNames={item.equipmentNames}
-              image={item.imageUrl}
-              reviewAvg={2.5}
+              imageUrl={item.imageUrl}
+              starAvg={2.5}
               reviewCount={item.reviewCount}
             />
           );
@@ -62,7 +67,7 @@ export default function LectureLikeScreen() {
       <CommonEmptyView
         guideText="강의가 없습니다."
         buttonText="강의 둘러보기"
-        moveViewName="ProfileMain"
+        moveViewName="홈"
       />
     )
   ) : (

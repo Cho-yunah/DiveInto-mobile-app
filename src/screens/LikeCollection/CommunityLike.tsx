@@ -15,7 +15,9 @@ export default function CommunityLikeScreen() {
   const atk = useRecoilValue(atkState);
   const [communityList, setCommunityList] = useState([]);
 
-  const moveDetailView = () => navigation.navigate('CommunityDetail');
+  const moveDetailView = () => {
+    navigation.navigate('CommunityDetail');
+  };
 
   useEffect(() => {
     const getLikeCommunity = async () => {
@@ -58,7 +60,8 @@ export default function CommunityLikeScreen() {
                   commentCount={item.commentCount}
                   likeCount={item.likeCount}
                   liked={item.liked}
-                  onItemClick={moveDetailView}
+                  type="profile"
+                  // onItemClick={moveDetailView}
                 />
               );
             }}
@@ -68,7 +71,7 @@ export default function CommunityLikeScreen() {
           <CommonEmptyView
             guideText="커뮤니티 글이 없습니다."
             buttonText="커뮤니티 글 둘러보기"
-            moveViewName="ProfileMain"
+            moveViewName="커뮤니티"
           />
         ))}
     </View>

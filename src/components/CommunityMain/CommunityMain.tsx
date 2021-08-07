@@ -1,14 +1,21 @@
-import React, { ReactElement, Suspense, useRef, useState} from 'react';
+import React, { ReactElement, Suspense, useRef, useState } from 'react';
 import { Text, View, FlatList, ActivityIndicator } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import CommunityItem from './CommunityItem';
+
 import {styles} from './styles'
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useRequestCommunityList} from './useRequestCommunityList';
-import {loadingState, listPageState, refreshState, communityListState} from '@/src/recoil/CommunityStack'
 import { ContentItem } from './types';
+import {
+  loadingState,
+  listPageState,
+  refreshState,
+  communityListState,
+} from '@/src/recoil/CommunityStack';
 
-export default function CommunityMain({share}: any):ReactElement  {
+
+export default function CommunityMain({ share }: any): ReactElement {
   // data 요청
   useRequestCommunityList({share})
   
@@ -23,16 +30,15 @@ export default function CommunityMain({share}: any):ReactElement  {
   const [callOnScrollEnd, setCallOnScrollEnd] = useState(false)
   
   console.log('communityList-main',list)
-
+    
   // data 받아올 때의 loader
-  const renderLoader =() => {
-    return (
-      (isLoading===true)
-        ? <View style={styles.loaderStyle}>
-          <ActivityIndicator size="large" color="#50CAD2" />
-        </View> : null
-    )
-  }
+  const renderLoader = () => {
+    return isLoading === true ? (
+      <View style={styles.loaderStyle}>
+        <ActivityIndicator size="large" color="#50CAD2" />
+      </View>
+    ) : null;
+  };
 
   // contents 더 가져오기
   const contentsLoadMore= ()=> { 
@@ -86,5 +92,5 @@ export default function CommunityMain({share}: any):ReactElement  {
           />
       {/* </Suspense> */}
     </View>
-  )
-};
+  );
+}

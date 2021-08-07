@@ -13,6 +13,7 @@ export default function UploadImgBtn({ buttonText }: { buttonText: string }) {
   const setImageURI = useSetRecoilState(ProfileImageURIState);
 
   const onChangeImgBtn = async () => {
+    setImageURI(null);
     try {
       const imgInfo: DocumentPickerResponse | undefined =
         await singleImageSelect();
@@ -30,6 +31,7 @@ export default function UploadImgBtn({ buttonText }: { buttonText: string }) {
             Authorization: atk,
           },
         });
+
         setImageURI(data.url);
       }
     } catch (err) {

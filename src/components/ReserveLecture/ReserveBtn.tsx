@@ -1,14 +1,15 @@
 import {
   getEquipmentsState,
-  getTheSameClassScheduleState,
   lectureIdState,
   requestReservationEquipmentDetailType,
   requestReservationEquipmentState,
+  selectedClassByIdSelector,
+  smallModalMessageState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
 import React, { useRef } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { ReserveBtn as styles } from './styles';
 import { ReserveBtnProps } from './types';
 
@@ -16,43 +17,39 @@ type FlagType = {
   [key: number]: boolean;
 };
 
-const ReserveBtn = ({
-  navigateToRequestPayment,
-  isDisabled,
-  setIsDisabled,
-  setModalMessage,
-}: ReserveBtnProps) => {
+const ReserveBtn = ({ navigateToRequestPayment }: ReserveBtnProps) => {
+  const [smallModalMessage, setSmallModalMessage] = useRecoilState(
+    smallModalMessageState,
+  );
   const lectureId = useRecoilValue(lectureIdState);
   const equipmentsState = useRecoilValue(getEquipmentsState(lectureId!)); // 강의 id -> 제공되는 대여장비, name,id, price
-  const classSchedule = useRecoilValue(getTheSameClassScheduleState);
+  const classSchedule = useRecoilValue(selectedClassByIdSelector);
   const studentNumber = useRecoilValue(studentNumberState); // 원하는 수강 인원
   const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
   let flag = useRef<FlagType>({});
-  equipmentsState.forEach(equip => {
-    const eachEquipmentArr = useRecoilValue(
-      requestReservationEquipmentState(equip.id),
-    );
-    let sumOfEquip = 0;
-    eachEquipmentArr.forEach(itemBySize => {
-      console.log(itemBySize, '우우우우우우ㅜ우우우');
-
-      sumOfEquip += itemBySize.rentNumber;
+  equipmentsState &&
+    equipmentsState.forEach(equip => {
+      const eachEquipmentArr = useRecoilValue(
+        requestReservationEquipmentState(equip.id),
+      );
+      let sumOfEquip = 0;
+      eachEquipmentArr.forEach(itemBySize => {
+        sumOfEquip += itemBySize.rentNumber;
+      });
+      if (sumOfEquip > studentNumber) {
+        flag.current[equip.id] = true;
+      } else {
+        flag.current[equip.id] = false;
+      }
+      reservedEquipmentsArray.push(...eachEquipmentArr);
     });
-    if (sumOfEquip > studentNumber) {
-      flag.current[equip.id] = true;
-    } else {
-      flag.current[equip.id] = false;
-    }
-    reservedEquipmentsArray.push(...eachEquipmentArr);
-  });
 
   const moveToRequestPayment = () => {
     if (
       !classSchedule.length ||
       classSchedule[0]?.currentNumber === classSchedule[0]?.maxNumber
     ) {
-      setModalMessage('예약 가능한 일정을 선택해 주세요.');
-      setIsDisabled(true);
+      setSmallModalMessage('예약 가능한 일정을 선택해 주세요.');
       return;
     }
     const checkArr = [];
@@ -62,15 +59,13 @@ const ReserveBtn = ({
     }
 
     if (checkArr.length && checkArr.some(boolean => boolean === true)) {
-      setModalMessage(
+      setSmallModalMessage(
         '대여 장비수가 수강 인원을 초과하였습니다.' +
           '\n' +
           '다시 확인 해주세요.',
       );
-      setIsDisabled(true);
       return;
     }
-
     navigateToRequestPayment();
   };
 
@@ -80,7 +75,7 @@ const ReserveBtn = ({
         marginRight: 10,
       }}
       onPress={() => moveToRequestPayment()}
-      disabled={isDisabled}
+      disabled={!!smallModalMessage}
     >
       <Text style={styles.headerBtnText}>다음</Text>
     </TouchableOpacity>
