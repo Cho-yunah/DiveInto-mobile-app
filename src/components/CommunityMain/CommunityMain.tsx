@@ -2,11 +2,18 @@ import React, { ReactElement, useMemo, useRef, useState} from 'react';
 import { View, FlatList, ActivityIndicator } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import CommunityItem from './CommunityItem';
+
 import {styles} from './styles'
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useRequestCommunityList} from './useRequestCommunityList';
-import {loadingState, listPageState, refreshState, communityListState} from '@/src/recoil/CommunityStack'
-import { ContentItem } from './types';
+import {
+  loadingState,
+  listPageState,
+  refreshState,
+  communityListState,
+  ContentItem,
+} from '@/src/recoil/CommunityStack';
+
 
 export default function CommunityMain({share, question}: any):ReactElement  {
   // data 요청
@@ -28,14 +35,13 @@ export default function CommunityMain({share, question}: any):ReactElement  {
   // console.log('mainpage', currentPage)
 
   // data 받아올 때의 loader
-  const renderLoader =() => {
-    return (
-      (isLoading===true)
-        ? <View style={styles.loaderStyle}>
-          <ActivityIndicator size="large" color="#50CAD2" />
-        </View> : null
-    )
-  }
+  const renderLoader = () => {
+    return isLoading === true ? (
+      <View style={styles.loaderStyle}>
+        <ActivityIndicator size="large" color="#50CAD2" />
+      </View>
+    ) : null;
+  };
 
   // contents 더 가져오기
   const contentsLoadMore= ()=> { 
@@ -94,5 +100,5 @@ export default function CommunityMain({share, question}: any):ReactElement  {
           />
       {/* </Suspense> */}
     </View>
-  )
-};
+  );
+}

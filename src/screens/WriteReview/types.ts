@@ -1,5 +1,5 @@
 export type UploadReviewHeaderBtnProps = {
-  // reservationId: number;
+  reservationId: number;
 };
 
 export type PostReviewBodyType = {

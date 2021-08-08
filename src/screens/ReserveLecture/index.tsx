@@ -11,11 +11,12 @@ import {
 } from '@components/ReserveLecture';
 import SuspenseCalendar from '@/src/components/ReserveLecture/SuspenseCalendar';
 import SuspenseReserveBtn from '@/src/components/ReserveLecture/SuspenseReserveBtn';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRecoilState } from 'recoil';
+import { smallModalMessageState } from '@/src/recoil/LectureStack';
+import { View } from 'react-native-animatable';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 
 const index = ({ navigation }: ReserveLectureProps) => {
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
   const navigateToRequestPayment = () => {
     navigation.navigate('RequestPayment');
   };
@@ -23,12 +24,7 @@ const index = ({ navigation }: ReserveLectureProps) => {
     navigation.setOptions({
       headerRight: () => (
         <Suspense fallback={<SuspenseReserveBtn />}>
-          <ReserveBtn
-            navigateToRequestPayment={navigateToRequestPayment}
-            isDisabled={isDisabled}
-            setIsDisabled={setIsDisabled}
-            setModalMessage={setModalMessage}
-          />
+          <ReserveBtn navigateToRequestPayment={navigateToRequestPayment} />
         </Suspense>
       ),
     });
@@ -47,23 +43,42 @@ const index = ({ navigation }: ReserveLectureProps) => {
         <SelectLectureSchedule />
         {/* 장비대여 */}
         <RentEquipments />
-        <Modal visible={isDisabled} transparent={true} animationType={'fade'}>
-          <Pressable
-            onPress={() => setIsDisabled(false)}
-            style={styles.modalOuterContainer}
-          >
-            <ModalContainer message={modalMessage} />
-          </Pressable>
-        </Modal>
+
+        {/* 모달 */}
+        <AlertModal />
       </ScrollView>
     </>
   );
 };
 
-export const ModalContainer = ({ message }: { message: string }) => (
-  <SafeAreaView style={styles.modalContainer}>
-    <Text style={styles.modalText}>{message}</Text>
-  </SafeAreaView>
-);
+export const AlertModal = () => {
+  const [smallModalMessage, setSmallModalMessage] = useRecoilState(
+    smallModalMessageState,
+  );
+  const navigation = useNavigation();
+  return (
+    <Modal
+      visible={!!smallModalMessage}
+      transparent={true}
+      animationType={'fade'}
+    >
+      <Pressable
+        onPress={() => {
+          if (smallModalMessage === '결제가 완료되었습니다.') {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'MainList' }],
+            });
+          }
+          setSmallModalMessage('');
+        }}
+        style={styles.modalOuterContainer}
+      ></Pressable>
+      <View style={styles.modalContainer}>
+        <Text style={styles.modalText}>{smallModalMessage}</Text>
+      </View>
+    </Modal>
+  );
+};
 
 export default index;

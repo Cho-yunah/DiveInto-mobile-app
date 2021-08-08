@@ -1,12 +1,12 @@
 import { getInstanceATK } from '@/src/lib/api/axios';
 import {
   cachingState,
+  cachingStateFormClassScheduleState,
   currScheduleIdState,
-  getEquipmentsState,
-  lectureIdState,
+  currSelectedDateState,
   rentEquipmentInfosType,
-  requestReservationEquipmentDetailType,
-  requestReservationEquipmentState,
+  requestReservationEquipmentArrayState,
+  smallModalMessageState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
 import { PayButtonProps } from '@/src/screens/RequestPayment/types';
@@ -19,19 +19,19 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { payButton as styles } from './styles';
 
 const PayButton = ({ setErrorMsg }: PayButtonProps) => {
-  const lectureId = useRecoilValue(lectureIdState);
-  const equipmentsState = useRecoilValue(getEquipmentsState(lectureId!)); // 강의 id -> 제공되는 대여장비, name,id, price
-  const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
   const currScheduleId = useRecoilValue(currScheduleIdState);
   const numberOfPeople = useRecoilValue(studentNumberState);
   const setCaching = useSetRecoilState(cachingState);
+  const setCachingSchedule = useSetRecoilState(
+    cachingStateFormClassScheduleState,
+  );
+  const setCurrSelectedDate = useSetRecoilState(currSelectedDateState);
+  const reservingEquipmentArray = useRecoilValue(
+    requestReservationEquipmentArrayState,
+  );
+
   const [isLoading, setIsLoading] = useState(false);
   let flag = useRef(false);
-  equipmentsState.forEach(equip =>
-    reservedEquipmentsArray.push(
-      ...useRecoilValue(requestReservationEquipmentState(equip.id)),
-    ),
-  );
 
   const requestReservation = async (
     rentEquipmentInfos: rentEquipmentInfosType[],
@@ -47,6 +47,8 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
       const instanceAtk = await getInstanceATK();
       const { data } = await instanceAtk.post('/reservation', body);
       console.log(data);
+      setErrorMsg('결제가 완료되었습니다.');
+      flag.current = true;
     } catch (e) {
       console.log(e.response.data);
       if (e.response.data.success === false) {
@@ -59,7 +61,13 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
 
   useEffect(() => {
     return () => {
-      if (flag.current) setCaching(cache => cache + 1);
+      if (flag.current) {
+        // 에러 발생해서 뒤로가기 할 경우 & 강의 예약이 성공한 경우 최신 강의정보(일정, 인원)를 다시 받아온다.
+        // 에러 발생시 강의 일정 선택으로 보내기. 성공시 메인화면으로 보낸다.
+        setCurrSelectedDate('');
+        setCaching(cache => cache + 1);
+        setCachingSchedule(cache => cache + 1);
+      }
     };
   }, []);
 
@@ -69,7 +77,7 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
         style={styles.button}
         onPress={() =>
           requestReservation(
-            reservedEquipmentsArray.map(equip => ({
+            reservingEquipmentArray.map(equip => ({
               scheduleEquipmentStockId: equip.scheduleEquipmentStockId,
               rentNumber: equip.rentNumber,
             })),

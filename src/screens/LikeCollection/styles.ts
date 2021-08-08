@@ -9,6 +9,6 @@ export const styles = StyleSheet.create({
   eachContainer: {
     flex: 1,
     marginTop: 20,
-    alignItems: 'center',
+    paddingHorizontal: 15,
   },
 });

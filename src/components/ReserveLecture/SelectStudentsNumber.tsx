@@ -4,15 +4,15 @@ import { SelectStudentNumber as styles } from './styles';
 import Entype from 'react-native-vector-icons/Entypo';
 import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import {
-  getTheSameClassScheduleState,
   lectureCommonSelectorFamily,
+  selectedClassByIdSelector,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
 import addCashComma from '@/src/lib/utils/addCashComma';
 
 const SelectStudentsNumber = () => {
   const [studentNumber, setStudentNumber] = useRecoilState(studentNumberState);
-  const classScheduleState = useRecoilValue(getTheSameClassScheduleState);
+  const classScheduleState = useRecoilValue(selectedClassByIdSelector);
   const { contents } = useRecoilValueLoadable(
     lectureCommonSelectorFamily('Info'),
   );
@@ -34,7 +34,7 @@ const SelectStudentsNumber = () => {
       <View style={styles.container}>
         <Text style={styles.title}>인원 선택</Text>
 
-        <Text>수강 인원 선택을 위해서 일정이 있는 날짜를 선택해 주세요.</Text>
+        <Text>수강 인원 선택을 위해서 일정을 선택해 주세요.</Text>
       </View>
     );
   else if (

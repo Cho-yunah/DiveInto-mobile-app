@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
 import { View, Animated, TouchableOpacity, Text } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
@@ -5,14 +6,16 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import CommonModal from '../common/CommonModal';
 
 import { TouchSwipeStyle as styles } from './styles';
-import { AuxProps, RightSwipeProps } from './types';
+import { TouchSwipeProps, RightSwipeProps } from './types';
 
 export default function TouchSwipe({
   imgComponent,
   contentsComponents,
   type,
-}: AuxProps) {
+  reservationId,
+}: TouchSwipeProps) {
   const [show, setShow] = useState(false);
+  const navigation = useNavigation();
 
   const RightSwipe = ({ progress, dragX, onPress }: RightSwipeProps) => {
     const scale = dragX.interpolate({
@@ -29,6 +32,14 @@ export default function TouchSwipe({
         </Animated.View>
       </TouchableOpacity>
     );
+  };
+
+  const onMoveWriteReiveView = () => {
+    navigation.navigate('WriteReview', { reservationId });
+  };
+
+  const onMoveLectureDetailView = () => {
+    navigation.navigate('DetailReservation', { reservationId });
   };
 
   const onDeleteLastLecture = useCallback(() => {
@@ -48,8 +59,11 @@ export default function TouchSwipe({
   const onDeleteLecture =
     type === 'last' ? onDeleteLastLecture : onDeleteNextLecture;
 
+  const onMoveScreen =
+    type === 'last' ? onMoveWriteReiveView : onMoveLectureDetailView;
+
   return (
-    <TouchableOpacity onPress={() => console.log('Click')}>
+    <TouchableOpacity onPress={onMoveScreen}>
       <Swipeable
         renderRightActions={(progress, dragX) => (
           <RightSwipe

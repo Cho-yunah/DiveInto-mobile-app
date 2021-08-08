@@ -1,5 +1,4 @@
 import React from 'react';
-import { RecoilRoot } from 'recoil';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootLoginStack } from './types';
 
@@ -8,9 +7,7 @@ import LoginWithEmailScreen from '@screens/LoginWithEmail';
 import SetPasswordScreen from '@screens/SetPassword';
 import AuthEmailScreen from '@screens/AuthEmail';
 import MemberInfoScreen from '@screens/MemberInfo';
-import WriteReviewScreen from '@/src/screens/WriteReview';
-import LectureDetailScreen from '@/src/screens/LectureDetail';
-import ReserveLecture from '@/src/screens/ReserveLecture';
+import ForgotPasswordScreen from '@/src/screens/ForgotPassword';
 
 const Stack = createStackNavigator<RootLoginStack>();
 
@@ -65,6 +62,11 @@ export default function LoginStack() {
         name="MemberInfo"
         component={MemberInfoScreen}
         options={{ title: '회원정보기입' }}
+      />
+      <Stack.Screen
+        name="ForgotPassword"
+        component={ForgotPasswordScreen}
+        options={{ title: '비밀번호 찾기' }}
       />
     </Stack.Navigator>
   );

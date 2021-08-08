@@ -8,11 +8,7 @@ import {
   View,
 } from 'react-native';
 import { LecturePicsStyles as styles } from './styles';
-import {
-  useRecoilValue,
-  useRecoilValueLoadable,
-  useSetRecoilState,
-} from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   lectureCommonSelectorFamily,
   LectureDetailPicsType,
@@ -47,24 +43,20 @@ const LecturePicsCarousel = () => {
             onPress={() => {
               console.log('hey', index);
 
-              setModalPics(lecturePics?._embedded?.lectureImageUrlList || []);
               setSelectedIdx(index);
+              setModalPics(lecturePics?._embedded?.lectureImageUrlList || []);
             }}
           >
             <Image
               source={{ uri: item.url }}
               style={[
                 styles.carouselImage,
-                { width: windowWidth, resizeMode: 'cover' },
+                { width: windowWidth, resizeMode: 'contain' },
               ]}
             />
           </Pressable>
         )}
-        data={
-          lecturePics?._embedded?.lectureImageUrlList || [
-            'https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg',
-          ]
-        }
+        data={lecturePics?._embedded?.lectureImageUrlList || noImageArr}
         horizontal
         showsHorizontalScrollIndicator={false}
         snapToAlignment={'center'}
@@ -93,3 +85,9 @@ const LecturePicsCarousel = () => {
 };
 
 export default LecturePicsCarousel;
+
+const noImageArr = [
+  {
+    url: 'https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg',
+  },
+];

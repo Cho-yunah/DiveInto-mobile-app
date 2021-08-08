@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { EachScheduleProps } from './types';
 import { aboutReservationDetail as styles } from './styles';
 import getDuration from '@/src/lib/utils/getDuaration';
+import { DateTimeInfoType } from '../ReserveLecture/types';
 
-const EachSchedule = ({ item }: EachScheduleProps) => {
+const EachSchedule = ({ item }: { item: DateTimeInfoType }) => {
   const date = item.date.split('-');
   const startTime = item.startTime.split(':');
   const endTime = item.endTime.split(':');

@@ -54,6 +54,9 @@ const UploadReviewHeaderBtn = ({}: UploadReviewHeaderBtnProps) => {
       console.log(e);
       console.warn('후기 작성 에러');
     }
+
+    console.log('click', 'click');
+
     setIsLoadingModalOpen(false);
   };
 

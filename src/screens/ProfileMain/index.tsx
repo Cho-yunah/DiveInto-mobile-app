@@ -7,17 +7,23 @@ import { styles } from './styles';
 import instance from '@lib/api/axios';
 import { ProfileMainProps } from '@navigators/ProfileStack/types';
 import { userInfoProps } from './types';
-import { atkState } from '@recoil/ProfileStack';
+import {
+  atkState,
+  modifyNumViewStateAtom,
+  PhoneNumState,
+} from '@recoil/ProfileStack';
 import { HeaderContainer, MainContainer } from '@components/ProfileMain';
 
 export default function ProfileMain({ navigation }: ProfileMainProps) {
   const [isInstructor, setIsInstructor] = useState<string | null>(null);
   const setAtk = useSetRecoilState(atkState);
+  const setPhoneNum = useSetRecoilState(PhoneNumState);
   const [userInfo, setUserInfo] = useState<userInfoProps | undefined>({
     email: '',
     nickname: '',
     phone: '',
   });
+  const setModifyNumViewState = useSetRecoilState(modifyNumViewStateAtom);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -28,7 +34,7 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
         setAtk(token);
         setIsInstructor(instructor);
 
-        const res = await instance.get('/account', {
+        const { data } = await instance.get('/account', {
           headers: {
             Authorization: token,
           },
@@ -36,17 +42,25 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
 
         setUserInfo(state => ({
           ...state,
-          email: res.data.email,
-          nickname: res.data.nickName,
-          phone: res.data.phoneNumber,
+          email: data.email,
+          nickname: data.nickName,
+          phone: data.phoneNumber,
         }));
+
+        setModifyNumViewState({
+          phoneNumber: data.phoneNumber,
+          birth: data.birth,
+          gender: data.gender,
+        });
+
+        setPhoneNum(data.phoneNumber);
       } catch (err) {
         console.log(err);
       }
     };
 
     getUserInfo();
-  }, []);
+  }, [userInfo]);
 
   return (
     <>
@@ -58,7 +72,6 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
             nickname={userInfo?.nickname}
             phone={userInfo?.phone}
             type={isInstructor === 'instructor' ? 'instructor' : 'student'}
-            // type={true ? 'instructor' : 'student'}
           />
         </SafeAreaView>
       )}
