@@ -6,20 +6,25 @@ import { useNavigation } from '@react-navigation/native';
 
 import { styles } from './styles';
 import ShowOutputModal from './ShowOutputModal';
+import { IsLogin } from '@recoil/Global';
 import {
   logoutModalOpenState,
   deleteModalOpenState,
-} from '@/src/recoil/ProfileStack';
+} from '@recoil/ProfileStack';
 
 export default function Output() {
   const navigation = useNavigation();
   const setLogoutShow = useSetRecoilState(logoutModalOpenState);
   const setDeleteShow = useSetRecoilState(deleteModalOpenState);
 
+  // 로그인했는지 안했는지 확인하는 리코일
+  const setIsLogin = useSetRecoilState(IsLogin);
+
   const onExecuteLogout = async () => {
     try {
       await AsyncStorage.removeItem('atk');
       setLogoutShow(false);
+      setIsLogin(false);
     } catch (err) {
       console.log(err);
     }

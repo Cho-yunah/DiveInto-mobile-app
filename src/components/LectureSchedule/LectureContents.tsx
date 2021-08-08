@@ -12,8 +12,6 @@ export default function LectureContents({
   reservationDate,
   nickname,
 }: LectureContentsProps) {
-  console.log('LectureContents');
-
   return (
     <View style={styles.container}>
       <View style={styles.commonLayout}>
