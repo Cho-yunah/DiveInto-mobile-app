@@ -25,7 +25,11 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
   });
   const setModifyNumViewState = useSetRecoilState(modifyNumViewStateAtom);
 
+  console.log(userInfo?.phone);
+
   useEffect(() => {
+    console.log('프로필 연결');
+
     const getUserInfo = async () => {
       try {
         const token = await AsyncStorage.getItem('atk');
@@ -60,7 +64,7 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
     };
 
     getUserInfo();
-  }, [userInfo]);
+  }, [userInfo?.phone]);
 
   return (
     <>

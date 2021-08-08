@@ -1,5 +1,5 @@
 export type CommunityMainProps = {
-  enterContenetDetail: () => void;
+  enterContenetDetail?: () => void;
 };
 
 export type ContentItem = {
@@ -12,7 +12,7 @@ export type ContentItem = {
   commentCount: number;
   likeCount: number;
   liked: boolean;
-  type: 'profile' | 'community';
+  listType?: 'mainList' | 'profileList';
 };
 
 export type CommentNumber = {

@@ -18,22 +18,14 @@ export default function CommunityItem({
   commentCount,
   likeCount,
   liked,
-  type,
+  listType,
 }: ContentItem) {
   const navigation = useNavigation();
   const basicThumnailUrl =
     'https://png.pngtree.com/png-clipart/20190516/original/pngtree-warm-color-cool-in-summer-cartoon-swimming-goggles-cool-png-image_3774944.jpg';
 
-  const whenCommunityTypeNaviagtion = () => {
-    // if (type === 'community') {
+  const onMoveDetailScreen = () => {
     navigation.navigate('CommunityDetail', { id });
-    // } else {
-    // navigation.navigate('커뮤니티', {
-    //   screen: 'CommunityDetail',
-    //   initial: false,
-    //   params: { id },
-    // });
-    // }
   };
 
   // moment 시간 계산
@@ -55,8 +47,7 @@ export default function CommunityItem({
     <TouchableOpacity
       style={styles.listItem}
       activeOpacity={0.8}
-      // onPress={() => navigation.navigate('CommunityDetail', { id })}
-      onPress={whenCommunityTypeNaviagtion}
+      onPress={onMoveDetailScreen}
     >
       {imageUrl ? (
         <Image style={styles.thumnailImage} source={{ uri: imageUrl }} />
@@ -80,7 +71,7 @@ export default function CommunityItem({
           id={id}
           likeCount={likeCount}
           liked={liked}
-          mainList={'mainList'}
+          listType="mainList"
         />
       </View>
       <View style={styles.iconBox}>

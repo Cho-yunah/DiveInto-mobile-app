@@ -1,42 +1,49 @@
-import instance from "@/src/lib/api/axios"
-import { communityListState, listPageState, loadingState, refreshState } from "@/src/recoil/CommunityStack"
-import { useEffect, useLayoutEffect } from "react"
-import { useRecoilState, useRecoilValue } from "recoil"
-import { ContentItem } from "./types"
+import instance, { getInstanceATK } from '@/src/lib/api/axios';
+import {
+  communityLikeState,
+  communityListState,
+  listPageState,
+  loadingState,
+  refreshState,
+} from '@/src/recoil/CommunityStack';
+import { useEffect, useLayoutEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { ContentItem } from './types';
 
-export const useRequestCommunityList = ({share}): ContentItem[] => {
-  
+export const useRequestCommunityList = ({ share }): ContentItem[] => {
   const [isLoading, setIsLoading] = useRecoilState<boolean>(loadingState);
-  const [communityList, setCommunityList]= useRecoilState<ContentItem[]>(communityListState)
-  const [refreshing, setRefreshing] = useRecoilState(refreshState)
-  const listPage = useRecoilValue(listPageState)
-  
+  const [communityList, setCommunityList] =
+    useRecoilState<ContentItem[]>(communityListState);
+  const [refreshing, setRefreshing] = useRecoilState(refreshState);
+  const listPage = useRecoilValue(listPageState);
+  // const communityLike = useRecoilValue(communityLikeState())
+
   const url = share
-    ? `/community/post/category?category=SHARE&page=${listPage}&size=10&sort=id,desc` 
-    : `/community/post/category?category=Question&page=${listPage}&size=10&sort=id,desc`
-  
-  useEffect(()=> {
-    console.log(url)
-    const requestCommunityList = async() => {
-      setIsLoading(true)
+    ? `/community/post/category?category=SHARE&page=${listPage}&size=10&sort=id,desc`
+    : `/community/post/category?category=Question&page=${listPage}&size=10&sort=id,desc`;
+
+  useEffect(() => {
+    console.log(url);
+    const requestCommunityList = async () => {
+      const instanceAtk = await getInstanceATK();
+
+      setIsLoading(true);
       try {
         // console.log('listPage', listPage)
-        const {data} = await instance.get(url);
-        // console.log('data', data) 
+        const { data } = await instanceAtk.get(url);
+        console.log('data', data);
 
-        data._embedded 
-        && setCommunityList((list)=>
-            [...list,...data._embedded.postsModelList]
-          );
+        data._embedded &&
+          setCommunityList(list => [...list, ...data._embedded.postsModelList]);
         // console.log('communityList-main',communityList)
-      } catch(e) {
-        console.log(e)
+      } catch (e) {
+        console.log(e);
       }
       // setRefreshing(false)
-      setIsLoading(false)
+      setIsLoading(false);
     };
-    
+
     requestCommunityList();
-  }, [listPage, refreshing])
+  }, [listPage, refreshing]);
   return communityList;
-}
+};

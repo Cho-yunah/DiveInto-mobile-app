@@ -1,8 +1,9 @@
 export type EachCommonInfoProps = {
   name: string;
   userInfo: string | number;
-  type: 'user' | 'costOrEquipment';
+  type: 'user' | 'cost' | 'equipment';
   emphasis?: boolean;
+  size?: string;
 };
 
 export type EachScheduleInfoProps = {

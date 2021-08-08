@@ -1,6 +1,7 @@
 import { atom, atomFamily, selector, selectorFamily } from 'recoil';
-import { userInfoProps } from '../screens/ProfileMain/types';
+import { userInfoProps } from '@screens/ProfileMain/types';
 import { sliceTimeString, sliceDateString } from '@lib/utils/sliceNewString';
+import theSameNameOfNumber from '@lib/utils/duplicateEquipment';
 
 export type lectureReviewAllType = {
   id: number;
@@ -260,15 +261,19 @@ export const totalCostSelector = selectorFamily({
     },
 });
 
-// // 같은 목록이면서 같은 사이즈 장비 수량 합을 구하는 셀렉터
-// export const sumOfSameListSelector = selector({
-//   key: 'sumOfSameList',
-//   get: ({ get }) => {
-//     const equipmentList = get(reserveEquipmentsState);
+// 같은 목록이면서 같은 사이즈 장비 수량 합을 구하는 셀렉터
+export const sumOfTheSameListSelector = selector({
+  key: 'sumOfSameList',
+  get: ({ get }) => {
+    const equipmentList = get(reserveEquipmentsState);
 
-//     if (!equipmentList.length) return [];
-//   },
-// });
+    if (!equipmentList.length) return [];
+
+    console.log(theSameNameOfNumber(equipmentList));
+
+    return theSameNameOfNumber(equipmentList);
+  },
+});
 
 // 강의 일정 관련 데이터 문자열 새로운 조합으로 바꾸는 셀렉터
 export const dateOrTimeOfNewStringSelector = selector({
