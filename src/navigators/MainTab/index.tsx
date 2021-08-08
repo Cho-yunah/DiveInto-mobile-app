@@ -24,38 +24,38 @@ export default function LoginStack() {
   console.log(isInstructor);
 
   return (
-    <RecoilRoot>
-      <Tab.Navigator
-        tabBarOptions={{
-          adaptive: true,
-          activeTintColor: colors.PointBlue,
-          inactiveTintColor: colors.Gray2,
-          labelStyle: { fontSize: 12 },
-        }}
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) =>
-            IconSelector({ focused, color, size, routeName: route.name }),
-        })}
-      >
-        {/* 탭 이름은 같더라도 강사와 수강생 뷰가 다를 수 있어서 구분해놨으나, 동일하라면 강의후기에만 조건문 걸면 됨. */}
-        {isInstructor ? (
-          <>
-            <Tab.Screen name="홈" component={LectureStack} />
-            <Tab.Screen name="강의일정" component={AdmMyLectureStack} />
-            <Tab.Screen name="커뮤니티" component={CommunityStack} />
-            <Tab.Screen name="강의후기" component={Tmp} />
-            <Tab.Screen name="프로필" component={ProfileStack} />
-          </>
-        ) : (
-          <>
-            <Tab.Screen name="홈" component={LectureStack} />
-            <Tab.Screen name="커뮤니티" component={CommunityStack} />
-            <Tab.Screen name="강의일정" component={Tmp} />
-            <Tab.Screen name="프로필" component={ProfileStack} />
-          </>
-        )}
-      </Tab.Navigator>
-    </RecoilRoot>
+    // <RecoilRoot>
+    <Tab.Navigator
+      tabBarOptions={{
+        adaptive: true,
+        activeTintColor: colors.PointBlue,
+        inactiveTintColor: colors.Gray2,
+        labelStyle: { fontSize: 12 },
+      }}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) =>
+          IconSelector({ focused, color, size, routeName: route.name }),
+      })}
+    >
+      {/* 탭 이름은 같더라도 강사와 수강생 뷰가 다를 수 있어서 구분해놨으나, 동일하라면 강의후기에만 조건문 걸면 됨. */}
+      {isInstructor ? (
+        <>
+          <Tab.Screen name="홈" component={LectureStack} />
+          <Tab.Screen name="강의일정" component={AdmMyLectureStack} />
+          <Tab.Screen name="커뮤니티" component={CommunityStack} />
+          <Tab.Screen name="강의후기" component={Tmp} />
+          <Tab.Screen name="프로필" component={ProfileStack} />
+        </>
+      ) : (
+        <>
+          <Tab.Screen name="홈" component={LectureStack} />
+          <Tab.Screen name="커뮤니티" component={CommunityStack} />
+          <Tab.Screen name="강의일정" component={Tmp} />
+          <Tab.Screen name="프로필" component={ProfileStack} />
+        </>
+      )}
+    </Tab.Navigator>
+    // </RecoilRoot>
   );
 }
 

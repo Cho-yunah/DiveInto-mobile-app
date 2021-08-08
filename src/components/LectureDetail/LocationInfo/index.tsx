@@ -37,12 +37,12 @@ const LocationInfo = () => {
   );
 };
 
-function Map({ latitude = 0, longitude = 0 }: locationResponseType) {
+export function Map({ latitude = 0, longitude = 0 }: locationResponseType) {
   const posCoords = { latitude, longitude };
 
   return (
     <NaverMapView
-      style={{ width: '100%', height: '100%' }}
+      style={{ width: '100%', height: 200 }}
       // showsMyLocationButton={true}
       center={{ ...posCoords, zoom: 15 }}
     >

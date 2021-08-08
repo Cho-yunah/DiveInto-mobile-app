@@ -13,47 +13,47 @@ const Stack = createStackNavigator<RootLectureStack>();
 
 export default function LectureStack() {
   return (
-    <RecoilRoot>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#50CAD2',
-            height: 88,
-          },
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 18,
-            height: 21,
-          },
-          headerBackTitle: '뒤로',
-          headerBackTitleStyle: {
-            fontWeight: 'bold',
-            backgroundColor: '#50CAD2',
-          },
-          headerTintColor: '#fefefe',
-        }}
-      >
-        <Stack.Screen
-          name="MainList"
-          component={MainList}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="LectureDetail"
-          component={LectureDetailScreen}
-          options={{ title: '강의 제목' }}
-        />
-        <Stack.Screen
-          name="ReserveLecture"
-          component={ReserveLectureScreen}
-          options={{ title: '강의 예약' }}
-        />
-        <Stack.Screen
-          name="RequestPayment"
-          component={RequestPaymentScreen}
-          options={{ title: '결제 요청' }}
-        />
-      </Stack.Navigator>
-    </RecoilRoot>
+    // <RecoilRoot>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#50CAD2',
+          height: 88,
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize: 18,
+          height: 21,
+        },
+        headerBackTitle: '뒤로',
+        headerBackTitleStyle: {
+          fontWeight: 'bold',
+          backgroundColor: '#50CAD2',
+        },
+        headerTintColor: '#fefefe',
+      }}
+    >
+      <Stack.Screen
+        name="MainList"
+        component={MainList}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LectureDetail"
+        component={LectureDetailScreen}
+        options={{ title: '강의 제목' }}
+      />
+      <Stack.Screen
+        name="ReserveLecture"
+        component={ReserveLectureScreen}
+        options={{ title: '강의 예약' }}
+      />
+      <Stack.Screen
+        name="RequestPayment"
+        component={RequestPaymentScreen}
+        options={{ title: '결제 요청' }}
+      />
+    </Stack.Navigator>
+    // </RecoilRoot>
   );
 }

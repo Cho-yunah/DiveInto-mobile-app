@@ -24,6 +24,9 @@ export type RootProfileStack = {
     title: string;
     type: string;
   };
+  DetailReservation: {
+    reservationId: number;
+  };
   WriteReview: {
     reservationId: number;
   };
@@ -74,6 +77,12 @@ export type ApplyLecturerProps = StackScreenProps<
 export type ReviewCollectionProps = StackScreenProps<
   RootProfileStack,
   'ReviewCollection'
+>;
+
+// 예약 상세 타입
+export type DetailReservationProps = StackScreenProps<
+  RootProfileStack,
+  'DetailReservation'
 >;
 
 // 후기작성 타입
