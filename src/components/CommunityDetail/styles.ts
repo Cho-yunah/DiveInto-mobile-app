@@ -32,14 +32,17 @@ export const DetailInfoStyle = StyleSheet.create({
     flexDirection: 'row',
     right: 17,
     top: 38,
-    width: 60,
+    width: 55,
     justifyContent: 'space-between',
+    alignItems: 'center'
   },
   modify: {
-    color: '#A9BBC9'
+    color: '#A9BBC9',
+    fontSize: 12
   },
   delete: {
     color: '#E93A55',
+    fontSize: 12
   }
 })
 

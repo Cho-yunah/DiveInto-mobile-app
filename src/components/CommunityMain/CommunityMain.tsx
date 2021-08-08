@@ -1,5 +1,5 @@
-import React, { ReactElement, Suspense, useRef, useState} from 'react';
-import { Text, View, FlatList, ActivityIndicator } from 'react-native';
+import React, { ReactElement, useMemo, useRef, useState} from 'react';
+import { View, FlatList, ActivityIndicator } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import CommunityItem from './CommunityItem';
 import {styles} from './styles'
@@ -8,9 +8,11 @@ import { useRequestCommunityList} from './useRequestCommunityList';
 import {loadingState, listPageState, refreshState, communityListState} from '@/src/recoil/CommunityStack'
 import { ContentItem } from './types';
 
-export default function CommunityMain({share}: any):ReactElement  {
+export default function CommunityMain({share, question}: any):ReactElement  {
   // data 요청
-  useRequestCommunityList({share})
+  share? 
+    useRequestCommunityList({requestPage: share})
+    : useRequestCommunityList({requestPage: question})
   
   // focus 되어있는 tab click 하면 맨위로 이동
   const listRef= useRef(null)
@@ -22,7 +24,8 @@ export default function CommunityMain({share}: any):ReactElement  {
   const [refreshing, setRefreshing] = useRecoilState(refreshState)
   const [callOnScrollEnd, setCallOnScrollEnd] = useState(false)
   
-  console.log('communityList-main',list)
+  // console.log('communityList-main',list)
+  // console.log('mainpage', currentPage)
 
   // data 받아올 때의 loader
   const renderLoader =() => {
@@ -46,7 +49,21 @@ export default function CommunityMain({share}: any):ReactElement  {
       ? setRefreshing(true) 
       : setCurrentPage(0)
   }
-  console.log('mainpage', currentPage)
+
+  const renerItem = useMemo(() => ({item})=> (
+      <CommunityItem
+        id={item.id}
+        title={item.title}
+        category={item.category}
+        writerNickname={item.writerNickname}
+        dateOfRegistration={item.dateOfRegistration}
+        imageUrl={item.imageUrl}
+        commentCount={item.commentCount}
+        likeCount={item.likeCount}
+        liked={item.liked}
+      />
+    )
+  ,[]) 
 
   return (
     <View style={styles.container}>
@@ -54,19 +71,7 @@ export default function CommunityMain({share}: any):ReactElement  {
           <FlatList 
             ref={listRef}
             data={list} // 렌더링데이터
-            renderItem={({item})=> (
-                <CommunityItem
-                  id={item.id}
-                  title={item.title}
-                  category={item.category}
-                  writerNickname={item.writerNickname}
-                  dateOfRegistration={item.dateOfRegistration}
-                  imageUrl={item.imageUrl}
-                  commentCount={item.commentCount}
-                  likeCount={item.likeCount}
-                  liked={item.liked}
-                />
-             )}
+            renderItem={renerItem}
             keyExtractor={
               share 
               ? (item, index) => `share${item.id}`
@@ -81,8 +86,11 @@ export default function CommunityMain({share}: any):ReactElement  {
             ListFooterComponent={renderLoader} // footer 도달시 로더
             refreshing={refreshing} //새로고침 props
             onRefresh={onFresh}
-            // extraData={list} // communityList가 바뀌면 리렌더
+            extraData={list} // communityList가 바뀌면 리렌더
             windowSize={2}
+            disableVirtualization={false} // virtualized 어쩌구 에러 없애줌
+            // initialNumToRender={1} 
+            removeClippedSubviews={true}
           />
       {/* </Suspense> */}
     </View>

@@ -1,9 +1,14 @@
 import {atom, atomFamily, selector, selectorFamily} from 'recoil'
+
 // 토큰 받기
 export const atkState = atom<string | null>({
   key: 'atkState',
   default: null,
 });
+export type decodeTokenType = {
+  exp: string,
+  user_name: string,
+}
 
 // 커뮤니티 메인 리스트 
 export type ContentItem = {
@@ -99,7 +104,17 @@ export const writerInfoState = atom ({
   } 
 })
 
+export type writerInfoType = {
+  id: string,
+  nickName: string,
+  profileImageUrl: string
+}
+
 // 커뮤니티 상세 페이지 
+export const checkWriterState = atom({
+  key: 'checkWriterState',
+  default: false
+})
 export const communityItemState = atom({
   key: 'communityItem',
   default: {
@@ -281,7 +296,7 @@ export const recommentListPageState= atom({
   default: 0
 })
 
-export const showRecommentState = atom({
+export const showRecommentState = atomFamily({
   key: 'showRecommentState',
   default: false
 })

@@ -2,21 +2,20 @@ import React, { ReactElement, useLayoutEffect} from 'react'
 import { View , Text} from 'react-native';
 import styles  from './styles';
 import {CommunityMain } from '@components/CommunityMain';
-import {QuestionaryContentsList } from '@components/CommunityMain';
 import NextButton from '@components/CommunityMain/NextButton'
 import { CommunityPostingProps, CommunityDetailProps } from '@navigators/CommunityStack/types';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { atkState, postingFormState } from '@/src/recoil/CommunityStack';
+import { useRecoilState} from 'recoil';
+import { atkState } from '@/src/recoil/CommunityStack';
 
 const Tab= createMaterialTopTabNavigator();
 
 export default function CommunityMainScreen({navigation}: CommunityPostingProps): ReactElement {
 
   const [token, setToken] = useRecoilState(atkState)
-  console.log(token)
+  // console.log(token)
 
   useEffect(()=> {
     const getToken = async() => {
@@ -29,7 +28,7 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
     } 
     getToken()
   },[])
- 
+
   // header 글쓰기 버튼  
   useLayoutEffect(()=> {
     const addContent = () => navigation.navigate('CommunityPosting')
@@ -51,12 +50,12 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
       <Tab.Screen 
         name="공유해요" 
         component={SharedContents}
-        initialParams={{share: 'share'}}
+        initialParams={{share: 'SHARE'}}
       />
       <Tab.Screen 
         name="궁금해요"
         component={QuestionaryContents}
-        initialParams={{question: 'question'}}
+        initialParams={{question: 'QUESTION'}}
         />
     </Tab.Navigator>
     </View>
@@ -70,8 +69,5 @@ const SharedContents = ({route}: any) => {
 
 const QuestionaryContents = ({route}: any) => {
   const question = route.params.question
-  // return (<CommunityMain question={question} />)
-return (<>
-  <Text>not yet</Text>
-</>
-)}
+  return (<CommunityMain question={question} />)
+}

@@ -1,4 +1,5 @@
 import {
+  checkWriterState,
   communityItemSelector,
   communityListState,
   listPageState,
@@ -19,6 +20,8 @@ export default function DetailInfo({ id }) {
   const { title, dateOfRegistration } = useRecoilValue(communityItemSelector);
   const writer = useRecoilValue(writerInfoState);
   const [show, setShow] = useRecoilState(showModalState);
+  const checkWriter = useRecoilValue(checkWriterState)
+  console.log(checkWriter)
   
   const basicProfilelUrl =
     'https://img.freepik.com/free-vector/swimmer-dives-into-water-from-splash-watercolors-illustration-paints_291138-350.jpg?size=626&ext=jpg';
@@ -61,8 +64,13 @@ export default function DetailInfo({ id }) {
         </View>
       </View>
       <View style={styles.buttons}>
-        <EditBtn style={styles.modify} navigation={navigation} id={id} />
-        <DeleteBtn style={styles.delete} toggleShowModal={toggleShowModal} />
+        {checkWriter 
+          ? <>
+              <EditBtn navigation={navigation} id={id} />
+              <DeleteBtn toggleShowModal={toggleShowModal} />
+            </>
+          : null
+        }
       </View>
 
       {/* 삭제버튼 눌렀을 경우 확인 모달 */}
@@ -82,7 +90,7 @@ const EditBtn = ({ navigation, id }: any) => {
     <TouchableOpacity
       onPress={() => navigation.navigate('CommunityPosting', { id })}
     >
-      <Text>수정</Text>
+      <Text style={styles.modify}>수정</Text>
     </TouchableOpacity>
   );
 };
@@ -90,7 +98,7 @@ const EditBtn = ({ navigation, id }: any) => {
 const DeleteBtn = ({ toggleShowModal }: any) => {
   return (
     <TouchableOpacity onPress={toggleShowModal}>
-      <Text>삭제</Text>
+      <Text style={styles.delete}> 삭제 </Text>
     </TouchableOpacity>
   );
 };

@@ -62,15 +62,3 @@ const CommentNum = ({ commentNum }: CommentNumber) => {
     </View>
   )
 }
-
-// let time
-    // if (dayInterval === 0) {
-    //     return (
-    //       hoursInterval === 0 
-    //       ? time=`${minutesInterval}분 전`
-    //       : tim`${hoursInterval}시간 전`)
-    // } 
-    // else if (0 < dayInterval && dayInterval <= 30){
-    //   return `${dayInterval}일 전`
-    // }
-    // else {return `${monthInterval}달 전` }

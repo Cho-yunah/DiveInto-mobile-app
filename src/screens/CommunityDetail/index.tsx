@@ -5,8 +5,10 @@ import { CommunityDetailProps } from '@navigators/CommunityStack/types';
 import { DetailInfo, DetailContents, CommentsInput, CommentDetail  } from '@components/CommunityDetail';
 import { useRequestCommunityItem } from '@components/CommunityDetail/useRequestCommunityItem';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { commentState, communityItemSelector, likeState } from '@/src/recoil/CommunityStack';
+import { atkState, checkWriterState, communityItemSelector, decodeTokenType, likeState, writerInfoState, writerInfoType } from '@/src/recoil/CommunityStack';
 import {LikeBtn} from '@components/CommunityMain/LikeBtn';
+import jwt_decode from "jwt-decode";
+
 
 
 export default function CommunityDetailScreen({route, navigation}: CommunityDetailProps) {
@@ -15,6 +17,16 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
   useRequestCommunityItem(id)
   
   const {content, liked, likeCount } = useRecoilValue(communityItemSelector)
+  const token = useRecoilValue(atkState)
+  const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null
+  const writerInfo= useRecoilValue<writerInfoType>(writerInfoState)
+  const [checkWriter, setCheckWriter] = useRecoilState(checkWriterState)
+  
+  console.log(decodeToken.user_name == writerInfo.id )
+
+  decodeToken.user_name == writerInfo.id 
+    ? setCheckWriter(true)
+    : setCheckWriter(false)
   
   //  좋아요 post 요청 함수 가져와서 호출하기
   const [like, setLike] = useRecoilState(likeState(id))

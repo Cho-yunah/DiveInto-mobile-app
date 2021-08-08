@@ -18,7 +18,7 @@ export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, comme
   const [editButton, setEditButton] = useRecoilState(commentInputButtonState)
   const [writingRecomment, setWritingRecomment] = useRecoilState(writingRecommentState)
   const recommentList = useRecoilValue(recommentState)
-  const [showRecomment, setShowRecomment] = useRecoilState(showRecommentState)
+  const [showRecomment, setShowRecomment] = useRecoilState(showRecommentState(commentId))
 
   // 댓글 삭제
   const requestDelete = async() => {
