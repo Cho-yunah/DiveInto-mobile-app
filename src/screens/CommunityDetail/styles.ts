@@ -4,8 +4,11 @@ import { StyleSheet } from 'react-native';
   container: {
     backgroundColor: '#F3F5F7',
     flex: 1,
-    position: 'relative',
+    // position: 'relative',
   },
+  detailContents: {
+    marginBottom: 80,
+  }
 
 });
 

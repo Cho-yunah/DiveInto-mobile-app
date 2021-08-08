@@ -1,6 +1,6 @@
 import instance from "@/src/lib/api/axios"
 import { communityListState, listPageState, loadingState, refreshState } from "@/src/recoil/CommunityStack"
-import { useEffect, useLayoutEffect } from "react"
+import { useEffect } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { ContentItem } from "./types"
 
@@ -20,22 +20,20 @@ export const useRequestCommunityList = ({share}): ContentItem[] => {
     const requestCommunityList = async() => {
       setIsLoading(true)
       try {
-        // console.log('listPage', listPage)
         const {data} = await instance.get(url);
-        // console.log('data', data) 
-
-        data._embedded 
-        && setCommunityList((list)=>
-            [...list,...data._embedded.postsModelList]
-          );
-        // console.log('communityList-main',communityList)
+        data._embedded && listPage === 0
+          ? ( setCommunityList((list)=>
+              [...data._embedded.postsModelList]
+            )) 
+          : ( setCommunityList((list)=>
+              [...list, ...data._embedded.postsModelList]
+            ))
       } catch(e) {
         console.log(e)
       }
-      // setRefreshing(false)
+      setRefreshing(false)
       setIsLoading(false)
     };
-    
     requestCommunityList();
   }, [listPage, refreshing])
   return communityList;
