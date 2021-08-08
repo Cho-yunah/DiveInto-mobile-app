@@ -1,4 +1,4 @@
-import { Modal, Pressable, ScrollView, View } from 'react-native';
+import { Modal, Pressable, ScrollView, Text, View } from 'react-native';
 import { LoginWithEmailProps } from '@navigators/LoginStack/types';
 import { PwForgot, LoginButton, PWInput } from '@components/LoginWithEmail';
 import styles from './styles';
@@ -13,10 +13,10 @@ import { JWToken } from './types';
 import axios from 'axios';
 
 import React, { useEffect, useState } from 'react';
-import { ModalContainer } from '../ReserveLecture';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as FCM from '@lib/firebase/FCM';
 import { emailState, isCheckedSaveEmailState } from '@/src/recoil/LoginStack';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
   const setIsLogin = useSetRecoilState(IsLogin);
@@ -68,19 +68,25 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
     setIsLoading(false);
   };
 
+  const navigateToForgotPassword = () => navigation.navigate('ForgotPassword');
+
   return (
     <View style={styles.container}>
       <ScrollView>
         <PWInput />
         <LoginButton requestLogin={requestLogin} />
-        <PwForgot />
+        <PwForgot navigateToForgotPassword={navigateToForgotPassword} />
       </ScrollView>
       <Modal visible={isError} transparent={true} animationType={'fade'}>
         <Pressable
           onPress={() => setIsError(false)}
           style={styles.modalOuterContainer}
         >
-          <ModalContainer message={'이메일 혹은 비밀번호가 잘못되었습니다.'} />
+          <SafeAreaView style={styles.modalContainer}>
+            <Text style={styles.modalText}>
+              이메일 혹은 비밀번호가 잘못되었습니다.
+            </Text>
+          </SafeAreaView>
         </Pressable>
       </Modal>
     </View>
