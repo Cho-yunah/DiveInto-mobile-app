@@ -68,7 +68,6 @@ export const postingFormState = atomFamily<string, string>({
 })
 
 export type PostingItemType = {
-  
   category: string,
   tags: string[],
   title: string,
@@ -149,7 +148,6 @@ export type ImageArrStateType = {
   type: string;
   name: string;
 };
-
 export const ImageArrState = atom<ImageArrStateType[]>({
   key: 'ImageArrState',
   default: [],
@@ -161,6 +159,10 @@ export const ImageState = atom({
 })
 
 // 상세 페이지 
+export const showModalState = atom({
+  key: 'showModalState',
+  default: false
+})
 export const commentState = atom<commentListType[]>({
   key: 'commentState',
   default: []
@@ -184,7 +186,8 @@ export type commentItemType = {
   profileUrl: string,
   dateOfWriting: string,
   content: string,
-  commentId: number
+  commentId: number,
+  // editing: void
 }
 
 export const postIdState= atom({
@@ -198,17 +201,87 @@ export const commentTextState = atom({
     content: ''
   }
 })
+export const commentRequestState = atom({
+  key: 'commentRequestState',
+  default: false
+})
 
-export const CommentTextSelector= selector({
-  key: 'CommentTextSelector',
-  get: ({get})  => {
-    const {content} = get(commentTextState);
+export const commentInputFocusState = atom({
+  key: 'commentInputFocusState',
+  default: false
+})
 
-  return {content}
+export const commentIdState = atom({
+  key: 'commentIdState',
+  default: 0
+})
+export const commentInputButtonState= atom({
+  key: 'commentInputButtonState',
+  default: false
+})
+export const commentListPageState = atom({
+  key: 'commentListPageState',
+  default : 0
+})
+export const commentLoadingState = atom({
+  key: 'commentLoadingState',
+  default: false
+})
+
+export const isEditedState = atom({
+  key: 'isEditedState',
+  default : false
+})
+
+/// 대댓글///
+export const writingRecommentState = atom({
+  key: 'writingRecommentState',
+  default: false
+})
+
+export const recommentTextState = atom({
+  key: 'recommentTextState',
+  default: {
+    content:''
   }
 })
 
-export const showModalState = atom({
-  key: 'showModalState',
+export const recommentState = atom<recommentListType[]>({
+  key: 'recommentState',
+  default: []
+})
+
+export type recommentListType = {
+  accountModel: {
+    id: number,
+    nickName: '',
+    profileImageUrl:  ''
+  },
+  commentCommentModel:{
+    id: number,
+    dateOfWriting: '',
+    content: ''
+  }
+}
+export type recommentItemType = {
+  nickName: string,
+  profileUrl: string,
+  dateOfWriting: string,
+  content: string,
+  recommentId: number,
+}
+
+export const recommentLoadingState = atom({
+  key: 'recommentLoadingState',
+  default: false
+})
+
+export const recommentListPageState= atom({
+  key: 'recommentListPageState',
+  default: 0
+})
+
+export const showRecommentState = atom({
+  key: 'showRecommentState',
   default: false
 })

@@ -4,17 +4,16 @@ import styles  from './styles';
 import { CommunityPostingProps } from '@navigators/CommunityStack/types';
 import  { SelectBox, TitleAndContents, AddImages}  from '@components/CommunityPosting';
 import NextButton from '@components/common/NextButton';
-import {useRecoilValue, useSetRecoilState } from 'recoil';
-import { communityListState, ImageArrState, postingFormSelector } from '@/src/recoil/CommunityStack';
+import {useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { communityListState, ImageArrState, isEditedState, postingFormSelector, refreshState } from '@/src/recoil/CommunityStack';
 import { getFormData, requestEditCommunity, requestPostCommunity } from '@components/CommunityPosting/requestPostCommunityImages';
-
-
-type IdType = number
 
 export default function CommunityPostingScreen({route, navigation}: CommunityPostingProps): ReactElement {
   const [isCompleted, setIsCompleted] = useState(false);
-  const setCommunityList = useSetRecoilState(communityListState)
   const imagesArr = useRecoilValue(ImageArrState)
+  const setCommunityList = useSetRecoilState(communityListState)
+  const setEditRequestSuccess = useSetRecoilState(isEditedState)
+  const setRefreshing = useSetRecoilState(refreshState)
 
   // 수정버튼 눌러서 id 가 들어왔을때의 데이터 넣어주기
   let id;
@@ -36,15 +35,14 @@ export default function CommunityPostingScreen({route, navigation}: CommunityPos
       const postingId = postingData.id
 
       if (typeof postingId === 'number' && imagesArr.length) {
-        console.log('catch!')
         const imageRes = await requestPostCommunity
           (getFormData(imagesArr), postingId); 
         console.log(imageRes);
         console.warn('게시글 작성 완료');
       }
       setCommunityList((oldCommunityList) => [
-        ...oldCommunityList,
-        postingData
+        postingData,
+        ...oldCommunityList
       ]); 
       navigation.navigate('CommunityMain');
     } catch(e) {
@@ -54,26 +52,22 @@ export default function CommunityPostingScreen({route, navigation}: CommunityPos
 
  // 글 수정 완료
   const editingComplete = async() => {
-    // console.log(id)
     setIsCompleted(allPostingFormFilled);
 
     try{
       const body= postingInfo
-      const editingData = await requestEditCommunity(body, id)
-      console.log(editingData)
-
-      setCommunityList((oldCommunityList) => [
-        ...oldCommunityList,
-        editingData
-      ]);
-      navigation.navigate('CommunityMain');
+      const editingData = await requestEditCommunity(body, id) // 수정 요청
+      // 수정되었을때 수정되었다는 알림 모달 띄우기 & 스켈레톤
+      setEditRequestSuccess(true)
+      setRefreshing(true)
+      
+      navigation.navigate('CommunityDetail',{id});
     } catch(e) {
       console.log(e)
     }
   }
 
   useLayoutEffect(()=> {
-    
     navigation.setOptions({
      headerRight: id
      ? () => <NextButton text='수정완료' onPress={editingComplete}  disable={!isCompleted}/>
@@ -88,7 +82,6 @@ export default function CommunityPostingScreen({route, navigation}: CommunityPos
         <SelectBox id={id}/>
         <TitleAndContents id={id}/>
         {id? <View></View> : <AddImages id={id} />}
-        {/* <AddImages id={id} /> */}
       </View>
   </ScrollView>
   )

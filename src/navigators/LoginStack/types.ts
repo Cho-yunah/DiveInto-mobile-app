@@ -9,6 +9,7 @@ export type RootLoginStack = {
   SetPassword: undefined;
   AuthEamil: undefined;
   MemberInfo: undefined;
+  ForgotPassword: undefined;
 };
 
 // 스크린 컴포넌트가 전달받을 navigation, route 프롭을 정의한다.
@@ -23,3 +24,8 @@ export type SetPasswordProps = StackScreenProps<RootLoginStack, 'SetPassword'>;
 
 export type AuthEmailProps = StackScreenProps<RootLoginStack, 'AuthEamil'>;
 export type MemberInfoProps = StackScreenProps<RootLoginStack, 'MemberInfo'>;
+
+export type ForgotPasswordProps = StackScreenProps<
+  RootLoginStack,
+  'ForgotPassword'
+>;

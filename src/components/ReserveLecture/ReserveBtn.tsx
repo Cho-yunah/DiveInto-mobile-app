@@ -1,15 +1,15 @@
 import {
-  getEquipmentsState,
-  lectureIdState,
-  requestReservationEquipmentDetailType,
-  requestReservationEquipmentState,
+  currScheduleIdState,
+  reservationEquipmentObjState,
   selectedClassByIdSelector,
   smallModalMessageState,
   studentNumberState,
+  requestReservationEquipmentDetailType,
+  requestReservationEquipmentArrayState,
 } from '@/src/recoil/LectureStack';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { ReserveBtn as styles } from './styles';
 import { ReserveBtnProps } from './types';
 
@@ -21,28 +21,16 @@ const ReserveBtn = ({ navigateToRequestPayment }: ReserveBtnProps) => {
   const [smallModalMessage, setSmallModalMessage] = useRecoilState(
     smallModalMessageState,
   );
-  const lectureId = useRecoilValue(lectureIdState);
-  const equipmentsState = useRecoilValue(getEquipmentsState(lectureId!)); // 강의 id -> 제공되는 대여장비, name,id, price
+  const scheduleId = useRecoilValue(currScheduleIdState);
+
   const classSchedule = useRecoilValue(selectedClassByIdSelector);
-  const studentNumber = useRecoilValue(studentNumberState); // 원하는 수강 인원
-  const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
+  const studentNumber = useRecoilValue(studentNumberState); // 원하는 수강 인
+  const selectedEquipmentsObj = useRecoilValue(reservationEquipmentObjState);
+  const setRequestReservationEquipmentArray = useSetRecoilState(
+    requestReservationEquipmentArrayState,
+  );
+
   let flag = useRef<FlagType>({});
-  equipmentsState &&
-    equipmentsState.forEach(equip => {
-      const eachEquipmentArr = useRecoilValue(
-        requestReservationEquipmentState(equip.id),
-      );
-      let sumOfEquip = 0;
-      eachEquipmentArr.forEach(itemBySize => {
-        sumOfEquip += itemBySize.rentNumber;
-      });
-      if (sumOfEquip > studentNumber) {
-        flag.current[equip.id] = true;
-      } else {
-        flag.current[equip.id] = false;
-      }
-      reservedEquipmentsArray.push(...eachEquipmentArr);
-    });
 
   const moveToRequestPayment = () => {
     if (
@@ -52,22 +40,68 @@ const ReserveBtn = ({ navigateToRequestPayment }: ReserveBtnProps) => {
       setSmallModalMessage('예약 가능한 일정을 선택해 주세요.');
       return;
     }
-    const checkArr = [];
 
-    for (const property in flag.current) {
-      checkArr.push(flag.current[property]);
+    for (const equipmentId in flag.current) {
+      if (flag.current && flag.current[equipmentId] === true) {
+        setSmallModalMessage(
+          '대여 장비수가 수강 인원을 초과하였습니다.' +
+            '\n' +
+            '다시 확인 해주세요.',
+        );
+        return;
+      }
     }
 
-    if (checkArr.length && checkArr.some(boolean => boolean === true)) {
-      setSmallModalMessage(
-        '대여 장비수가 수강 인원을 초과하였습니다.' +
-          '\n' +
-          '다시 확인 해주세요.',
-      );
-      return;
-    }
     navigateToRequestPayment();
   };
+
+  useEffect(() => {
+    let reservingEquipsArray: requestReservationEquipmentDetailType[] = [];
+    const currSelectedEquipmentsObj = { ...selectedEquipmentsObj };
+
+    for (const equipmentId in currSelectedEquipmentsObj) {
+      let sumOfEquip = 0;
+
+      for (const equipmentStockId in currSelectedEquipmentsObj[equipmentId]
+        .equipmentStocks) {
+        const {
+          scheduleEquipmentStockId,
+          rentNumber,
+          size,
+          price,
+          totalRentNumber,
+          quantity,
+          name,
+        } =
+          currSelectedEquipmentsObj[equipmentId].equipmentStocks[
+            equipmentStockId
+          ];
+
+        sumOfEquip += rentNumber;
+
+        reservingEquipsArray = [
+          ...reservingEquipsArray,
+          {
+            scheduleEquipmentStockId,
+            rentNumber,
+            size,
+            price,
+            totalRentNumber,
+            quantity,
+            name,
+          },
+        ];
+      }
+
+      if (sumOfEquip > studentNumber) flag.current[equipmentId] = true;
+      else flag.current[equipmentId] = false;
+    }
+    setRequestReservationEquipmentArray(reservingEquipsArray);
+  }, [selectedEquipmentsObj]);
+
+  useEffect(() => {
+    flag.current = {};
+  }, [scheduleId]);
 
   return (
     <TouchableOpacity

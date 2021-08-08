@@ -17,21 +17,19 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
 
   const [token, setToken] = useRecoilState(atkState)
   console.log(token)
-  // token 받아오기 
+
   useEffect(()=> {
     const getToken = async() => {
-    try{
-      const getTokenRequest= await AsyncStorage.getItem('token');
-      setToken(getTokenRequest)
-    } catch (error) {
-      console.log(error)
-    }
-  } 
-  getToken()
+      try{
+        const getTokenRequest= await AsyncStorage.getItem('token');
+        setToken(getTokenRequest)
+      } catch (error) {
+        console.log(error)
+      }
+    } 
+    getToken()
   },[])
  
-  
-  
   // header 글쓰기 버튼  
   useLayoutEffect(()=> {
     const addContent = () => navigation.navigate('CommunityPosting')

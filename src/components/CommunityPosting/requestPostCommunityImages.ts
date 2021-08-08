@@ -54,6 +54,7 @@ export const requestPostCommunity: RequestPostCommunityType =
     }
   };
 
+  // 게시물 수정 요청
   export const requestEditCommunity: RequestEditCommunityType = async (body: PostingBodyType, id: number) => {
     const instanceAtk = await getInstanceATK();
     console.log(body)
@@ -67,6 +68,7 @@ export const requestPostCommunity: RequestPostCommunityType =
     }
   }
 
+  // 게시물 삭제 요청
   export const requestDeleteCommunity= async (id: number) => {
     const instanceAtk = await getInstanceATK();
     console.log(id)
