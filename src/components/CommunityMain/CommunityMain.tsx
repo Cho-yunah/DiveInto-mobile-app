@@ -67,7 +67,7 @@ export default function CommunityMain({ share }: any): ReactElement {
               commentCount={item.commentCount}
               likeCount={item.likeCount}
               liked={item.liked}
-              type="community"
+              // type="community"
             />
           )}
           keyExtractor={

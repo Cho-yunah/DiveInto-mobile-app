@@ -102,7 +102,7 @@ export default function DetailReservationScreen({
       <ReserveCost />
 
       {/* 예약 취소 버튼 */}
-      <CancelBtn />
+      <CancelBtn reservationId={reservationId} />
     </ScrollView>
   );
 }

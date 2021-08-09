@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { View, Animated, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Swipeable } from 'react-native-gesture-handler';
@@ -8,6 +8,8 @@ import { TouchSwipeStyle as styles, CommonStyles } from './styles';
 import { CommonListProps, RightSwipeProps } from './types';
 import CommonModal from '@components/common/CommonModal';
 import { getInstanceATK } from '@/src/lib/api/axios';
+import { reservationLectureListState } from '@/src/recoil/ProfileStack';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 export default function TouchSwipe({
   imgComponent,
@@ -15,8 +17,10 @@ export default function TouchSwipe({
   reservationId,
 }: CommonListProps) {
   // const [show, setShow] = useReserveCancel(type);
+  const swipeableRef = useRef(null);
   const [show, setShow] = useState(false);
   const navigation = useNavigation();
+  const setDeleteLecture = useSetRecoilState(reservationLectureListState);
 
   const RightSwipe = ({ progress, dragX, onPress }: RightSwipeProps) => {
     const scale = dragX.interpolate({
@@ -39,8 +43,13 @@ export default function TouchSwipe({
     navigation.navigate('DetailReservation', { reservationId });
   };
 
+  const closeSwipeable = () => {
+    swipeableRef.current.close();
+  };
+
   const onDeleteNextLecture = useCallback(() => {
     setShow(false);
+    closeSwipeable();
 
     const requestReserveCancel = async () => {
       console.log(reservationId);
@@ -48,6 +57,10 @@ export default function TouchSwipe({
       const instanceAtk = await getInstanceATK();
 
       try {
+        setDeleteLecture(list =>
+          list?.filter(v => v.reservationId !== reservationId),
+        );
+
         const res = await instanceAtk.delete(`/reservation/${reservationId}`);
 
         console.log(res);
@@ -67,11 +80,13 @@ export default function TouchSwipe({
   return (
     <TouchableOpacity onPress={onMoveLectureDetailView}>
       <Swipeable
+        ref={swipeableRef}
         renderRightActions={(progress, dragX) => (
           <RightSwipe
             progress={progress}
             dragX={dragX}
             onPress={toggleShowModal}
+            closeSwipeable={closeSwipeable}
           />
         )}
         overshootFriction={30}

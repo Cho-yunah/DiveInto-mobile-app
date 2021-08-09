@@ -14,8 +14,13 @@ export const useRequestCommunityList = ({ share }): ContentItem[] => {
   const [isLoading, setIsLoading] = useRecoilState<boolean>(loadingState);
   const [communityList, setCommunityList] =
     useRecoilState<ContentItem[]>(communityListState);
+
+  console.log(communityList);
+
   const [refreshing, setRefreshing] = useRecoilState(refreshState);
   const listPage = useRecoilValue(listPageState);
+  // const [temp, setTemp] = useRecoilState(likeState())
+
   // const communityLike = useRecoilValue(communityLikeState())
 
   const url = share
@@ -35,6 +40,7 @@ export const useRequestCommunityList = ({ share }): ContentItem[] => {
 
         data._embedded &&
           setCommunityList(list => [...list, ...data._embedded.postsModelList]);
+
         // console.log('communityList-main',communityList)
       } catch (e) {
         console.log(e);
@@ -45,5 +51,6 @@ export const useRequestCommunityList = ({ share }): ContentItem[] => {
 
     requestCommunityList();
   }, [listPage, refreshing]);
+
   return communityList;
 };

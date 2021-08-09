@@ -131,6 +131,17 @@ export const nextReservationLectureListState = selector({
   },
 });
 
+export const deleteReservationLectureListState = selectorFamily({
+  key: 'deleteReservationLectureList',
+  get:
+    (id: number) =>
+    ({ get }) => {
+      const totalList = get(reservationLectureListState);
+
+      console.log(totalList, id);
+    },
+});
+
 export const lastReservationLectureListState = selector({
   key: 'lastReservationLectureList',
   get: ({ get }) => {
@@ -145,7 +156,7 @@ export const lastReservationLectureListState = selector({
 });
 
 // 프로필 유저 이미지 상태 공유
-export const ProfileImageURIState = atom<string | null>({
+export const ProfileImageURIState = atom<string | 'change' | null>({
   key: 'ProfileImageURI',
   default: null,
 });

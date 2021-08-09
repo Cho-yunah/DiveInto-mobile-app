@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { likeBtnPropsType } from '@/src/recoil/CommunityStack';
 import { likeState } from '@recoil/CommunityStack';
@@ -16,6 +16,13 @@ export const LikeBtn = ({
   listType,
 }: likeBtnPropsType) => {
   const [like, setLike] = useRecoilState(likeState(id));
+  console.log(liked);
+
+  useEffect(() => {
+    setLike(liked);
+  }, [liked]);
+
+  // setLike()
 
   const likeCountNumber = liked
     ? like

@@ -70,7 +70,7 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
     <>
       {userInfo && (
         <SafeAreaView style={styles.container}>
-          <HeaderContainer currScreen={'main'} buttonText="사진수정" />
+          <HeaderContainer currScreen="main" buttonText="사진수정" />
           <MainContainer
             email={userInfo?.email}
             nickname={userInfo?.nickname}
