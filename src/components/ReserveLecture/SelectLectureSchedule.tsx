@@ -6,7 +6,6 @@ import {
   currScheduleIdState,
   currSelectedDateState,
   getTheSameClassScheduleState,
-  scheduleIdObjState,
 } from '@/src/recoil/LectureStack';
 import Entype from 'react-native-vector-icons/Entypo';
 
@@ -17,6 +16,7 @@ const SelectLectureSchedule = () => {
   );
   const [currScheduleId, setCurrScheduleId] =
     useRecoilState(currScheduleIdState);
+
   useEffect(() => {
     setCurrScheduleId(null);
   }, [currSelectedDate]);

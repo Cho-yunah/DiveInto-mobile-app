@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 import { useRecoilState } from 'recoil';
 
@@ -10,7 +10,7 @@ type InterpolationObj = {
 };
 
 type useTransitionColorProps = {
-  screen?: 'Login' | 'PwInput';
+  screen?: 'Login' | 'PwInput' | 'ForgotPassword';
 };
 
 const useTransitionColor = ({

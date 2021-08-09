@@ -11,9 +11,10 @@ import {
 } from '@components/ReserveLecture';
 import SuspenseCalendar from '@/src/components/ReserveLecture/SuspenseCalendar';
 import SuspenseReserveBtn from '@/src/components/ReserveLecture/SuspenseReserveBtn';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRecoilState } from 'recoil';
 import { smallModalMessageState } from '@/src/recoil/LectureStack';
+import { View } from 'react-native-animatable';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 
 const index = ({ navigation }: ReserveLectureProps) => {
   const navigateToRequestPayment = () => {
@@ -54,6 +55,7 @@ export const AlertModal = () => {
   const [smallModalMessage, setSmallModalMessage] = useRecoilState(
     smallModalMessageState,
   );
+  const navigation = useNavigation();
   return (
     <Modal
       visible={!!smallModalMessage}
@@ -61,12 +63,20 @@ export const AlertModal = () => {
       animationType={'fade'}
     >
       <Pressable
-        onPress={() => setSmallModalMessage('')}
+        onPress={() => {
+          if (smallModalMessage === '결제가 완료되었습니다.') {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'MainList' }],
+            });
+          }
+          setSmallModalMessage('');
+        }}
         style={styles.modalOuterContainer}
       ></Pressable>
-      <SafeAreaView style={styles.modalContainer}>
+      <View style={styles.modalContainer}>
         <Text style={styles.modalText}>{smallModalMessage}</Text>
-      </SafeAreaView>
+      </View>
     </Modal>
   );
 };

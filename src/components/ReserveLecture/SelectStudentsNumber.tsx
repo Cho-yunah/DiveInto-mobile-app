@@ -4,7 +4,6 @@ import { SelectStudentNumber as styles } from './styles';
 import Entype from 'react-native-vector-icons/Entypo';
 import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import {
-  getTheSameClassScheduleState,
   lectureCommonSelectorFamily,
   selectedClassByIdSelector,
   studentNumberState,
