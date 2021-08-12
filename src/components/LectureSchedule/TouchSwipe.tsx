@@ -1,21 +1,26 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { View, Animated, TouchableOpacity, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Swipeable } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import CommonModal from '../common/CommonModal';
 
-import { TouchSwipeStyle as styles } from './styles';
-import { TouchSwipeProps, RightSwipeProps } from './types';
+import { TouchSwipeStyle as styles, CommonStyles } from './styles';
+import { CommonListProps, RightSwipeProps } from './types';
+import CommonModal from '@components/common/CommonModal';
+import { getInstanceATK } from '@/src/lib/api/axios';
+import { reservationLectureListState } from '@/src/recoil/ProfileStack';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 export default function TouchSwipe({
   imgComponent,
   contentsComponents,
-  type,
   reservationId,
-}: TouchSwipeProps) {
+}: CommonListProps) {
+  // const [show, setShow] = useReserveCancel(type);
+  const swipeableRef = useRef(null);
   const [show, setShow] = useState(false);
   const navigation = useNavigation();
+  const setDeleteLecture = useSetRecoilState(reservationLectureListState);
 
   const RightSwipe = ({ progress, dragX, onPress }: RightSwipeProps) => {
     const scale = dragX.interpolate({
@@ -34,21 +39,37 @@ export default function TouchSwipe({
     );
   };
 
-  const onMoveWriteReiveView = () => {
-    navigation.navigate('WriteReview', { reservationId });
-  };
-
   const onMoveLectureDetailView = () => {
     navigation.navigate('DetailReservation', { reservationId });
   };
 
-  const onDeleteLastLecture = useCallback(() => {
-    setShow(false);
-    console.log('이전 강의 삭제');
-  }, []);
+  const closeSwipeable = () => {
+    swipeableRef.current.close();
+  };
 
   const onDeleteNextLecture = useCallback(() => {
     setShow(false);
+    closeSwipeable();
+
+    const requestReserveCancel = async () => {
+      console.log(reservationId);
+
+      const instanceAtk = await getInstanceATK();
+
+      try {
+        setDeleteLecture(list =>
+          list?.filter(v => v.reservationId !== reservationId),
+        );
+
+        const res = await instanceAtk.delete(`/reservation/${reservationId}`);
+
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    requestReserveCancel();
     console.log('예약한 강의 취소');
   }, []);
 
@@ -56,30 +77,25 @@ export default function TouchSwipe({
     setShow(state => !state);
   }, []);
 
-  const onDeleteLecture =
-    type === 'last' ? onDeleteLastLecture : onDeleteNextLecture;
-
-  const onMoveScreen =
-    type === 'last' ? onMoveWriteReiveView : onMoveLectureDetailView;
-
   return (
-    <TouchableOpacity onPress={onMoveScreen}>
+    <TouchableOpacity onPress={onMoveLectureDetailView}>
       <Swipeable
+        ref={swipeableRef}
         renderRightActions={(progress, dragX) => (
           <RightSwipe
             progress={progress}
             dragX={dragX}
             onPress={toggleShowModal}
+            closeSwipeable={closeSwipeable}
           />
         )}
         overshootFriction={30}
         containerStyle={{
           borderRadius: 10,
-          marginVertical: 12,
-          // marginBottom: 12,
+          marginBottom: 12,
         }}
       >
-        <View style={styles.container}>
+        <View style={CommonStyles.listContainer}>
           {imgComponent}
           {contentsComponents}
         </View>
@@ -88,7 +104,7 @@ export default function TouchSwipe({
           mode="output"
           desc="예약 취소하시겠습니까?"
           toggleShowModal={toggleShowModal}
-          onClickConfirm={onDeleteLecture}
+          onClickConfirm={onDeleteNextLecture}
         />
       </Swipeable>
     </TouchableOpacity>

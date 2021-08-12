@@ -1,35 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { useRecoilValue } from 'recoil';
-import { useNavigation } from '@react-navigation/native';
 
 import { styles } from './styles';
 import { CommunityLikeProps } from './types';
-import instance from '@lib/api/axios';
+import { getInstanceATK } from '@lib/api/axios';
 import { CommunityItem } from '@components/CommunityMain';
 import { atkState } from '@recoil/ProfileStack';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 
 export default function CommunityLikeScreen() {
-  const navigation = useNavigation();
   const atk = useRecoilValue(atkState);
   const [communityList, setCommunityList] = useState([]);
 
-  const moveDetailView = () => {
-    navigation.navigate('CommunityDetail');
-  };
-
   useEffect(() => {
     const getLikeCommunity = async () => {
+      const instanceAtk = await getInstanceATK();
+
       try {
-        const res = await instance.get('/community/post/like?page=0&size=1', {
-          headers: {
-            Authorization: atk,
-          },
-        });
+        const res = await instanceAtk.get(
+          '/community/post/like?page=0&size=10',
+        );
 
         if (res.data._embedded) {
           setCommunityList(res.data._embedded.postsModelList);
+          console.log(res.data._embedded.postsModelList);
         } else {
           setCommunityList([]);
         }
@@ -60,8 +55,7 @@ export default function CommunityLikeScreen() {
                   commentCount={item.commentCount}
                   likeCount={item.likeCount}
                   liked={item.liked}
-                  type="profile"
-                  // onItemClick={moveDetailView}
+                  listType="profileList"
                 />
               );
             }}

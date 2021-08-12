@@ -131,16 +131,33 @@ export const ReserveCommonStyles = StyleSheet.create({
   costLayout: {
     justifyContent: 'space-between',
   },
+  equipmentLayout: {
+    justifyContent: 'space-between',
+  },
+  DescTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   itemName: {
     fontSize: 15,
     fontWeight: '500',
     color: '#6A6D70',
-    width: WIDTH * 0.25,
+  },
+  itemSize: {
+    fontSize: 15,
+    color: Color.BlackText,
   },
   itemDesc: {
     fontSize: 15,
     color: Color.BlackText,
   },
+  borderline: {
+    width: 1,
+    height: '100%',
+    backgroundColor: Color.DarkgrayText,
+    marginHorizontal: 10,
+  },
+
   emphasis: {
     color: Color.Selected,
     fontWeight: '600',

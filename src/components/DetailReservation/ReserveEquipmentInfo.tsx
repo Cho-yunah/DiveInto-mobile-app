@@ -4,14 +4,10 @@ import { useRecoilValue } from 'recoil';
 
 import { ReserveCommonStyles as styles } from './styles';
 import EachCommonInfo from './EachCommonInfo';
-import {
-  reserveEquipmentsState,
-  // sumOfSameListSelector,
-} from '@recoil/ProfileStack';
+import { sumOfTheSameListSelector } from '@recoil/ProfileStack';
 
 export default function ReserveEquipmentInfo() {
-  const detailEquipments = useRecoilValue(reserveEquipmentsState);
-  // const equipmentList = useRecoilValue(sumOfSameListSelector);
+  const detailEquipments = useRecoilValue(sumOfTheSameListSelector);
 
   if (!detailEquipments.length) return null;
 
@@ -24,7 +20,8 @@ export default function ReserveEquipmentInfo() {
             key={`equipment_${index + 1}`}
             name={el.equipmentName}
             userInfo={`${el.rentNumber}개`}
-            type="costOrEquipment"
+            size={el.size}
+            type="equipment"
           />
         ))}
       </View>
