@@ -14,7 +14,7 @@ import {
   communityListState,
 } from '@/src/recoil/CommunityStack';
 
-export default function CommunityMain({ share }: any): ReactElement {
+export default function CommunityMain({ share, type }: any): ReactElement {
   // data 요청
   useRequestCommunityList({ share });
 

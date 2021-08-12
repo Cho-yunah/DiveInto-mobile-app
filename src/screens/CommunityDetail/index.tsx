@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useLayoutEffect } from 'react';
+import React, { ReactElement, useLayoutEffect } from 'react';
 import { ScrollView, View, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import { CommunityDetailProps } from '@navigators/CommunityStack/types';
@@ -17,6 +17,7 @@ import {
   commentState,
 } from '@/src/recoil/CommunityStack';
 import { LikeBtn } from '@components/CommunityMain/LikeBtn';
+import useToggleLike from '@/src/lib/hooks/useToggleLike';
 
 export default function CommunityDetailScreen({
   route,
@@ -26,14 +27,7 @@ export default function CommunityDetailScreen({
   useRequestCommunityItem(id);
 
   const { content, liked, likeCount } = useRecoilValue(communityItemSelector);
-
-  //  좋아요 post 요청 함수 가져와서 호출하기
-  const [like, setLike] = useRecoilState(likeState(id));
-  console.log(like);
-
-  const Clickedlike = () => {
-    setLike(!like);
-  };
+  const { Clickedlike } = useToggleLike(id);
 
   // 헤더에 좋아요 하트 버튼
   useLayoutEffect(() => {
@@ -44,7 +38,7 @@ export default function CommunityDetailScreen({
         </TouchableOpacity>
       ),
     });
-  }, [id, liked, likeCount]);
+  }, [id, liked, likeCount, Clickedlike]);
 
   return (
     <View style={styles.container}>

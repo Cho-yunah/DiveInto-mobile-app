@@ -55,5 +55,8 @@ export default function App() {
   );
 }
 
-const SelectNavigator = () =>
-  useRecoilValue(IsLogin) ? <MainTab /> : <LoginStack />;
+const SelectNavigator = () => {
+  const isLogin = useRecoilValue(IsLogin);
+
+  return isLogin ? <MainTab /> : <LoginStack />;
+};
