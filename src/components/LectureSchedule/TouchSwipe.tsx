@@ -8,7 +8,10 @@ import { TouchSwipeStyle as styles, CommonStyles } from './styles';
 import { CommonListProps, RightSwipeProps } from './types';
 import CommonModal from '@components/common/CommonModal';
 import { getInstanceATK } from '@/src/lib/api/axios';
-import { reservationLectureListState } from '@/src/recoil/ProfileStack';
+import {
+  reservationLectureListState,
+  reservationLectureListType,
+} from '@/src/recoil/ProfileStack';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 export default function TouchSwipe({
@@ -57,9 +60,14 @@ export default function TouchSwipe({
       const instanceAtk = await getInstanceATK();
 
       try {
-        setDeleteLecture(list =>
-          list?.filter(v => v.reservationId !== reservationId),
-        );
+        // 무슨 문제인가?
+
+        setDeleteLecture((list: reservationLectureListType) => {
+          console.log(list);
+
+          if (!list) return;
+          return list?.filter(v => v.reservationId !== reservationId);
+        });
 
         const res = await instanceAtk.delete(`/reservation/${reservationId}`);
 

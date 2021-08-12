@@ -12,7 +12,7 @@ import {
   communityListState,
 } from '@/src/recoil/CommunityStack';
 
-export default function CommunityMain({ share }: any): ReactElement {
+export default function CommunityMain({ share, type }: any): ReactElement {
   // data 요청
   useRequestCommunityList({ share });
 
@@ -25,6 +25,8 @@ export default function CommunityMain({ share }: any): ReactElement {
   const [currentPage, setCurrentPage] = useRecoilState<number>(listPageState);
   const [refreshing, setRefreshing] = useRecoilState(refreshState);
   const [callOnScrollEnd, setCallOnScrollEnd] = useState(false);
+
+  // console.log(list, 'list');
 
   // data 받아올 때의 loader
   const renderLoader = () => {
@@ -67,7 +69,7 @@ export default function CommunityMain({ share }: any): ReactElement {
               commentCount={item.commentCount}
               likeCount={item.likeCount}
               liked={item.liked}
-              // type="community"
+              listType={type}
             />
           )}
           keyExtractor={

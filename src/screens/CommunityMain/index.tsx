@@ -70,7 +70,7 @@ export default function CommunityMainScreen({
 
 const SharedContents = ({ route }: any) => {
   const share = route.params.share;
-  return <CommunityMain share={share} />;
+  return <CommunityMain share={share} type="mainList" />;
 };
 
 const QuestionaryContents = ({ route }: any) => {

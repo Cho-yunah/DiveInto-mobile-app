@@ -1,4 +1,10 @@
-import { atom, atomFamily, selector, selectorFamily } from 'recoil';
+import {
+  atom,
+  atomFamily,
+  selector,
+  selectorFamily,
+  DefaultValue,
+} from 'recoil';
 // 토큰 받기
 export const atkState = atom<string | null>({
   key: 'atkState',
@@ -17,11 +23,6 @@ export type ContentItem = {
   likeCount: number;
   liked: boolean;
 };
-
-export const communityListState = atom<ContentItem[]>({
-  key: 'communityListState',
-  default: [],
-});
 
 export const allCommunityListState = selector({
   key: 'allCommunityListState',
@@ -77,16 +78,64 @@ export type PostingItemType = {
 //   default : 1
 // })
 
+// 좋아요 on/off state
 export const likeState = atomFamily<Element, number>({
   key: 'likeState',
   default: false,
 });
 
+export const communityListState = atom<ContentItem[]>({
+  key: 'communityListState',
+  default: [],
+});
+
+export const likedListState = atom<ContentItem[]>({
+  key: 'likedListState',
+  default: [],
+});
+
+// 좋아요 on/off state에 변경에 따른 리렌더링 상태
+
+// export const setDeleteLikedSelector = selectorFamily({
+//   key: 'setDeleteLiked',
+//   get: () => () => {},
+//   set:
+//     (id: number) =>
+//     ({ set, get }) => {
+//       get(likedListState);
+//       const removelikeList = get(communityListState).filter(info => {
+//         if (info.liked && info.id !== id) return info;
+//       });
+
+//       set(likedListState, removelikeList);
+//     },
+// });
+
+// export const setAddLikedSelector = selectorFamily({
+//   key: 'setAddLiked',
+//   get: () => () => {},
+//   set:
+//     (id: number) =>
+//     ({ set, get }) => {
+//       const totalList = get(communityListState);
+//       const likedList = totalList.filter(info => info.liked);
+//       const like = get(likeState(id));
+//       const newAddItem = totalList.find(info => info.id === id);
+
+//       // 새로운 커뮤니티 item 추가에 필요한 조건
+//       if (like && likedList.includes(newAddItem!)) {
+//         likedList.push(newAddItem!);
+//       }
+
+//       set(likedListState, likedList);
+//     },
+// });
+
 export type likeBtnPropsType = {
   id: number;
   likeCount: number;
   liked: boolean;
-  listType?: string;
+  listType?: 'mainList' | 'profileList';
 };
 
 export const writerInfoState = atom({

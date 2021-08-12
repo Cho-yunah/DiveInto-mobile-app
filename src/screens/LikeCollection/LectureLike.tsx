@@ -4,7 +4,7 @@ import { FlatList, View } from 'react-native';
 import { styles } from './styles';
 import { LectureLikeProps } from './types';
 
-import instance from '@lib/api/axios';
+import { getInstanceATK } from '@lib/api/axios';
 import { useRecoilValue } from 'recoil';
 import { atkState } from '@recoil/ProfileStack';
 import CommonLoading from '@components/common/CommonLoading';
@@ -13,22 +13,24 @@ import { PopularLecture } from '@components/MainList/Lecture/PopularLectureList'
 
 export default function LectureLikeScreen() {
   const atk = useRecoilValue(atkState);
-  const [lectureList, setLectureList] = useState<[] | null>(null);
+  const [lectureList, setLectureList] = useState<LectureLikeProps[] | null>(
+    null,
+  );
 
   // isMarked, price, period 값이 lectureList에 있는지 확인 후 props로 넣어주기
   console.log(lectureList);
 
   useEffect(() => {
     const getLikeLecture = async () => {
-      try {
-        const res = await instance.get('/lecture/like/list?page=0&size=2', {
-          headers: {
-            Authorization: atk,
-          },
-        });
+      const instanceAtk = await getInstanceATK();
 
-        if (res.data._embedded) {
-          setLectureList(res.data._embedded.likeLectureInfoList);
+      try {
+        const { data } = await instanceAtk.get(
+          '/lecture/like/list?page=0&size=5',
+        );
+
+        if (data._embedded) {
+          setLectureList(data._embedded.likeLectureInfoList);
         } else {
           setLectureList([]);
         }
@@ -58,6 +60,7 @@ export default function LectureLikeScreen() {
               imageUrl={item.imageUrl}
               starAvg={2.5}
               reviewCount={item.reviewCount}
+              isMarked={item.isMarked}
             />
           );
         }}

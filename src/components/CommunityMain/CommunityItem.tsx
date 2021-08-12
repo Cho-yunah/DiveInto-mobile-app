@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { styles } from './styles';
-import * as colors from '@config/colors';
-import { ContentItem, CommentNumber } from './types';
 import { useNavigation } from '@react-navigation/native';
+import { useSetRecoilState } from 'recoil';
 import moment from 'moment';
+
+import { styles } from './styles';
+import { ContentItem, CommentNumber } from './types';
+import * as colors from '@config/colors';
 import { LikeBtn } from './LikeBtn';
+import { likeState } from '@recoil/CommunityStack';
 
 export default function CommunityItem({
   id,
@@ -23,9 +26,14 @@ export default function CommunityItem({
   const navigation = useNavigation();
   const basicThumnailUrl =
     'https://png.pngtree.com/png-clipart/20190516/original/pngtree-warm-color-cool-in-summer-cartoon-swimming-goggles-cool-png-image_3774944.jpg';
+  const setLike = useSetRecoilState(likeState(id));
+
+  useEffect(() => {
+    setLike(liked);
+  }, [liked]);
 
   const onMoveDetailScreen = () => {
-    navigation.navigate('CommunityDetail', { id });
+    navigation.navigate('CommunityDetail', { id, ScreenType: listType });
   };
 
   // moment 시간 계산
@@ -71,13 +79,13 @@ export default function CommunityItem({
           id={id}
           likeCount={likeCount}
           liked={liked}
-          listType="mainList"
+          listType={listType}
         />
       </View>
-      <View style={styles.iconBox}>
+      {/* <View style={styles.iconBox}>
         <CommentNum commentNum={commentCount} />
         <LikeBtn id={id} likeCount={likeCount} liked={liked} />
-      </View>
+      </View> */}
     </TouchableOpacity>
   );
 }

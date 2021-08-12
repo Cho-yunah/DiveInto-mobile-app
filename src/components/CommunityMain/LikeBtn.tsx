@@ -2,11 +2,10 @@ import React, { useCallback, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { likeBtnPropsType } from '@/src/recoil/CommunityStack';
 import { likeState } from '@recoil/CommunityStack';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { styles } from './styles';
 import * as colors from '@config/colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { getInstanceATK } from '@/src/lib/api/axios';
 
 // 좋아요 버튼
 export const LikeBtn = ({
@@ -15,14 +14,7 @@ export const LikeBtn = ({
   liked,
   listType,
 }: likeBtnPropsType) => {
-  const [like, setLike] = useRecoilState(likeState(id));
-  console.log(liked);
-
-  useEffect(() => {
-    setLike(liked);
-  }, [liked]);
-
-  // setLike()
+  const like = useRecoilValue(likeState(id));
 
   const likeCountNumber = liked
     ? like
@@ -34,36 +26,18 @@ export const LikeBtn = ({
     ? 0
     : likeCount;
 
-  const Clickedlike = useCallback(() => {
-    const requestToggleLiked = async () => {
-      const instanchATK = await getInstanceATK();
-
-      try {
-        setLike(!like);
-
-        like
-          ? await instanchATK.delete(`/community/post/${id}/like`)
-          : await instanchATK.post(`/community/post/${id}/like`);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    requestToggleLiked();
-  }, [like]);
-
   return (
-    <TouchableOpacity style={styles.commentAndLike} onPress={Clickedlike}>
+    <View style={styles.commentAndLike}>
       <FontAwesome
         name="heart"
         size={14}
-        color={liked || like ? colors.Selected : colors.Gray2}
+        color={like ? colors.Selected : colors.Gray2}
       />
       {listType === 'mainList' ? (
         <Text style={{ color: colors.Gray2 }}> {likeCountNumber}</Text>
       ) : (
         <View></View>
       )}
-    </TouchableOpacity>
+    </View>
   );
 };

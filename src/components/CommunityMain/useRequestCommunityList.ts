@@ -1,6 +1,6 @@
 import instance, { getInstanceATK } from '@/src/lib/api/axios';
 import {
-  communityLikeState,
+  // communityLikeState,
   communityListState,
   listPageState,
   loadingState,
@@ -15,13 +15,10 @@ export const useRequestCommunityList = ({ share }): ContentItem[] => {
   const [communityList, setCommunityList] =
     useRecoilState<ContentItem[]>(communityListState);
 
-  console.log(communityList);
+  // console.log(communityList);
 
   const [refreshing, setRefreshing] = useRecoilState(refreshState);
   const listPage = useRecoilValue(listPageState);
-  // const [temp, setTemp] = useRecoilState(likeState())
-
-  // const communityLike = useRecoilValue(communityLikeState())
 
   const url = share
     ? `/community/post/category?category=SHARE&page=${listPage}&size=10&sort=id,desc`
