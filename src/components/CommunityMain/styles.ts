@@ -28,6 +28,7 @@ export const styles = StyleSheet.create({
   },
   listItem: {
     flexDirection: 'row',
+
     marginTop: 12,
     width: WIDTH - 34,
     height: 70,
@@ -73,13 +74,13 @@ export const styles = StyleSheet.create({
     color: '#D8D8D8',
     fontSize: 14,
     paddingRight: 17,
-    paddingVertical: 5 , 
+    paddingVertical: 5,
   },
   ActivationButtonText: {
     color: '#F5DAAC',
   },
   likeBtn: {
     marginRight: 12,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 });

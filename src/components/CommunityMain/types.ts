@@ -2,6 +2,11 @@ export type CommunityTabType = {
   share ?: string,
   question ?: string
 }
+
+export type CommunityMainProps = {
+  enterContenetDetail?: () => void;
+};
+
 export type ContentItemType = {
   id: number;
   title: string;
@@ -12,7 +17,7 @@ export type ContentItemType = {
   commentCount: number;
   likeCount: number;
   liked: boolean;
-  // type: 'profile' | 'community';
+  listType?: 'mainList' | 'profileList';
 };
 
 export type CommentNumber = {

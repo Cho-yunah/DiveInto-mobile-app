@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { styles } from './styles';
-import * as colors from '@config/colors';
-import { ContentItemType, CommentNumber } from './types';
 import { useNavigation } from '@react-navigation/native';
-import { LikeBtn } from './LikeBtn';
 import { TimeOfWriting } from './TimeOfWriting';
+import { useSetRecoilState } from 'recoil';
+import moment from 'moment';
+import { styles } from './styles';
+import { ContentItem, CommentNumber, ContentItemType, } from './types';
+import * as colors from '@config/colors';
+import { LikeBtn } from './LikeBtn';
+import { likeState } from '@recoil/CommunityStack';
 
 export default function CommunityItem({
   id,
@@ -18,22 +21,20 @@ export default function CommunityItem({
   commentCount,
   likeCount,
   liked,
-  // type,
+  listType,
 }: ContentItemType) {
+
   const navigation = useNavigation();
   const basicThumnailUrl =
     'https://png.pngtree.com/png-clipart/20190516/original/pngtree-warm-color-cool-in-summer-cartoon-swimming-goggles-cool-png-image_3774944.jpg';
+  const setLike = useSetRecoilState(likeState(id));
 
-  const whenCommunityTypeNaviagtion = () => {
-    // if (type === 'community') {
-    navigation.navigate('CommunityDetail', { id });
-    // } else {
-    // navigation.navigate('커뮤니티', {
-    //   screen: 'CommunityDetail',
-    //   initial: false,
-    //   params: { id },
-    // });
-    // }
+  useEffect(() => {
+    setLike(liked);
+  }, [liked]);
+
+  const onMoveDetailScreen = () => {
+    navigation.navigate('CommunityDetail', { id, ScreenType: listType });
   };
 
 
@@ -41,8 +42,7 @@ export default function CommunityItem({
     <TouchableOpacity
       style={styles.listItem}
       activeOpacity={0.8}
-      // onPress={() => navigation.navigate('CommunityDetail', { id })}
-      onPress={whenCommunityTypeNaviagtion}
+      onPress={onMoveDetailScreen}
     >
       <Image 
         style={styles.thumnailImage} 
@@ -62,9 +62,14 @@ export default function CommunityItem({
           id={id}
           likeCount={likeCount}
           liked={liked}
-          mainList={'mainList'}
+          listType={listType}
         />
       </View>
+
+      {/* <View style={styles.iconBox}>
+        <CommentNum commentNum={commentCount} />
+        <LikeBtn id={id} likeCount={likeCount} liked={liked} />
+      </View> */}
     </TouchableOpacity>
   );
 }

@@ -6,9 +6,11 @@ import { mainHeaderStyles as styles } from './styles';
 import { ProfileImageProps } from './types';
 import { ProfileImageURIState } from '@/src/recoil/ProfileStack';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import { basicThumnailUrl } from '@/src/config/basicThumnailUrl';
 
 export default function ProfileImg() {
   const imageURI = useRecoilValue(ProfileImageURIState);
+  const basicURI = basicThumnailUrl;
 
   return (
     <View>

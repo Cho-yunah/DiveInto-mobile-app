@@ -1,8 +1,13 @@
-import React, { useEffect } from 'react'
-import { ScrollView, View,TouchableOpacity } from 'react-native';
-import styles  from './styles';
+import React, { ReactElement, useLayoutEffect } from 'react';
+import { ScrollView, View, TouchableOpacity } from 'react-native';
+import styles from './styles';
 import { CommunityDetailProps } from '@navigators/CommunityStack/types';
-import { DetailInfo, DetailContents, CommentsInput, CommentDetail  } from '@components/CommunityDetail';
+import {
+  DetailInfo,
+  DetailContents,
+  CommentsInput,
+  CommentDetail,
+} from '@components/CommunityDetail';
 import { useRequestCommunityItem } from '@components/CommunityDetail/useRequestCommunityItem';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { atkState, checkWriterState, commentState, communityItemSelector, communityItemState, decodeTokenType, ImageState, likeState, recommentState, writerInfoState, writerInfoType } from '@/src/recoil/CommunityStack';
@@ -72,7 +77,7 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
     <View style={styles.container}>
       <DetailInfo id={id} />
       <ScrollView style={styles.detailContents}>
-        <DetailContents content={content}/>
+        <DetailContents content={content} />
         <CommentDetail id={id} />
       </ScrollView>
       <CommentsInput id={id} />

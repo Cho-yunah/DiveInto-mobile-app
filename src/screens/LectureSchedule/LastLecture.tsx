@@ -11,10 +11,9 @@ import {
 import { lastReservationLectureListState } from '@recoil/ProfileStack';
 import CommonLoading from '@components/common/CommonLoading';
 import CommonEmptyView from '@/src/components/common/CommonEmptyView';
+import LastLectureSchedule from '@/src/components/LectureSchedule/LastLectureSchedule';
 export default function LastLectureScreen() {
   const reservationList = useRecoilValue(lastReservationLectureListState);
-
-  console.log(reservationList);
 
   const ListEl = reservationList ? (
     reservationList.length !== 0 ? (
@@ -22,7 +21,7 @@ export default function LastLectureScreen() {
         data={reservationList}
         renderItem={({ item }) => {
           return (
-            <TouchSwipe
+            <LastLectureSchedule
               imgComponent={<LectureImg img={item.lectureImageUrl} />}
               contentsComponents={
                 <LectureContents
@@ -31,11 +30,11 @@ export default function LastLectureScreen() {
                   group={item.organization}
                   reservationDate={item.reservationDate}
                   nickname={item.instructorNickname}
+                  lectureType="last"
                 />
               }
-              type="last"
               reservationId={item.reservationId}
-            ></TouchSwipe>
+            ></LastLectureSchedule>
           );
         }}
         keyExtractor={item => String(item.reservationId)}
