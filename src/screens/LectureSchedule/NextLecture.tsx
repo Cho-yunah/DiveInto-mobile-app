@@ -15,6 +15,8 @@ import CommonEmptyView from '@components/common/CommonEmptyView';
 export default function NextLectureScreen() {
   const reservationList = useRecoilValue(nextReservationLectureListState);
 
+  console.log(reservationList);
+
   const ListEl = reservationList ? (
     reservationList.length !== 0 ? (
       <FlatList
@@ -30,9 +32,9 @@ export default function NextLectureScreen() {
                   group={item.organization}
                   reservationDate={item.reservationDate}
                   nickname={item.instructorNickname}
+                  lectureType="next"
                 />
               }
-              type="next"
               reservationId={item.reservationId}
             ></TouchSwipe>
           );

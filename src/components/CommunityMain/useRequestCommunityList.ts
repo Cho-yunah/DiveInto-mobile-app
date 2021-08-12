@@ -1,40 +1,61 @@
 import instance from "@/src/lib/api/axios"
-import { communityListState, listPageState, loadingState, refreshState } from "@/src/recoil/CommunityStack"
+import { getInstanceATK } from '@/src/lib/api/axios';
+import { loadingState, ContentItem, commentRequestState, questionListState, questionListPageState, shareListState, shareListPageState, refreshShareState, refreshQuestionState } from "@/src/recoil/CommunityStack"
 import { useEffect } from "react"
-import { useRecoilState, useRecoilValue } from "recoil"
-import { ContentItem } from "./types"
+import { useRecoilState, useRecoilValue, useSetRecoilState} from "recoil"
 
-export const useRequestCommunityList = ({share}): ContentItem[] => {
+export const useRequestCommunityList = ({requestPage}): ContentItem[] => {
   
-  const [isLoading, setIsLoading] = useRecoilState<boolean>(loadingState);
-  const [communityList, setCommunityList]= useRecoilState<ContentItem[]>(communityListState)
-  const [refreshing, setRefreshing] = useRecoilState(refreshState)
-  const listPage = useRecoilValue(listPageState)
+  const setIsLoading = useSetRecoilState<boolean>(loadingState);
+  const [shareList, setShareList]= useRecoilState<ContentItem[]>(shareListState)
+  const [questionList, setQuestionList]= useRecoilState<ContentItem[]>(questionListState)
+
+  const sharePage = useRecoilValue(shareListPageState)
+  const questionPage = useRecoilValue(questionListPageState)
+
+  const [refreshShare, setRefreshShare] = useRecoilState(refreshShareState)
+  const [refreshQuestion, setRefreshQuestion] = useRecoilState(refreshQuestionState)
+
+  const changeCommentState = useRecoilValue(commentRequestState)
   
-  const url = share
-    ? `/community/post/category?category=SHARE&page=${listPage}&size=10&sort=id,desc` 
-    : `/community/post/category?category=Question&page=${listPage}&size=10&sort=id,desc`
+  const url =
+    requestPage === 'SHARE'
+      ? `/community/post/category?category=${requestPage}&page=${sharePage}&size=10&sort=id,desc` 
+      :  `/community/post/category?category=${requestPage}&page=${questionPage}&size=10&sort=id,desc` 
   
   useEffect(()=> {
-    console.log(url)
     const requestCommunityList = async() => {
       setIsLoading(true)
+      const instanceAtk = await getInstanceATK();
       try {
         const {data} = await instance.get(url);
-        data._embedded && listPage === 0
-          ? ( setCommunityList((list)=>
-              [...data._embedded.postsModelList]
-            )) 
-          : ( setCommunityList((list)=>
-              [...list, ...data._embedded.postsModelList]
-            ))
-      } catch(e) {
-        console.log(e)
-      }
-      setRefreshing(false)
-      setIsLoading(false)
+        console.log(url)
+        requestPage === 'SHARE' 
+          ? ( data._embedded && sharePage === 0
+              ? ( setShareList((list)=>
+                  [...data._embedded.postsModelList])) 
+              : ( setShareList((list)=>
+                  [...list, ...data._embedded.postsModelList]))
+            ) 
+          : 
+            ( data._embedded && questionPage === 0
+              ? ( setQuestionList((list)=>
+                  [...data._embedded.postsModelList])) 
+              : ( setQuestionList((list)=>
+                [...list, ...data._embedded.postsModelList]))
+            )
+            console.log(data)
+          } catch(e) {
+            console.log(e)
+          }
+        setRefreshShare(false)
+        setRefreshQuestion(false)
+        setIsLoading(false)
     };
+
     requestCommunityList();
-  }, [listPage, refreshing])
-  return communityList;
+  }, [sharePage, questionPage, refreshShare, refreshQuestion, changeCommentState, requestPage])
+
+  return requestPage === 'SHARE'? shareList: questionList;
 }
+

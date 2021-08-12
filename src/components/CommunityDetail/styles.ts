@@ -32,14 +32,17 @@ export const DetailInfoStyle = StyleSheet.create({
     flexDirection: 'row',
     right: 17,
     top: 38,
-    width: 60,
+    width: 55,
     justifyContent: 'space-between',
+    alignItems: 'center'
   },
   modify: {
-    color: '#A9BBC9'
+    color: '#A9BBC9',
+    fontSize: 12
   },
   delete: {
     color: '#E93A55',
+    fontSize: 12
   }
 })
 
@@ -234,8 +237,17 @@ export const RecommentDetailStyles = StyleSheet.create({
     fontSize: 12,
     color: '#6A6D70',
   }, 
-  recomment: {
+  contentBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 10,
-    // lineHeight: 14
+  },
+  recomment: {
+   flexGrow: 1
+  },
+  deleteBtn: {
+    color: '#E93A55', 
+    fontSize: 12, 
+    paddingHorizontal: 5 
   }
 })

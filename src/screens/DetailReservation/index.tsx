@@ -79,7 +79,7 @@ export default function DetailReservationScreen({
         setReserveSchedule(schedule._embedded.scheduleDetailList);
         setDetailLocation(location);
 
-        console.log(schedule._embedded.scheduleDetailList);
+        // console.log(equipment._embedded.rentEquipmentDetailList);
       } catch (err) {
         console.log(err);
       }
@@ -100,7 +100,7 @@ export default function DetailReservationScreen({
       <ReserveHeader />
 
       {/* 예약한 강의 위치 */}
-      <ReserveLocationInfo />
+      {/* <ReserveLocationInfo /> */}
 
       {/* 강의 일정 정보 */}
       <ReserveSchedule />
@@ -115,7 +115,7 @@ export default function DetailReservationScreen({
       <ReserveCost />
 
       {/* 예약 취소 버튼 */}
-      <CancelBtn />
+      <CancelBtn reservationId={reservationId} />
     </ScrollView>
   );
 }

@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { styles } from './styles';
-import * as colors from '@config/colors';
-import { ContentItem, CommentNumber } from './types';
 import { useNavigation } from '@react-navigation/native';
+import { TimeOfWriting } from './TimeOfWriting';
+import { useSetRecoilState } from 'recoil';
 import moment from 'moment';
+import { styles } from './styles';
+import { ContentItem, CommentNumber, ContentItemType, } from './types';
+import * as colors from '@config/colors';
 import { LikeBtn } from './LikeBtn';
+import { likeState } from '@recoil/CommunityStack';
 
 export default function CommunityItem({
   id,
@@ -18,60 +21,39 @@ export default function CommunityItem({
   commentCount,
   likeCount,
   liked,
-  type,
-}: ContentItem) {
+  listType,
+}: ContentItemType) {
+
   const navigation = useNavigation();
   const basicThumnailUrl =
     'https://png.pngtree.com/png-clipart/20190516/original/pngtree-warm-color-cool-in-summer-cartoon-swimming-goggles-cool-png-image_3774944.jpg';
+  const setLike = useSetRecoilState(likeState(id));
 
-  const whenCommunityTypeNaviagtion = () => {
-    // if (type === 'community') {
-    navigation.navigate('CommunityDetail', { id });
-    // } else {
-    // navigation.navigate('커뮤니티', {
-    //   screen: 'CommunityDetail',
-    //   initial: false,
-    //   params: { id },
-    // });
-    // }
+  useEffect(() => {
+    setLike(liked);
+  }, [liked]);
+
+  const onMoveDetailScreen = () => {
+    navigation.navigate('CommunityDetail', { id, ScreenType: listType });
   };
 
-  // moment 시간 계산
-  const monthInterval = moment().diff(moment(dateOfRegistration), 'months');
-  const dayInterval = moment().diff(moment(dateOfRegistration), 'days');
-  const hoursInterval = moment().diff(moment(dateOfRegistration), 'hours');
-  const minutesInterval = moment().diff(moment(dateOfRegistration), 'minutes');
-
-  const timeOfWriting =
-    dayInterval === 0
-      ? hoursInterval === 0
-        ? `${minutesInterval}분 전`
-        : `${hoursInterval}시간 전`
-      : 0 < dayInterval && dayInterval <= 30
-      ? `${dayInterval}일 전`
-      : `${monthInterval}달 전`;
 
   return (
     <TouchableOpacity
       style={styles.listItem}
       activeOpacity={0.8}
-      // onPress={() => navigation.navigate('CommunityDetail', { id })}
-      onPress={whenCommunityTypeNaviagtion}
+      onPress={onMoveDetailScreen}
     >
-      {imageUrl ? (
-        <Image style={styles.thumnailImage} source={{ uri: imageUrl }} />
-      ) : (
-        <Image
-          style={styles.thumnailImage}
-          source={{ uri: basicThumnailUrl }}
-        ></Image>
-      )}
+      <Image 
+        style={styles.thumnailImage} 
+        source={{uri: imageUrl ? imageUrl : basicThumnailUrl }} 
+      />
       <View style={styles.contentInfo}>
         <Text>{title}</Text>
         <View style={styles.flexBox}>
           <Text>{writerNickname}</Text>
           <Entypo name="dot-single" size={14} color={colors.BlackText} />
-          <Text>{timeOfWriting}</Text>
+          <TimeOfWriting time={dateOfRegistration} />
         </View>
       </View>
       <View style={styles.iconBox}>
@@ -80,13 +62,14 @@ export default function CommunityItem({
           id={id}
           likeCount={likeCount}
           liked={liked}
-          mainList={'mainList'}
+          listType={listType}
         />
       </View>
-      <View style={styles.iconBox}>
+
+      {/* <View style={styles.iconBox}>
         <CommentNum commentNum={commentCount} />
         <LikeBtn id={id} likeCount={likeCount} liked={liked} />
-      </View>
+      </View> */}
     </TouchableOpacity>
   );
 }

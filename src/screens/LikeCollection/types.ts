@@ -15,6 +15,7 @@ export type LectureLikeProps = LectureLikeStaticProps & {
   reviewAvg: number;
   reviewCount: number;
   id: number;
+  isMarked: boolean;
 };
 
 export type CommunityLikeProps = {

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import { lectureContentsStyle as styles } from './styles';
+import { nextLectureContentsStyle, lastLectureContentsStyle } from './styles';
 import { LectureContentsProps } from './types';
 
 export default function LectureContents({
@@ -11,7 +11,13 @@ export default function LectureContents({
   group,
   reservationDate,
   nickname,
+  lectureType,
 }: LectureContentsProps) {
+  const styles =
+    lectureType === 'next'
+      ? nextLectureContentsStyle
+      : lastLectureContentsStyle;
+
   return (
     <View style={styles.container}>
       <View style={styles.commonLayout}>

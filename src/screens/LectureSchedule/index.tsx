@@ -10,7 +10,7 @@ import {
   atkState,
   reservationLectureListState,
 } from '@/src/recoil/ProfileStack';
-import instance from '@/src/lib/api/axios';
+import instance, { getInstanceATK } from '@/src/lib/api/axios';
 
 const Tab = createMaterialTopTabNavigator();
 export default function LectureScheduleScreen() {
@@ -21,17 +21,14 @@ export default function LectureScheduleScreen() {
 
   useEffect(() => {
     const getData = async () => {
-      try {
-        const headers = {
-          Authorization: atk,
-        };
+      const instanceAtk = await getInstanceATK();
 
-        const { data } = await instance(
-          '/reservation/list?page=0&size=30&sort=dateOfReservation,DESC',
-          {
-            headers,
-          },
+      try {
+        const { data } = await instanceAtk.get(
+          '/reservation/list?page=0&size=15&sort=dateOfReservation,DESC',
         );
+
+        console.log(data);
 
         setReservationLectureList(data._embedded.reservationInfoList);
       } catch (err) {

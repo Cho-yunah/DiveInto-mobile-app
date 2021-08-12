@@ -23,6 +23,7 @@ export default function CommentDetail({id}) {
         nestedScrollEnabled={true}
         ListFooterComponent={commentLoading? CommonLoading : null}
         onEndReachedThreshold={0}
+        disableVirtualization={false} 
 
         renderItem={({item}) => (
           <CommentItem

@@ -1,10 +1,39 @@
-import { recommentItemType } from '@/src/recoil/CommunityStack'
+import { getInstanceATK } from '@/src/lib/api/axios'
+import { atkState, checkRecommentWriter, decodeTokenType, recommentItemType, recommentRequestState, recommentState } from '@/src/recoil/CommunityStack'
 import React from 'react'
-import {View, Text, Image} from 'react-native'
+import {View, Text, Image, TouchableOpacity} from 'react-native'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { TimeOfWriting } from '../CommunityMain/TimeOfWriting'
 import {RecommentDetailStyles as styles} from './styles'
+import jwt_decode from "jwt-decode";
+
 
 export const RecommentItem =({nickName, profileUrl, dateOfWriting, content, recommentId}: recommentItemType) => {
+
+  const token = useRecoilValue(atkState)
+  const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null
+  const recommentWriterInfo = useRecoilValue(recommentState)
+  const [recommentWriter] = recommentWriterInfo.map(item=> item.accountModel.id)
+  const  [isRecommentWriter, setIsRecommentWriter] = useRecoilState(checkRecommentWriter)
+
+  const [recommentSuccess, setRecommentSuccess] = useRecoilState(recommentRequestState)
+
+   // 댓글 삭제
+   const requestDelete = async() => {
+    const instanceAtk = await getInstanceATK();
+    console.log(recommentId)
+    try {
+      await instanceAtk.delete(`/community/comment/${recommentId}`)
+      setRecommentSuccess(true) 
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
+  decodeToken.user_name == `${recommentWriter}`
+    ? setIsRecommentWriter(true)
+    : setIsRecommentWriter(false)
+
   return (
     <View style={styles.recommentBox}>
       <View style={styles.writerInfo}>
@@ -16,7 +45,21 @@ export const RecommentItem =({nickName, profileUrl, dateOfWriting, content, reco
           <TimeOfWriting time={dateOfWriting}/>
         </Text>
       </View>
-      <Text style={styles.recomment} >{content}</Text>
+      <View style={styles.contentBox} >
+        <Text style={styles.recomment} >{content}</Text>
+        {isRecommentWriter ?
+          <DeleteBtn requestDelete={requestDelete}/>
+          : null
+        }
+      </View>
     </View>
+  )
+}
+
+const DeleteBtn= ({requestDelete}) => {
+  return (
+    <TouchableOpacity onPress={requestDelete}>
+      <Text style={styles.deleteBtn}>삭제</Text>
+    </TouchableOpacity>
   )
 }

@@ -18,7 +18,7 @@ export default function ReserveCost() {
     <EachCommonInfo
       name="장비 대여 가격"
       userInfo={`${addCashComma(equipmentCost)}원`}
-      type="costOrEquipment"
+      type="cost"
     />
   ) : null;
 
@@ -29,13 +29,13 @@ export default function ReserveCost() {
         <EachCommonInfo
           name="상품 가격"
           userInfo={`${addCashComma(lectureCost)}원`}
-          type="costOrEquipment"
+          type="cost"
         />
         {conditionCost}
         <EachCommonInfo
           name="총 가격"
           userInfo={`${addCashComma(totalCost)}원`}
-          type="costOrEquipment"
+          type="cost"
           emphasis
         />
       </View>

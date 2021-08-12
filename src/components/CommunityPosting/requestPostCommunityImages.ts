@@ -46,7 +46,7 @@ export const requestPostCommunity: RequestPostCommunityType =
 
       } else {
         const {data}  = await instanceAtk.post('/community/post', body);
-        console.log(data);
+        console.log('postingData',data);
         return data.postResource
       }
     } catch (e) {

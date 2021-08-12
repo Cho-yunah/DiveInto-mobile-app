@@ -23,9 +23,8 @@ export default function ApplyLecturerScreen({
   const [isLoading, setIsLoading] = useState(false);
   const picsArr = useRecoilValue(instructorImageCollectionState);
   const resetPicsArr = useResetRecoilState(instructorImageCollectionState);
-  const [viewType, setViewType] = useRecoilState(WaitingCERTInstructorState);
-
-  console.log(viewType);
+  const [validInstructor, setValidInstructor] = useState(false);
+  // const [viewType, setViewType] = useRecoilState(WaitingCERTInstructorState);
 
   const applyInstructorInfo = async () => {
     const instanceAtk = await getInstanceATK();
@@ -55,7 +54,6 @@ export default function ApplyLecturerScreen({
         certificatePicsBody,
       );
 
-      setViewType('done');
       navigation.navigate('ApplyLecturer');
     } catch (err) {
       console.log(err);
@@ -66,6 +64,26 @@ export default function ApplyLecturerScreen({
   };
 
   useEffect(() => {
+    const validApplyInstructor = async () => {
+      const instanceAtk = await getInstanceATK();
+
+      try {
+        setIsLoading(true);
+        const { data } = await instanceAtk.get(
+          '/account/instructor-application',
+        );
+        console.log(data);
+
+        setValidInstructor(data.applied);
+      } catch (err) {
+        console.log(err);
+      }
+      setIsLoading(false);
+    };
+    validApplyInstructor();
+  }, []);
+
+  useEffect(() => {
     if (group && intro && picsArr.length === 3) {
       setIsCompleted(true);
     } else {
@@ -74,7 +92,7 @@ export default function ApplyLecturerScreen({
   }, [group, intro, picsArr]);
 
   useLayoutEffect(() => {
-    if (viewType === 'none') {
+    if (validInstructor) {
       navigation.setOptions({
         headerRight: () => (
           <NextButton
@@ -86,23 +104,21 @@ export default function ApplyLecturerScreen({
       });
     } else {
       navigation.setOptions({
-        headerRight: () => null,
         title: '강사 신청 대기중 ...',
+        headerRight: () => null,
       });
     }
-  }, [isCompleted, viewType]);
-
-  console.log(isCompleted, '모든 조건 만족');
+  }, [isCompleted, validInstructor]);
 
   const conditionStyle = isLoading
     ? styles.loadingContainer
     : styles.basicContainer;
 
+  console.log(isCompleted, '모든 조건 만족');
+
   return (
     <View style={conditionStyle}>
-      {isLoading ? (
-        <ActivityIndicator size="large" color="#50CAD2" />
-      ) : viewType === 'none' ? (
+      {isLoading ? null : !validInstructor ? ( // <ActivityIndicator size="large" color="#50CAD2" />
         <ApplyLecturerView
           intro={intro}
           onChange={onChangeIntro}
