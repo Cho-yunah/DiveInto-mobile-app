@@ -15,7 +15,6 @@ const Tab= createMaterialTopTabNavigator();
 export default function CommunityMainScreen({navigation}: CommunityPostingProps): ReactElement {
 
   const [token, setToken] = useRecoilState(atkState)
-  // console.log(token)
 
   useEffect(()=> {
     const getToken = async() => {
@@ -64,10 +63,12 @@ export default function CommunityMainScreen({navigation}: CommunityPostingProps)
 
 const SharedContents = ({route}: any) => {
   const share = route.params.share;
+  // console.log('share')
   return (<CommunityMain share={share} /> )
 }
 
 const QuestionaryContents = ({route}: any) => {
   const question = route.params.question
+  // console.log('question')
   return (<CommunityMain question={question} />)
 }

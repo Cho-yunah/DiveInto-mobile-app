@@ -4,10 +4,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { styles } from './styles';
 import * as colors from '@config/colors';
-import { ContentItem, CommentNumber } from './types';
+import { ContentItemType, CommentNumber } from './types';
 import { useNavigation } from '@react-navigation/native';
-import moment from 'moment';
 import { LikeBtn } from './LikeBtn';
+import { TimeOfWriting } from './TimeOfWriting';
 
 export default function CommunityItem({
   id,
@@ -19,7 +19,7 @@ export default function CommunityItem({
   likeCount,
   liked,
   // type,
-}: ContentItem) {
+}: ContentItemType) {
   const navigation = useNavigation();
   const basicThumnailUrl =
     'https://png.pngtree.com/png-clipart/20190516/original/pngtree-warm-color-cool-in-summer-cartoon-swimming-goggles-cool-png-image_3774944.jpg';
@@ -36,20 +36,6 @@ export default function CommunityItem({
     // }
   };
 
-  // moment 시간 계산
-  const monthInterval = moment().diff(moment(dateOfRegistration), 'months');
-  const dayInterval = moment().diff(moment(dateOfRegistration), 'days');
-  const hoursInterval = moment().diff(moment(dateOfRegistration), 'hours');
-  const minutesInterval = moment().diff(moment(dateOfRegistration), 'minutes');
-
-  const timeOfWriting =
-    dayInterval === 0
-      ? hoursInterval === 0
-        ? `${minutesInterval}분 전`
-        : `${hoursInterval}시간 전`
-      : 0 < dayInterval && dayInterval <= 30
-      ? `${dayInterval}일 전`
-      : `${monthInterval}달 전`;
 
   return (
     <TouchableOpacity
@@ -58,20 +44,16 @@ export default function CommunityItem({
       // onPress={() => navigation.navigate('CommunityDetail', { id })}
       onPress={whenCommunityTypeNaviagtion}
     >
-      {imageUrl ? (
-        <Image style={styles.thumnailImage} source={{ uri: imageUrl }} />
-      ) : (
-        <Image
-          style={styles.thumnailImage}
-          source={{ uri: basicThumnailUrl }}
-        ></Image>
-      )}
+      <Image 
+        style={styles.thumnailImage} 
+        source={{uri: imageUrl ? imageUrl : basicThumnailUrl }} 
+      />
       <View style={styles.contentInfo}>
         <Text>{title}</Text>
         <View style={styles.flexBox}>
           <Text>{writerNickname}</Text>
           <Entypo name="dot-single" size={14} color={colors.BlackText} />
-          <Text>{timeOfWriting}</Text>
+          <TimeOfWriting time={dateOfRegistration} />
         </View>
       </View>
       <View style={styles.iconBox}>
@@ -82,10 +64,6 @@ export default function CommunityItem({
           liked={liked}
           mainList={'mainList'}
         />
-      </View>
-      <View style={styles.iconBox}>
-        <CommentNum commentNum={commentCount} />
-        <LikeBtn id={id} likeCount={likeCount} liked={liked} />
       </View>
     </TouchableOpacity>
   );

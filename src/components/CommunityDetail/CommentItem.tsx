@@ -1,16 +1,22 @@
 import React, { useRef } from 'react'
-import { commentIdState, commentInputButtonState, commentInputFocusState, commentItemType, commentRequestState, commentState, recommentState, showRecommentState, writingRecommentState,  } from "@/src/recoil/CommunityStack"
-import { Image, View, Text, TouchableOpacity, KeyboardAvoidingView, TextInput, FlatList } from "react-native"
+import { atkState, checkCommentWriter, commentIdState, commentInputButtonState, commentInputFocusState, commentItemType, commentRequestState, commentState, decodeTokenType, recommentState, showRecommentState, writingRecommentState,  } from "@/src/recoil/CommunityStack"
+import { Image, View, Text, TouchableOpacity, FlatList } from "react-native"
 import {CommentDetailStyles as styles} from './styles'
 import { TimeOfWriting } from '@components/CommunityMain/TimeOfWriting'
 import { getInstanceATK } from '@/src/lib/api/axios'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { useRequestRecomments } from './useRequestRecomments'
 import { RecommentItem } from './RecommentItem'
+import jwt_decode from "jwt-decode";
+
 
 export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, commentId}: commentItemType)=> {
 
   useRequestRecomments({commentId}) // 대댓글 요청 
+
+  const token = useRecoilValue(atkState)
+  const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null
+  const commentWriterInfo = useRecoilValue(commentState)
 
   const [RequestSuccess, setRequestSuccess] = useRecoilState(commentRequestState)
   const [isFocus, setIsFocus] = useRecoilState(commentInputFocusState)
@@ -19,6 +25,16 @@ export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, comme
   const [writingRecomment, setWritingRecomment] = useRecoilState(writingRecommentState)
   const recommentList = useRecoilValue(recommentState)
   const [showRecomment, setShowRecomment] = useRecoilState(showRecommentState(commentId))
+  const  [isCommentWriter, setIsCommentWriter] = useRecoilState(checkCommentWriter)
+
+  // 댓글 작성자인지 확인
+  const [commentWriter] = commentWriterInfo.map(item=> item.accountModel.id )
+  // console.log(typeof decodeToken.user_name) // string
+  // console.log(typeof commentWriter) // number
+
+  decodeToken.user_name === `${commentWriter}`
+    ? setIsCommentWriter(true)
+    : setIsCommentWriter(false)
 
   // 댓글 삭제
   const requestDelete = async() => {
@@ -43,6 +59,8 @@ export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, comme
     setWritingRecomment(!writingRecomment)
     setShowRecomment(!showRecomment)
   }
+  // console.log(recommentList)
+  // console.log(showRecomment)
 
   return (
     <View style={styles.commentBox}>
@@ -65,10 +83,14 @@ export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, comme
             {recommentList? '대댓글 보기': '대댓글 쓰기'}
           </Text>
         </TouchableOpacity>
-        <View style={styles.edintingBtnBox}>
-          <EditBtn editing={editing}/>
-          <DeleteBtn requestDelete={requestDelete}/>
-        </View>
+        {/* 댓글을 작성한 사람이 아닐경우 버튼 안보이게 */}
+        {commentWriter? 
+          <View style={styles.edintingBtnBox}>
+            <EditBtn editing={editing}/>
+            <DeleteBtn requestDelete={requestDelete}/>
+          </View>
+          : null
+        }
       </View>
 
       {/* 대댓글 component */}
@@ -77,6 +99,7 @@ export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, comme
           <FlatList
             data={recommentList}
             keyExtractor={(item)=> `${item.accountModel.id}${item.accountModel.nickName}`}
+            disableVirtualization={false} 
             renderItem={({item}) => (
               <RecommentItem
                 nickName= {item.accountModel.nickName}

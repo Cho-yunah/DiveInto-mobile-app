@@ -237,8 +237,17 @@ export const RecommentDetailStyles = StyleSheet.create({
     fontSize: 12,
     color: '#6A6D70',
   }, 
-  recomment: {
+  contentBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 10,
-    // lineHeight: 14
+  },
+  recomment: {
+   flexGrow: 1
+  },
+  deleteBtn: {
+    color: '#E93A55', 
+    fontSize: 12, 
+    paddingHorizontal: 5 
   }
 })

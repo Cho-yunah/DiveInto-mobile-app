@@ -1,23 +1,23 @@
 import instance from '@/src/lib/api/axios';
 import { communityItemState, ImageState, isEditedState, writerInfoState } from '@/src/recoil/CommunityStack';
 import { useEffect } from 'react';
-import  {useRecoilState, useSetRecoilState} from 'recoil';
+import  {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil';
 
 export const useRequestCommunityItem = (id: number) => {
   const setCommunityItem = useSetRecoilState(communityItemState);
   const setImageItem = useSetRecoilState(ImageState)
   const setWriterInfo = useSetRecoilState(writerInfoState)
   const [editRequestSuccess, setEditRequestSuccess] = useRecoilState(isEditedState)
+ 
 
   useEffect(()=> {
+    
     const requestCommunityItem = async()=> {
       try {
         // data & image 받아오기
         const {data} = await instance.get(`/community/post/${id}`);
-        // console.log(data)
         const writerResource= await instance.get(`/community/post/${id}/writer`)
         const imageResource = await instance.get(`/community/post/${id}/post-image`)
-        // console.log(imageResource)
 
         const { title, category, tags, dateOfRegistration, content, liked, likeCount } = data.postResource;
         const writerInfo = writerResource.data

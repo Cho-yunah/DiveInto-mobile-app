@@ -24,6 +24,7 @@ export default function DetailContents({content} : any) {
             data={imageArr}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
+            disableVirtualization={false} 
             renderItem= {({item, index})=> {
               return <ImageItem item={item} index={index}/>
             }}

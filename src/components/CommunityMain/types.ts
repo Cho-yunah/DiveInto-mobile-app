@@ -1,8 +1,8 @@
-export type CommunityMainProps = {
-  enterContenetDetail: () => void;
-};
-
-export type ContentItem = {
+export type CommunityTabType = {
+  share ?: string,
+  question ?: string
+}
+export type ContentItemType = {
   id: number;
   title: string;
   dateOfRegistration: string;
@@ -26,3 +26,14 @@ export type nextButtonProps = {
   text?: string;
   disable?: boolean;
 };
+
+export type likeBtnPropsType = {
+  id: number,
+  likeCount: number , 
+  liked: boolean ,
+  mainList ?: string
+}
+
+export type Time = {
+  time: string
+}

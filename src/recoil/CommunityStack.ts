@@ -1,16 +1,16 @@
 import {atom, atomFamily, selector, selectorFamily} from 'recoil'
 
 // 토큰 받기
-export const atkState = atom<string | null>({
-  key: 'atkState',
-  default: null,
-});
 export type decodeTokenType = {
   exp: string,
   user_name: string,
 }
+export const atkState = atom<string | null>({
+  key: 'atkState',
+  default: null,
+});
 
-// 커뮤니티 메인 리스트 
+// 커뮤니티 리스트 
 export type ContentItem = {
   id: number;
   title: string;
@@ -23,30 +23,36 @@ export type ContentItem = {
   liked: boolean;
 }
 
-export const communityListState = atom<ContentItem[]>({
-  key: 'communityListState',
-  default: []
-})
-
-export const allCommunityListState = selector({
-  key: 'allCommunityListState',
-  get: ({get}) => {
-    const list = get(communityListState)
-    return list;
-  }
-})
 export const loadingState = atom<boolean>({
   key: 'lodingState',
   default : false
 })
 
-export const listPageState = atom<number>({
+export const shareListState = atom<ContentItem[]>({
+  key: 'shareListState',
+  default: []
+})
+export const questionListState = atom<ContentItem[]>({
+  key: 'questionListState',
+  default : []
+})
+
+export const shareListPageState = atom<number>({
   key: 'listPageState',
   default : 0
 })
+export const questionListPageState = atom<number>({
+  key: 'questionListPageState',
+  default : 0
+})
 
-export const refreshState = atom<boolean>({
-  key: 'refreshState',
+
+export const refreshShareState = atom<boolean>({
+  key: 'refreshShareState',
+  default : false
+})
+export const refreshQuestionState = atom<boolean>({
+  key: 'refreshQuestionState',
   default : false
 })
 
@@ -78,22 +84,11 @@ export type PostingItemType = {
   title: string,
   content: string
 }
-// export const postingIdState= atom ({
-//   key: 'postingIdState',
-//   default : 1
-// })
 
 export const likeState= atomFamily<Element,number>({
   key: 'likeState',
   default: false
 })
-
-export type likeBtnPropsType = {
-  id: number,
-  likeCount: number , 
-  liked: boolean ,
-  mainList ?: string
-}
 
 export const writerInfoState = atom ({ 
   key: 'writerInfoState',
@@ -149,6 +144,11 @@ export const communityItemSelector= selector({
   return {id, title, category, tags, dateOfRegistration, content, liked, likeCount}
   }
 })
+
+// export const communityDetailState = atomFamily<string, string>({
+//   key: 'postingFormState',
+//   default: 
+// })
 
 export type DetailInfoType = {
   id: number,
@@ -234,6 +234,11 @@ export const commentInputButtonState= atom({
   key: 'commentInputButtonState',
   default: false
 })
+export const checkCommentWriter= atom({
+  key: 'checkRecommentWriter',
+  default: false
+})
+
 export const commentListPageState = atom({
   key: 'commentListPageState',
   default : 0
@@ -298,5 +303,15 @@ export const recommentListPageState= atom({
 
 export const showRecommentState = atomFamily({
   key: 'showRecommentState',
+  default: false
+})
+
+export const recommentRequestState= atom({
+  key: 'recommentRequestState',
+  default: false
+})
+
+export const checkRecommentWriter= atom({
+  key: 'checkRecommentWriter',
   default: false
 })

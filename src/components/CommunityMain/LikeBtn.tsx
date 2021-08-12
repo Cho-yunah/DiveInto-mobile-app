@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native'
-import { atkState, likeBtnPropsType, likeState, postIdState } from "@/src/recoil/CommunityStack"
+import { View, Text } from 'react-native'
+import { atkState, likeState } from "@/src/recoil/CommunityStack"
 import { useRecoilState, useRecoilValue } from "recoil"
+import { likeBtnPropsType } from './types';
 import {styles} from "./styles"
 import * as colors from '@config/colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
