@@ -27,7 +27,7 @@ export default function LectureScheduleScreen() {
         };
 
         const { data } = await instance(
-          '/reservation/list?page=0&size=15&sort=dateOfReservation,DESC',
+          '/reservation/list?page=0&size=30&sort=dateOfReservation,DESC',
           {
             headers,
           },

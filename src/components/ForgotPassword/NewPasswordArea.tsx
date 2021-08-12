@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { useRecoilCallback, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { NewPasswordAreaStyle as styles } from './styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { newPasswordState, reNewPasswordState } from '@/src/recoil/LoginStack';

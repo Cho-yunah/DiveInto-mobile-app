@@ -6,10 +6,12 @@ import {
   currSelectedDateState,
   rentEquipmentInfosType,
   requestReservationEquipmentArrayState,
+  reservationIdState,
   smallModalMessageState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
 import { PayButtonProps } from '@/src/screens/RequestPayment/types';
+import { AxiosResponse } from 'axios';
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
@@ -29,7 +31,7 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
   const reservingEquipmentArray = useRecoilValue(
     requestReservationEquipmentArrayState,
   );
-
+  const setReservationId = useSetRecoilState(reservationIdState);
   const [isLoading, setIsLoading] = useState(false);
   let flag = useRef(false);
 
@@ -45,10 +47,14 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
     };
     try {
       const instanceAtk = await getInstanceATK();
-      const { data } = await instanceAtk.post('/reservation', body);
+      const { data }: AxiosResponse = await instanceAtk.post(
+        '/reservation',
+        body,
+      );
       console.log(data);
       setErrorMsg('결제가 완료되었습니다.');
       flag.current = true;
+      setReservationId(data.reservationId);
     } catch (e) {
       console.log(e.response.data);
       if (e.response.data.success === false) {

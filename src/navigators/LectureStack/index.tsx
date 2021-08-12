@@ -7,7 +7,7 @@ import MainList from '@screens/MainList';
 import LectureDetailScreen from '@/src/screens/LectureDetail';
 import ReserveLectureScreen from '@/src/screens/ReserveLecture';
 import RequestPaymentScreen from '@/src/screens/RequestPayment';
-import WriteReviewScreen from '@/src/screens/WriteReview';
+import DetailReservationScreen from '@/src/screens/DetailReservation';
 
 const Stack = createStackNavigator<RootLectureStack>();
 
@@ -52,6 +52,11 @@ export default function LectureStack() {
         name="RequestPayment"
         component={RequestPaymentScreen}
         options={{ title: '결제 요청' }}
+      />
+      <Stack.Screen
+        name="DetailReservation"
+        component={DetailReservationScreen}
+        options={{ title: '예약 상세' }}
       />
     </Stack.Navigator>
     // </RecoilRoot>
