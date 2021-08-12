@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+export const ForgotPasswordScreenStyle = StyleSheet.create({
   container: {
     paddingLeft: 18,
     paddingRight: 19,
@@ -30,5 +30,3 @@ const styles = StyleSheet.create({
   },
   modalText: { fontSize: 16, color: '#fefefe' },
 });
-
-export default styles;

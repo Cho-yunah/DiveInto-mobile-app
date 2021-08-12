@@ -1,6 +1,5 @@
-import instance, { getInstanceATK } from '@/src/lib/api/axios';
+import { getInstanceATK } from '@/src/lib/api/axios';
 import {
-  // communityLikeState,
   communityListState,
   listPageState,
   loadingState,
@@ -14,8 +13,6 @@ export const useRequestCommunityList = ({ share }): ContentItem[] => {
   const [isLoading, setIsLoading] = useRecoilState<boolean>(loadingState);
   const [communityList, setCommunityList] =
     useRecoilState<ContentItem[]>(communityListState);
-
-  // console.log(communityList);
 
   const [refreshing, setRefreshing] = useRecoilState(refreshState);
   const listPage = useRecoilValue(listPageState);
@@ -31,18 +28,18 @@ export const useRequestCommunityList = ({ share }): ContentItem[] => {
 
       setIsLoading(true);
       try {
-        // console.log('listPage', listPage)
         const { data } = await instanceAtk.get(url);
-        console.log('data', data);
 
-        data._embedded &&
-          setCommunityList(list => [...list, ...data._embedded.postsModelList]);
-
-        // console.log('communityList-main',communityList)
+        data._embedded && listPage === 0
+          ? setCommunityList(list => [...data._embedded.postsModelList])
+          : setCommunityList(list => [
+              ...list,
+              ...data._embedded.postsModelList,
+            ]);
       } catch (e) {
         console.log(e);
       }
-      // setRefreshing(false)
+      setRefreshing(false);
       setIsLoading(false);
     };
 

@@ -10,14 +10,19 @@ import {
 } from '@components/CommunityDetail';
 import { useRequestCommunityItem } from '@components/CommunityDetail/useRequestCommunityItem';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { communityItemSelector, likeState } from '@/src/recoil/CommunityStack';
+
+import {
+  communityItemSelector,
+  likeState,
+  commentState,
+} from '@/src/recoil/CommunityStack';
 import { LikeBtn } from '@components/CommunityMain/LikeBtn';
 import useToggleLike from '@/src/lib/hooks/useToggleLike';
 
 export default function CommunityDetailScreen({
   route,
   navigation,
-}: CommunityDetailProps): ReactElement {
+}: CommunityDetailProps) {
   const { id } = route.params;
   useRequestCommunityItem(id);
 
@@ -38,7 +43,7 @@ export default function CommunityDetailScreen({
   return (
     <View style={styles.container}>
       <DetailInfo id={id} />
-      <ScrollView>
+      <ScrollView style={styles.detailContents}>
         <DetailContents content={content} />
         <CommentDetail id={id} />
       </ScrollView>

@@ -4,9 +4,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import styles from './styles';
 
-const PwForgot = () => (
+type PwForgotProps = {
+  navigateToForgotPassword: () => void;
+};
+
+const PwForgot = ({ navigateToForgotPassword }: PwForgotProps) => (
   <SafeAreaView>
-    <Pressable>
+    <Pressable onPress={navigateToForgotPassword}>
       <Text style={styles.underlineText}>비밀번호를 잊으셨나요?</Text>
     </Pressable>
   </SafeAreaView>
