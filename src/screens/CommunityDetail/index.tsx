@@ -9,36 +9,69 @@ import {
   CommentDetail,
 } from '@components/CommunityDetail';
 import { useRequestCommunityItem } from '@components/CommunityDetail/useRequestCommunityItem';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { atkState, checkWriterState, commentState, communityItemSelector, communityItemState, decodeTokenType, ImageState, likeState, recommentState, writerInfoState, writerInfoType } from '@/src/recoil/CommunityStack';
+import {LikeBtn} from '@components/CommunityMain/LikeBtn';
+import jwt_decode from "jwt-decode";
 
-import {
-  communityItemSelector,
-  likeState,
-  commentState,
-} from '@/src/recoil/CommunityStack';
-import { LikeBtn } from '@components/CommunityMain/LikeBtn';
-import useToggleLike from '@/src/lib/hooks/useToggleLike';
+export default function CommunityDetailScreen({route, navigation}: CommunityDetailProps) {
+  
+  const {id} =route.params;
+  useRequestCommunityItem(id)
+  
+  const token = useRecoilValue(atkState)
+  const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null
+  const writerInfo= useRecoilValue<writerInfoType>(writerInfoState)
+  const setCheckWriter = useSetRecoilState(checkWriterState)
+  const commentWriterInfo = useRecoilValue(commentState)
+  const recommentWriterInfo = useRecoilValue(recommentState)
 
-export default function CommunityDetailScreen({
-  route,
-  navigation,
-}: CommunityDetailProps) {
-  const { id } = route.params;
-  useRequestCommunityItem(id);
+  const {content, liked, likeCount } = useRecoilValue(communityItemSelector)
+  const [like, setLike] = useRecoilState(likeState(id))
 
-  const { content, liked, likeCount } = useRecoilValue(communityItemSelector);
-  const { Clickedlike } = useToggleLike(id);
+  const setCommunityItem = useSetRecoilState(communityItemState);
+  const setImageItem = useSetRecoilState(ImageState)
+  const setWriterInfo = useSetRecoilState(writerInfoState)
 
-  // 헤더에 좋아요 하트 버튼
-  useLayoutEffect(() => {
+  // 로그인한 사람과 글 게시한 사람이 일치하는지
+  decodeToken.user_name == writerInfo.id 
+    ? setCheckWriter(true)
+    : setCheckWriter(false)
+  
+  //  좋아요 
+  const Clickedlike=() => {
+    setLike(!like)
+  }
+ 
+  // 클린업 함수
+  const cleanUp = () => {
+    setCommunityItem({
+      id: id, 
+      title: '', 
+      category: '', 
+      tags: [], 
+      dateOfRegistration: '', 
+      content: '', 
+      liked: false, 
+      likeCount: 0
+    })
+    setImageItem([])
+    setWriterInfo({
+      id: 'id', 
+      nickName: '', 
+      profileImageUrl: ''
+    })
+  }
+
+  useEffect(()=> {
     navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity onPress={Clickedlike}>
-          <LikeBtn id={id} liked={liked} likeCount={likeCount} />
-        </TouchableOpacity>
-      ),
-    });
-  }, [id, liked, likeCount, Clickedlike]);
+      headerRight: () => 
+      <TouchableOpacity  onPress={Clickedlike}>
+        <LikeBtn id={id} liked={liked} likeCount={likeCount}/>
+      </TouchableOpacity>
+    })
+    cleanUp()
+  },[like])
 
   return (
     <View style={styles.container}>

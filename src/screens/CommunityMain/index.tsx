@@ -1,9 +1,8 @@
-import React, { ReactElement, useLayoutEffect } from 'react';
-import { View, Text } from 'react-native';
-import styles from './styles';
-import { CommunityMain } from '@components/CommunityMain';
-import { QuestionaryContentsList } from '@components/CommunityMain';
-import NextButton from '@components/CommunityMain/NextButton';
+import React, { ReactElement, useLayoutEffect} from 'react'
+import { View , Text} from 'react-native';
+import styles  from './styles';
+import { CommunityMain, QuestionaryContentsList } from '@components/CommunityMain';
+import NextButton from '@components/CommunityMain/NextButton'
 import {
   CommunityPostingProps,
   CommunityDetailProps,
@@ -11,10 +10,11 @@ import {
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { atkState, postingFormState } from '@/src/recoil/CommunityStack';
+import { useRecoilState} from 'recoil';
+import { atkState } from '@/src/recoil/CommunityStack';
 
 const Tab = createMaterialTopTabNavigator();
+
 
 export default function CommunityMainScreen({
   navigation,
@@ -27,6 +27,7 @@ export default function CommunityMainScreen({
       try {
         const getTokenRequest = await AsyncStorage.getItem('atk');
         setToken(getTokenRequest);
+
       } catch (error) {
         console.log(error);
       }
@@ -44,25 +45,25 @@ export default function CommunityMainScreen({
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Tab.Navigator
-        tabBarOptions={{
-          labelStyle: { fontSize: 18 },
-          activeTintColor: '#50CAD2',
-          inactiveTintColor: '#6A6D70',
-          indicatorStyle: { borderColor: '#50CAD2', borderWidth: 1 },
-        }}
-      >
-        <Tab.Screen
-          name="공유해요"
-          component={SharedContents}
-          initialParams={{ share: 'share' }}
-        />
-        <Tab.Screen
-          name="궁금해요"
-          component={QuestionaryContents}
-          initialParams={{ question: 'question' }}
-        />
+    <View style={styles.container}  > 
+    <Tab.Navigator  
+      tabBarOptions={{
+        labelStyle: { fontSize: 18 }, 
+        activeTintColor:'#50CAD2', 
+        inactiveTintColor: '#6A6D70', 
+        indicatorStyle: {borderColor: '#50CAD2', borderWidth: 1 } 
+       }}  
+    >
+      <Tab.Screen 
+        name="공유해요" 
+        component={SharedContents}
+        initialParams={{ share: 'SHARE' }}
+      />
+      <Tab.Screen 
+        name="궁금해요"
+        component={QuestionaryContents}
+        initialParams={{ question: 'QUESTION' }}
+       />
       </Tab.Navigator>
     </View>
   );
@@ -74,11 +75,7 @@ const SharedContents = ({ route }: any) => {
 };
 
 const QuestionaryContents = ({ route }: any) => {
-  const question = route.params.question;
-  // return (<CommunityMain question={question} />)
-  return (
-    <>
-      <Text>not yet</Text>
-    </>
-  );
+   const question = route.params.question
+  // console.log('question')
+  return (<CommunityMain question={question} />)
 };

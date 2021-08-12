@@ -46,7 +46,7 @@ const Category= ({category, id}:any) => {
           setValue={setCategoryValue}
           /// style
           style={styles.pickerStyle}
-          containerStyle={styles.shadowContainer}
+          containerStyle={open? styles.shadowContainer : styles.selectContainer}
           labelStyle={styles.labelStyle}
           dropDownContainerStyle={styles.dropDown}
         />
@@ -54,8 +54,12 @@ const Category= ({category, id}:any) => {
   )
 }
 
+type selectTagType ={
+  tags: string,
+  id: number
+}
 // Tag Component
-const Tag=({tags, id}) => {
+const Tag=({tags, id}: selectTagType) => {
   const [tagItem, setTagItem]= useState([
     {label: '다이빙 스킬 전수', value: '다이빙 스킬 전수'}, 
     {label: '초보는 드루와', value: '초보는 드루와'},
@@ -64,7 +68,7 @@ const Tag=({tags, id}) => {
   const [open, setOpen] = useState(false);
 
   useEffect(()=>{
-    id? setTagsValue(...tags) : setTagsValue('')
+    id? setTagsValue(tags) : setTagsValue('')
   },[])
 
   return (

@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { likeBtnPropsType } from '@/src/recoil/CommunityStack';
-import { likeState } from '@recoil/CommunityStack';
-import { useRecoilValue } from 'recoil';
-import { styles } from './styles';
+import { View, Text, TouchableOpacity } from 'react-native'
+import { atkState, likeState } from "@recoil/CommunityStack"
+import { useRecoilState, useRecoilValue } from "recoil"
+import { likeBtnPropsType } from './types';
+import {styles} from "./styles"
+
 import * as colors from '@config/colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
