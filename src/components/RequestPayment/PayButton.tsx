@@ -9,6 +9,7 @@ import {
   smallModalMessageState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
+import { ReserveLectureCachingState } from '@/src/recoil/ProfileStack';
 import { PayButtonProps } from '@/src/screens/RequestPayment/types';
 import React, { useState } from 'react';
 import { useRef } from 'react';
@@ -29,6 +30,10 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
   const reservingEquipmentArray = useRecoilValue(
     requestReservationEquipmentArrayState,
   );
+  // 프로필 Screen의 예약한 강의 Rerendering
+  const setRefreshProfile = useSetRecoilState(ReserveLectureCachingState);
+
+  console.log('이 페이지당');
 
   const [isLoading, setIsLoading] = useState(false);
   let flag = useRef(false);
@@ -48,11 +53,14 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
       const { data } = await instanceAtk.post('/reservation', body);
       console.log(data);
       setErrorMsg('결제가 완료되었습니다.');
+      setRefreshProfile(prev => prev + 1);
+
       flag.current = true;
     } catch (e) {
       console.log(e.response.data);
       if (e.response.data.success === false) {
         setErrorMsg(e.response.data.msg);
+
         flag.current = true;
       }
     }

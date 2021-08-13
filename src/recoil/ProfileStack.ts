@@ -4,7 +4,7 @@ import { getInstanceATK } from '@lib/api/axios';
 import { userInfoProps } from '@screens/ProfileMain/types';
 import { sliceTimeString, sliceDateString } from '@lib/utils/sliceNewString';
 import theSameNameOfNumber from '@lib/utils/duplicateEquipment';
-import { communityRefreshState } from './Global';
+import { liekCollectionRefreshState } from './Global';
 
 export type lectureReviewAllType = {
   id: number;
@@ -26,10 +26,6 @@ export type reservationLectureListType = {
   instructorNickname: string;
   reservationDate: string;
   remainingDate: number;
-}[];
-
-export type lastReservationLectureListType = {
-  remainingDate: string;
 };
 
 export type instructorImageCollectionType = {
@@ -82,25 +78,10 @@ export type reserveEquipmentsAtomType = {
 
 export type reserveCostInfoTypesType = 'total' | 'lecture' | 'equipment';
 
-export type CommunityLikeListStateType = {
-  id: number;
-  title: string;
-  dateOfRegistration: string;
-  category: string;
-  writerNickname: string;
-  imageUrl?: string;
-  commentCount: number;
-  likeCount: number;
-  liked: boolean;
-};
-
-export const userInfoAtom = atom<userInfoProps | null>({
-  key: 'userInfoAtom',
-  default: {
-    email: '',
-    nickname: '',
-    phone: '',
-  },
+// deleteReserve(예약강의삭제 id)
+export const ReserveLectureCachingState = atom({
+  key: 'ReserveLectureCachingState',
+  default: 0,
 });
 
 export const modifyNumViewStateAtom = atom<modifyNumViewStateAtomType | null>({
@@ -117,57 +98,16 @@ export const atkState = atom<string | null>({
   default: null,
 });
 
-export const LectureListState = atom({
-  key: 'LectureList',
-  default: [],
-});
-
 export const lectureReviewAllState = atom<lectureReviewAllType[]>({
   key: 'lectureReview',
   default: [],
 });
 
-export const reservationLectureListState =
-  atom<reservationLectureListType | null>({
-    key: 'reservationLectureList',
-    default: null,
-  });
-
-export const nextReservationLectureListState = selector({
-  key: 'nextReservationLectureList',
-  get: ({ get }) => {
-    const res = get(reservationLectureListState);
-
-    const nextReservationLectureInfo = res?.filter(data =>
-      data.remainingDate !== 365 ? data : null,
-    );
-
-    return nextReservationLectureInfo;
-  },
-});
-
-export const deleteReservationLectureListState = selectorFamily({
-  key: 'deleteReservationLectureList',
-  get:
-    (id: number) =>
-    ({ get }) => {
-      const totalList = get(reservationLectureListState);
-
-      console.log(totalList, id);
-    },
-});
-
-export const lastReservationLectureListState = selector({
-  key: 'lastReservationLectureList',
-  get: ({ get }) => {
-    const res = get(reservationLectureListState);
-
-    const lastReservationLectureInfo = res?.filter(data =>
-      data.remainingDate === 365 ? data : null,
-    );
-
-    return lastReservationLectureInfo;
-  },
+export const reservationLectureListState = atom<
+  reservationLectureListType[] | null
+>({
+  key: 'reservationLectureList',
+  default: null,
 });
 
 // 프로필 유저 이미지 상태 공유
@@ -182,11 +122,6 @@ export const instructorImageCollectionState = atom<
 >({
   key: 'instructorImageCollection',
   default: [],
-});
-
-export const WaitingCERTInstructorState = atom<'none' | 'done'>({
-  key: 'WaitingCERTInstructor',
-  default: 'none',
 });
 
 // 로그아웃 모달 on/off 상태
@@ -248,31 +183,65 @@ export const reserveEquipmentsState = atom<reserveEquipmentsAtomType>({
   default: [],
 });
 
-// 좋아요한 커뮤니티 리스트 상태
-export const communityLikeListState = atom<CommunityLikeListStateType[]>({
-  key: 'communityLikeList',
-  default: [],
+// 수강 내역에서 예약한 강의 / 지난 강의를 분리하는 selector
+export const requestLectureScheduleListSelector = selectorFamily({
+  key: 'requestLectureScheduleList',
+  get:
+    (scheduleType: 'next' | 'last') =>
+    async ({ get }) => {
+      get(ReserveLectureCachingState);
+      const instanceAtk = await getInstanceATK();
+
+      try {
+        console.log('Rerendering');
+
+        const { data } = await instanceAtk.get(
+          '/reservation/list?page=0&size=15&sort=dateOfReservation,DESC',
+        );
+
+        if (!data.page.totalElements) return [];
+
+        const schedule = data._embedded.reservationInfoList;
+
+        switch (scheduleType) {
+          case 'next':
+            return schedule.filter(
+              (data: reservationLectureListType) => data.remainingDate !== 365,
+            );
+          case 'last':
+            return schedule.filter(
+              (data: reservationLectureListType) => data.remainingDate === 365,
+            );
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
 });
 
-export const requestCommunityLikeListSelector = selector({
-  key: '/community/post/like',
-  get: async ({ get }) => {
-    get(communityRefreshState);
-    const instanceAtk = await getInstanceATK();
+// likeListType 조건에 따라 찜한 리스트 dataFetching selector
+export const requestLikeListSelector = selectorFamily({
+  key: 'requestLikeList',
+  get:
+    (likeListType: 'community' | 'lecture') =>
+    async ({ get }) => {
+      const [uri, dataStoreName] =
+        likeListType === 'community'
+          ? ['/community/post/like?page=0&size=10', 'postsModelList']
+          : ['/lecture/like/list?page=0&size=5', 'likeLectureInfoList'];
 
-    try {
-      const { data } = await instanceAtk.get(
-        '/community/post/like?page=0&size=10',
-      );
+      get(liekCollectionRefreshState(likeListType));
+      const instanceAtk = await getInstanceATK();
 
-      console.log(data);
+      try {
+        const { data } = await instanceAtk.get(uri);
 
-      if (!data.page.totalElements) return [];
-      else return data._embedded.postsModelList;
-    } catch (err) {
-      console.log(err);
-    }
-  },
+        if (!data.page.totalElements) return [];
+        else return data._embedded[dataStoreName];
+      } catch (err) {
+        console.log(err);
+      }
+    },
 });
 
 // 회원 탈퇴 전에 작성해야 하는 조건 selector

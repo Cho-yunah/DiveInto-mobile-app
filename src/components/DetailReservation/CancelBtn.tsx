@@ -1,33 +1,27 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { CancelBtnStyles as styles } from './styles';
 import { getInstanceATK } from '@/src/lib/api/axios';
+import { useRecoilCallback } from 'recoil';
+import { ReserveLectureCachingState } from '@/src/recoil/ProfileStack';
 
 function CancelBtn({ reservationId }: { reservationId: number }) {
   const navigation = useNavigation();
+  const onDeleteNextLecture = useRecoilCallback(({ set }) => async () => {
+    const instanceAtk = await getInstanceATK();
 
-  const onDeleteNextLecture = useCallback(() => {
-    const requestReserveCancel = async () => {
-      console.log(reservationId);
+    try {
+      const res = await instanceAtk.delete(`/reservation/${reservationId}`);
+      set(ReserveLectureCachingState, prev => prev + 1);
+      navigation.goBack();
 
-      const instanceAtk = await getInstanceATK();
-
-      try {
-        const res = await instanceAtk.delete(`/reservation/${reservationId}`);
-
-        navigation.goBack();
-
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    requestReserveCancel();
-    console.log('예약한 강의 취소');
-  }, [reservationId]);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  });
 
   return (
     <View style={styles.container}>

@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom, atomFamily } from 'recoil';
 
 export const IsLogin = atom({
   key: 'IsLogin',
@@ -10,7 +10,7 @@ export const IsInstructor = atom({
   default: false,
 });
 
-export const communityRefreshState = atom({
+export const liekCollectionRefreshState = atomFamily({
   key: 'communityRefresh',
   default: 0,
 });

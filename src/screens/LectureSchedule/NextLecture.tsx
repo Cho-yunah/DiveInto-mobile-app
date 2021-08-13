@@ -8,17 +8,28 @@ import {
   TouchSwipe,
   LectureContents,
 } from '@components/LectureSchedule';
-import { nextReservationLectureListState } from '@recoil/ProfileStack';
-import CommonLoading from '@components/common/CommonLoading';
+import { requestLectureScheduleListSelector } from '@recoil/ProfileStack';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 
-export default function NextLectureScreen() {
-  const reservationList = useRecoilValue(nextReservationLectureListState);
+export default function NextLecture() {
+  const reservationList = useRecoilValue(
+    requestLectureScheduleListSelector('next'),
+  );
 
-  console.log(reservationList);
+  if (reservationList.length === 0) {
+    return (
+      <View style={styles.eachScreenContainerStyle}>
+        <CommonEmptyView
+          guideText="예약한 강의가 없습니다."
+          buttonText="강의 둘러보기"
+          moveViewName="ProfileMain"
+        />
+      </View>
+    );
+  }
 
-  const ListEl = reservationList ? (
-    reservationList.length !== 0 ? (
+  return (
+    <View style={styles.eachScreenContainerStyle}>
       <FlatList
         data={reservationList}
         renderItem={({ item }) => {
@@ -36,22 +47,12 @@ export default function NextLectureScreen() {
                 />
               }
               reservationId={item.reservationId}
-            ></TouchSwipe>
+            />
           );
         }}
         keyExtractor={item => String(item.reservationId)}
         showsVerticalScrollIndicator={false}
       />
-    ) : (
-      <CommonEmptyView
-        guideText="예약한 강의가 없습니다."
-        buttonText="강의 둘러보기"
-        moveViewName="ProfileMain"
-      />
-    )
-  ) : (
-    <CommonLoading />
+    </View>
   );
-
-  return <View style={styles.eachScreenContainerStyle}>{ListEl}</View>;
 }
