@@ -367,3 +367,8 @@ export const requestReservationEquipmentArrayState = atom<
   key: 'requestReservationEquipmentArrayState',
   default: [],
 });
+
+export const reservationIdState = atom<null | number>({
+  key: 'reservationIdState',
+  default: null,
+});

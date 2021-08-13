@@ -50,6 +50,7 @@ const ChangePwBtn = () => {
       );
     }
   });
+
   return (
     <Pressable style={styles.container} onPress={requestChangePw}>
       <Text style={styles.btnText}>완료</Text>

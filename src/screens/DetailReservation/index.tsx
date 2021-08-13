@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { Pressable, ScrollView, Text } from 'react-native';
 import { useSetRecoilState } from 'recoil';
 
 import { styles } from './styles';
@@ -23,14 +23,27 @@ import {
 import CommonLoading from '@components/common/CommonLoading';
 
 export default function DetailReservationScreen({
+  navigation,
   route,
 }: DetailReservationProps) {
-  const { reservationId } = route.params;
+  const { reservationId, navigateToHome } = route.params;
   const setReserveDetailList = useSetRecoilState(reserveDetailListState);
   const setReserveSchedule = useSetRecoilState(reserveScheduleState);
   const setDetailLocation = useSetRecoilState(reserveLocationState);
   const setDetailEquipments = useSetRecoilState(reserveEquipmentsState);
   const [isLoading, setIsLoading] = useState(false);
+
+  useLayoutEffect(() => {
+    console.log(navigateToHome);
+    if (!!navigateToHome)
+      navigation.setOptions({
+        headerRight: () => (
+          <Pressable style={{ marginRight: 10 }} onPress={navigateToHome}>
+            <Text style={{ color: '#F5DAAC', fontSize: 16 }}>확인</Text>
+          </Pressable>
+        ),
+      });
+  }, [navigateToHome]);
 
   useEffect(() => {
     const requestReservationDetail = async () => {

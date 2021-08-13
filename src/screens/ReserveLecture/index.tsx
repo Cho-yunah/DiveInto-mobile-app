@@ -11,10 +11,13 @@ import {
 } from '@components/ReserveLecture';
 import SuspenseCalendar from '@/src/components/ReserveLecture/SuspenseCalendar';
 import SuspenseReserveBtn from '@/src/components/ReserveLecture/SuspenseReserveBtn';
-import { useRecoilState } from 'recoil';
-import { smallModalMessageState } from '@/src/recoil/LectureStack';
+import { useRecoilCallback, useRecoilState } from 'recoil';
+import {
+  reservationIdState,
+  smallModalMessageState,
+} from '@/src/recoil/LectureStack';
 import { View } from 'react-native-animatable';
-import { CommonActions, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const index = ({ navigation }: ReserveLectureProps) => {
   const navigateToRequestPayment = () => {
@@ -55,7 +58,27 @@ export const AlertModal = () => {
   const [smallModalMessage, setSmallModalMessage] = useRecoilState(
     smallModalMessageState,
   );
-  const navigation = useNavigation();
+  const navigation = useNavigation<ReserveLectureProps['navigation']>();
+
+  const navigateToDetailReservation = useRecoilCallback(
+    ({ snapshot }) =>
+      async (navigation: ReserveLectureProps['navigation']) => {
+        const reservationId = await snapshot.getPromise(reservationIdState);
+        navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: 'DetailReservation',
+              params: {
+                reservationId,
+                navigateToHome: () => navigation.navigate('MainList'),
+              },
+            },
+          ],
+        });
+      },
+  );
+
   return (
     <Modal
       visible={!!smallModalMessage}
@@ -65,10 +88,7 @@ export const AlertModal = () => {
       <Pressable
         onPress={() => {
           if (smallModalMessage === '결제가 완료되었습니다.') {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'MainList' }],
-            });
+            navigateToDetailReservation(navigation);
           }
           setSmallModalMessage('');
         }}

@@ -7,13 +7,11 @@ import {
 } from '@/src/recoil/LoginStack';
 import React from 'react';
 import { Pressable, Text } from 'react-native';
-import { useRecoilCallback, useRecoilState } from 'recoil';
+import { useRecoilCallback, useRecoilValue } from 'recoil';
 import { AuthenticationCodeAreaStyle as styles } from './styles';
 
 const RequestAuthBtn = () => {
-  const [isAuthenticated, setIsAuthenticated] =
-    useRecoilState(isAuthenticatedState);
-
+  const isAuthenticated = useRecoilValue(isAuthenticatedState);
   const requestCheckingAuthCode = useRecoilCallback(
     ({ set, snapshot }) =>
       async () => {
@@ -31,7 +29,8 @@ const RequestAuthBtn = () => {
 
         try {
           const { data } = await instance.post('/email/code/verify', body);
-          data.success === true && setIsAuthenticated(true);
+          // data.success === true && setIsAuthenticated(true);
+          data.success === true && set(isAuthenticatedState, true);
           console.log(data);
           set(
             isAlertedState,
@@ -43,7 +42,8 @@ const RequestAuthBtn = () => {
             isAlertedState,
             '이메일 인증에 실패하였습니다. 다시 확인해주세요.',
           );
-          setIsAuthenticated(false);
+          // setIsAuthenticated(false);
+          set(isAuthenticatedState, false);
           set(AuthCodeState, '');
         }
       },
