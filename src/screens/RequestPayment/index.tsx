@@ -13,6 +13,7 @@ import styles from './styles';
 
 const index = ({ navigation }: RequestPaymentProps) => {
   const setErrorMsg = useSetRecoilState(smallModalMessageState);
+
   return (
     <View style={styles.container}>
       {/* 강의 제목, 예약 일정 내용, 대여장비 */}

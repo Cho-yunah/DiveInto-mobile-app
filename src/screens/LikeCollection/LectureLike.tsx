@@ -1,51 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FlatList, View } from 'react-native';
+import { useRecoilValue } from 'recoil';
 
 import { styles } from './styles';
 import { LectureLikeProps } from './types';
-
-import { getInstanceATK } from '@lib/api/axios';
-import { useRecoilValue } from 'recoil';
-import { atkState } from '@recoil/ProfileStack';
-import CommonLoading from '@components/common/CommonLoading';
+import { requestLikeListSelector } from '@recoil/ProfileStack';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 import { PopularLecture } from '@components/MainList/Lecture/PopularLectureList';
 
-export default function LectureLikeScreen() {
-  const atk = useRecoilValue(atkState);
-  const [lectureList, setLectureList] = useState<LectureLikeProps[] | null>(
-    null,
-  );
+export default function LectureLike() {
+  const LectureLikeList = useRecoilValue(requestLikeListSelector('lecture'));
 
-  // isMarked, price, period 값이 lectureList에 있는지 확인 후 props로 넣어주기
-  console.log(lectureList);
+  // price, period 값이 lectureList에 있는지 확인 후 props로 넣어주기
+  console.log(LectureLikeList, 'LectureLikeList');
 
-  useEffect(() => {
-    const getLikeLecture = async () => {
-      const instanceAtk = await getInstanceATK();
+  if (LectureLikeList.length === 0) {
+    return (
+      <View style={styles.eachContainer}>
+        <CommonEmptyView
+          guideText="강의가 없습니다."
+          buttonText="강의 둘러보기"
+          moveViewName="홈"
+        />
+      </View>
+    );
+  }
 
-      try {
-        const { data } = await instanceAtk.get(
-          '/lecture/like/list?page=0&size=5',
-        );
-
-        if (data._embedded) {
-          setLectureList(data._embedded.likeLectureInfoList);
-        } else {
-          setLectureList([]);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getLikeLecture();
-  }, [atk]);
-
-  const ListEl = lectureList ? (
-    lectureList.length !== 0 ? (
+  return (
+    <View style={styles.eachContainer}>
       <FlatList
-        data={lectureList}
+        data={LectureLikeList}
         renderItem={({ item }: { item: LectureLikeProps }) => {
           return (
             <PopularLecture
@@ -66,16 +50,6 @@ export default function LectureLikeScreen() {
         }}
         keyExtractor={item => item.id.toString()}
       />
-    ) : (
-      <CommonEmptyView
-        guideText="강의가 없습니다."
-        buttonText="강의 둘러보기"
-        moveViewName="홈"
-      />
-    )
-  ) : (
-    <CommonLoading />
+    </View>
   );
-
-  return <View style={styles.eachContainer}>{ListEl}</View>;
 }
