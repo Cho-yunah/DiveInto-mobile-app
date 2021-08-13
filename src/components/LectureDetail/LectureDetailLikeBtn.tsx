@@ -1,4 +1,5 @@
 import { getInstanceATK } from '@/src/lib/api/axios';
+import { liekCollectionRefreshState } from '@/src/recoil/Global';
 import {
   lectureIdState,
   smallModalMessageState,
@@ -13,6 +14,10 @@ const LectureDetailLikeBtn = () => {
   const [isLike, setIsLike] = useState<null | boolean>(null);
   const lectureId = useRecoilValue(lectureIdState);
   const setSmallModalMessage = useSetRecoilState(smallModalMessageState);
+  // 찜 모아보기 데이터 업데이트 관련 상태 업로드
+  const setLecutreRefresh = useSetRecoilState(
+    liekCollectionRefreshState('lecture'),
+  );
 
   const requestLikeOrUnlike = async (isLike: boolean) => {
     const url = isLike ? `/lecture/unlike` : `/lecture/like`;
@@ -32,6 +37,7 @@ const LectureDetailLikeBtn = () => {
         isLike ? '강의 찜하기 취소 했습니다.' : '강의 찜하기 완료 했습니다.!',
       );
       setIsLike(isLike => !isLike);
+      setLecutreRefresh(prevRefresh => prevRefresh + 1);
     } catch (e) {
       console.log(e?.response?.data);
       setSmallModalMessage(e?.response?.data?.msg || '찜하기 실패하였습니다.');

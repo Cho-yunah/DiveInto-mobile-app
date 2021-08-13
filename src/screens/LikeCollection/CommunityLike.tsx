@@ -3,15 +3,15 @@ import { FlatList, View, Text } from 'react-native';
 import { useRecoilValue } from 'recoil';
 
 import { styles } from './styles';
+import { CommunityLikeItemType } from './types';
 import { CommunityItem } from '@components/CommunityMain';
-import {
-  CommunityLikeListStateType,
-  requestCommunityLikeListSelector,
-} from '@recoil/ProfileStack';
+import { requestLikeListSelector } from '@recoil/ProfileStack';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 
 export default function CommunityLike() {
-  const communityLikeList = useRecoilValue(requestCommunityLikeListSelector);
+  const communityLikeList = useRecoilValue(
+    requestLikeListSelector('community'),
+  );
 
   if (communityLikeList.length === 0) {
     return (
@@ -29,7 +29,7 @@ export default function CommunityLike() {
     <View style={styles.eachContainer}>
       <FlatList
         data={communityLikeList}
-        renderItem={({ item }: { item: CommunityLikeListStateType }) => {
+        renderItem={({ item }: { item: CommunityLikeItemType }) => {
           const date = item.dateOfRegistration.split('T')[0];
 
           return (
