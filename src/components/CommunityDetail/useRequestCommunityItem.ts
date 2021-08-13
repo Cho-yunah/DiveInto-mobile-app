@@ -6,14 +6,13 @@ import {
   writerInfoState,
 } from '@/src/recoil/CommunityStack';
 import { useEffect } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import  {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil';
 
 export const useRequestCommunityItem = (id: number) => {
   const setCommunityItem = useSetRecoilState(communityItemState);
-  const setImageItem = useSetRecoilState(ImageState);
-  const setWriterInfo = useSetRecoilState(writerInfoState);
-  const [editRequestSuccess, setEditRequestSuccess] =
-    useRecoilState(isEditedState);
+  const setImageItem = useSetRecoilState(ImageState)
+  const setWriterInfo = useSetRecoilState(writerInfoState)
+  const [editRequestSuccess, setEditRequestSuccess] = useRecoilState(isEditedState)
 
   useEffect(() => {
     const requestCommunityItem = async () => {

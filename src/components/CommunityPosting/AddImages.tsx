@@ -11,7 +11,7 @@ export default function AddImages ({id}) {
   const [isLoading, setIsLoading] = useState(false)
 
   const beforeEditingImageArr = useRecoilValue(ImageState)
-  console.log(beforeEditingImageArr)
+  // console.log(beforeEditingImageArr)
   
   // useEffect(()=> {
   //   beforeEditingImageArr && setImageArr(...beforeEditingImageArr)

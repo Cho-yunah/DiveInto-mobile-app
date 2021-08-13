@@ -1,24 +1,30 @@
 import {
+  checkWriterState,
   communityItemSelector,
-  communityListState,
-  listPageState,
+  refreshQuestionState,
+  refreshShareState,
   showModalState,
   writerInfoState,
 } from '@/src/recoil/CommunityStack';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import CommonModal from '@components/common/CommonModal';
 import { DetailInfoStyle as styles } from './styles';
 import { requestDeleteCommunity } from '../CommunityPosting/requestPostCommunityImages';
+import roundToNearestMinutes from 'date-fns/esm/roundToNearestMinutes';
 
 export default function DetailInfo({ id }) {
   const navigation = useNavigation();
-  const [communityList, setCommunityList] = useRecoilState(communityListState);
+  // const [communityList, setCommunityList] = useRecoilState(communityListState);
+  const setRefreshShare= useSetRecoilState(refreshShareState)
+  const setRefreshQuestion= useSetRecoilState(refreshQuestionState)
   const { title, dateOfRegistration } = useRecoilValue(communityItemSelector);
-  const writer = useRecoilValue(writerInfoState);
   const [show, setShow] = useRecoilState(showModalState);
+  const writer = useRecoilValue(writerInfoState);
+  const checkWriter = useRecoilValue(checkWriterState)
+  // console.log(checkWriter)
   
   const basicProfilelUrl =
     'https://img.freepik.com/free-vector/swimmer-dives-into-water-from-splash-watercolors-illustration-paints_291138-350.jpg?size=626&ext=jpg';
@@ -33,7 +39,9 @@ export default function DetailInfo({ id }) {
     try {
       console.log(id)
       requestDeleteCommunity(id)
-      setCommunityList(communityList.filter(item => item.id !== id));
+      // setCommunityList(communityList.filter(item => item.id !== id));
+      setRefreshShare(true)
+      setRefreshQuestion(true)
       navigation.navigate('CommunityMain');
       setShow(!show); //모달 닫기
     } catch (e) {
@@ -61,8 +69,13 @@ export default function DetailInfo({ id }) {
         </View>
       </View>
       <View style={styles.buttons}>
-        <EditBtn style={styles.modify} navigation={navigation} id={id} />
-        <DeleteBtn style={styles.delete} toggleShowModal={toggleShowModal} />
+        {checkWriter 
+          ? <>
+              <EditBtn navigation={navigation} id={id} />
+              <DeleteBtn toggleShowModal={toggleShowModal} />
+            </>
+          : null
+        }
       </View>
 
       {/* 삭제버튼 눌렀을 경우 확인 모달 */}
@@ -82,7 +95,7 @@ const EditBtn = ({ navigation, id }: any) => {
     <TouchableOpacity
       onPress={() => navigation.navigate('CommunityPosting', { id })}
     >
-      <Text>수정</Text>
+      <Text style={styles.modify}>수정</Text>
     </TouchableOpacity>
   );
 };
@@ -90,7 +103,7 @@ const EditBtn = ({ navigation, id }: any) => {
 const DeleteBtn = ({ toggleShowModal }: any) => {
   return (
     <TouchableOpacity onPress={toggleShowModal}>
-      <Text>삭제</Text>
+      <Text style={styles.delete}> 삭제 </Text>
     </TouchableOpacity>
   );
 };
