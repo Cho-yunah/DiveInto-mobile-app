@@ -1,5 +1,6 @@
-import instance from "@lib/api/axios"
-import { shareLoadingState, ContentItem, commentRequestState, questionListState, questionListPageState, shareListState, shareListPageState, refreshShareState, refreshQuestionState } from "@recoil/CommunityStack"
+import instance from "@/src/lib/api/axios"
+import { getInstanceATK } from '@/src/lib/api/axios';
+import { shareLoadingState, ContentItem, commentRequestState, questionListState, questionListPageState, shareListState, shareListPageState, refreshShareState, refreshQuestionState  } from "@/src/recoil/CommunityStack"
 import { useEffect } from "react"
 import { useRecoilState, useRecoilValue, useSetRecoilState} from "recoil"
 
@@ -28,6 +29,7 @@ export const useRequestCommunityList = ({requestPage}: {requestPage: string}): C
       {requestPage === "SHARE" 
         ? setShareLoading(true) 
         : setQuestionLoading(true)}
+      const instanceAtk = await getInstanceATK();
       try {
         const {data} = await instance.get(url);
         console.log(url)
@@ -55,8 +57,10 @@ export const useRequestCommunityList = ({requestPage}: {requestPage: string}): C
           ? setShareLoading(false) 
           : setQuestionLoading(false)}
     };
+
     requestCommunityList();
   }, [sharePage, questionPage, refreshShare, refreshQuestion, changeCommentState, requestPage])
 
   return requestPage === 'SHARE'? shareList: questionList;
 }
+

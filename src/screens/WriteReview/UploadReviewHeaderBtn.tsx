@@ -8,6 +8,7 @@ import {
   picsArrState,
   ratingStarState,
 } from '@/src/recoil/ProfileStack';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -21,6 +22,8 @@ const UploadReviewHeaderBtn = ({}: UploadReviewHeaderBtnProps) => {
   const content = useRecoilValue(contentState);
   const picsArr = useRecoilValue(picsArrState);
   const setIsLoadingModalOpen = useSetRecoilState(isModalOpenState);
+
+  const navigation = useNavigation();
 
   const isReadyToUpload = () =>
     instructorStar &&
@@ -55,9 +58,10 @@ const UploadReviewHeaderBtn = ({}: UploadReviewHeaderBtnProps) => {
       console.warn('후기 작성 에러');
     }
 
+    setIsLoadingModalOpen(false);
     console.log('click', 'click');
 
-    setIsLoadingModalOpen(false);
+    navigation.goBack();
   };
 
   return (

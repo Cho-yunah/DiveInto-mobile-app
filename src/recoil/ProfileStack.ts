@@ -1,6 +1,10 @@
 import { atom, atomFamily, selector, selectorFamily } from 'recoil';
-import { userInfoProps } from '../screens/ProfileMain/types';
+import { getInstanceATK } from '@lib/api/axios';
+
+import { userInfoProps } from '@screens/ProfileMain/types';
 import { sliceTimeString, sliceDateString } from '@lib/utils/sliceNewString';
+import theSameNameOfNumber from '@lib/utils/duplicateEquipment';
+import { communityRefreshState } from './Global';
 
 export type lectureReviewAllType = {
   id: number;
@@ -78,6 +82,18 @@ export type reserveEquipmentsAtomType = {
 
 export type reserveCostInfoTypesType = 'total' | 'lecture' | 'equipment';
 
+export type CommunityLikeListStateType = {
+  id: number;
+  title: string;
+  dateOfRegistration: string;
+  category: string;
+  writerNickname: string;
+  imageUrl?: string;
+  commentCount: number;
+  likeCount: number;
+  liked: boolean;
+};
+
 export const userInfoAtom = atom<userInfoProps | null>({
   key: 'userInfoAtom',
   default: {
@@ -88,7 +104,7 @@ export const userInfoAtom = atom<userInfoProps | null>({
 });
 
 export const modifyNumViewStateAtom = atom<modifyNumViewStateAtomType | null>({
-  key: 'userInfoAtom',
+  key: 'modifyNumViewState',
   default: {
     phoneNumber: '',
     birth: '',
@@ -130,6 +146,17 @@ export const nextReservationLectureListState = selector({
   },
 });
 
+export const deleteReservationLectureListState = selectorFamily({
+  key: 'deleteReservationLectureList',
+  get:
+    (id: number) =>
+    ({ get }) => {
+      const totalList = get(reservationLectureListState);
+
+      console.log(totalList, id);
+    },
+});
+
 export const lastReservationLectureListState = selector({
   key: 'lastReservationLectureList',
   get: ({ get }) => {
@@ -144,7 +171,7 @@ export const lastReservationLectureListState = selector({
 });
 
 // 프로필 유저 이미지 상태 공유
-export const ProfileImageURIState = atom<string | null>({
+export const ProfileImageURIState = atom<string | 'change' | null>({
   key: 'ProfileImageURI',
   default: null,
 });
@@ -192,22 +219,6 @@ export const deletePasswordState = atom<string>({
   default: '',
 });
 
-// 회원 탈퇴 전에 작성해야 하는 조건 selector
-export const deleteUserConditionSelector = selector({
-  key: 'deleteUserCondition',
-  get: ({ get }) => {
-    const password = get(deletePasswordState);
-    const selectOption = get(deleteReasonState);
-    const etcOption = get(etcDeleteReasonState);
-
-    if ((etcOption || selectOption) && password) {
-      return true;
-    } else {
-      return false;
-    }
-  },
-});
-
 // 유저 프로필 정보와 번호 변경에 필요한 전화번호 상태
 export const PhoneNumState = atom<string>({
   key: 'PhoneNum',
@@ -237,6 +248,49 @@ export const reserveEquipmentsState = atom<reserveEquipmentsAtomType>({
   default: [],
 });
 
+// 좋아요한 커뮤니티 리스트 상태
+export const communityLikeListState = atom<CommunityLikeListStateType[]>({
+  key: 'communityLikeList',
+  default: [],
+});
+
+export const requestCommunityLikeListSelector = selector({
+  key: '/community/post/like',
+  get: async ({ get }) => {
+    get(communityRefreshState);
+    const instanceAtk = await getInstanceATK();
+
+    try {
+      const { data } = await instanceAtk.get(
+        '/community/post/like?page=0&size=10',
+      );
+
+      console.log(data);
+
+      if (!data.page.totalElements) return [];
+      else return data._embedded.postsModelList;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+});
+
+// 회원 탈퇴 전에 작성해야 하는 조건 selector
+export const deleteUserConditionSelector = selector({
+  key: 'deleteUserCondition',
+  get: ({ get }) => {
+    const password = get(deletePasswordState);
+    const selectOption = get(deleteReasonState);
+    const etcOption = get(etcDeleteReasonState);
+
+    if ((etcOption || selectOption) && password) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+});
+
 // 가격 타입 param에 따라서 가격 결과를 보내주는 셀렉터
 export const totalCostSelector = selectorFamily({
   key: 'totalCost',
@@ -260,15 +314,19 @@ export const totalCostSelector = selectorFamily({
     },
 });
 
-// // 같은 목록이면서 같은 사이즈 장비 수량 합을 구하는 셀렉터
-// export const sumOfSameListSelector = selector({
-//   key: 'sumOfSameList',
-//   get: ({ get }) => {
-//     const equipmentList = get(reserveEquipmentsState);
+// 같은 목록이면서 같은 사이즈 장비 수량 합을 구하는 셀렉터
+export const sumOfTheSameListSelector = selector({
+  key: 'sumOfSameList',
+  get: ({ get }) => {
+    const equipmentList = get(reserveEquipmentsState);
 
-//     if (!equipmentList.length) return [];
-//   },
-// });
+    if (!equipmentList.length) return [];
+
+    console.log(theSameNameOfNumber(equipmentList));
+
+    return theSameNameOfNumber(equipmentList);
+  },
+});
 
 // 강의 일정 관련 데이터 문자열 새로운 조합으로 바꾸는 셀렉터
 export const dateOrTimeOfNewStringSelector = selector({

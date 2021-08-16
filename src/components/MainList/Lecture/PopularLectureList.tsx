@@ -2,13 +2,13 @@ import React, { useLayoutEffect, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { PopularLectures as styles, shadow } from './styles';
 import { PopularLectureProps } from './types';
+import { getInstanceATK } from '@lib/api/axios';
 
 import Heart from './Heart';
 import InfoTags from './InfoTags';
 
 const lectureExm = require('@assets/LectureExm.png');
 
-import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 
 export const PopularLecture = ({
@@ -59,7 +59,7 @@ export const PopularLecture = ({
           />
 
           {/* 찜하기 버튼 */}
-          <Heart containerStyle={styles.heart} />
+          <Heart containerStyle={styles.heart} isMarked={isMarked} />
         </View>
       </View>
     </TouchableOpacity>
@@ -71,18 +71,17 @@ export default function PopularLectureList() {
   useLayoutEffect(() => {
     try {
       const fetch = async () => {
-        const res = await axios.get(
+        const instanceAtk = await getInstanceATK();
+
+        const res = await instanceAtk.get(
           'http://52.79.225.4:8081/lecture/popular/list?page=0&size=5',
-          {
-            headers: {
-              // IsRefreshToken: false,
-              Authorization: null,
-            },
-          },
         );
+
+        console.log(res.data._embedded);
 
         const status = res.status;
         if (status !== 200) throw new Error('인기강의 조회 에러');
+
         setLectures(res.data._embedded.lectureInfoList);
       };
       fetch();

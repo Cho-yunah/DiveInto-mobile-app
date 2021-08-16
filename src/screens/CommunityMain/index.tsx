@@ -9,32 +9,36 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { useRecoilState} from 'recoil';
 import { atkState } from '@recoil/CommunityStack';
 
-const Tab= createMaterialTopTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
-export default function CommunityMainScreen({navigation}: CommunityPostingProps): ReactElement {
 
-  const [token, setToken] = useRecoilState(atkState)
+export default function CommunityMainScreen({
+  navigation,
+}: CommunityPostingProps): ReactElement {
+  const [token, setToken] = useRecoilState(atkState);
+  console.log(token);
+  // token 받아오기
+  useEffect(() => {
+    const getToken = async () => {
+      try {
+        const getTokenRequest = await AsyncStorage.getItem('atk');
+        setToken(getTokenRequest);
 
-  useEffect(()=> {
-    const getToken = async() => {
-      try{
-        const getTokenRequest= await AsyncStorage.getItem('token');
-        setToken(getTokenRequest)
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    } 
-    getToken()
-  },[])
+    };
+    getToken();
+  }, []);
 
-  // header 글쓰기 버튼  
-  useLayoutEffect(()=> {
-    const addContent = () => navigation.navigate('CommunityPosting')
-    
+  // header 글쓰기 버튼
+  useLayoutEffect(() => {
+    const addContent = () => navigation.navigate('CommunityPosting');
+
     navigation.setOptions({
-      headerRight: () => <NextButton text='글쓰기' onPress={addContent} />
-    })
-  },[])
+      headerRight: () => <NextButton text="글쓰기" onPress={addContent} />,
+    });
+  }, []);
 
   return (
     <View style={styles.container}  > 

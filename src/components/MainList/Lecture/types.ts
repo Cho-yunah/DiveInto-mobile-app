@@ -52,3 +52,8 @@ export type InfoTagsProps = {
   reviewCount?: number;
   containerStyle: ViewStyle;
 };
+
+export type HeartProps = {
+  containerStyle?: ViewStyle;
+  isMarked?: boolean;
+};

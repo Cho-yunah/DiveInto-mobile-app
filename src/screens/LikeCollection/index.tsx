@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import styles from '../CommunityMain/styles';
 import LectureLikeScreen from './LectureLike';
-import CommunityLikeScreen from './CommunityLike';
+import CommunityLikeScreen from './WrappingCommunityLike';
 
 const Tab = createMaterialTopTabNavigator();
 

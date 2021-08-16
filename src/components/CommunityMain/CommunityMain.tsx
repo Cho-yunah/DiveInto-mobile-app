@@ -2,9 +2,10 @@ import React, { ReactElement, useRef, useState} from 'react';
 import { View, FlatList, ActivityIndicator } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import CommunityItem from './CommunityItem';
-import {styles} from './styles'
-import { CommunityTabType, ContentItemType } from './types';
+import { styles } from './styles';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRequestCommunityList } from './useRequestCommunityList';
+import { ContentItem, CommunityTabType, ContentItemType  } from './types';
 import {
   shareListState,
   shareListPageState,
@@ -43,6 +44,7 @@ export default function CommunityMain({share, question}: CommunityTabType):React
   
   // console.log('share',shareList)
   // console.log('question',questionList)
+
 
   // data 받아올 때의 loader
   const renderLoader = () => {
@@ -84,7 +86,6 @@ export default function CommunityMain({share, question}: CommunityTabType):React
         liked={item.liked}
       />
     );
-
     
     return (
       <View style={styles.container}>    
