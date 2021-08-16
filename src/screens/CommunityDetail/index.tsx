@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { ScrollView, View,TouchableOpacity } from 'react-native';
 import styles  from './styles';
-import { CommunityDetailProps } from '@navigators/CommunityStack/types';
-import { DetailInfo, DetailContents, CommentsInput, CommentDetail  } from '@components/CommunityDetail';
-import { useRequestCommunityItem } from '@components/CommunityDetail/useRequestCommunityItem';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { atkState, checkWriterState, commentState, communityItemSelector, communityItemState, decodeTokenType, ImageState, likeState, recommentState, writerInfoState, writerInfoType } from '@/src/recoil/CommunityStack';
+import { CommunityDetailProps } from '@navigators/CommunityStack/types';
+import { useRequestCommunityItem } from '@components/CommunityDetail/useRequestCommunityItem';
+import { DetailInfo, DetailContents, CommentsInput, CommentDetail  } from '@components/CommunityDetail';
+import { atkState, checkWriterState, communityItemSelector, communityItemState, decodeTokenType, ImageState, likeState, writerInfoState, writerInfoType } from '@recoil/CommunityStack';
 import {LikeBtn} from '@components/CommunityMain/LikeBtn';
 import jwt_decode from "jwt-decode";
 
@@ -18,8 +18,6 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
   const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null
   const writerInfo= useRecoilValue<writerInfoType>(writerInfoState)
   const setCheckWriter = useSetRecoilState(checkWriterState)
-  const commentWriterInfo = useRecoilValue(commentState)
-  const recommentWriterInfo = useRecoilValue(recommentState)
 
   const {content, liked, likeCount } = useRecoilValue(communityItemSelector)
   const [like, setLike] = useRecoilState(likeState(id))
@@ -28,11 +26,6 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
   const setImageItem = useSetRecoilState(ImageState)
   const setWriterInfo = useSetRecoilState(writerInfoState)
 
-  // 로그인한 사람과 글 게시한 사람이 일치하는지
-  decodeToken.user_name == writerInfo.id 
-    ? setCheckWriter(true)
-    : setCheckWriter(false)
-  
   //  좋아요 
   const Clickedlike=() => {
     setLike(!like)
@@ -66,6 +59,11 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
       </TouchableOpacity>
     })
     cleanUp()
+
+     // 로그인한 사람과 글 게시한 사람이 일치하는지
+    decodeToken.user_name == writerInfo.id 
+    ? setCheckWriter(true)
+    : setCheckWriter(false)
   },[like])
 
   return (

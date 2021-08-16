@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native'
+import * as Color from '@config/colors';
 
 export const DetailInfoStyle = StyleSheet.create({
   writerInfoBox: {
@@ -7,7 +8,7 @@ export const DetailInfoStyle = StyleSheet.create({
     paddingHorizontal: 17,
     paddingVertical: 13,
     position: 'relative',
-    backgroundColor: '#fefefe',
+    backgroundColor: Color.White,
   },
   writerImage: {
     width: 36,
@@ -25,7 +26,7 @@ export const DetailInfoStyle = StyleSheet.create({
   dateStyle: {
     fontSize: 12,
     lineHeight: 20.4,
-    color: '#6A6D70'
+    color: Color.DarkgrayText
   },
   buttons: {
     position: 'absolute',
@@ -79,10 +80,10 @@ export const CommentInputStyle = StyleSheet.create({
     left: 0, 
     right: 0, 
     bottom: 0, 
-    backgroundColor: '#F3F5F7'
+    backgroundColor: Color.Background
   },
   commentInputBox: {
-    width: 353,
+    width: '91%',
     height: 46,
     paddingRight: 38,
     paddingLeft: 15, 
@@ -103,7 +104,7 @@ export const CommentInputStyle = StyleSheet.create({
     lineHeight: 20,
   },
   recommentInput: {
-    width: 353,
+    width: '91%',
     height: 46,
     paddingRight: 38,
     paddingLeft: 15, 

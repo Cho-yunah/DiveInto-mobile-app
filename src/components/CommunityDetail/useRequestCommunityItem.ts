@@ -1,5 +1,5 @@
-import instance from '@/src/lib/api/axios';
-import { communityItemState, ImageState, isEditedState, writerInfoState } from '@/src/recoil/CommunityStack';
+import instance from '@lib/api/axios';
+import { communityItemState, ImageState, isEditedState, writerInfoState } from '@recoil/CommunityStack';
 import { useEffect } from 'react';
 import  {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil';
 

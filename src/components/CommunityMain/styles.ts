@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import * as Color from '@config/colors';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGTH = Dimensions.get('window').height;
@@ -6,23 +7,21 @@ const HEIGTH = Dimensions.get('window').height;
 export const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    flex: 1,
+
   },
   tabContainer: {
-    backgroundColor: '#fefefe',
+    backgroundColor: Color.White,
     flexDirection: 'row',
     justifyContent: 'space-around',
     height: 46,
     alignItems: 'center',
   },
   tab: {
-    paddingHorizontal: 66,
-    paddingVertical: 13,
-    borderColor: '#50CAD2',
+    borderColor: Color.PointBlue,
     borderBottomWidth: 2,
   },
   tabText: {
-    color: '#6A6D70',
+    color: Color.DarkgrayText,
     fontWeight: 'bold',
     fontSize: 18,
   },
@@ -31,7 +30,7 @@ export const styles = StyleSheet.create({
     marginTop: 12,
     width: WIDTH - 34,
     height: 70,
-    backgroundColor: '#FEFEFE',
+    backgroundColor: Color.White,
     borderRadius: 10,
     padding: 10,
     alignItems: 'center',
@@ -41,7 +40,7 @@ export const styles = StyleSheet.create({
     width: 46,
     height: 46,
     borderRadius: 10,
-    backgroundColor: '#D8D8D8',
+    backgroundColor: Color.placeholder,
   },
   contentInfo: {
     marginLeft: 10,
@@ -70,7 +69,7 @@ export const styles = StyleSheet.create({
     marginVertical: 16,
   },
   btnText: {
-    color: '#D8D8D8',
+    color: Color.placeholder,
     fontSize: 14,
     paddingRight: 17,
     paddingVertical: 5 , 

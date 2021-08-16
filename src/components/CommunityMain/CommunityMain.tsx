@@ -1,19 +1,20 @@
-import React, { ReactElement, Suspense, useMemo, useRef, useState} from 'react';
-import { View, FlatList, ActivityIndicator, Text } from 'react-native';
+import React, { ReactElement, useRef, useState} from 'react';
+import { View, FlatList, ActivityIndicator } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import CommunityItem from './CommunityItem';
 import {styles} from './styles'
 import { CommunityTabType, ContentItemType } from './types';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
-  loadingState,
   shareListState,
   shareListPageState,
   refreshShareState,
   questionListState,
   questionListPageState,
   refreshQuestionState,
-} from '@/src/recoil/CommunityStack';
+  shareLoadingState,
+  questionLoadingState,
+} from '@recoil/CommunityStack';
 import { useRequestCommunityList } from './useRequestCommunityList';
 
 export default function CommunityMain({share, question}: CommunityTabType):ReactElement  {
@@ -36,15 +37,16 @@ export default function CommunityMain({share, question}: CommunityTabType):React
   const [questionPage, setQuestionPage] = useRecoilState<number>(questionListPageState)
   const [refreshQuestion, setRefreshQuestion] = useRecoilState<boolean>(refreshQuestionState)
 
-  const isLoading = useRecoilValue<boolean>(loadingState);
+  const isShareLoading = useRecoilValue<boolean>(shareLoadingState);
+  const isQuestionLoading = useRecoilValue<boolean>(questionLoadingState);
   const [callOnScrollEnd, setCallOnScrollEnd] = useState(false)
   
-  console.log('share',shareList)
-  console.log('question',questionList)
+  // console.log('share',shareList)
+  // console.log('question',questionList)
 
   // data 받아올 때의 loader
   const renderLoader = () => {
-    return isLoading ? (
+    return isShareLoading || isQuestionLoading ? (
       <View style={styles.loaderStyle}>
         <ActivityIndicator size="large" color="#50CAD2" />
       </View>
@@ -53,7 +55,8 @@ export default function CommunityMain({share, question}: CommunityTabType):React
 
   // contents 더 가져오기
   const contentsLoadMore= ()=> { 
-    if(isLoading && refreshShare ) return
+    if(isShareLoading && refreshShare ) return
+    if(isQuestionLoading && refreshQuestion) return 
     share? 
       setSharePage(sharePage +1 ) 
       : setQuestionPage(questionPage + 1)
@@ -84,9 +87,7 @@ export default function CommunityMain({share, question}: CommunityTabType):React
 
     
     return (
-      <View style={styles.container}>
-        <Suspense fallback={<Text>Loading...</Text>}>
-    
+      <View style={styles.container}>    
             <FlatList 
               ref={listRef}
               data={share? shareList: questionList} // 렌더링데이터
@@ -104,15 +105,11 @@ export default function CommunityMain({share, question}: CommunityTabType):React
               }}
               ListFooterComponent={renderLoader} // footer 도달시 로더
               refreshing={share ? refreshShare : refreshQuestion } //새로고침 props
-              onRefresh={() => onFresh()}
-              // extraData={share? shareList: questionList} // communityList가 바뀌면 리렌더
+              onRefresh={onFresh}
               windowSize={2}
               disableVirtualization={false} // virtualized 어쩌구 에러 없애줌
               initialNumToRender={9} 
-              removeClippedSubviews={true}
             />
-        </Suspense>
       </View>
     );
-  // },[shareList, questionList])
 }

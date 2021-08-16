@@ -1,11 +1,12 @@
-import instance from "@/src/lib/api/axios"
-import { loadingState, ContentItem, commentRequestState, questionListState, questionListPageState, shareListState, shareListPageState, refreshShareState, refreshQuestionState } from "@/src/recoil/CommunityStack"
+import instance from "@lib/api/axios"
+import { shareLoadingState, ContentItem, commentRequestState, questionListState, questionListPageState, shareListState, shareListPageState, refreshShareState, refreshQuestionState } from "@recoil/CommunityStack"
 import { useEffect } from "react"
 import { useRecoilState, useRecoilValue, useSetRecoilState} from "recoil"
 
-export const useRequestCommunityList = ({requestPage}): ContentItem[] => {
+export const useRequestCommunityList = ({requestPage}: {requestPage: string}): ContentItem[] => {
   
-  const setIsLoading = useSetRecoilState<boolean>(loadingState);
+  const setShareLoading = useSetRecoilState<boolean>(shareLoadingState);
+  const setQuestionLoading = useSetRecoilState<boolean>(shareLoadingState);
   const [shareList, setShareList]= useRecoilState<ContentItem[]>(shareListState)
   const [questionList, setQuestionList]= useRecoilState<ContentItem[]>(questionListState)
 
@@ -24,7 +25,9 @@ export const useRequestCommunityList = ({requestPage}): ContentItem[] => {
   
   useEffect(()=> {
     const requestCommunityList = async() => {
-      setIsLoading(true)
+      {requestPage === "SHARE" 
+        ? setShareLoading(true) 
+        : setQuestionLoading(true)}
       try {
         const {data} = await instance.get(url);
         console.log(url)
@@ -48,7 +51,9 @@ export const useRequestCommunityList = ({requestPage}): ContentItem[] => {
           }
         setRefreshShare(false)
         setRefreshQuestion(false)
-        setIsLoading(false)
+        {requestPage === "SHARE" 
+          ? setShareLoading(false) 
+          : setQuestionLoading(false)}
     };
     requestCommunityList();
   }, [sharePage, questionPage, refreshShare, refreshQuestion, changeCommentState, requestPage])
