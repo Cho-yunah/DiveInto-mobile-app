@@ -1,3 +1,10 @@
+import React from 'react';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import CommonModal from '@components/common/CommonModal';
+import { DetailInfoStyle as styles } from './styles';
+import { requestDeleteCommunity } from '@components/CommunityPosting/requestPostCommunityImages';
 import {
   checkWriterState,
   communityItemSelector,
@@ -5,22 +12,13 @@ import {
   refreshShareState,
   showModalState,
   writerInfoState,
-} from '@/src/recoil/CommunityStack';
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import CommonModal from '@components/common/CommonModal';
-import { DetailInfoStyle as styles } from './styles';
-import { requestDeleteCommunity } from '../CommunityPosting/requestPostCommunityImages';
-import roundToNearestMinutes from 'date-fns/esm/roundToNearestMinutes';
+} from '@recoil/CommunityStack';
 
-export default function DetailInfo({ id }) {
+export default function DetailInfo({ id }: {id: number}) {
   const navigation = useNavigation();
-  // const [communityList, setCommunityList] = useRecoilState(communityListState);
   const setRefreshShare= useSetRecoilState(refreshShareState)
   const setRefreshQuestion= useSetRecoilState(refreshQuestionState)
-  const { title, dateOfRegistration } = useRecoilValue(communityItemSelector);
+  const { title } = useRecoilValue(communityItemSelector);
   const [show, setShow] = useRecoilState(showModalState);
   const writer = useRecoilValue(writerInfoState);
   const checkWriter = useRecoilValue(checkWriterState)
@@ -30,16 +28,15 @@ export default function DetailInfo({ id }) {
     'https://img.freepik.com/free-vector/swimmer-dives-into-water-from-splash-watercolors-illustration-paints_291138-350.jpg?size=626&ext=jpg';
 
   // 삭제 확인 모달
-  const toggleShowModal = (): void => {
+  const toggleShowModal = () => {
     setShow(!show);
   };
+
   // 삭제 요청
   const requestDelete = async () => {
-    // console.log('delete!')
     try {
       console.log(id)
       requestDeleteCommunity(id)
-      // setCommunityList(communityList.filter(item => item.id !== id));
       setRefreshShare(true)
       setRefreshQuestion(true)
       navigation.navigate('CommunityMain');
@@ -71,7 +68,7 @@ export default function DetailInfo({ id }) {
       <View style={styles.buttons}>
         {checkWriter 
           ? <>
-              <EditBtn navigation={navigation} id={id} />
+              <EditBtn id={id} />
               <DeleteBtn toggleShowModal={toggleShowModal} />
             </>
           : null
@@ -89,8 +86,10 @@ export default function DetailInfo({ id }) {
   );
 }
 
-const EditBtn = ({ navigation, id }: any) => {
-  // console.log(id)
+// 게시물 수정
+const EditBtn = ({ id } : {id: number}) => {
+  const navigation = useNavigation();
+
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('CommunityPosting', { id })}
@@ -100,7 +99,9 @@ const EditBtn = ({ navigation, id }: any) => {
   );
 };
 
-const DeleteBtn = ({ toggleShowModal }: any) => {
+// 게시물 삭제
+const DeleteBtn = ({toggleShowModal}: {toggleShowModal: ()=> void}) => {
+
   return (
     <TouchableOpacity onPress={toggleShowModal}>
       <Text style={styles.delete}> 삭제 </Text>

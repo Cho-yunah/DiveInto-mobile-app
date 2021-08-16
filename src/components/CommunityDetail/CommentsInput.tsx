@@ -1,23 +1,24 @@
-import { getInstanceATK } from '@/src/lib/api/axios';
-import { commentIdState, commentInputButtonState, commentInputFocusState, commentRequestState, commentTextState, recommentRequestState, recommentTextState, writingRecommentState } from '@/src/recoil/CommunityStack';
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect} from 'react'
 import {KeyboardAvoidingView, TextInput, TouchableOpacity, Text } from 'react-native'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { getInstanceATK } from '@lib/api/axios';
+import { commentIdState, commentInputButtonState, commentInputFocusState, commentRequestState, commentTextState, recommentRequestState, recommentTextState, writingRecommentState } from '@recoil/CommunityStack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import {CommentInputStyle as styles} from './styles'
 
-export default function CommentsInput({id}) {
-  const [comment, setComment] = useRecoilState(commentTextState)
+export default function CommentsInput({id}: {id: number}) {
   const postId = id // 댓글 추가시 게시물 아이디
-  const [RequestSuccess, setRequestSuccess] = useRecoilState(commentRequestState)
+
+  const [comment, setComment] = useRecoilState(commentTextState)
+  const [recomment, setRecomment] = useRecoilState(recommentTextState)
+
+  const setRequestSuccess = useSetRecoilState(commentRequestState)
+  const setRecommentSuccess = useSetRecoilState(recommentRequestState)
+
   const isFocus = useRecoilValue(commentInputFocusState)
   const commentId = useRecoilValue(commentIdState) // 수정 요청시 댓글 아이디
   const [editButton, setEditButton]= useRecoilState(commentInputButtonState)
   const [writingRecomment, setWritingRecomment] = useRecoilState(writingRecommentState)
-  const [recomment, setRecomment] = useRecoilState(recommentTextState)
-  const [recommentSuccess, setRecommentSuccess] = useRecoilState(recommentRequestState)
-  console.log(commentId)
-
 
   // 댓글 추가
   const addComment= async()=> {
@@ -36,7 +37,7 @@ export default function CommentsInput({id}) {
     const instanceAtk = await getInstanceATK();
     try{
       const data = await instanceAtk.put(`/community/comment/${commentId}`, comment)
-      console.log(data)
+      // console.log(data)
       setRequestSuccess(true)  
       setComment({content:''})
       setEditButton(false)
@@ -49,9 +50,9 @@ export default function CommentsInput({id}) {
   const addRecomment = async() => {
     const instanceAtk = await getInstanceATK();
     try{
-      console.log('commentId',commentId)
+      // console.log('commentId',commentId)
       const {data} = await instanceAtk.post(`/community/comment/${commentId}/comment`, recomment)
-      console.log(data)
+      // console.log(data)
       setRecommentSuccess(true)
       setWritingRecomment(true)
       setRecomment({content:''})

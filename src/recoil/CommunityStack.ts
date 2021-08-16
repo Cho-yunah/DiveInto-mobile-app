@@ -5,6 +5,7 @@ import {
   selectorFamily,
   DefaultValue,
 } from 'recoil';
+import { commentListType, recommentListType } from '../components/CommunityDetail/types';
 
 // 토큰 받기
 export type decodeTokenType = {
@@ -29,10 +30,14 @@ export type ContentItem = {
   liked: boolean;
 }
 
-export const loadingState = atom<boolean>({
-  key: 'lodingState',
-  default: false,
-});
+export const shareLoadingState = atom<boolean>({
+  key: 'shareLoadingState',
+  default : false
+})
+export const questionLoadingState = atom<boolean>({
+  key: 'questionLoadingState',
+  default : false
+})
 
 export const shareListState = atom<ContentItem[]>({
   key: 'shareListState',
@@ -256,31 +261,10 @@ export const commentState = atom<commentListType[]>({
   default: [],
 });
 
-export type commentListType = {
-  accountModel: {
-    id: number;
-    nickName: '';
-    profileImageUrl: '';
-  };
-  commentModel: {
-    id: number;
-    dateOfWriting: '';
-    content: '';
-  };
-};
-
-export type commentItemType = {
-  nickName: string;
-  profileUrl: string;
-  dateOfWriting: string;
-  content: string;
-  commentId: number;
-};
-
-export const postIdState = atom({
-  key: 'postIdState',
-  default: 1,
-});
+export const postIdState= atom({
+  key: 'postIdState', 
+  default: 1
+})
 
 export const commentTextState = atom({
   key: 'commentTextState',
@@ -358,18 +342,6 @@ export const recommentState = atom<recommentListType[]>({
   default: [],
 });
 
-export type recommentListType = {
-  accountModel: {
-    id: number;
-    nickName: '';
-    profileImageUrl: '';
-  };
-  commentCommentModel: {
-    id: number;
-    dateOfWriting: '';
-    content: '';
-  };
-};
 export type recommentItemType = {
   nickName: string;
   profileUrl: string;
