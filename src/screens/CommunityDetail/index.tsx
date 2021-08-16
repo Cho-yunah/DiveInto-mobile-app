@@ -9,6 +9,7 @@ import {
   CommentDetail,
 } from '@components/CommunityDetail';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+
 import { useRequestCommunityItem } from '@components/CommunityDetail/useRequestCommunityItem';
 import { atkState, checkWriterState, communityItemSelector, communityItemState, decodeTokenType, ImageState, likeState, writerInfoState, writerInfoType } from '@recoil/CommunityStack';
 import {LikeBtn} from '@components/CommunityMain/LikeBtn';
@@ -24,39 +25,39 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
   const writerInfo= useRecoilValue<writerInfoType>(writerInfoState)
   const setCheckWriter = useSetRecoilState(checkWriterState)
 
-  const {content, liked, likeCount } = useRecoilValue(communityItemSelector)
-  const [like, setLike] = useRecoilState(likeState(id))
+  const { content, liked, likeCount } = useRecoilValue(communityItemSelector);
+  const [like, setLike] = useRecoilState(likeState(id));
 
   const setCommunityItem = useSetRecoilState(communityItemState);
-  const setImageItem = useSetRecoilState(ImageState)
-  const setWriterInfo = useSetRecoilState(writerInfoState)
+  const setImageItem = useSetRecoilState(ImageState);
+  const setWriterInfo = useSetRecoilState(writerInfoState);
 
   //  좋아요 
   const Clickedlike=() => {
     setLike(!like)
   }
- 
+
   // 클린업 함수
   const cleanUp = () => {
     setCommunityItem({
-      id: id, 
-      title: '', 
-      category: '', 
-      tags: [], 
-      dateOfRegistration: '', 
-      content: '', 
-      liked: false, 
-      likeCount: 0
-    })
-    setImageItem([])
+      id: id,
+      title: '',
+      category: '',
+      tags: [],
+      dateOfRegistration: '',
+      content: '',
+      liked: false,
+      likeCount: 0,
+    });
+    setImageItem([]);
     setWriterInfo({
-      id: 'id', 
-      nickName: '', 
-      profileImageUrl: ''
-    })
-  }
+      id: 'id',
+      nickName: '',
+      profileImageUrl: '',
+    });
+  };
 
-  useEffect(()=> {
+  useEffect(() => {
     navigation.setOptions({
       headerRight: () => 
       <TouchableOpacity  onPress={Clickedlike}>
