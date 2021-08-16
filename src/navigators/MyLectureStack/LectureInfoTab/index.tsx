@@ -22,6 +22,7 @@ export function LectureInfoTab({ navigation, route }: ScheduleStackProps) {
 
     const onNewPress = () => {
       console.log('일정추가 버튼 테스트');
+      console.log('현재 강의 id : ', lectureId);
       navigation.navigate('일정추가', { lectureId });
     };
 

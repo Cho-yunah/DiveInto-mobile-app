@@ -31,7 +31,7 @@ export function AdmMyLectureList({ navigation }: MyLectureListProps) {
   ];
 
   const onLecturePress = (lectureId: number) =>
-    navigation.navigate('일정관리', { lectureId });
+    navigation.navigate('강의정보관리', { lectureId });
 
   return (
     <View style={{ marginLeft: 18, marginRight: 18 }}>

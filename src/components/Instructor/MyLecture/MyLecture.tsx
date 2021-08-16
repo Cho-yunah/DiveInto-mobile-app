@@ -10,6 +10,9 @@ import MainImage from './MainImage';
 
 import axios from 'axios';
 
+import { SetRecoilState, useSetRecoilState } from 'recoil';
+import { LectureIdList } from '@recoil/Instructor/AdmMyLecture';
+
 export function MyLecture({
   id,
   title,
@@ -65,6 +68,7 @@ export default function MyLectureList({
   onPress?: (lectureId: number) => void;
 }) {
   const [lectures, setLectures] = useState<InstructorMyLecture[]>();
+  const setLectureIdList = useSetRecoilState(LectureIdList);
   useLayoutEffect(() => {
     try {
       const fetch = async () => {
@@ -75,6 +79,11 @@ export default function MyLectureList({
         const status = res.status;
         if (status !== 200) throw new Error('강사 내강의 조회 에러');
         setLectures(res.data._embedded.myLectureInfoList);
+        setLectureIdList(
+          res.data._embedded.myLectureInfoList.map(
+            (lectureinfo: InstructorMyLecture) => lectureinfo.id,
+          ),
+        );
       };
       fetch();
     } catch (e) {

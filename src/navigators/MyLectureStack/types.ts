@@ -15,10 +15,10 @@ export type RootAdmMyLectureStack = {
       longitude: number;
     }) => void;
   };
-  강의수정: {
+  강의정보관리: {
     lectureId: number;
   };
-  일정관리: {
+  강의수정: {
     lectureId: number;
   };
   일정추가: {
@@ -49,14 +49,13 @@ export type NMapSearchProps = StackScreenProps<
   '위치검색'
 >;
 
+export type ScheduleStackProps = StackScreenProps<
+  RootAdmMyLectureStack,
+  '강의정보관리'
+>;
 export type EditLectureProps = StackScreenProps<
   RootAdmMyLectureStack,
   '강의수정'
->;
-
-export type ScheduleStackProps = StackScreenProps<
-  RootAdmMyLectureStack,
-  '일정관리'
 >;
 
 export type AddScheduleProps = StackScreenProps<

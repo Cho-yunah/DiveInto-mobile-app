@@ -102,7 +102,7 @@ export function AddLocation({ navigation, route }: AddLocationProps) {
     };
     navigation.setOptions({
       title: '강의등록',
-      headerRight: () => <NextButton onPress={onPress} text="완료" />,
+      headerRight: () => <NextButton onPress={onPress} text="완료" disable />,
     });
   }, [picker, address, alias]);
 
