@@ -1,4 +1,4 @@
-import React, { ReactElement, useLayoutEffect } from 'react';
+import React, { ReactElement, useEffect, useLayoutEffect } from 'react';
 import { ScrollView, View, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import { CommunityDetailProps } from '@navigators/CommunityStack/types';
@@ -10,68 +10,83 @@ import {
 } from '@components/CommunityDetail';
 import { useRequestCommunityItem } from '@components/CommunityDetail/useRequestCommunityItem';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { atkState, checkWriterState, commentState, communityItemSelector, communityItemState, decodeTokenType, ImageState, likeState, recommentState, writerInfoState, writerInfoType } from '@/src/recoil/CommunityStack';
-import {LikeBtn} from '@components/CommunityMain/LikeBtn';
-import jwt_decode from "jwt-decode";
+import {
+  atkState,
+  checkWriterState,
+  commentState,
+  communityItemSelector,
+  communityItemState,
+  decodeTokenType,
+  ImageState,
+  likeState,
+  recommentState,
+  writerInfoState,
+  writerInfoType,
+} from '@/src/recoil/CommunityStack';
+import { LikeBtn } from '@components/CommunityMain/LikeBtn';
+import jwt_decode from 'jwt-decode';
 
-export default function CommunityDetailScreen({route, navigation}: CommunityDetailProps) {
-  
-  const {id} =route.params;
-  useRequestCommunityItem(id)
-  
-  const token = useRecoilValue(atkState)
-  const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null
-  const writerInfo= useRecoilValue<writerInfoType>(writerInfoState)
-  const setCheckWriter = useSetRecoilState(checkWriterState)
-  const commentWriterInfo = useRecoilValue(commentState)
-  const recommentWriterInfo = useRecoilValue(recommentState)
+export default function CommunityDetailScreen({
+  route,
+  navigation,
+}: CommunityDetailProps) {
+  const { id } = route.params;
+  useRequestCommunityItem(id);
 
-  const {content, liked, likeCount } = useRecoilValue(communityItemSelector)
-  const [like, setLike] = useRecoilState(likeState(id))
+  const token = useRecoilValue(atkState);
+  const decodeToken = jwt_decode<decodeTokenType>(token || '') || null;
+  const writerInfo = useRecoilValue<writerInfoType>(writerInfoState);
+  const setCheckWriter = useSetRecoilState(checkWriterState);
+  const commentWriterInfo = useRecoilValue(commentState);
+  const recommentWriterInfo = useRecoilValue(recommentState);
+
+  const { content, liked, likeCount } = useRecoilValue(communityItemSelector);
+  const [like, setLike] = useRecoilState(likeState(id));
 
   const setCommunityItem = useSetRecoilState(communityItemState);
-  const setImageItem = useSetRecoilState(ImageState)
-  const setWriterInfo = useSetRecoilState(writerInfoState)
+  const setImageItem = useSetRecoilState(ImageState);
+  const setWriterInfo = useSetRecoilState(writerInfoState);
 
   // 로그인한 사람과 글 게시한 사람이 일치하는지
-  decodeToken.user_name == writerInfo.id 
+  decodeToken.user_name == writerInfo.id
     ? setCheckWriter(true)
-    : setCheckWriter(false)
-  
-  //  좋아요 
-  const Clickedlike=() => {
-    setLike(!like)
-  }
- 
+    : setCheckWriter(false);
+
+  //  좋아요
+  const Clickedlike = () => {
+    setLike(!like);
+  };
+
   // 클린업 함수
   const cleanUp = () => {
     setCommunityItem({
-      id: id, 
-      title: '', 
-      category: '', 
-      tags: [], 
-      dateOfRegistration: '', 
-      content: '', 
-      liked: false, 
-      likeCount: 0
-    })
-    setImageItem([])
+      id: id,
+      title: '',
+      category: '',
+      tags: [],
+      dateOfRegistration: '',
+      content: '',
+      liked: false,
+      likeCount: 0,
+    });
+    setImageItem([]);
     setWriterInfo({
-      id: 'id', 
-      nickName: '', 
-      profileImageUrl: ''
-    })
-  }
+      id: 'id',
+      nickName: '',
+      profileImageUrl: '',
+    });
+  };
 
-  useEffect(()=> {
+  useEffect(() => {
     navigation.setOptions({
-      headerRight: () => 
-      <TouchableOpacity  onPress={Clickedlike}>
-        <LikeBtn id={id} liked={liked} likeCount={likeCount}/>
-      </TouchableOpacity>
-    })
-    cleanUp()
-  },[like])
+      headerRight: () => (
+        <TouchableOpacity onPress={Clickedlike}>
+          <LikeBtn id={id} liked={liked} likeCount={likeCount} />
+        </TouchableOpacity>
+      ),
+    });
+    cleanUp();
+  }, [like]);
 
   return (
     <View style={styles.container}>
