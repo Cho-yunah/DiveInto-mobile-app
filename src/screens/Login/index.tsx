@@ -35,7 +35,7 @@ const LoginScreen = ({ navigation }: LoginProps) => {
       <ScrollView>
         <HeaderText />
         <EmailInput requestCheckEmail={requestCheckEmail} />
-        <SocialLogin />
+        {/* <SocialLogin /> */}
         <LoginProblem />
       </ScrollView>
     </View>

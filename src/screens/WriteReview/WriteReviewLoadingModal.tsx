@@ -14,12 +14,12 @@ const WriteReviewLoadingModal = () => {
           style={{
             width: windowWidth,
             height: windowHeight,
-            backgroundColor: 'rgba(0,0,0,0.5)',
+            backgroundColor: 'rgba(0,0,0,0.4)',
             justifyContent: 'center',
             alignContent: 'center',
           }}
         >
-          <ActivityIndicator size="large" color="white" />
+          <ActivityIndicator size="large" color="black" />
         </SafeAreaView>
       </Modal>
     </>
