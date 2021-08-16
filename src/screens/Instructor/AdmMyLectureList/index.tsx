@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 
 import NextButton from '@components/common/NextButton';
@@ -30,13 +30,18 @@ export function AdmMyLectureList({ navigation }: MyLectureListProps) {
     '높은가격순',
   ];
 
+  const [curFilter, setCurFilter] = useState<filterTagList>('등록순');
+
   const onLecturePress = (lectureId: number) =>
     navigation.navigate('강의정보관리', { lectureId });
 
   return (
     <View style={{ marginLeft: 18, marginRight: 18 }}>
-      <FilterTagList filters={filters} />
-      <MyLectureList onPress={onLecturePress} />
+      <FilterTagList
+        filters={filters}
+        onFilterChange={tag => setCurFilter(tag)}
+      />
+      <MyLectureList onPress={onLecturePress} filter={curFilter} />
     </View>
   );
 }

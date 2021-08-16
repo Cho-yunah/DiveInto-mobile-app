@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { MyLectureStyle as styles, shadow } from './styles';
 import { Organization, Level, Region } from '@typing/common';
@@ -62,10 +62,14 @@ export function MyLecture({
   );
 }
 
+type filterTagList = '등록순' | '최신강의순' | '낮은가격순' | '높은가격순';
+
 export default function MyLectureList({
   onPress = () => {},
+  filter,
 }: {
   onPress?: (lectureId: number) => void;
+  filter?: filterTagList;
 }) {
   const [lectures, setLectures] = useState<InstructorMyLecture[]>();
   const setLectureIdList = useSetRecoilState(LectureIdList);
@@ -73,7 +77,7 @@ export default function MyLectureList({
     try {
       const fetch = async () => {
         const res = await axios.get(
-          'http://52.79.225.4:8081/lecture/manage/list?page=0&size=5',
+          'http://52.79.225.4:8081/lecture/manage/list?page=0&size=30',
         );
 
         const status = res.status;
@@ -90,6 +94,13 @@ export default function MyLectureList({
       console.log('강사 내강의 조회 에러');
     }
   }, []);
+
+  useEffect(() => {
+    if (filter === '낮은가격순')
+      setLectures(lectures?.sort((a, b) => b.price - a.price));
+    else if(filter === '높은가격순')
+      setLectures(lectures?.sort((a, b) => a.price - b.price));
+  }, [filter]);
 
   return (
     <ScrollView
