@@ -1,11 +1,10 @@
-import { IsLogin } from '@/src/recoil/Global';
 import {
   lectureModalState,
   lecutureModalSelectedIdxState,
 } from '@/src/recoil/LectureStack';
 import React from 'react';
 import { FlatList, Image, Pressable } from 'react-native';
-import { useRecoilCallback, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 const Pics = ({ pics }: { pics: string[] }) => {
   const setLectureModalPics = useSetRecoilState(lectureModalState);

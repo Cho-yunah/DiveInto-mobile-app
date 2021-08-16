@@ -26,6 +26,7 @@ export type RootProfileStack = {
   };
   DetailReservation: {
     reservationId: number;
+    navigateToHome?: () => void;
   };
   WriteReview: {
     reservationId: number;

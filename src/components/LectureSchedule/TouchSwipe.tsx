@@ -3,87 +3,50 @@ import { View, Animated, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Swipeable } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { useRecoilCallback } from 'recoil';
 
 import { TouchSwipeStyle as styles, CommonStyles } from './styles';
 import { CommonListProps, RightSwipeProps } from './types';
 import CommonModal from '@components/common/CommonModal';
 import { getInstanceATK } from '@/src/lib/api/axios';
-import {
-  reservationLectureListState,
-  reservationLectureListType,
-} from '@/src/recoil/ProfileStack';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { ReserveLectureCachingState } from '@/src/recoil/ProfileStack';
 
 export default function TouchSwipe({
   imgComponent,
   contentsComponents,
   reservationId,
 }: CommonListProps) {
-  // const [show, setShow] = useReserveCancel(type);
-  const swipeableRef = useRef(null);
+  const swipeableRef = useRef<Swipeable | null>(null);
   const [show, setShow] = useState(false);
   const navigation = useNavigation();
-  const setDeleteLecture = useSetRecoilState(reservationLectureListState);
-
-  const RightSwipe = ({ progress, dragX, onPress }: RightSwipeProps) => {
-    const scale = dragX.interpolate({
-      inputRange: [-100, 0],
-      outputRange: [1, 0],
-      extrapolate: 'clamp',
-    });
-
-    return (
-      <TouchableOpacity style={styles.deleteBottonContainer} onPress={onPress}>
-        <Animated.View style={[styles.deleteBox, { transform: [{ scale }] }]}>
-          <FontAwesome name="trash" color="#FEFEFE" size={25} />
-          <Text style={styles.textStyle}>취소</Text>
-        </Animated.View>
-      </TouchableOpacity>
-    );
-  };
 
   const onMoveLectureDetailView = () => {
     navigation.navigate('DetailReservation', { reservationId });
   };
 
-  const closeSwipeable = () => {
-    swipeableRef.current.close();
-  };
-
-  const onDeleteNextLecture = useCallback(() => {
-    setShow(false);
-    closeSwipeable();
-
-    const requestReserveCancel = async () => {
-      console.log(reservationId);
-
-      const instanceAtk = await getInstanceATK();
-
-      try {
-        // 무슨 문제인가?
-
-        setDeleteLecture((list: reservationLectureListType) => {
-          console.log(list);
-
-          if (!list) return;
-          return list?.filter(v => v.reservationId !== reservationId);
-        });
-
-        const res = await instanceAtk.delete(`/reservation/${reservationId}`);
-
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    requestReserveCancel();
-    console.log('예약한 강의 취소');
-  }, []);
-
-  const toggleShowModal = useCallback(() => {
+  const onToggleShowModal = useCallback(() => {
     setShow(state => !state);
   }, []);
+
+  const onCloseSwipeable = () => {
+    if (swipeableRef.current) {
+      swipeableRef.current.close();
+    }
+  };
+
+  const onDeleteNextLecture = useRecoilCallback(({ set }) => async () => {
+    setShow(false);
+    onCloseSwipeable();
+
+    const instanceAtk = await getInstanceATK();
+
+    try {
+      await instanceAtk.delete(`/reservation/${reservationId}`);
+      set(ReserveLectureCachingState, prev => prev + 1);
+    } catch (err) {
+      console.log(err);
+    }
+  });
 
   return (
     <TouchableOpacity onPress={onMoveLectureDetailView}>
@@ -93,8 +56,7 @@ export default function TouchSwipe({
           <RightSwipe
             progress={progress}
             dragX={dragX}
-            onPress={toggleShowModal}
-            closeSwipeable={closeSwipeable}
+            onPress={onToggleShowModal}
           />
         )}
         overshootFriction={30}
@@ -111,10 +73,27 @@ export default function TouchSwipe({
           show={show}
           mode="output"
           desc="예약 취소하시겠습니까?"
-          toggleShowModal={toggleShowModal}
+          toggleShowModal={onToggleShowModal}
           onClickConfirm={onDeleteNextLecture}
         />
       </Swipeable>
     </TouchableOpacity>
   );
 }
+
+const RightSwipe = ({ progress, dragX, onPress }: RightSwipeProps) => {
+  const scale = dragX.interpolate({
+    inputRange: [-100, 0],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+  });
+
+  return (
+    <TouchableOpacity style={styles.deleteBottonContainer} onPress={onPress}>
+      <Animated.View style={[styles.deleteBox, { transform: [{ scale }] }]}>
+        <FontAwesome name="trash" color="#FEFEFE" size={25} />
+        <Text style={styles.textStyle}>취소</Text>
+      </Animated.View>
+    </TouchableOpacity>
+  );
+};

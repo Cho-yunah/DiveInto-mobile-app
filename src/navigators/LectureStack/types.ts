@@ -7,6 +7,7 @@ export type RootLectureStack = {
   LectureDetail: { lectureId: number };
   ReserveLecture: { lectureId: number };
   RequestPayment: undefined;
+  DetailReservation: { reservationId: number; navigateToHome: () => void };
 };
 export type MainListProps = StackScreenProps<RootLectureStack, 'MainList'>;
 

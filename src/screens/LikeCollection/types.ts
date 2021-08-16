@@ -30,3 +30,15 @@ export type CommunityLikeProps = {
   liked: boolean;
   onItemClick: () => void;
 };
+
+export type CommunityLikeItemType = {
+  id: number;
+  title: string;
+  dateOfRegistration: string;
+  category: string;
+  writerNickname: string;
+  imageUrl?: string;
+  commentCount: number;
+  likeCount: number;
+  liked: boolean;
+};

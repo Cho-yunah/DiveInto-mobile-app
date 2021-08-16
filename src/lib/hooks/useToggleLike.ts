@@ -9,12 +9,15 @@ import {
   // setAddLikedSelector,
   likedListState,
 } from '@/src/recoil/CommunityStack';
-import { communityRefreshState } from '@/src/recoil/Global';
+import { liekCollectionRefreshState } from '@/src/recoil/Global';
 
 function useToggleLike(id: number) {
   const communityList = useRecoilValue(communityListState);
   const [like, setLike] = useRecoilState(likeState(id));
-  const setCommunityRefresh = useSetRecoilState(communityRefreshState);
+  // 찜 모아보기 데이터 업데이트 관련 상태 업로드
+  const setCommunityRefresh = useSetRecoilState(
+    liekCollectionRefreshState('community'),
+  );
 
   const Clickedlike = useCallback(() => {
     const requestToggleLiked = async () => {
