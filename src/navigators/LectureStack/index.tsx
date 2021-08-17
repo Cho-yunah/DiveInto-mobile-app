@@ -9,6 +9,7 @@ import ReserveLectureScreen from '@/src/screens/ReserveLecture';
 import RequestPaymentScreen from '@/src/screens/RequestPayment';
 import DetailReservationScreen from '@/src/screens/DetailReservation';
 import { IsLogin } from '@/src/recoil/Global';
+import WriteReviewScreen from '@/src/screens/WriteReview';
 
 const Stack = createStackNavigator<RootLectureStack>();
 
@@ -39,8 +40,8 @@ export default function LectureStack() {
       >
         <Stack.Screen
           name="MainList"
-          component={MainList}
-          options={{ headerShown: false }}
+          component={WriteReviewScreen}
+          // options={{ headerShown: false }}
         />
         <Stack.Screen
           name="LectureDetail"

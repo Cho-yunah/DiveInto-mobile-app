@@ -13,9 +13,10 @@ import {
   questionListState,
   questionListPageState,
   refreshQuestionState,
-  // shareLoadingState,  
-  // questionLoadingState,
+  shareLoadingState,
+  questionLoadingState,
 } from '@recoil/CommunityStack';
+
 
 export default function CommunityMain({share, question}: CommunityTabType):ReactElement  {
   // data 요청
@@ -37,8 +38,8 @@ export default function CommunityMain({share, question}: CommunityTabType):React
   const [questionPage, setQuestionPage] = useRecoilState<number>(questionListPageState)
   const [refreshQuestion, setRefreshQuestion] = useRecoilState<boolean>(refreshQuestionState)
 
-  // const isShareLoading = useRecoilValue<boolean>(shareLoadingState);
-  // const isQuestionLoading = useRecoilValue<boolean>(questionLoadingState);
+  const isShareLoading = useRecoilValue<boolean>(shareLoadingState);
+  const isQuestionLoading = useRecoilValue<boolean>(questionLoadingState);
   const [callOnScrollEnd, setCallOnScrollEnd] = useState(false)
   
   // console.log('share',shareList)
@@ -47,17 +48,17 @@ export default function CommunityMain({share, question}: CommunityTabType):React
 
   // data 받아올 때의 loader
   const renderLoader = () => {
-    // return isShareLoading || isQuestionLoading ? (
+    return isShareLoading || isQuestionLoading ? (
       <View style={styles.loaderStyle}>
         <ActivityIndicator size="large" color="#50CAD2" />
       </View>
-    // ) : null;
+     ) : null;
   };
 
   // contents 더 가져오기
   const contentsLoadMore= ()=> { 
-    // if(isShareLoading && refreshShare ) return
-    // if(isQuestionLoading && refreshQuestion) return 
+    if(isShareLoading && refreshShare ) return
+    if(isQuestionLoading && refreshQuestion) return 
     share? 
       setSharePage(sharePage +1 ) 
       : setQuestionPage(questionPage + 1)
@@ -66,11 +67,11 @@ export default function CommunityMain({share, question}: CommunityTabType):React
   // 새로고침
   const onFresh = () => {
     // page에 따라 의존성을 다르게 하여 리스트 요청을 한다.
-    share && sharePage === 0 
-      ? setRefreshShare(true) : setSharePage(0)
-    question && questionPage === 0 
-      ? setRefreshQuestion(true) : setQuestionPage(0)
-  }
+    share && sharePage === 0 ? setRefreshShare(true) : setSharePage(0);
+    question && questionPage === 0
+      ? setRefreshQuestion(true)
+      : setQuestionPage(0);
+  };
 
   const renderItem = ({item})=> (
       <CommunityItem
@@ -103,7 +104,7 @@ export default function CommunityMain({share, question}: CommunityTabType):React
                 callOnScrollEnd && contentsLoadMore()
                 setCallOnScrollEnd(false)
               }}
-              // ListFooterComponent={renderLoader} // footer 도달시 로더
+              ListFooterComponent={renderLoader} // footer 도달시 로더
               refreshing={share ? refreshShare : refreshQuestion } //새로고침 props
               onRefresh={onFresh}
               windowSize={2}
