@@ -1,8 +1,7 @@
 import React, { ReactElement, useLayoutEffect} from 'react'
 import { View , Text} from 'react-native';
 import styles  from './styles';
-import { CommunityMain, QuestionaryContentsList } from '@components/CommunityMain';
-import NextButton from '@components/CommunityMain/NextButton'
+import { CommunityMain } from '@components/CommunityMain';
 import {
   CommunityPostingProps,
   CommunityDetailProps,
@@ -10,8 +9,11 @@ import {
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useRecoilState} from 'recoil';
-import { atkState } from '@/src/recoil/CommunityStack';
+import { useRecoilState, useSetRecoilState} from 'recoil';
+import { atkState, isLoginState } from '@/src/recoil/CommunityStack';
+import { NextButton } from '@/src/components/common';
+import roundToNearestMinutes from 'date-fns/fp/roundToNearestMinutes/index';
+import roundToNearestMinutesWithOptions from 'date-fns/fp/roundToNearestMinutesWithOptions/index.js';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -19,15 +21,18 @@ const Tab = createMaterialTopTabNavigator();
 export default function CommunityMainScreen({
   navigation,
 }: CommunityPostingProps): ReactElement {
+
   const [token, setToken] = useRecoilState(atkState);
   console.log(token);
+  const [isLogin, setIsLogin]= useRecoilState(isLoginState)
+
   // token 받아오기
   useEffect(() => {
     const getToken = async () => {
       try {
         const getTokenRequest = await AsyncStorage.getItem('atk');
         setToken(getTokenRequest);
-
+        setIsLogin(true)
       } catch (error) {
         console.log(error);
       }
@@ -40,7 +45,7 @@ export default function CommunityMainScreen({
     const addContent = () => navigation.navigate('CommunityPosting');
 
     navigation.setOptions({
-      headerRight: () => <NextButton text="글쓰기" onPress={addContent} />,
+      headerRight: () => <NextButton text="글쓰기" onPress={addContent} disable={!isLogin}/>,
     });
   }, []);
 

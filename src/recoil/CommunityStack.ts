@@ -16,6 +16,11 @@ export const atkState = atom<string | null>({
   default: null,
 });
 
+export const isLoginState = atom({
+  key: 'isLoginState',
+  default: false
+})
+
 // 커뮤니티 리스트 
 export type ContentItem = {
   id: number;

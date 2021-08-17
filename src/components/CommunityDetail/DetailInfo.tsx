@@ -13,7 +13,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import CommonModal from '@components/common/CommonModal';
 import { DetailInfoStyle as styles } from './styles';
 import { requestDeleteCommunity } from '../CommunityPosting/requestPostCommunityImages';
-import roundToNearestMinutes from 'date-fns/esm/roundToNearestMinutes';
+
 
 export default function DetailInfo({ id }) {
   const navigation = useNavigation();
