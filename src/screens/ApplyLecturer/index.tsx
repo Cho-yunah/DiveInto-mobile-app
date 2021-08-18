@@ -8,10 +8,7 @@ import { ApplyLecturerProps } from '@navigators/ProfileStack/types';
 import NextButton from '@components/common/NextButton';
 import { getInstanceATK } from '@lib/api/axios';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import {
-  instructorImageCollectionState,
-  WaitingCERTInstructorState,
-} from '@recoil/ProfileStack';
+import { instructorImageCollectionState } from '@recoil/ProfileStack/store';
 import WaitingCERTInstructorView from './WaitingCERTInstructorView';
 
 export default function ApplyLecturerScreen({

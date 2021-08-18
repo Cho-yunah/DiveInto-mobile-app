@@ -4,12 +4,12 @@ import { useRecoilValue } from 'recoil';
 
 import { styles } from './styles';
 import { LectureImg, LectureContents } from '@components/LectureSchedule';
-import { requestLectureScheduleListSelector } from '@recoil/ProfileStack';
+import { getLectureScheduleListSelector } from '@/src/recoil/ProfileStack/dataFetch';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 import LastLectureSchedule from '@components/LectureSchedule/LastLectureSchedule';
 export default function LastLecture() {
   const reservationList = useRecoilValue(
-    requestLectureScheduleListSelector('last'),
+    getLectureScheduleListSelector('last'),
   );
 
   if (reservationList.length === 0) {

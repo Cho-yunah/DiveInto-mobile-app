@@ -10,7 +10,7 @@ import {
   smallModalMessageState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
-import { ReserveLectureCachingState } from '@/src/recoil/ProfileStack';
+import { ReserveLectureCachingState } from '@/src/recoil/ProfileStack/store';
 import { PayButtonProps } from '@/src/screens/RequestPayment/types';
 import { AxiosResponse } from 'axios';
 import React, { useState } from 'react';

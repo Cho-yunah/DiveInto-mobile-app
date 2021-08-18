@@ -10,7 +10,7 @@ import { IsLogin } from '@recoil/Global';
 import {
   logoutModalOpenState,
   deleteModalOpenState,
-} from '@recoil/ProfileStack';
+} from '@recoil/ProfileStack/store';
 
 export default function Output() {
   const navigation = useNavigation();

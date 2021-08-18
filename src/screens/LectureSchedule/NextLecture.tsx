@@ -8,12 +8,12 @@ import {
   TouchSwipe,
   LectureContents,
 } from '@components/LectureSchedule';
-import { requestLectureScheduleListSelector } from '@recoil/ProfileStack';
+import { getLectureScheduleListSelector } from '@/src/recoil/ProfileStack/dataFetch';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 
 export default function NextLecture() {
   const reservationList = useRecoilValue(
-    requestLectureScheduleListSelector('next'),
+    getLectureScheduleListSelector('next'),
   );
 
   if (reservationList.length === 0) {

@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { CancelBtnStyles as styles } from './styles';
 import { getInstanceATK } from '@/src/lib/api/axios';
 import { useRecoilCallback } from 'recoil';
-import { ReserveLectureCachingState } from '@/src/recoil/ProfileStack';
+import { ReserveLectureCachingState } from '@recoil/ProfileStack/store';
 
 function CancelBtn({ reservationId }: { reservationId: number }) {
   const navigation = useNavigation();

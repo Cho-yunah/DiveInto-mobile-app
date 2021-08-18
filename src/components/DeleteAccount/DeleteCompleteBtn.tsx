@@ -1,4 +1,4 @@
-import { deleteUserConditionSelector } from '@/src/recoil/ProfileStack';
+import { deleteUserConditionSelector } from '@/src/recoil/ProfileStack/utils';
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { useRecoilValue } from 'recoil';

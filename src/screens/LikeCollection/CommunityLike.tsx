@@ -5,13 +5,11 @@ import { useRecoilValue } from 'recoil';
 import { styles } from './styles';
 import { CommunityLikeItemType } from './types';
 import { CommunityItem } from '@components/CommunityMain';
-import { requestLikeListSelector } from '@recoil/ProfileStack';
+import { getLikeListSelector } from '@/src/recoil/ProfileStack/dataFetch';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 
 export default function CommunityLike() {
-  const communityLikeList = useRecoilValue(
-    requestLikeListSelector('community'),
-  );
+  const communityLikeList = useRecoilValue(getLikeListSelector('community'));
 
   if (communityLikeList.length === 0) {
     return (

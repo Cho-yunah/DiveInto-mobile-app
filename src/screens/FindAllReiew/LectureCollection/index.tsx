@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { styles } from './styles';
 import LectureFilterContainer from '@/src/components/FindInstructorReview/LectureFilter';
 import CommonLecture from '@components/FindInstructorReview/CommonLecture';
-import { atkState } from '@recoil/ProfileStack';
+import { atkState } from '@recoil/ProfileStack/store';
 import instance from '@/src/lib/api/axios';
 import { CommonLectureProps } from '@components/FindInstructorReview/types';
 import CommonLoading from '@/src/components/common/CommonLoading';

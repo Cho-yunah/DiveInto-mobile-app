@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { styles } from './styles';
-import instance from '@lib/api/axios';
-import { ProfileMainProps } from '@navigators/ProfileStack/types';
 import { userInfoProps } from './types';
-import {
-  atkState,
-  modifyNumViewStateAtom,
-  PhoneNumState,
-} from '@recoil/ProfileStack';
+import { PhoneNumState } from '@recoil/ProfileStack/store';
+import { modifyNumViewStateAtom, atkState } from '@recoil/ProfileStack/store';
 import { HeaderContainer, MainContainer } from '@components/ProfileMain';
+import { IsInstructor } from '@/src/recoil/Global';
+import { requestUserInfoSelector } from '@/src/recoil/ProfileStack/dataFetch';
+import withSuspense from '@/src/lib/HOC/withSuspense';
 
-export default function ProfileMain({ navigation }: ProfileMainProps) {
-  const [isInstructor, setIsInstructor] = useState<string | null>(null);
-  const setAtk = useSetRecoilState(atkState);
+function ProfileMain() {
+  const isInstructor = useRecoilValue(IsInstructor);
   const setPhoneNum = useSetRecoilState(PhoneNumState);
   const [userInfo, setUserInfo] = useState<userInfoProps | undefined>({
     email: '',
@@ -24,47 +21,24 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
     phone: '',
   });
   const setModifyNumViewState = useSetRecoilState(modifyNumViewStateAtom);
-
-  console.log(userInfo?.phone);
+  const data = useRecoilValue(requestUserInfoSelector);
 
   useEffect(() => {
-    console.log('프로필 연결');
+    setUserInfo(state => ({
+      ...state,
+      email: data.email,
+      nickname: data.nickName,
+      phone: data.phoneNumber,
+    }));
 
-    const getUserInfo = async () => {
-      try {
-        const token = await AsyncStorage.getItem('atk');
-        const instructor = await AsyncStorage.getItem('instructor');
+    setModifyNumViewState({
+      phoneNumber: data.phoneNumber,
+      birth: data.birth,
+      gender: data.gender,
+    });
 
-        setAtk(token);
-        setIsInstructor(instructor);
-
-        const { data } = await instance.get('/account', {
-          headers: {
-            Authorization: token,
-          },
-        });
-
-        setUserInfo(state => ({
-          ...state,
-          email: data.email,
-          nickname: data.nickName,
-          phone: data.phoneNumber,
-        }));
-
-        setModifyNumViewState({
-          phoneNumber: data.phoneNumber,
-          birth: data.birth,
-          gender: data.gender,
-        });
-
-        setPhoneNum(data.phoneNumber);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getUserInfo();
-  }, [userInfo?.phone]);
+    setPhoneNum(data.phoneNumber);
+  }, []);
 
   return (
     <>
@@ -75,10 +49,12 @@ export default function ProfileMain({ navigation }: ProfileMainProps) {
             email={userInfo?.email}
             nickname={userInfo?.nickname}
             phone={userInfo?.phone}
-            type={isInstructor === 'instructor' ? 'instructor' : 'student'}
+            type={isInstructor ? 'instructor' : 'student'}
           />
         </SafeAreaView>
       )}
     </>
   );
 }
+
+export default withSuspense(ProfileMain);

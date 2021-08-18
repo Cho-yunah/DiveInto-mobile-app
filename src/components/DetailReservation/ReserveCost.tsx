@@ -4,10 +4,7 @@ import { View, Text } from 'react-native';
 import { ReserveCommonStyles as styles } from './styles';
 import EachCommonInfo from './EachCommonInfo';
 import { useRecoilValue } from 'recoil';
-import {
-  reserveDetailListState,
-  totalCostSelector,
-} from '@recoil/ProfileStack';
+import { totalCostSelector } from '@recoil/ProfileStack/utils';
 import addCashComma from '@lib/utils/addCashComma';
 export default function ReserveCost() {
   const totalCost = useRecoilValue(totalCostSelector('total'));

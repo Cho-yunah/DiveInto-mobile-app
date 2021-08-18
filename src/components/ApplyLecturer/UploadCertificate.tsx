@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 
 import { UploadCertificate as styles, containerShadowBox } from './styles';
 import { multiImageSelect } from '@lib/file';
-import { instructorImageCollectionState } from '@recoil/ProfileStack';
+import { instructorImageCollectionState } from '@recoil/ProfileStack/store';
 import { Image } from 'react-native-animatable';
 
 export default function UploadCertificate() {

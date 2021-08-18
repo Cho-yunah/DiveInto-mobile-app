@@ -1,29 +1,26 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import { mainHeaderStyles as styles, lecturerHeaderStyles } from './styles';
 import { HeaderContainerProps } from './types';
 import ProfileImg from './ProfileImg';
 import UploadImgBtn from './UploadImgBtn';
-import instance from '@/src/lib/api/axios';
-import { atkState, ProfileImageURIState } from '@/src/recoil/ProfileStack';
+import { getInstanceATK } from '@/src/lib/api/axios';
+import { ProfileImageURIState } from '@recoil/ProfileStack/store';
 
 export default function Header({
   currScreen,
   buttonText,
 }: HeaderContainerProps) {
   const setImageURI = useSetRecoilState(ProfileImageURIState);
-  const atk = useRecoilValue(atkState);
 
   useEffect(() => {
     const getProfileImg = async () => {
+      const instanceAtk = await getInstanceATK();
+
       try {
-        const res = await instance.get('/profile-photo', {
-          headers: {
-            Authorization: atk,
-          },
-        });
+        const res = await instanceAtk.get('/profile-photo');
 
         setImageURI(res.data.imageUrl);
       } catch (err) {
@@ -31,10 +28,8 @@ export default function Header({
       }
     };
 
-    if (atk) {
-      getProfileImg();
-    }
-  }, [atk]);
+    getProfileImg();
+  }, []);
 
   return (
     <View

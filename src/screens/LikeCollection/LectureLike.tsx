@@ -4,12 +4,12 @@ import { useRecoilValue } from 'recoil';
 
 import { styles } from './styles';
 import { LectureLikeProps } from './types';
-import { requestLikeListSelector } from '@recoil/ProfileStack';
+import { getLikeListSelector } from '@/src/recoil/ProfileStack/dataFetch';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 import { PopularLecture } from '@components/MainList/Lecture/PopularLectureList';
 
 export default function LectureLike() {
-  const LectureLikeList = useRecoilValue(requestLikeListSelector('lecture'));
+  const LectureLikeList = useRecoilValue(getLikeListSelector('lecture'));
 
   // price, period 값이 lectureList에 있는지 확인 후 props로 넣어주기
   console.log(LectureLikeList, 'LectureLikeList');

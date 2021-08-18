@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 
 import { RserveHeaderStyles as styles } from './styles';
 import { sliceDateString } from '@lib/utils/sliceNewString';
-import { reserveDetailListState } from '@recoil/ProfileStack';
+import { reserveDetailListState } from '@recoil/ProfileStack/store';
 
 export default function ReserveHeader() {
   const list = useRecoilValue(reserveDetailListState);

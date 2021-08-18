@@ -11,7 +11,7 @@ import { getInstanceATK } from '@lib/api/axios';
 import { ModifyNumProps } from '@navigators/ProfileStack/types';
 import NextButton from '@components/common/NextButton';
 import { useRecoilValue } from 'recoil';
-import { modifyNumViewStateAtom } from '@/src/recoil/ProfileStack';
+import { modifyNumViewStateAtom } from '@recoil/ProfileStack/store';
 
 export default function ModifyNumScreen({ navigation }: ModifyNumProps) {
   const [nextPhoneNum, setNextPhoneNum] = useState('');

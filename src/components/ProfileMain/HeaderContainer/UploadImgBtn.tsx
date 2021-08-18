@@ -6,7 +6,8 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { singleFileUpload, singleImageSelect } from '@/src/lib/file';
 import { mainHeaderStyles as styles } from './styles';
 import instance from '@/src/lib/api/axios';
-import { atkState, ProfileImageURIState } from '@/src/recoil/ProfileStack';
+import { ProfileImageURIState } from '@recoil/ProfileStack/store';
+import { atkState } from '@recoil/ProfileStack/store';
 
 export default function UploadImgBtn({ buttonText }: { buttonText: string }) {
   const atk = useRecoilValue(atkState);

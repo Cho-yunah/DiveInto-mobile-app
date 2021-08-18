@@ -6,7 +6,7 @@ import Entype from 'react-native-vector-icons/Entypo';
 import { ReserveLocationInfoStyles as styles } from './styles';
 import { Map } from '../LectureDetail/LocationInfo';
 import useAreaCalculate from './useAreaCalculate';
-import { reserveLocationState } from '@recoil/ProfileStack';
+import { reserveLocationState } from '@recoil/ProfileStack/store';
 
 export default function ReserveLocationInfo() {
   const location = useRecoilValue(reserveLocationState);

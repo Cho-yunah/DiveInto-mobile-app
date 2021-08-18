@@ -19,7 +19,7 @@ import {
   reserveScheduleState,
   reserveEquipmentsState,
   reserveLocationState,
-} from '@recoil/ProfileStack';
+} from '@recoil/ProfileStack/store';
 import CommonLoading from '@components/common/CommonLoading';
 
 export default function DetailReservationScreen({
@@ -81,7 +81,7 @@ export default function DetailReservationScreen({
 
         // console.log(equipment._embedded.rentEquipmentDetailList);
       } catch (err) {
-        console.log(err);
+        console.log(err.response);
       }
 
       setIsLoading(false);
@@ -100,7 +100,7 @@ export default function DetailReservationScreen({
       <ReserveHeader />
 
       {/* 예약한 강의 위치 */}
-      {/* <ReserveLocationInfo /> */}
+      <ReserveLocationInfo />
 
       {/* 강의 일정 정보 */}
       <ReserveSchedule />
