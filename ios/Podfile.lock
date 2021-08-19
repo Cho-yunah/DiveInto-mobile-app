@@ -450,9 +450,9 @@ PODS:
     - React
   - RNCPicker (1.16.4):
     - React-Core
-  - RNCPushNotificationIOS (1.9.0):
+  - RNCPushNotificationIOS (1.8.0):
     - React-Core
-  - RNDeviceInfo (8.3.0):
+  - RNDeviceInfo (8.1.5):
     - React-Core
   - RNFBApp (11.5.0):
     - Firebase/CoreOnly (= 7.11.0)
@@ -715,7 +715,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
-  FBReactNativeSpec: 53036551b5c07b17a7abd0e9d83ab01f9857ea74
+  FBReactNativeSpec: 1dea39484a660440d18a8f6b9cc2708a0be846ff
   Firebase: c121feb35e4126c0b355e3313fa9b487d47319fd
   FirebaseAnalytics: cd3bd84d722a24a8923918af8af8e5236f615d77
   FirebaseCore: 907447d8917a4d3eb0cce2829c5a0ad21d90b432
@@ -771,9 +771,9 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCCheckbox: 6bd119c26c6eb8264a29d59ff66cb70a14de3349
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
-  RNCPicker: 6724ab5fcca83c34fe1f18a89baa13e9885f0393
-  RNCPushNotificationIOS: 5bffde624d1fd15bfc8b2fd202b012a517a6dc9b
-  RNDeviceInfo: 1c15bd65d0555a4246107dd9b5b9d9095aa6ad76
+  RNCPicker: c620feabdfb8b131fc1be42b407be5bacc147fea
+  RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
+  RNDeviceInfo: b7b76016bf0d89c0446365dde551273195e0f525
   RNFBApp: 9c90f9d576861947ba75fe0830567c570bcbcf6d
   RNFBIid: e3a0c5de29ab0d414f6b186963066b4d34884d59
   RNFBMessaging: c873e6c37f69d22de22cab134413030a9c6330a9
