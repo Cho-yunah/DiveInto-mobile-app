@@ -1,5 +1,6 @@
 import React from 'react';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View } from 'react-native';
+import { useRecoilValue } from 'recoil';
 
 import { styles } from './styles';
 import {
@@ -7,39 +8,51 @@ import {
   TouchSwipe,
   LectureContents,
 } from '@components/LectureSchedule';
-import { useRecoilValue } from 'recoil';
-import {
-  nextReservationLectureListState,
-  reservationLectureListState,
-} from '@/src/recoil/ProfileStack';
+import { requestLectureScheduleListSelector } from '@recoil/ProfileStack';
+import CommonEmptyView from '@components/common/CommonEmptyView';
 
-export default function NextLectureScreen() {
-  const reservationList = useRecoilValue(nextReservationLectureListState);
+export default function NextLecture() {
+  const reservationList = useRecoilValue(
+    requestLectureScheduleListSelector('next'),
+  );
 
-  const ListEl = reservationList ? (
-    <FlatList
-      data={reservationList}
-      renderItem={({ item }) => {
-        return (
-          <TouchSwipe
-            imgComponent={<LectureImg img={item.lectureImageUrl} />}
-            contentsComponents={
-              <LectureContents
-                title={item.lectureTitle}
-                level={item.level}
-                group={item.organization}
-                reservationDate={item.reservationDate}
-                nickname={item.instructorNickname}
-              />
-            }
-            type="next"
-          ></TouchSwipe>
-        );
-      }}
-      keyExtractor={item => String(item.reservationId)}
-      showsVerticalScrollIndicator={false}
-    />
-  ) : null;
+  if (reservationList.length === 0) {
+    return (
+      <View style={styles.eachScreenContainerStyle}>
+        <CommonEmptyView
+          guideText="예약한 강의가 없습니다."
+          buttonText="강의 둘러보기"
+          moveViewName="ProfileMain"
+        />
+      </View>
+    );
+  }
 
-  return <View style={styles.eachScreenContainerStyle}>{ListEl}</View>;
+  return (
+    <View style={styles.eachScreenContainerStyle}>
+      <FlatList
+        data={reservationList}
+        renderItem={({ item }) => {
+          return (
+            <TouchSwipe
+              imgComponent={<LectureImg img={item.lectureImageUrl} />}
+              contentsComponents={
+                <LectureContents
+                  title={item.lectureTitle}
+                  level={item.level}
+                  group={item.organization}
+                  reservationDate={item.reservationDate}
+                  nickname={item.instructorNickname}
+                  lectureType="next"
+                />
+              }
+              reservationId={item.reservationId}
+            />
+          );
+        }}
+        keyExtractor={item => String(item.reservationId)}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
+  );
 }

@@ -2,7 +2,7 @@ import {
   lectureModalState,
   lecutureModalSelectedIdxState,
 } from '@/src/recoil/LectureStack';
-import React, { useEffect, useRef } from 'react';
+import React, { Ref, useEffect, useRef, useState } from 'react';
 import { useWindowDimensions, Modal, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRecoilState } from 'recoil';
@@ -16,25 +16,21 @@ const LeturePicsModal = () => {
   const [selectedPicIdx, setSelectedPicIdx] = useRecoilState(
     lecutureModalSelectedIdxState,
   );
-  const windowWidth = useWindowDimensions().width;
-  const windowHeight = useWindowDimensions().height;
+  const { width: windowWidth, height: windowHeight } = useWindowDimensions();
   const viewabilityConfRef = useRef({
     viewAreayCoveragePercentThreshold: 50,
     minimumViewTime: 400,
-    itemVisiblePercentThreshold: 10,
+    itemVisiblePercentThreshold: 100,
   });
   const viewableItemsCallbackRef = useRef(({ viewableItems }: any) => {
-    if (viewableItems.length === 1) {
+    console.log(viewableItems);
+    console.log(selectedPicIdx);
+
+    if (viewableItems.length) {
       setSelectedPicIdx(viewableItems[0].index);
     }
   });
-
-  useEffect(() => {
-    return () => {
-      setModalPics([]);
-      setSelectedPicIdx(0);
-    };
-  }, []);
+  const flatListRef = useRef<any>(null);
 
   if (!modalPics.length) return null;
 
@@ -51,11 +47,21 @@ const LeturePicsModal = () => {
           style={styles.modalCloseIcon}
         />
         <FlatList
+          ref={flatListRef}
           data={modalPics}
           keyExtractor={item => item.url}
           horizontal
           initialScrollIndex={selectedPicIdx}
-          onScrollToIndexFailed={() => {}}
+          onScrollToIndexFailed={failInfo => {
+            console.log(failInfo);
+            const wait = new Promise(resolve => setTimeout(resolve, 10));
+            wait.then(() => {
+              flatListRef.current?.scrollToIndex({
+                index: failInfo.index,
+                animated: false,
+              });
+            });
+          }}
           snapToAlignment={'center'}
           snapToInterval={windowWidth}
           decelerationRate={'fast'}

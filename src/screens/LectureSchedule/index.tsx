@@ -1,47 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import { styles } from './styles';
-import NextLectureScreen from './NextLecture';
-import LastLectureScreen from './LastLecture';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  atkState,
-  reservationLectureListState,
-} from '@/src/recoil/ProfileStack';
-import instance from '@/src/lib/api/axios';
+import NextLectureScreen from './WrappingNextLecture';
+import LastLectureScreen from './WrappingLastLecture';
 
 const Tab = createMaterialTopTabNavigator();
 export default function LectureScheduleScreen() {
-  const atk = useRecoilValue(atkState);
-  const setReservationLectureList = useSetRecoilState(
-    reservationLectureListState,
-  );
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const headers = {
-          Authorization: atk,
-        };
-
-        const { data } = await instance(
-          '/reservation/list?page=0&size=15&sort=dateOfReservation,DESC',
-          {
-            headers,
-          },
-        );
-
-        setReservationLectureList(data._embedded.reservationInfoList);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getData();
-  }, [atk]);
-
   return (
     <View style={styles.container}>
       <Tab.Navigator

@@ -15,6 +15,7 @@ export type LectureLikeProps = LectureLikeStaticProps & {
   reviewAvg: number;
   reviewCount: number;
   id: number;
+  isMarked: boolean;
 };
 
 export type CommunityLikeProps = {
@@ -28,4 +29,16 @@ export type CommunityLikeProps = {
   likeCount: number;
   liked: boolean;
   onItemClick: () => void;
+};
+
+export type CommunityLikeItemType = {
+  id: number;
+  title: string;
+  dateOfRegistration: string;
+  category: string;
+  writerNickname: string;
+  imageUrl?: string;
+  commentCount: number;
+  likeCount: number;
+  liked: boolean;
 };

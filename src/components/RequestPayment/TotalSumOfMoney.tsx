@@ -1,29 +1,27 @@
 import addCashComma from '@/src/lib/utils/addCashComma';
 import {
-  getEquipmentsState,
-  lectureDetailState,
+  lectureCommonSelectorFamily,
+  requestReservationEquipmentArrayState,
   requestReservationEquipmentDetailType,
-  requestReservationEquipmentState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
 import React from 'react';
 import { View, Text } from 'react-native';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import { totalSumOfMoney as styles } from './styles';
 
 const TotalSumOfMoney = () => {
   const peopleNumber = useRecoilValue(studentNumberState);
-  const { price } = useRecoilValue(lectureDetailState);
-  const equipmentsState = useRecoilValue(getEquipmentsState(1)); // 강의 id -> 제공되는 대여장비, name,id, price
-  const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
-  let rentalPrice = 0;
-  equipmentsState.forEach(equip =>
-    reservedEquipmentsArray.push(
-      ...useRecoilValue(requestReservationEquipmentState(equip.id)),
-    ),
+  const { contents } = useRecoilValueLoadable(
+    lectureCommonSelectorFamily('Info'),
+  );
+  const reservingEquipmentArray = useRecoilValue(
+    requestReservationEquipmentArrayState,
   );
 
-  reservedEquipmentsArray.forEach(equip => {
+  let rentalPrice = 0;
+
+  reservingEquipmentArray.forEach(equip => {
     rentalPrice += equip.price * equip.rentNumber;
   });
 
@@ -34,7 +32,7 @@ const TotalSumOfMoney = () => {
           프리다이빙 수강료 ( {peopleNumber}명 )
         </Text>
         <Text style={styles.lecturePriceText}>
-          {addCashComma(price * peopleNumber)} 원
+          {addCashComma(contents.price * peopleNumber)} 원
         </Text>
       </View>
       <View style={styles.textContainer}>
@@ -48,7 +46,7 @@ const TotalSumOfMoney = () => {
         <View style={styles.totalPriceTextcontainer}>
           <Text style={styles.totalPriceText}>
             {' '}
-            {addCashComma(price * peopleNumber + rentalPrice)}{' '}
+            {addCashComma(contents.price * peopleNumber + rentalPrice)}
           </Text>
           <Text>원</Text>
         </View>

@@ -1,48 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { DocumentPickerResponse } from 'react-native-document-picker';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { singleFileUpload, singleImageSelect } from '@/src/lib/file';
 import { mainHeaderStyles as styles } from './styles';
-import { baseURL } from '@/src/lib/api/axios';
-import { atkState } from '@/src/recoil/ProfileStack';
+import instance from '@/src/lib/api/axios';
+import { atkState, ProfileImageURIState } from '@/src/recoil/ProfileStack';
 
-export default function UploadImgBtn({
-  buttonText,
-  token,
-}: {
-  buttonText: string;
-  token?: string;
-}) {
+export default function UploadImgBtn({ buttonText }: { buttonText: string }) {
   const atk = useRecoilValue(atkState);
-
-  const [isCompleted, setIsCompleted] = useState<null | boolean>(null);
+  const setImageURI = useSetRecoilState(ProfileImageURIState);
 
   const onChangeImgBtn = async () => {
+    setImageURI(null);
     try {
       const imgInfo: DocumentPickerResponse | undefined =
         await singleImageSelect();
-      const onSuccess = () => setIsCompleted(true);
-      const onError = () => setIsCompleted(false);
 
       if (imgInfo && atk) {
-        await singleFileUpload({
-          fileInfo: imgInfo,
-          uploadTo: `${baseURL}/profile-photo`,
+        const body = new FormData();
+        body.append('image', {
+          name: imgInfo.name,
+          type: imgInfo.type,
+          uri: imgInfo.uri,
+        });
+
+        const { data } = await instance.post('/profile-photo', body, {
           headers: {
             Authorization: atk,
-            // 'Dropbox-API-Arg': JSON.stringify({
-            //   path: `/${imgInfo.name}`,
-            //   mode: 'add',
-            //   autorename: true,
-            //   mute: false,
-            // }),
-            'Content-Type': 'multipart/form-data',
           },
-          onSuccess,
-          onError,
         });
+
+        setImageURI(data.url);
       }
     } catch (err) {
       console.log(err);

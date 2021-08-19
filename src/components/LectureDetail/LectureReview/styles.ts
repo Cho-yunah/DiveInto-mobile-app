@@ -21,11 +21,7 @@ export const LectureReviewStyles = StyleSheet.create({
     marginLeft: 5,
     color: '#6A6D70',
   },
-  orderBySelectorsContainer: {
-    marginVertical: 8,
-    flexDirection: 'row',
-  },
-  orderBySelectorBtn: {
+  shadowContainer: {
     height: 25,
     width: 85,
     borderRadius: 10,
@@ -34,24 +30,27 @@ export const LectureReviewStyles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 8,
     marginBottom: 8,
-
+    backgroundColor: '#ffffff',
     shadowColor: '#000',
     shadowOffset: {
-      width: 5,
-      height: 5,
+      width: 0,
+      height: 2,
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
     elevation: 5,
   },
+  orderBySelectorsContainer: {
+    marginVertical: 8,
+    flexDirection: 'row',
+  },
+  orderBySelectorBtn: {},
   orderBySelectorBtnActive: {
     backgroundColor: '#50CAD2',
     height: 25,
     width: 85,
     borderRadius: 10,
-    paddingHorizontal: 16,
-    paddingVertical: 6,
+    borderColor: '#50CAD2',
     alignItems: 'center',
     marginRight: 8,
   },

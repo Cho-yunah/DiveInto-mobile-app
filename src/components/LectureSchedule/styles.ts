@@ -3,16 +3,22 @@ import * as Color from '@config/colors';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export const styles = StyleSheet.create({});
-
-export const TouchSwipeStyle = StyleSheet.create({
-  container: {
+export const CommonStyles = StyleSheet.create({
+  listContainer: {
     width: SCREEN_WIDTH,
     backgroundColor: Color.White,
+    // backgroundColor: 'red',
     flexDirection: 'row',
     borderBottomRightRadius: 10,
     borderTopRightRadius: 10,
   },
+
+  lastLectureContainer: {
+    marginBottom: 12,
+  },
+});
+
+export const TouchSwipeStyle = StyleSheet.create({
   deleteBottonContainer: {
     backgroundColor: Color.Selected,
     justifyContent: 'center',
@@ -38,14 +44,46 @@ export const lectureImgStyle = StyleSheet.create({
   },
 });
 
-export const lectureContentsStyle = StyleSheet.create({
+export const nextLectureContentsStyle = StyleSheet.create({
   container: {
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
     backgroundColor: Color.White,
-
     justifyContent: 'center',
     paddingLeft: 13,
+  },
+  commonLayout: {
+    flexDirection: 'row',
+  },
+  largeTextStyle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: Color.BlackText,
+    lineHeight: 21,
+  },
+  mediumTextStyle: {
+    fontSize: 12,
+    color: '#535557',
+    lineHeight: 20,
+    paddingRight: 10,
+  },
+  smallTextStyle: {
+    fontSize: 10,
+    paddingBottom: 5,
+  },
+});
+
+export const lastLectureContentsStyle = StyleSheet.create({
+  container: {
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    backgroundColor: Color.White,
+    justifyContent: 'center',
+    paddingLeft: 13,
+    width: SCREEN_WIDTH * 0.51,
+    // borderWidth: 1,
+
+    borderRadius: 10,
   },
   commonLayout: {
     flexDirection: 'row',

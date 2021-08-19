@@ -10,9 +10,10 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     position: 'absolute',
-    backgroundColor: 'transparent',
+    zIndex: 1,
   },
   modalContainer: {
+    zIndex: 0,
     position: 'absolute',
     top: 650,
     left: 20,

@@ -1,43 +1,38 @@
 import {
   getEquipmentsState,
   getTheSameClassScheduleState,
-  lectureDetailState,
+  lectureCommonSelectorFamily,
+  lectureIdState,
+  requestReservationEquipmentArrayState,
   requestReservationEquipmentDetailType,
   requestReservationEquipmentState,
+  selectedClassByIdSelector,
 } from '@/src/recoil/LectureStack';
 import React from 'react';
 import { View, Text, FlatList } from 'react-native';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import EachSchedule from './EachSchedule';
 import { aboutReservationDetail as styles } from './styles';
 
 const AboutReservationDetail = () => {
   // 강의 제목, 단체, level
-  const lectureDetail = useRecoilValue(lectureDetailState);
-  const classSchedule = useRecoilValue(getTheSameClassScheduleState);
-  const equipmentsState = useRecoilValue(getEquipmentsState(1)); // 강의 id -> 제공되는 대여장비, name,id, price
-  const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
-  equipmentsState.forEach(equip =>
-    reservedEquipmentsArray.push(
-      ...useRecoilValue(requestReservationEquipmentState(equip.id)),
-    ),
+  const { contents } = useRecoilValueLoadable(
+    lectureCommonSelectorFamily('Info'),
   );
-
-  console.log(classSchedule);
-  console.log(reservedEquipmentsArray, ';sdfsdkfjsdlkfj');
+  const classSchedule = useRecoilValue(selectedClassByIdSelector);
+  const reservedEquipmentsArray: requestReservationEquipmentDetailType[] =
+    useRecoilValue(requestReservationEquipmentArrayState);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.lectureTitle}>{lectureDetail.title}</Text>
+      <Text style={styles.lectureTitle}>{contents.title}</Text>
       <View style={styles.organizationLevelContainer}>
-        <Text style={styles.organizationText}>
-          #{lectureDetail.organization}
-        </Text>
-        <Text style={styles.organizationText}>#Lv{lectureDetail.level[5]}</Text>
+        <Text style={styles.organizationText}>#{contents.organization}</Text>
+        <Text style={styles.organizationText}>#Lv{contents.level[5]}</Text>
       </View>
       <View style={styles.scheduleInfoContainer}>
         <FlatList
-          data={classSchedule}
+          data={classSchedule[1]}
           renderItem={({ item }) => <EachSchedule item={item} />}
         />
         <FlatList

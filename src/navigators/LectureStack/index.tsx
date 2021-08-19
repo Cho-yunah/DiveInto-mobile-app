@@ -1,5 +1,5 @@
 import React from 'react';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useRecoilValue } from 'recoil';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootLectureStack } from './types';
 
@@ -7,13 +7,18 @@ import MainList from '@screens/MainList';
 import LectureDetailScreen from '@/src/screens/LectureDetail';
 import ReserveLectureScreen from '@/src/screens/ReserveLecture';
 import RequestPaymentScreen from '@/src/screens/RequestPayment';
+import DetailReservationScreen from '@/src/screens/DetailReservation';
+import { IsLogin } from '@/src/recoil/Global';
 import WriteReviewScreen from '@/src/screens/WriteReview';
 
 const Stack = createStackNavigator<RootLectureStack>();
 
 export default function LectureStack() {
+  const confirmIsLogin = useRecoilValue(IsLogin);
+  console.log(confirmIsLogin, '로그인 확인/강의 상세');
+
   return (
-    <RecoilRoot>
+    <RecoilRoot override={false}>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
@@ -35,8 +40,8 @@ export default function LectureStack() {
       >
         <Stack.Screen
           name="MainList"
-          component={MainList}
-          options={{ headerShown: false }}
+          component={WriteReviewScreen}
+          // options={{ headerShown: false }}
         />
         <Stack.Screen
           name="LectureDetail"
@@ -52,6 +57,11 @@ export default function LectureStack() {
           name="RequestPayment"
           component={RequestPaymentScreen}
           options={{ title: '결제 요청' }}
+        />
+        <Stack.Screen
+          name="DetailReservation"
+          component={DetailReservationScreen}
+          options={{ title: '예약 상세' }}
         />
       </Stack.Navigator>
     </RecoilRoot>

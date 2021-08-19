@@ -1,7 +1,8 @@
 import {
-  eachEquipmentState,
-  getEquipmentsState,
-  requestReservationEquipmentState,
+  currScheduleIdState,
+  providedEquipmentsState,
+  getEquipmentsStateByScheduleId,
+  reservationEquipmentObjState,
   selectedEquipmentsIdState,
 } from '@/src/recoil/LectureStack';
 import React, { useEffect, useRef } from 'react';
@@ -19,50 +20,67 @@ import { SizeModalProps } from './types';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const SizeModal = ({ setIsOpen }: SizeModalProps) => {
-  const selectedEquipmentsId = useRecoilValue(selectedEquipmentsIdState);
-  const getEquipments = useRecoilValue(getEquipmentsState(1));
-  const eachEquipment = useRecoilValue(
-    eachEquipmentState(selectedEquipmentsId.id),
+  const selectedEquipmentsId = useRecoilValue(selectedEquipmentsIdState); // 한일정에서 오리발 자체의 id + 이름(오리발), 사이즈별 id아님
+  const scheduleId = useRecoilValue(currScheduleIdState);
+  const getEquipmentsByScheduleId = useRecoilValue(
+    getEquipmentsStateByScheduleId(scheduleId),
   );
+
+  // 현재 선택된 일정에서 대여 가능한 장비의 배열
+  const providedEquipments = useRecoilValue(
+    providedEquipmentsState(selectedEquipmentsId.id),
+  );
+  const [selectedEquipmentsObj, setSelectedEquipmentsObj] = useRecoilState(
+    reservationEquipmentObjState,
+  );
+
+  console.log(selectedEquipmentsObj, '23792384729384732948723987');
+
   const windowWidth = useWindowDimensions().width;
   const slideAnim = useRef(new Animated.Value(500)).current;
-  // 한 장비와 그 장비의 사이즈들의 예약 정보를 담고있는 배열
-  const [thisEquipmentArr, setThisEquipmentArr] = useRecoilState(
-    requestReservationEquipmentState(selectedEquipmentsId.id),
-  );
+  // 현재 선택된 장비의 가격
   const selectedEquipmentsPrice =
-    getEquipments.find(equip => equip.id === selectedEquipmentsId.id)?.price ||
-    0;
+    getEquipmentsByScheduleId.find(
+      equip => equip.scheduleEquipmentId === selectedEquipmentsId.id,
+    )?.price || 0;
 
-  const slideUp = () =>
-    Animated.timing(slideAnim, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-
-  const selectSize = (size: string, id: number) => {
-    // 현재 배열 상태 저장,
-    const currEquipmentsArr = thisEquipmentArr;
-    // 현재 배열 에서 선택된 id(size값)를 가진 배열만 제거 = 필터링한 배열
-    const filteredEquipmentsArr = currEquipmentsArr.filter(
-      equipment => equipment.scheduleEquipmentStockId !== id,
-    );
-    // 필터링한 배열에 새로 만든 상태를 넣어서 같은 사이즈인 중복 객체 생성을 방지한다.
-    setThisEquipmentArr([
-      ...filteredEquipmentsArr,
-      {
-        scheduleEquipmentStockId: id,
-        rentNumber: 1,
-        size,
-        name: selectedEquipmentsId.name,
-        price: selectedEquipmentsPrice,
+  const selectSize = (
+    size: string,
+    scheduleEquipmentStockId: number,
+    totalRentNumber: number,
+    quantity: number,
+  ) => {
+    // 예약요청에 넣어서 보낼 장비 선택상태 객체 저장,
+    const currEquipmentsObj = { ...selectedEquipmentsObj };
+    currEquipmentsObj[selectedEquipmentsId.id] = {
+      name: providedEquipments.name, // 장비 자체의 이름
+      price: selectedEquipmentsPrice,
+      equipmentStocks: {
+        ...currEquipmentsObj[selectedEquipmentsId.id]?.equipmentStocks,
+        [scheduleEquipmentStockId]: {
+          scheduleEquipmentStockId, // 장비안의 특정사이즈의 id값
+          rentNumber: 1, // 갯수
+          size, // 사이즈
+          name: selectedEquipmentsId.name, // 장비 이름
+          price: selectedEquipmentsPrice,
+          totalRentNumber, // 사람들이 현재까지 빌린 갯수
+          quantity, // 전체 재고
+        },
       },
-    ]);
+    };
+
+    setSelectedEquipmentsObj(currEquipmentsObj); // 새로 만든 객체로 상태 변경
     setIsOpen(false);
   };
 
   useEffect(() => {
+    const slideUp = () =>
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+
     slideUp();
   }, []);
 
@@ -91,15 +109,25 @@ const SizeModal = ({ setIsOpen }: SizeModalProps) => {
       />
       <ScrollView style={styles.modalScrollView}>
         <Text style={styles.modalSelectSize}>
-          {eachEquipment.name} 사이즈 선택
+          {providedEquipments.name} 사이즈 선택
         </Text>
         <View style={styles.modalInnerView}>
-          {eachEquipment.stocks.map((equip: any) => (
+          {providedEquipments.stocks.map(equip => (
             <TouchableOpacity
-              style={styles.modalSizeView}
-              key={equip.id}
+              style={
+                equip.totalRentNumber === equip.quantity
+                  ? styles.modalSizeViewDisabled
+                  : styles.modalSizeView
+              }
+              key={equip.scheduleEquipmentStockId}
+              disabled={equip.totalRentNumber === equip.quantity} // 남은 재고 없으면 선택 불가능.
               onPress={() => {
-                selectSize(equip.size, equip.id);
+                selectSize(
+                  equip.size,
+                  equip.scheduleEquipmentStockId,
+                  equip.totalRentNumber,
+                  equip.quantity,
+                );
               }}
             >
               <Text style={styles.modalSize}>{equip.size}</Text>

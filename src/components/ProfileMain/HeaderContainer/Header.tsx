@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { mainHeaderStyles as styles, lecturerHeaderStyles } from './styles';
 import { HeaderContainerProps } from './types';
 import ProfileImg from './ProfileImg';
 import UploadImgBtn from './UploadImgBtn';
 import instance from '@/src/lib/api/axios';
-import { atkState } from '@/src/recoil/ProfileStack';
+import { atkState, ProfileImageURIState } from '@/src/recoil/ProfileStack';
 
 export default function Header({
   currScreen,
   buttonText,
 }: HeaderContainerProps) {
-  const [imageURI, setImageURI] = useState<string | null>(null);
+  const setImageURI = useSetRecoilState(ProfileImageURIState);
   const atk = useRecoilValue(atkState);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function Header({
           currScreen === 'lecturer' && lecturerHeaderStyles.headerContainer,
         ]}
       >
-        {imageURI && <ProfileImg uri={imageURI} />}
+        <ProfileImg />
         <UploadImgBtn buttonText={buttonText} />
       </View>
     </View>

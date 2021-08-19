@@ -16,6 +16,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'transparent',
   },
+  modalContainer: {
+    position: 'absolute',
+    top: 650,
+    left: 20,
+    right: 20,
+    borderRadius: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#6A6D70',
+    paddingVertical: 10,
+  },
+  modalText: { fontSize: 16, color: '#fefefe' },
 });
 
 export default styles;

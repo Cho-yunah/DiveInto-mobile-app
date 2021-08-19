@@ -1,5 +1,4 @@
-import React, { Suspense } from 'react';
-import { Text } from 'react-native';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RecoilRoot, useRecoilValue } from 'recoil';
 
@@ -19,15 +18,22 @@ import LectureCollectionScreen from '@screens/FindAllReiew/LectureCollection';
 import ReviewCollectionScreen from '@screens/FindAllReiew/ReviewCollection';
 import LikeCollectionScreen from '@screens/LikeCollection';
 import LectureScheduleScreen from '@screens/LectureSchedule';
-import { IsInstructor } from '@recoil/Global';
-import WriteReviewScreen from '@/src/screens/WriteReview';
+import WriteReviewScreen from '@screens/WriteReview';
+import DeleteAccountScreen from '@screens/DeleteAccount';
+import DetailReservationScreen from '@screens/DetailReservation';
+import CommunityDetailScreen from '@screens/CommunityDetail';
+import LectureDetailScreen from '@screens/LectureDetail';
+import { IsLogin } from '@/src/recoil/Global';
 // import DetailPoliciesScreen from '@/src/screens/DetailPolicies';
 
 const Stack = createStackNavigator();
 
 export default function ProfileStack<ProfileStak>() {
+  const confirmIsLogin = useRecoilValue(IsLogin);
+  console.log(confirmIsLogin, '로그인 확인/프로필');
+
   return (
-    <RecoilRoot>
+    <RecoilRoot override={false}>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
@@ -109,6 +115,13 @@ export default function ProfileStack<ProfileStak>() {
           options={{ title: '강의일정' }}
         />
 
+        {/* 예약한 강의 세부 사항 View */}
+        <Stack.Screen
+          name="DetailReservation"
+          component={DetailReservationScreen}
+          options={{ title: '예약 상세 정보' }}
+        />
+
         {/* 공지 사항 리스트, 상세 View */}
         <Stack.Screen
           name="NoticeList"
@@ -168,6 +181,28 @@ export default function ProfileStack<ProfileStak>() {
           component={PrivacyPolicyScreen}
           options={{
             title: '개인정보 처리방침',
+          }}
+        />
+
+        <Stack.Screen
+          name="DeleteAccount"
+          component={DeleteAccountScreen}
+          options={{
+            title: '회원탈퇴',
+          }}
+        />
+
+        <Stack.Screen
+          name="LectureDetail"
+          component={LectureDetailScreen}
+          options={{ title: '강의 제목' }}
+        />
+
+        <Stack.Screen
+          name="CommunityDetail"
+          component={CommunityDetailScreen}
+          options={{
+            title: '커뮤니티 상세',
           }}
         />
 

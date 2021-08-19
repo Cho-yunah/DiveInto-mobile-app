@@ -1,15 +1,18 @@
 import { getInstanceATK } from '@/src/lib/api/axios';
 import {
   cachingState,
+  cachingStateFormClassScheduleState,
   currScheduleIdState,
-  getEquipmentsState,
+  currSelectedDateState,
   rentEquipmentInfosType,
-  requestReservationEquipmentDetailType,
-  requestReservationEquipmentState,
+  requestReservationEquipmentArrayState,
+  reservationIdState,
+  smallModalMessageState,
   studentNumberState,
 } from '@/src/recoil/LectureStack';
+import { ReserveLectureCachingState } from '@/src/recoil/ProfileStack';
 import { PayButtonProps } from '@/src/screens/RequestPayment/types';
-import AsyncStorage from '@react-native-community/async-storage';
+import { AxiosResponse } from 'axios';
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
@@ -19,24 +22,28 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { payButton as styles } from './styles';
 
 const PayButton = ({ setErrorMsg }: PayButtonProps) => {
-  const equipmentsState = useRecoilValue(getEquipmentsState(1)); // 강의 id -> 제공되는 대여장비, name,id, price
-  const reservedEquipmentsArray: requestReservationEquipmentDetailType[] = [];
   const currScheduleId = useRecoilValue(currScheduleIdState);
   const numberOfPeople = useRecoilValue(studentNumberState);
   const setCaching = useSetRecoilState(cachingState);
+  const setCachingSchedule = useSetRecoilState(
+    cachingStateFormClassScheduleState,
+  );
+  const setCurrSelectedDate = useSetRecoilState(currSelectedDateState);
+  const reservingEquipmentArray = useRecoilValue(
+    requestReservationEquipmentArrayState,
+  );
+  const setReservationId = useSetRecoilState(reservationIdState);
+  // 프로필 Screen의 예약한 강의 Rerendering
+  const setRefreshProfile = useSetRecoilState(ReserveLectureCachingState);
+
+  console.log('이 페이지당');
+
   const [isLoading, setIsLoading] = useState(false);
   let flag = useRef(false);
-  equipmentsState.forEach(equip =>
-    reservedEquipmentsArray.push(
-      ...useRecoilValue(requestReservationEquipmentState(equip.id)),
-    ),
-  );
-  console.log(reservedEquipmentsArray);
 
   const requestReservation = async (
     rentEquipmentInfos: rentEquipmentInfosType[],
   ) => {
-    console.log(rentEquipmentInfos);
     setIsLoading(true);
 
     const body = {
@@ -46,12 +53,21 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
     };
     try {
       const instanceAtk = await getInstanceATK();
-      const { data } = await instanceAtk.post('/reservation', body);
+      const { data }: AxiosResponse = await instanceAtk.post(
+        '/reservation',
+        body,
+      );
       console.log(data);
+      setErrorMsg('결제가 완료되었습니다.');
+      setRefreshProfile(prev => prev + 1);
+
+      flag.current = true;
+      setReservationId(data.reservationId);
     } catch (e) {
       console.log(e.response.data);
       if (e.response.data.success === false) {
         setErrorMsg(e.response.data.msg);
+
         flag.current = true;
       }
     }
@@ -60,7 +76,13 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
 
   useEffect(() => {
     return () => {
-      if (flag.current) setCaching(cache => cache + 1);
+      if (flag.current) {
+        // 에러 발생해서 뒤로가기 할 경우 & 강의 예약이 성공한 경우 최신 강의정보(일정, 인원)를 다시 받아온다.
+        // 에러 발생시 강의 일정 선택으로 보내기. 성공시 메인화면으로 보낸다.
+        setCurrSelectedDate('');
+        setCaching(cache => cache + 1);
+        setCachingSchedule(cache => cache + 1);
+      }
     };
   }, []);
 
@@ -70,7 +92,7 @@ const PayButton = ({ setErrorMsg }: PayButtonProps) => {
         style={styles.button}
         onPress={() =>
           requestReservation(
-            reservedEquipmentsArray.map(equip => ({
+            reservingEquipmentArray.map(equip => ({
               scheduleEquipmentStockId: equip.scheduleEquipmentStockId,
               rentNumber: equip.rentNumber,
             })),

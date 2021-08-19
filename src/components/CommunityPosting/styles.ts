@@ -1,21 +1,22 @@
-import {StyleSheet} from 'react-native'
+import {Dimensions, StyleSheet} from 'react-native'
+import * as Color from '@config/colors';
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGTH = Dimensions.get('window').height;
 
 export const SelectStyle = StyleSheet.create({
   selectContainer: {
     marginTop: 30 ,
-    width: 353,
     height: 40,
+    borderWidth: 0
   },
   shadowContainer: {
     marginTop: 30 ,
-    width: 353,
     height: 40,
-    shadowOffset:{width: 2, height: -2},
+    shadowOffset:{width: 2, height: 2},
     shadowColor: '#566B7E33',
     shadowOpacity: 0.5,
-  },
-  itemStyle: {
-    justifyContent: 'flex-start',
+    borderWidth: 0,
   },
   pickerStyle: {
     borderTopLeftRadius: 8,
@@ -28,25 +29,25 @@ export const SelectStyle = StyleSheet.create({
     borderTopWidth: 1,
     borderWidth: 0,
     borderTopColor: '#A9BBC9',
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8, 
-    shadowOffset:{width: 2, height: 2},
-    shadowColor: '#566B7E33',
-    shadowOpacity: 0.5,
   },
   labelStyle: { 
     fontSize: 15,
     textAlign: 'left', 
-    color: '#6A6D70' ,
+    color: Color.DarkgrayText ,
+    borderWidth: 0,
   },
 })
 
 export const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
+  inputContainer: {
+    marginTop: 30,
+    width: WIDTH-40, 
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    padding: 12, 
   },
   imageContainer: {
-    width: 353,
+    width: WIDTH-40, 
     height: 76,
     backgroundColor: '#fff',
     borderRadius: 8,
@@ -58,22 +59,22 @@ export const styles = StyleSheet.create({
   imageUploadBtn: {
     width: 60,
     height: 60,
-    backgroundColor: '#CCD7DF',
+    backgroundColor: Color.underLine,
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
   },
   imageUploadText: {
-    color: '#D8D8D8',
+    color: Color.Gray2,
   },
   imageUploadLimit: {
-    color: '#D8D8D8',
+    color: Color.Gray2,
   },
   uploadedImagesContainer: {
     display: 'flex',
     flexDirection: 'row',
-    marginRight: 38,
+    marginRight: 15,
   },
   uploadedImgBtn: {},
   uploadedImg: { width: 60, height: 60, borderRadius: 8, marginRight: 10 },
@@ -84,35 +85,5 @@ export const styles = StyleSheet.create({
     height: 60,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  inputContainer: {
-    marginTop: 30,
-    width: 353,
-    borderRadius: 8,
-    backgroundColor: '#fff',
-    padding: 10, 
-  },
-  addImageBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  imageUploadBtn: {
-    width: 60,
-    height: 60,
-    backgroundColor: '#CCD7DF',
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 12,
-  },
-  text: {
-    color: '#D8D8D8',
-    fontSize: 15,
-    marginLeft: 12,
-  }, 
-  btnText: {
-    color: '#fefefe',
-    fontSize: 15,
-    paddingRight: 17,
   },
 })
