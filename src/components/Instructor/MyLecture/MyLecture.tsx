@@ -10,6 +10,9 @@ import MainImage from './MainImage';
 
 import axios from 'axios';
 
+import { SetRecoilState, useSetRecoilState } from 'recoil';
+import { LectureIdList } from '@recoil/Instructor/AdmMyLecture';
+
 export function MyLecture({
   id,
   title,
@@ -24,9 +27,14 @@ export function MyLecture({
   equipmentNames,
   leftScheduleDate,
   isClosed,
+  onPress = () => {},
 }: InstructorMyLecture) {
   return (
-    <TouchableOpacity style={[shadow, { marginRight: 5 }]} activeOpacity={0.7}>
+    <TouchableOpacity
+      style={[shadow, { marginRight: 5 }]}
+      activeOpacity={0.7}
+      onPress={() => onPress(id)}
+    >
       <View style={styles.lectureContainer}>
         <MainImage image={imageUrl} />
 
@@ -54,8 +62,13 @@ export function MyLecture({
   );
 }
 
-export default function MyLectureList() {
+export default function MyLectureList({
+  onPress = () => {},
+}: {
+  onPress?: (lectureId: number) => void;
+}) {
   const [lectures, setLectures] = useState<InstructorMyLecture[]>();
+  const setLectureIdList = useSetRecoilState(LectureIdList);
   useLayoutEffect(() => {
     try {
       const fetch = async () => {
@@ -66,6 +79,11 @@ export default function MyLectureList() {
         const status = res.status;
         if (status !== 200) throw new Error('강사 내강의 조회 에러');
         setLectures(res.data._embedded.myLectureInfoList);
+        setLectureIdList(
+          res.data._embedded.myLectureInfoList.map(
+            (lectureinfo: InstructorMyLecture) => lectureinfo.id,
+          ),
+        );
       };
       fetch();
     } catch (e) {
@@ -95,6 +113,7 @@ export default function MyLectureList() {
             period={lecture.period}
             leftScheduleDate={lecture.leftScheduleDate}
             isClosed={lecture.isClosed}
+            onPress={onPress}
           />
         ))}
     </ScrollView>

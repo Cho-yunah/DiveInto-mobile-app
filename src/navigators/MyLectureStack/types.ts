@@ -5,8 +5,6 @@ export type RootAdmMyLectureStack = {
   강의등록: undefined;
   강의등록2: undefined;
   장비등록: undefined;
-  일정등록: undefined;
-  전체일정: undefined;
   위치등록: undefined;
   위치검색: {
     baseLocationChange: ({
@@ -16,6 +14,15 @@ export type RootAdmMyLectureStack = {
       latitude: number;
       longitude: number;
     }) => void;
+  };
+  강의정보관리: {
+    lectureId: number;
+  };
+  강의수정: {
+    lectureId: number;
+  };
+  일정추가: {
+    lectureId: number;
   };
 };
 export type MyLectureListProps = StackScreenProps<
@@ -31,14 +38,6 @@ export type AddLecture2Props = StackScreenProps<
   '강의등록2'
 >;
 export type AddEquipProps = StackScreenProps<RootAdmMyLectureStack, '장비등록'>;
-export type AddScheduleProps = StackScreenProps<
-  RootAdmMyLectureStack,
-  '일정등록'
->;
-export type AllScheduleProps = StackScreenProps<
-  RootAdmMyLectureStack,
-  '전체일정'
->;
 
 export type AddLocationProps = StackScreenProps<
   RootAdmMyLectureStack,
@@ -48,4 +47,18 @@ export type AddLocationProps = StackScreenProps<
 export type NMapSearchProps = StackScreenProps<
   RootAdmMyLectureStack,
   '위치검색'
+>;
+
+export type ScheduleStackProps = StackScreenProps<
+  RootAdmMyLectureStack,
+  '강의정보관리'
+>;
+export type EditLectureProps = StackScreenProps<
+  RootAdmMyLectureStack,
+  '강의수정'
+>;
+
+export type AddScheduleProps = StackScreenProps<
+  RootAdmMyLectureStack,
+  '일정추가'
 >;

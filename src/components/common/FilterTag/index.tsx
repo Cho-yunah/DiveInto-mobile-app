@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import * as color from '@config/colors';
 
 import { selector, useRecoilState } from 'recoil';
-import { SelectedFilterTag } from '@recoil/AdmMyLecture';
+import { SelectedFilterTag } from '@recoil/Instructor/AdmMyLecture';
 
 type filterTagList = '등록순' | '최신강의순' | '낮은가격순' | '높은가격순';
 

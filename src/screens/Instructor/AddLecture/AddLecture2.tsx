@@ -61,7 +61,7 @@ export function AddLecture2({ navigation }: AddLecture2Props) {
     };
     navigation.setOptions({
       title: '강의등록',
-      headerRight: () => <NextButton onPress={onPress} text="다음" />,
+      headerRight: () => <NextButton onPress={onPress} text="다음" disable />,
     });
   }, [region, classKind, organaization, level, period, lectureTime, max]);
 

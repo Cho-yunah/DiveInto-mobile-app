@@ -10,11 +10,16 @@ type filterTagList = '등록순' | '최신강의순' | '낮은가격순' | '높�
 
 export function AdmMyLectureList({ navigation }: MyLectureListProps) {
   useLayoutEffect(() => {
-    const onPress = () => navigation.navigate('강의등록');
+    const onPress = () => {
+      console.log('강의등록 버튼 테스트');
+      navigation.navigate('강의등록');
+    };
 
     navigation.setOptions({
       title: '내 강의 목록',
-      headerRight: () => <NextButton onPress={onPress} text="강의등록" />,
+      headerRight: () => (
+        <NextButton onPress={onPress} text="강의등록" disable />
+      ),
     });
   }, []);
 
@@ -24,10 +29,14 @@ export function AdmMyLectureList({ navigation }: MyLectureListProps) {
     '낮은가격순',
     '높은가격순',
   ];
+
+  const onLecturePress = (lectureId: number) =>
+    navigation.navigate('강의정보관리', { lectureId });
+
   return (
     <View style={{ marginLeft: 18, marginRight: 18 }}>
       <FilterTagList filters={filters} />
-      <MyLectureList />
+      <MyLectureList onPress={onLecturePress} />
     </View>
   );
 }
