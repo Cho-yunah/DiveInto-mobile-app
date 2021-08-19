@@ -40,8 +40,8 @@ export default function LectureStack() {
       >
         <Stack.Screen
           name="MainList"
-          component={WriteReviewScreen}
-          // options={{ headerShown: false }}
+          component={MainList}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="LectureDetail"

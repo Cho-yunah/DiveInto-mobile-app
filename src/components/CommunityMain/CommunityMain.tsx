@@ -1,11 +1,11 @@
-import React, { ReactElement, useRef, useState} from 'react';
+import React, { ReactElement, useRef, useState } from 'react';
 import { View, FlatList, ActivityIndicator } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import CommunityItem from './CommunityItem';
 import { styles } from './styles';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useRequestCommunityList } from './useRequestCommunityList';
-import { ContentItem, CommunityTabType, ContentItemType } from './types';
+import { CommunityTabType, ContentItemType } from './types';
 import {
   shareListState,
   shareListPageState,
@@ -16,8 +16,6 @@ import {
   shareLoadingState,
   questionLoadingState,
 } from '@recoil/CommunityStack';
-import { useRequestCommunityList } from './useRequestCommunityList';
-
 
 export default function CommunityMain({
   share,
@@ -48,11 +46,10 @@ export default function CommunityMain({
 
   const isShareLoading = useRecoilValue<boolean>(shareLoadingState);
   const isQuestionLoading = useRecoilValue<boolean>(questionLoadingState);
-  const [callOnScrollEnd, setCallOnScrollEnd] = useState(false)
-  
+  const [callOnScrollEnd, setCallOnScrollEnd] = useState(false);
+
   // console.log('share',shareList)
   // console.log('question',questionList)
-
 
   console.log('share', shareList);
   console.log('question', questionList);
@@ -68,14 +65,11 @@ export default function CommunityMain({
 
   // contents 더 가져오기
 
-  const contentsLoadMore= ()=> { 
-    if(isShareLoading && refreshShare ) return
-    if(isQuestionLoading && refreshQuestion) return 
-    share? 
-      setSharePage(sharePage +1 ) 
-      : setQuestionPage(questionPage + 1)
-  }
-
+  const contentsLoadMore = () => {
+    if (isShareLoading && refreshShare) return;
+    if (isQuestionLoading && refreshQuestion) return;
+    share ? setSharePage(sharePage + 1) : setQuestionPage(questionPage + 1);
+  };
 
   // 새로고침
   const onFresh = () => {
@@ -86,44 +80,44 @@ export default function CommunityMain({
       : setQuestionPage(0);
   };
 
-  const renderItem = ({item})=> (
-      <CommunityItem
-        id={item.id}
-        title={item.title}
-        category={item.category}
-        writerNickname={item.writerNickname}
-        dateOfRegistration={item.dateOfRegistration}
-        imageUrl={item.imageUrl}
-        commentCount={item.commentCount}
-        likeCount={item.likeCount}
-        liked={item.liked}
+  const renderItem = ({ item }) => (
+    <CommunityItem
+      id={item.id}
+      title={item.title}
+      category={item.category}
+      writerNickname={item.writerNickname}
+      dateOfRegistration={item.dateOfRegistration}
+      imageUrl={item.imageUrl}
+      commentCount={item.commentCount}
+      likeCount={item.likeCount}
+      liked={item.liked}
+    />
+  );
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        ref={listRef}
+        data={share ? shareList : questionList} // 렌더링데이터
+        renderItem={renderItem}
+        keyExtractor={
+          share
+            ? (item, index) => `share${item.id}`
+            : (item, index) => `question${item.id}`
+        }
+        onEndReachedThreshold={0}
+        onEndReached={() => setCallOnScrollEnd(true)}
+        onMomentumScrollEnd={() => {
+          callOnScrollEnd && contentsLoadMore();
+          setCallOnScrollEnd(false);
+        }}
+        ListFooterComponent={renderLoader} // footer 도달시 로더
+        refreshing={share ? refreshShare : refreshQuestion} //새로고침 props
+        onRefresh={onFresh}
+        windowSize={2}
+        disableVirtualization={false} // virtualized 어쩌구 에러 없애줌
+        initialNumToRender={9}
       />
-    );
-    
-    return (
-      <View style={styles.container}>    
-            <FlatList 
-              ref={listRef}
-              data={share? shareList: questionList} // 렌더링데이터
-              renderItem={renderItem}
-              keyExtractor={
-                share 
-                ? (item, index) => `share${item.id}`
-                : (item, index) => `question${item.id}`
-              }
-              onEndReachedThreshold={0}
-              onEndReached={() => setCallOnScrollEnd(true)}
-              onMomentumScrollEnd={() => {
-                callOnScrollEnd && contentsLoadMore()
-                setCallOnScrollEnd(false)
-              }}
-              ListFooterComponent={renderLoader} // footer 도달시 로더
-              refreshing={share ? refreshShare : refreshQuestion } //새로고침 props
-              onRefresh={onFresh}
-              windowSize={2}
-              disableVirtualization={false} // virtualized 어쩌구 에러 없애줌
-              initialNumToRender={9} 
-            />
-      </View>
-    );
+    </View>
+  );
 }
