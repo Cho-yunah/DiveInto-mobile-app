@@ -1,11 +1,11 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { DocumentPickerResponse } from 'react-native-document-picker';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { singleFileUpload, singleImageSelect } from '@/src/lib/file';
 import { mainHeaderStyles as styles } from './styles';
-import instance from '@/src/lib/api/axios';
+import instance, { getInstanceATK } from '@/src/lib/api/axios';
 import { ProfileImageURIState } from '@recoil/ProfileStack/store';
 import { atkState } from '@recoil/ProfileStack/store';
 
@@ -13,32 +13,30 @@ export default function UploadImgBtn({ buttonText }: { buttonText: string }) {
   const atk = useRecoilValue(atkState);
   const setImageURI = useSetRecoilState(ProfileImageURIState);
 
-  const onChangeImgBtn = async () => {
+  const onChangeImgBtn = useRecoilCallback(({ snapshot, set }) => async () => {
+    const instanceAtk = await getInstanceATK();
     setImageURI(null);
     try {
       const imgInfo: DocumentPickerResponse | undefined =
         await singleImageSelect();
 
-      if (imgInfo && atk) {
+      if (imgInfo) {
         const body = new FormData();
+
         body.append('image', {
           name: imgInfo.name,
           type: imgInfo.type,
           uri: imgInfo.uri,
         });
 
-        const { data } = await instance.post('/profile-photo', body, {
-          headers: {
-            Authorization: atk,
-          },
-        });
+        const { data } = await instanceAtk.post('/profile-photo', body);
 
-        setImageURI(data.url);
+        set(ProfileImageURIState, data.url);
       }
     } catch (err) {
       console.log(err);
     }
-  };
+  });
 
   return (
     <View>

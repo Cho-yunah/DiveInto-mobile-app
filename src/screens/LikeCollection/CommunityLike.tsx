@@ -7,8 +7,9 @@ import { CommunityLikeItemType } from './types';
 import { CommunityItem } from '@components/CommunityMain';
 import { getLikeListSelector } from '@/src/recoil/ProfileStack/dataFetch';
 import CommonEmptyView from '@components/common/CommonEmptyView';
+import withSuspense from '@/src/lib/HOC/withSuspense';
 
-export default function CommunityLike() {
+function CommunityLikeScreen() {
   const communityLikeList = useRecoilValue(getLikeListSelector('community'));
 
   if (communityLikeList.length === 0) {
@@ -49,3 +50,5 @@ export default function CommunityLike() {
     </View>
   );
 }
+
+export default withSuspense(CommunityLikeScreen);

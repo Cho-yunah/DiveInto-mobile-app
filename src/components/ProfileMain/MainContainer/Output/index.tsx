@@ -12,6 +12,8 @@ import {
   deleteModalOpenState,
 } from '@recoil/ProfileStack/store';
 
+import RNRestart from 'react-native-restart';
+
 export default function Output() {
   const navigation = useNavigation();
   const setLogoutShow = useSetRecoilState(logoutModalOpenState);
@@ -25,6 +27,7 @@ export default function Output() {
       await AsyncStorage.removeItem('atk');
       setLogoutShow(false);
       setIsLogin(false);
+      RNRestart.Restart();
     } catch (err) {
       console.log(err);
     }

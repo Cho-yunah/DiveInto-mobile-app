@@ -9,7 +9,7 @@ import { PhoneNumState } from '@recoil/ProfileStack/store';
 import { modifyNumViewStateAtom, atkState } from '@recoil/ProfileStack/store';
 import { HeaderContainer, MainContainer } from '@components/ProfileMain';
 import { IsInstructor } from '@/src/recoil/Global';
-import { requestUserInfoSelector } from '@/src/recoil/ProfileStack/dataFetch';
+import { profileMainMultipleEval } from '@/src/recoil/ProfileStack/dataFetch';
 import withSuspense from '@/src/lib/HOC/withSuspense';
 
 function ProfileMain() {
@@ -21,9 +21,11 @@ function ProfileMain() {
     phone: '',
   });
   const setModifyNumViewState = useSetRecoilState(modifyNumViewStateAtom);
-  const data = useRecoilValue(requestUserInfoSelector);
+  const { userInfo: data } = useRecoilValue(profileMainMultipleEval);
 
   useEffect(() => {
+    console.log(data);
+
     setUserInfo(state => ({
       ...state,
       email: data.email,

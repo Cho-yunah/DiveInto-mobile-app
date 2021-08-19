@@ -7,7 +7,8 @@ import { LectureImg, LectureContents } from '@components/LectureSchedule';
 import { getLectureScheduleListSelector } from '@/src/recoil/ProfileStack/dataFetch';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 import LastLectureSchedule from '@components/LectureSchedule/LastLectureSchedule';
-export default function LastLecture() {
+import withSuspense from '@/src/lib/HOC/withSuspense';
+function LastLectureScreen() {
   const reservationList = useRecoilValue(
     getLectureScheduleListSelector('last'),
   );
@@ -52,6 +53,8 @@ export default function LastLecture() {
     </View>
   );
 }
+
+export default withSuspense(LastLectureScreen);
 
 //   const ListEl = reservationList ? (
 //     reservationList.length !== 0 ? (

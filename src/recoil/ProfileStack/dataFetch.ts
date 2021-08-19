@@ -1,23 +1,56 @@
-import { selector, selectorFamily } from 'recoil';
+import { selector, selectorFamily, waitForAll } from 'recoil';
 
 import { reservationLectureListType } from './types';
 import { getInstanceATK } from '@lib/api/axios';
-import { PhoneNumState, ReserveLectureCachingState } from './store';
+import { modifyNumViewStateAtom, ReserveLectureCachingState } from './store';
 import { liekCollectionRefreshState } from '../Global';
 
 // ProfileMainScreen에서 기본 사용자 정보를 받는 dataFetching selector
-export const requestUserInfoSelector = selector({
+export const getUserInfoSelector = selector({
   key: '/account',
-  get: async ({ get }) => {
+  get: async () => {
+    console.log('getUserInfoSelector');
+
     const instanceAtk = await getInstanceATK();
 
     try {
-      const { data } = await instanceAtk.get('/account');
+      const { data: userInfo } = await instanceAtk.get('/account');
 
-      return data;
+      return userInfo;
     } catch (err) {
       console.log(err);
     }
+  },
+});
+
+// ProfileHeader에서 필요한 image uri 정보를 받는 dataFetching selector
+export const getProfileImg = selector({
+  key: '/profile-photo',
+  get: async () => {
+    console.log('getProfileImg');
+
+    const instanceAtk = await getInstanceATK();
+
+    try {
+      const { data: imgURI } = await instanceAtk.get('/profile-photo');
+
+      return imgURI;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+});
+
+// 이 함수를 어디에 둬야하는 것인가??? (http 통신을 여러번 해야하는 경우를 대비해서 한번에 보내서 모든 통신이 완료되면 값을 넘기는 방식)
+export const profileMainMultipleEval = selector({
+  key: ' multipleEval',
+  get: ({ get }) => {
+    get(modifyNumViewStateAtom);
+    const [userInfo, imgURI] = get(
+      waitForAll([getUserInfoSelector, getProfileImg]),
+    );
+
+    return { userInfo, imgURI };
   },
 });
 
@@ -79,5 +112,86 @@ export const getLikeListSelector = selectorFamily({
       } catch (err) {
         console.log(err);
       }
+    },
+});
+
+// 강사 신청 스크린에서 강사 신청 여부 판단 selector
+export const getIsApplyInsctructorSelector = selector({
+  key: '/account/instructor-application',
+  get: async () => {
+    const instanceAtk = await getInstanceATK();
+
+    try {
+      const {
+        data: { applied },
+      } = await instanceAtk.get('/account/instructor-application');
+
+      return applied;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+});
+
+// 강사 자신의 강의 후기 모아보기 list 받아오는 selector
+export const getMyLectureListSelector = selector({
+  key: 'lecture/manage/list',
+  get: async () => {
+    const instanceAtk = await getInstanceATK();
+
+    try {
+      const { data } = await instanceAtk.get(
+        '/lecture/manage/list?page=0&size=5',
+      );
+
+      if (!data.page.totalElements) return [];
+
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+});
+
+// 예약한 강의 상세 보기 정보 관련 selector
+export const getReservationDetail = selectorFamily({
+  key: '/reservation?reservationId=reservationId',
+  get: (uri: string) => async () => {
+    const instanceATK = await getInstanceATK();
+
+    try {
+      const { data } = await instanceATK.get(uri);
+
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+});
+
+// 예약한 강의 상세 보기 각각의 정보가 전부 받아지면 화면을 보이게 하기 위한 멀티 dataFetching selector
+export const reserveDetailMultipleEval = selectorFamily({
+  key: 'multipleEval2',
+  get:
+    (reservationId: number) =>
+    ({ get }) => {
+      const { info, location, schedule, equipment } = get(
+        waitForAll({
+          info: getReservationDetail(
+            `/reservation?reservationId=${reservationId}`,
+          ),
+          location: getReservationDetail(
+            `/reservation/location?reservationId=${reservationId}`,
+          ),
+          schedule: getReservationDetail(
+            `/reservation/schedule?reservationId=${reservationId}`,
+          ),
+          equipment: getReservationDetail(
+            `/reservation/equipment/list?reservationId=${reservationId}`,
+          ),
+        }),
+      );
+
+      return { info, location, schedule, equipment };
     },
 });

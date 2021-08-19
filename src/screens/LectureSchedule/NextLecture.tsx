@@ -10,8 +10,9 @@ import {
 } from '@components/LectureSchedule';
 import { getLectureScheduleListSelector } from '@/src/recoil/ProfileStack/dataFetch';
 import CommonEmptyView from '@components/common/CommonEmptyView';
+import withSuspense from '@/src/lib/HOC/withSuspense';
 
-export default function NextLecture() {
+function NextLectureScreen() {
   const reservationList = useRecoilValue(
     getLectureScheduleListSelector('next'),
   );
@@ -22,7 +23,7 @@ export default function NextLecture() {
         <CommonEmptyView
           guideText="예약한 강의가 없습니다."
           buttonText="강의 둘러보기"
-          moveViewName="ProfileMain"
+          moveViewName="홈"
         />
       </View>
     );
@@ -56,3 +57,5 @@ export default function NextLecture() {
     </View>
   );
 }
+
+export default withSuspense(NextLectureScreen);

@@ -1,10 +1,9 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { Pressable, ScrollView, Text } from 'react-native';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { styles } from './styles';
 import { DetailReservationProps } from '@navigators/ProfileStack/types';
-import { getInstanceATK } from '@lib/api/axios';
 import {
   ReserveHeader,
   ReserveLocationInfo,
@@ -20,9 +19,10 @@ import {
   reserveEquipmentsState,
   reserveLocationState,
 } from '@recoil/ProfileStack/store';
-import CommonLoading from '@components/common/CommonLoading';
+import { reserveDetailMultipleEval } from '@/src/recoil/ProfileStack/dataFetch';
+import withSuspense from '@/src/lib/HOC/withSuspense';
 
-export default function DetailReservationScreen({
+function DetailReservationScreen({
   navigation,
   route,
 }: DetailReservationProps) {
@@ -31,7 +31,9 @@ export default function DetailReservationScreen({
   const setReserveSchedule = useSetRecoilState(reserveScheduleState);
   const setDetailLocation = useSetRecoilState(reserveLocationState);
   const setDetailEquipments = useSetRecoilState(reserveEquipmentsState);
-  const [isLoading, setIsLoading] = useState(false);
+  const { info, location, schedule, equipment } = useRecoilValue(
+    reserveDetailMultipleEval(reservationId),
+  );
 
   useLayoutEffect(() => {
     console.log(navigateToHome);
@@ -46,53 +48,18 @@ export default function DetailReservationScreen({
   }, [navigateToHome]);
 
   useEffect(() => {
-    const requestReservationDetail = async () => {
-      const instanceATK = await getInstanceATK();
+    if (equipment._embedded) {
+      console.log('장비 있음');
+      setDetailEquipments(equipment._embedded.rentEquipmentDetailList);
+    } else {
+      console.log('장비 없음');
+      setDetailEquipments([]);
+    }
 
-      try {
-        setIsLoading(true);
-        const { data: info } = await instanceATK.get(
-          `/reservation?reservationId=${reservationId}`,
-        );
-
-        const { data: location } = await instanceATK.get(
-          `/reservation/location?reservationId=${reservationId}`,
-        );
-
-        const { data: schedule } = await instanceATK.get(
-          `/reservation/schedule?reservationId=${reservationId}`,
-        );
-
-        const { data: equipment } = await instanceATK.get(
-          `/reservation/equipment/list?reservationId=${reservationId}`,
-        );
-
-        if (equipment._embedded) {
-          console.log('장비 있음');
-          setDetailEquipments(equipment._embedded.rentEquipmentDetailList);
-        } else {
-          console.log('장비 없음');
-          setDetailEquipments([]);
-        }
-
-        setReserveDetailList(info);
-        setReserveSchedule(schedule._embedded.scheduleDetailList);
-        setDetailLocation(location);
-
-        // console.log(equipment._embedded.rentEquipmentDetailList);
-      } catch (err) {
-        console.log(err.response);
-      }
-
-      setIsLoading(false);
-    };
-
-    requestReservationDetail();
-  }, []);
-
-  if (isLoading) {
-    return <CommonLoading />;
-  }
+    setReserveDetailList(info);
+    setReserveSchedule(schedule._embedded.scheduleDetailList);
+    setDetailLocation(location);
+  }, [info, location, schedule, equipment]);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -119,3 +86,5 @@ export default function DetailReservationScreen({
     </ScrollView>
   );
 }
+
+export default withSuspense(DetailReservationScreen);

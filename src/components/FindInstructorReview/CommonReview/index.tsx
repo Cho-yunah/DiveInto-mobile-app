@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
 import PersonalReview from '@components/LectureDetail/LectureReview/PersonalReview';
-import { lectureReviewAllType } from '@/src/recoil/ProfileStack';
+import { lectureReviewAllType } from '@recoil/ProfileStack/types';
 
 export default function CommonReview({ reviews }: lectureReviewAllType[]) {
   return (
