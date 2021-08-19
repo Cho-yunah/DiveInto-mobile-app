@@ -17,7 +17,7 @@ export default function useAutoCloseModal(callerName: UseAutoCloseModalProps) {
 
     setTimeout(() => {
       setVisibleShow('');
-    }, 1200);
+    }, 750);
   };
 
   return { visibleShow, showModal };

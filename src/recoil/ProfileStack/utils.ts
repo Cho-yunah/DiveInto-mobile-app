@@ -14,7 +14,7 @@ import {
 
 // 가격 타입 param에 따라서 가격 결과를 보내주는 셀렉터
 export const totalCostSelector = selectorFamily({
-  key: 'totalCost',
+  key: 'profile/totalCost',
   get:
     (costType: reserveCostInfoTypesType) =>
     ({ get }) => {
@@ -37,7 +37,7 @@ export const totalCostSelector = selectorFamily({
 
 // 회원 탈퇴 전에 작성해야 하는 조건 selector
 export const deleteUserConditionSelector = selector({
-  key: 'deleteUserCondition',
+  key: 'profile/deleteUserCondition',
   get: ({ get }) => {
     const password = get(deletePasswordState);
     const selectOption = get(deleteReasonState);
@@ -53,7 +53,7 @@ export const deleteUserConditionSelector = selector({
 
 // 같은 목록이면서 같은 사이즈 장비 수량 합을 구하는 셀렉터
 export const sumOfTheSameListSelector = selector({
-  key: 'sumOfSameList',
+  key: 'profile/sumOfSameList',
   get: ({ get }) => {
     const equipmentList = get(reserveEquipmentsState);
 
@@ -67,7 +67,7 @@ export const sumOfTheSameListSelector = selector({
 
 // 강의 일정 관련 데이터 문자열 새로운 조합으로 바꾸는 셀렉터
 export const dateOrTimeOfNewStringSelector = selector({
-  key: 'dateOrTimeOfNewString',
+  key: 'profile/dateOrTimeOfNewString',
   get: ({ get }) => {
     const schedules = get(reserveScheduleState);
 

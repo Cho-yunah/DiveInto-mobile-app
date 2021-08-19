@@ -56,7 +56,7 @@ export const profileMainMultipleEval = selector({
 
 // 수강 내역에서 예약한 강의 / 지난 강의를 분리하는 dataFetching selector
 export const getLectureScheduleListSelector = selectorFamily({
-  key: 'requestLectureScheduleList',
+  key: '/reservation/list',
   get:
     (scheduleType: 'next' | 'last') =>
     async ({ get }) => {
@@ -92,7 +92,7 @@ export const getLectureScheduleListSelector = selectorFamily({
 
 // likeListType 조건에 따라 찜한 리스트 dataFetching selector
 export const getLikeListSelector = selectorFamily({
-  key: 'requestLikeList',
+  key: '/diff/post/like',
   get:
     (likeListType: 'community' | 'lecture') =>
     async ({ get }) => {
@@ -135,7 +135,7 @@ export const getIsApplyInsctructorSelector = selector({
 
 // 강사 자신의 강의 후기 모아보기 list 받아오는 selector
 export const getMyLectureListSelector = selector({
-  key: 'lecture/manage/list',
+  key: '/lecture/manage/list',
   get: async () => {
     const instanceAtk = await getInstanceATK();
 
@@ -171,7 +171,7 @@ export const getReservationDetail = selectorFamily({
 
 // 예약한 강의 상세 보기 각각의 정보가 전부 받아지면 화면을 보이게 하기 위한 멀티 dataFetching selector
 export const reserveDetailMultipleEval = selectorFamily({
-  key: 'multipleEval2',
+  key: 'reserveDetailMultipleEval',
   get:
     (reservationId: number) =>
     ({ get }) => {

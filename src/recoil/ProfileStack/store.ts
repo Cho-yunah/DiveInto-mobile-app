@@ -14,12 +14,12 @@ import {
 
 // deleteReserve(예약강의삭제 id)
 export const ReserveLectureCachingState = atom({
-  key: 'ReserveLectureCachingState',
+  key: 'profile/ReserveLectureCachingState',
   default: 0,
 });
 
 export const modifyNumViewStateAtom = atom<modifyNumViewStateAtomType | null>({
-  key: 'modifyNumViewState',
+  key: 'profile/modifyNumViewState',
   default: {
     phoneNumber: '',
     birth: '',
@@ -29,25 +29,25 @@ export const modifyNumViewStateAtom = atom<modifyNumViewStateAtomType | null>({
 
 // async selector Caching Techniques
 export const atkState = atom<string | null>({
-  key: 'atk',
+  key: 'profile/atk',
   default: null,
 });
 
 export const lectureReviewAllState = atom<lectureReviewAllType[]>({
-  key: 'lectureReview',
+  key: 'profile/lectureReview',
   default: [],
 });
 
 export const reservationLectureListState = atom<
   reservationLectureListType[] | null
 >({
-  key: 'reservationLectureList',
+  key: 'profile/reservationLectureList',
   default: null,
 });
 
 // 프로필 유저 이미지 상태 공유
 export const ProfileImageURIState = atom<string | 'change' | null>({
-  key: 'ProfileImageURI',
+  key: 'profile/ProfileImageURI',
   default: null,
 });
 
@@ -55,66 +55,66 @@ export const ProfileImageURIState = atom<string | 'change' | null>({
 export const instructorImageCollectionState = atom<
   instructorImageCollectionType[]
 >({
-  key: 'instructorImageCollection',
+  key: 'profile/instructorImageCollection',
   default: [],
 });
 
 // 로그아웃 모달 on/off 상태
 export const logoutModalOpenState = atom({
-  key: 'logoutModalOpenState',
+  key: 'profile/logoutModalOpenState',
   default: false,
 });
 
 // 회원탈퇴 모달 on/off 상태
 export const deleteModalOpenState = atom({
-  key: 'deleteModalOpenState',
+  key: 'profile/deleteModalOpenState',
   default: false,
 });
 
 // 탈퇴 이유 dropdown 배열 상태
 export const deleteReasonState = atom<deleteReasonStateType | null>({
-  key: 'deleteReason',
+  key: 'profile/deleteReason',
   default: null,
 });
 
 // 기타 탈퇴 이유 textInput 상태
 export const etcDeleteReasonState = atom<string>({
-  key: 'EtcDeleteReason',
+  key: 'profile/EtcDeleteReason',
   default: '',
 });
 
 // 회원 탈퇴를 위한 PW 확인 상태
 export const deletePasswordState = atom<string>({
-  key: 'deletePassword',
+  key: 'profile/deletePassword',
   default: '',
 });
 
 // 유저 프로필 정보와 번호 변경에 필요한 전화번호 상태
 export const PhoneNumState = atom<string>({
-  key: 'PhoneNum',
+  key: 'profile/PhoneNum',
   default: '',
 });
 
 // 예약한 강의 상세 정보 상태
 export const reserveDetailListState = atom<reserveDetailListAtomType | null>({
-  key: 'ReserveDetailList',
+  key: 'profile/ReserveDetailList',
   default: null,
 });
 // 예약한 강의 일정 정보 상태
 export const reserveScheduleState = atom<reserveScheduleAtomType>({
-  key: 'reserveSchedule',
+  key: 'profile/reserveSchedule',
   default: [],
 });
 
 // 예약한 강의 상세 위치
 export const reserveLocationState = atom<reserveLocationAtomType | null>({
-  key: 'reserveLocation',
+  key: 'profile/reserveLocation',
   default: null,
 });
 
 // 예약한 강의에서 사용하는 대여 장비 상세 정보
 export const reserveEquipmentsState = atom<reserveEquipmentsAtomType>({
-  key: 'reserveEquipments',
+  key: 'profile/reserveEquipments',
   default: [],
 });
 
