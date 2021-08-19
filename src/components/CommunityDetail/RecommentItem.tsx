@@ -6,18 +6,19 @@ import { atkState, checkRecommentWriter, decodeTokenType, recommentItemType, rec
 import {View, Text, Image, TouchableOpacity} from 'react-native'
 import { TimeOfWriting } from '@components/CommunityMain/TimeOfWriting'
 import jwt_decode from "jwt-decode";
+import { recommentListType } from './types'
 
-export const RecommentItem =({nickName, profileUrl, dateOfWriting, content, recommentId}: recommentItemType) => {
+export const RecommentItem =({nickName, profileUrl, dateOfWriting, content, recommentId, commentId}: recommentItemType) => {
 
   const token = useRecoilValue(atkState)
   const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null
-  const recommentWriterInfo = useRecoilValue(recommentState)
+  const recommentWriterInfo = useRecoilValue<recommentListType[]>(recommentState(commentId))
   const [recommentWriter] = recommentWriterInfo.map(item=> item.accountModel.id)
   const [isRecommentWriter, setIsRecommentWriter] = useRecoilState(checkRecommentWriter)
 
   const[recommentSuccess, setRecommentSuccess] = useRecoilState(recommentRequestState)
 
-   // 댓글 삭제
+   // 대댓글 삭제
    const requestDelete = async() => {
     const instanceAtk = await getInstanceATK();
     console.log(recommentId)

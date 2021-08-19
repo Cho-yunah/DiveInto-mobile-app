@@ -5,7 +5,6 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation } from '@react-navigation/native';
 import { TimeOfWriting } from './TimeOfWriting';
 import { useSetRecoilState } from 'recoil';
-import moment from 'moment';
 import { styles } from './styles';
 import { ContentItem, CommentNumber, ContentItemType, } from './types';
 import * as colors from '@config/colors';
@@ -82,15 +81,3 @@ const CommentNum = ({ commentNum }: CommentNumber) => {
     </View>
   );
 };
-
-// let time
-// if (dayInterval === 0) {
-//     return (
-//       hoursInterval === 0
-//       ? time=`${minutesInterval}분 전`
-//       : tim`${hoursInterval}시간 전`)
-// }
-// else if (0 < dayInterval && dayInterval <= 30){
-//   return `${dayInterval}일 전`
-// }
-// else {return `${monthInterval}달 전` }

@@ -342,7 +342,7 @@ export const recommentTextState = atom({
   },
 });
 
-export const recommentState = atom<recommentListType[]>({
+export const recommentState = atomFamily({
   key: 'recommentState',
   default: [],
 });
@@ -353,6 +353,7 @@ export type recommentItemType = {
   dateOfWriting: string;
   content: string;
   recommentId: number;
+  commentId: number
 };
 
 export const recommentLoadingState = atom({

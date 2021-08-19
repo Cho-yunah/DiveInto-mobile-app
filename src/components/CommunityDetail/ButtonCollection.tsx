@@ -59,7 +59,7 @@ export const RecommentAddBtn =({commentId}: CommentIdProps) => {
   const setSelectCommentId = useSetRecoilState(commentIdState)
   const [writingRecomment, setWritingRecomment] = useRecoilState(writingRecommentState)
   const [showRecomment, setShowRecomment] = useRecoilState(showRecommentState(commentId))
-  const recommentList = useRecoilValue(recommentState)
+  const recommentList = useRecoilValue(recommentState(commentId))
 
   const recommentWriting = ()=> {
     setSelectCommentId(commentId)
@@ -71,7 +71,7 @@ export const RecommentAddBtn =({commentId}: CommentIdProps) => {
     <TouchableOpacity 
     onPress={recommentWriting}>
     <Text style={{color: '#207AB4', fontSize: 12}}>
-      {recommentList? '대댓글 보기': '대댓글 쓰기'}
+      {recommentList.length===0? '대댓글 쓰기': '대댓글 보기'}
     </Text>
   </TouchableOpacity>
   )

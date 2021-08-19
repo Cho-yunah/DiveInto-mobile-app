@@ -1,10 +1,13 @@
+import { commentIdState } from './../../recoil/CommunityStack';
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import instance from '@/src/lib/api/axios';
-import { commentListPageState, commentListType, commentLoadingState, commentRequestState, commentState, recommentRequestState } from '@/src/recoil/CommunityStack';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import instance from '@lib/api/axios';
+import { commentListPageState, commentLoadingState, commentRequestState, commentState, recommentRequestState } from '@recoil/CommunityStack';
+import { commentListType } from './types';
 
-export const useRequestComments =({id}) => {
-  const [commentList, setCommentList]= useRecoilState<commentListType[]>(commentState)
+export const useRequestComments =({id}: {id: number}) => {
+  const commentId = useRecoilValue(commentIdState)
+  const [commentList, setCommentList]= useRecoilState(commentState)
   const [commentLoading, setCommentLoading] = useRecoilState(commentLoadingState)
   const [RequestSuccess, setRequestSuccess] = useRecoilState(commentRequestState)
   const [ commentListPage , setCommentListPage ] = useRecoilState(commentListPageState)

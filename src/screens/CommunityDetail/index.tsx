@@ -11,7 +11,13 @@ import {
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useRequestCommunityItem } from '@components/CommunityDetail/useRequestCommunityItem';
-import { atkState, checkWriterState, communityItemSelector, communityItemState, decodeTokenType, ImageState, likeState, writerInfoState, writerInfoType } from '@recoil/CommunityStack';
+import { atkState, 
+         checkWriterState, 
+         commentIdState, commentState, communityItemSelector, 
+         communityItemState, decodeTokenType, 
+         ImageState, likeState, recommentState, 
+         showRecommentState, writerInfoState, writerInfoType 
+      } from '@recoil/CommunityStack';
 import {LikeBtn} from '@components/CommunityMain/LikeBtn';
 import jwt_decode from "jwt-decode";
 
@@ -31,6 +37,10 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
   const setCommunityItem = useSetRecoilState(communityItemState);
   const setImageItem = useSetRecoilState(ImageState);
   const setWriterInfo = useSetRecoilState(writerInfoState);
+  const commentId = useRecoilValue(commentIdState)
+  const setRecommentList = useSetRecoilState(recommentState(commentId))
+  const setCommentList = useSetRecoilState(commentState)
+  const  setShowRecomment = useSetRecoilState(showRecommentState(commentId))
 
   //  좋아요 
   const Clickedlike=() => {
@@ -38,7 +48,7 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
   }
 
   // 클린업 함수
-  const cleanUp = () => {
+  const cleanUp = () => {   
     setCommunityItem({
       id: id,
       title: '',
@@ -55,6 +65,9 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
       nickName: '',
       profileImageUrl: '',
     });
+    setCommentList([])
+    setRecommentList([])
+    setShowRecomment(false)
   };
 
   useEffect(() => {
@@ -64,13 +77,16 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
         <LikeBtn id={id} liked={liked} likeCount={likeCount}/>
       </TouchableOpacity>
     })
-    cleanUp()
-
-     // 로그인한 사람과 글 게시한 사람이 일치하는지
+    
+    // 로그인한 사람과 글 게시한 사람이 일치하는지
     decodeToken.user_name == writerInfo.id 
     ? setCheckWriter(true)
     : setCheckWriter(false)
-  },[like])
+
+    return (
+      cleanUp()
+    )
+  },[])
 
   return (
     <View style={styles.container}>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Image, View, Text, FlatList } from "react-native"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {CommentDetailStyles as styles} from './styles'
-import { commentItemType, decodeTokenType } from './types'
+import { commentItemType, decodeTokenType, recommentListType } from './types'
 import jwt_decode from "jwt-decode";
 import { atkState, 
          checkCommentWriter,
@@ -23,18 +23,22 @@ export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, comme
 
   const token = useRecoilValue(atkState)
   const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null
-  
+
   const commentLoading = useRecoilValue(commentLoadingState)
   const commentWriterInfo = useRecoilValue(commentState)
-  const recommentList = useRecoilValue(recommentState)
+  const recommentList = useRecoilValue<recommentListType[]>(recommentState(commentId))
   const showRecomment= useRecoilValue(showRecommentState(commentId))
+  const [callOnScrollEnd, setCallOnScrollEnd] = useState(false)
   
-  const [ callOnScrollEnd, setCallOnScrollEnd ] = useState(false)
   const setIsCommentWriter = useSetRecoilState(checkCommentWriter)
   const [ recommentListPage , setRecommentListPage ] = useRecoilState(commentListPageState)
 
+  console.log(commentId)
+  console.log(recommentList)
+  console.log(showRecomment)
+
   // 댓글 작성자인지 확인
-  const [commentWriter] = commentWriterInfo.map(item=> item.accountModel.id )
+  const [commentWriter] = commentWriterInfo.map( item=> item.accountModel.id )
   // console.log(typeof decodeToken.user_name) // string
   // console.log(typeof commentWriter) // number
 
@@ -90,6 +94,7 @@ export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, comme
                 dateOfWriting={item.commentCommentModel.dateOfWriting}
                 content={item.commentCommentModel.content}
                 recommentId= {item.commentCommentModel.id}
+                commentId= {commentId}
               />
             )}
             onEndReachedThreshold={0}
