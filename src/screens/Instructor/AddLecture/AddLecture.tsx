@@ -34,7 +34,7 @@ export function AddLecture({ navigation }: AddLectureProps) {
     };
     navigation.setOptions({
       title: '강의등록',
-      headerRight: () => <NextButton onPress={onPress} text="다음" />,
+      headerRight: () => <NextButton onPress={onPress} text="다음" disable />,
     });
   }, [title, description, price]);
 

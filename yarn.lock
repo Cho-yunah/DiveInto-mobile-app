@@ -1205,9 +1205,9 @@
   "version" "0.1.11"
 
 "@react-native-community/push-notification-ios@^1.8.0":
-  "integrity" "sha512-vxvkeampafjmtDoQBN8Q4azP21l6cMX93+OQZemyIWZmG++OjCVDQVitobf/kWLm5zyGwdylejbpMGo75qo7rA=="
-  "resolved" "https://registry.npmjs.org/@react-native-community/push-notification-ios/-/push-notification-ios-1.8.0.tgz"
-  "version" "1.8.0"
+  "integrity" "sha512-vKzMnADAd58FoYYQ+7nIIV2jcEzlZRNj9tZmqrnELjIc0nAbjDhW1la1zoVKzND9kAfbsvOaViZdoJ+bYjBz4A=="
+  "resolved" "https://registry.npmjs.org/@react-native-community/push-notification-ios/-/push-notification-ios-1.9.0.tgz"
+  "version" "1.9.0"
   dependencies:
     "invariant" "^2.2.4"
 
@@ -1550,9 +1550,9 @@
   "version" "1.5.5"
 
 "@types/react-native-calendars@^1.505.4":
-  "integrity" "sha512-isIwXARr9eI23T342AswHAtmjDyRwmLh7ae3vyJCrgserJZ+HF4G0cjKNPtYIOmfVT6snSZ0K5KbX7mD9AuKGg=="
-  "resolved" "https://registry.npmjs.org/@types/react-native-calendars/-/react-native-calendars-1.1264.1.tgz"
-  "version" "1.1264.1"
+  "integrity" "sha512-nsNwzqF7s4FzNtxSG4Rcr3FQ9qOdZUJcrXKo7aCEgvR9QmU5K09QhobR+PTe93opB4a1ldvLmsFGTiOAYeeaBg=="
+  "resolved" "https://registry.npmjs.org/@types/react-native-calendars/-/react-native-calendars-1.1264.2.tgz"
+  "version" "1.1264.2"
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
@@ -6507,9 +6507,9 @@
   "version" "3.3.2"
 
 "react-native-device-info@^8.1.3":
-  "integrity" "sha512-w92x+FGIZdzEmU4SN+Zr+0zESubKb+zWRmHFECr0l+AtQlOZZ6AvO9WNwe2RBGpPkOUf54d7k8D0YgGvnRGIdQ=="
-  "resolved" "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-8.1.5.tgz"
-  "version" "8.1.5"
+  "integrity" "sha512-UkqK47w5r9rgjFpNMgXoMXj5D9GVQO8QxaTAbtJ/66XXt23WSHDroIzn+MVtTLl6SPKBw5/qakPKivLG44IPtw=="
+  "resolved" "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-8.3.0.tgz"
+  "version" "8.3.0"
 
 "react-native-document-picker@^5.0.4":
   "integrity" "sha512-zXK34hW6fM0gXoo6v7edZZxKvLT7DyjOdBXi7WrxbKqZchDokTEQ/tNTeZxky+7oI8sVz8T3uXBBEW0sp+VfXQ=="
