@@ -13,14 +13,15 @@ import {
   ReserveCost,
   CancelBtn,
 } from '@components/DetailReservation';
+import AutoCloseAlertModal from '@components/common/AutoCloseAlertModal';
 import {
   reserveDetailListState,
   reserveScheduleState,
   reserveEquipmentsState,
   reserveLocationState,
 } from '@recoil/ProfileStack/store';
-import { reserveDetailMultipleEval } from '@/src/recoil/ProfileStack/dataFetch';
-import withSuspense from '@/src/lib/HOC/withSuspense';
+import { reserveDetailMultipleEval } from '@recoil/ProfileStack/dataFetch';
+import withSuspense from '@lib/HOC/withSuspense';
 
 function DetailReservationScreen({
   navigation,
@@ -83,6 +84,9 @@ function DetailReservationScreen({
 
       {/* 예약 취소 버튼 */}
       <CancelBtn reservationId={reservationId} />
+
+      {/* 사용자 가이드 안내문 */}
+      <AutoCloseAlertModal callerName="detailReservation" />
     </ScrollView>
   );
 }

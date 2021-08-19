@@ -11,6 +11,7 @@ import {
 import { getLectureScheduleListSelector } from '@/src/recoil/ProfileStack/dataFetch';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 import withSuspense from '@/src/lib/HOC/withSuspense';
+import AutoCloseAlertModal from '@/src/components/common/AutoCloseAlertModal';
 
 function NextLectureScreen() {
   const reservationList = useRecoilValue(
