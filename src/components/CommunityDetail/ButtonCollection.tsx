@@ -1,13 +1,11 @@
 import React from 'react'
 import { Text, TouchableOpacity } from "react-native"
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { getInstanceATK } from '@lib/api/axios'
 import { commentIdState, 
         commentInputButtonState, commentInputFocusState, 
         commentRequestState, 
-        recommentState, 
-        showRecommentState, 
-        writingRecommentState } 
+        } 
   from '@recoil/CommunityStack'
 import { CommentIdProps } from './types'
 
@@ -50,29 +48,5 @@ export const CommentDeleteBtn= ({commentId}: CommentIdProps) => {
     <TouchableOpacity onPress={requestDelete}>
       <Text style={{color: '#E93A55', fontSize: 12 }}>삭제</Text>
     </TouchableOpacity>
-  )
-}
-
-// 대댓글 추가 
-// 추가 버튼을 누르면 CommentTextInput이 대댓글을 추가할수 있는 상태로 바뀜
-export const RecommentAddBtn =({commentId}: CommentIdProps) => {
-  const setSelectCommentId = useSetRecoilState(commentIdState)
-  const [writingRecomment, setWritingRecomment] = useRecoilState(writingRecommentState)
-  const [showRecomment, setShowRecomment] = useRecoilState(showRecommentState(commentId))
-  const recommentList = useRecoilValue(recommentState(commentId))
-
-  const recommentWriting = ()=> {
-    setSelectCommentId(commentId)
-    setWritingRecomment(!writingRecomment)
-    setShowRecomment(!showRecomment)
-  }
-
-  return (
-    <TouchableOpacity 
-    onPress={recommentWriting}>
-    <Text style={{color: '#207AB4', fontSize: 12}}>
-      {recommentList.length===0? '대댓글 쓰기': '대댓글 보기'}
-    </Text>
-  </TouchableOpacity>
   )
 }

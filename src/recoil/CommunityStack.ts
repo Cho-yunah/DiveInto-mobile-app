@@ -261,29 +261,20 @@ export const ImageState = atom({
   default: [],
 });
 
-export const commentState = atom<commentListType[]>({
+export const commentState = atom({
   key: 'commentState',
   default: [],
 });
 
-export const postIdState= atom({
-  key: 'postIdState', 
-  default: 1
-})
+// export const postIdState= atom({
+//   key: 'postIdState', 
+//   default: 1
+// })
 
 export const commentTextState = atom({
   key: 'commentTextState',
   default: {
     content: '',
-  },
-});
-
-export const CommentTextSelector = selector({
-  key: 'CommentTextSelector',
-  get: ({ get }) => {
-    const { content } = get(commentTextState);
-
-    return { content };
   },
 });
 
@@ -306,11 +297,13 @@ export const commentIdState = atom({
   key: 'commentIdState',
   default: 0,
 });
+
+
 export const commentInputButtonState = atom({
   key: 'commentInputButtonState',
   default: false
 })
-export const checkCommentWriter= atom({
+export const checkCommentWriter= atomFamily({
   key: 'checkRecommentWriter',
   default: false
 })

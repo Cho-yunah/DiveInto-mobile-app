@@ -1,18 +1,18 @@
 import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import {RecommentDetailStyles as styles} from './styles'
+import {RecommentDetailStyles as styles} from '../styles'
 import { getInstanceATK } from '@lib/api/axios'
 import { atkState, checkRecommentWriter, decodeTokenType, recommentItemType, recommentRequestState, recommentState } from '@recoil/CommunityStack'
 import {View, Text, Image, TouchableOpacity} from 'react-native'
 import { TimeOfWriting } from '@components/CommunityMain/TimeOfWriting'
 import jwt_decode from "jwt-decode";
-import { recommentListType } from './types'
+import { RecommentListType } from '../types'
 
 export const RecommentItem =({nickName, profileUrl, dateOfWriting, content, recommentId, commentId}: recommentItemType) => {
 
   const token = useRecoilValue(atkState)
   const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null
-  const recommentWriterInfo = useRecoilValue<recommentListType[]>(recommentState(commentId))
+  const recommentWriterInfo = useRecoilValue<RecommentListType[]>(recommentState(commentId))
   const [recommentWriter] = recommentWriterInfo.map(item=> item.accountModel.id)
   const [isRecommentWriter, setIsRecommentWriter] = useRecoilState(checkRecommentWriter)
 
@@ -48,18 +48,12 @@ export const RecommentItem =({nickName, profileUrl, dateOfWriting, content, reco
       <View style={styles.contentBox} >
         <Text style={styles.recomment} >{content}</Text>
         {isRecommentWriter ?
-          <DeleteBtn requestDelete={requestDelete}/>
+          <TouchableOpacity onPress={requestDelete}>
+            <Text style={styles.deleteBtn}>삭제</Text>
+          </TouchableOpacity>
           : null
         }
       </View>
     </View>
-  )
-}
-
-const DeleteBtn= ({requestDelete}) => {
-  return (
-    <TouchableOpacity onPress={requestDelete}>
-      <Text style={styles.deleteBtn}>삭제</Text>
-    </TouchableOpacity>
   )
 }

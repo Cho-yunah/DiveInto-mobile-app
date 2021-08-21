@@ -4,14 +4,15 @@ import { useRecoilValue } from 'recoil'
 import {ContentsStyle as styles} from './styles'
 import { ImageState } from '@recoil/CommunityStack'
 
-export default function DetailContents({content} : any) {
-  const imageArr = useRecoilValue (ImageState)
+type ImageType = {
+  id: number,
+  imageUrl: string
+}
 
-  const ImageItem =({item}: any) => {
-    return <Image 
-              style={styles.contentsImage} 
-              source={{uri: item.imageUrl}} />
-  }
+export default function DetailContents({content} : {content: string}) {
+
+  const imageArr = useRecoilValue<ImageType[]> (ImageState)
+  console.log(imageArr)
 
   return (
     <View style= {styles.contentsContainer}>
@@ -25,9 +26,12 @@ export default function DetailContents({content} : any) {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             disableVirtualization={false} 
-            renderItem= {({item, index})=> {
-              return <ImageItem item={item} />
-            }}
+            keyExtractor={(item=> `communityImg${item.id}`)}
+            renderItem= {({item})=> (
+              <Image 
+                style={styles.contentsImage} 
+                source={{uri: item.imageUrl}} />
+            )}
             nestedScrollEnabled={true}
           />
       </View>

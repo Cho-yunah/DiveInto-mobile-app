@@ -1,16 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, FlatList} from 'react-native';
-import { useRecoilValue } from 'recoil';
-import { commentLoadingState, commentState } from '@recoil/CommunityStack';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { commentListPageState, commentLoadingState, commentState } from '@recoil/CommunityStack';
 import { useRequestComments } from '@components/CommunityDetail/useRequestComments';
 import {CommentItem} from '@components/CommunityDetail/CommentItem';
 import CommonLoading  from '@components/common/CommonLoading';
+import { useRequestRecomments } from './useRequestRecomments';
+import { isDate } from 'date-fns';
+import { CommentListType } from './types';
 
 export default function CommentDetail({id}:{id: number}) { 
   useRequestComments({id})
+  // useRequestRecomments({commentId}) // 대댓글 요청 
 
-  const commentList = useRecoilValue(commentState)
+  const commentList = useRecoilValue<CommentListType[]>(commentState)
   const commentLoading = useRecoilValue(commentLoadingState)
+  const [callOnScrollEnd, setCallOnScrollEnd] = useState(false)
+  const [ commentListPage , setCommentListPage ] = useRecoilState(commentListPageState)
+  
+
+  // comments 더 가져오기
+  const commentsLoadMore= ()=> { 
+    if( commentLoading ) return 
+    setCommentListPage(commentListPage +1 ) 
+  }
 
   return (
     < >
@@ -33,6 +46,11 @@ export default function CommentDetail({id}:{id: number}) {
             commentId= {item.commentModel.id}
           />
         )}
+        onEndReached={() => setCallOnScrollEnd(true)}
+        onMomentumScrollEnd={() => {
+        callOnScrollEnd && commentsLoadMore()
+        setCallOnScrollEnd(false)
+        }}
       />
     )
     : (<View></View>)}

@@ -21,11 +21,11 @@ export const DetailInfoStyle = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: '600',
-    lineHeight: 21
+    paddingVertical: 3,
   },
   dateStyle: {
     fontSize: 12,
-    lineHeight: 20.4,
+    padding: 2,
     color: Color.DarkgrayText
   },
   buttons: {
@@ -57,7 +57,6 @@ export const ContentsStyle = StyleSheet.create({
     marginBottom: 5,
   },
   textStyle: {
-    lineHeight: 25,
     marginHorizontal: 19,
     color: '#202020',
   },
@@ -196,6 +195,10 @@ export const CommentDetailStyles = StyleSheet.create({
     marginTop: 10,
     // lineHeight: 14
   },
+  showingRecomment: {
+    // backgroundColor: 'skyblue',
+    overflow: "hidden",
+  },
   buttonBox: {
     paddingVertical:10,
     marginBottom: 5,
@@ -206,7 +209,7 @@ export const CommentDetailStyles = StyleSheet.create({
     width: 55,
     flexDirection: 'row',
     justifyContent: 'space-between',
-  }
+  },
 })
 
 export const RecommentDetailStyles = StyleSheet.create({
@@ -217,6 +220,7 @@ export const RecommentDetailStyles = StyleSheet.create({
     padding: 10,
     marginVertical: 6
   },
+
   writerInfo: {
     flexDirection: 'row',
     alignItems: 'center',

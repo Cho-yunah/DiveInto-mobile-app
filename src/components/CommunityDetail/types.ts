@@ -1,4 +1,4 @@
-export type commentItemType = {
+export type CommentItemType = {
   nickName: string,
   profileUrl: string,
   dateOfWriting: string,
@@ -14,7 +14,7 @@ export type CommentIdProps ={
   commentId : number,
 }
 
-export type commentListType = {
+export type CommentListType = {
   accountModel: {
     id: number,
     nickName: '',
@@ -27,7 +27,7 @@ export type commentListType = {
   }
 }
 
-export type recommentListType = {
+export type RecommentListType = {
   accountModel: {
     id: number,
     nickName: '',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -6,13 +6,17 @@ import CommonModal from '@components/common/CommonModal';
 import { DetailInfoStyle as styles } from './styles';
 import { requestDeleteCommunity } from '@components/CommunityPosting/requestPostCommunityImages';
 import {
+  atkState,
   checkWriterState,
   communityItemSelector,
   refreshQuestionState,
   refreshShareState,
   showModalState,
   writerInfoState,
+  writerInfoType,
 } from '@recoil/CommunityStack';
+import jwt_decode from "jwt-decode";
+import { decodeTokenType } from './types';
 
 export default function DetailInfo({ id }: {id: number}) {
   const navigation = useNavigation();
@@ -21,11 +25,12 @@ export default function DetailInfo({ id }: {id: number}) {
   const { title } = useRecoilValue(communityItemSelector);
   const [show, setShow] = useRecoilState(showModalState);
   const writer = useRecoilValue(writerInfoState);
-  const checkWriter = useRecoilValue(checkWriterState)
   // console.log(checkWriter)
-  
-  const basicProfilelUrl =
-    'https://img.freepik.com/free-vector/swimmer-dives-into-water-from-splash-watercolors-illustration-paints_291138-350.jpg?size=626&ext=jpg';
+
+  const token = useRecoilValue(atkState)
+  const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null;
+  const writerInfo= useRecoilValue<writerInfoType>(writerInfoState)
+  const [checkWriter, setCheckWriter] = useRecoilState(checkWriterState)
 
   // 삭제 확인 모달
   const toggleShowModal = () => {
@@ -46,6 +51,13 @@ export default function DetailInfo({ id }: {id: number}) {
     }
   };
 
+  useEffect(()=> {
+    // 로그인한 사람과 글 게시한 사람이 일치하는지
+    decodeToken.user_name == writerInfo.id 
+      ? setCheckWriter(true)
+      : setCheckWriter(false)
+  },[writerInfo.id ])
+
   return (
     <View>
       <View style={styles.writerInfoBox}>
@@ -54,12 +66,10 @@ export default function DetailInfo({ id }: {id: number}) {
             style={styles.writerImage}
             source={{ uri: writer.profileImageUrl }}
           />
-        ) : (
-          <Image
-            style={styles.writerImage}
-            source={{ uri: basicProfilelUrl }}
-          />
-        )}
+         ) : (
+          <View style={styles.writerImage}>
+          </View>
+         )}
         <View>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.dateStyle}>{writer.nickName}</Text>

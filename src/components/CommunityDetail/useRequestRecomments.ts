@@ -4,7 +4,6 @@ import instance, { getInstanceATK } from "@lib/api/axios"
 import { commentListPageState, 
          recommentLoadingState, 
          recommentState, 
-         writingRecommentState, 
          recommentRequestState } 
   from "@recoil/CommunityStack"
 import { CommentIdProps, recommentListType } from './types';
@@ -12,10 +11,8 @@ import { CommentIdProps, recommentListType } from './types';
 export const useRequestRecomments= ({commentId}: CommentIdProps) => {
   const [recommentList, setRecommentList] = useRecoilState(recommentState(commentId))
   const setRecommentLoading = useSetRecoilState(recommentLoadingState)
-  const setWritingRecomment = useSetRecoilState(writingRecommentState)
   const recommentListPage = useRecoilValue(commentListPageState)
   const [recommentSuccess, setRecommentSuccess] = useRecoilState(recommentRequestState)
-  // const  setShowRecomment = useSetRecoilState(showRecommentState(commentId))
 
   useEffect(()=> {
     const requestRecomments= async() => {
@@ -27,7 +24,6 @@ export const useRequestRecomments= ({commentId}: CommentIdProps) => {
         recommentResource.data._embedded
          ? setRecommentList(recommentResource.data._embedded.commentCommentsModelList)
          : setRecommentList([])
-         setWritingRecomment(false)
          setRecommentSuccess(false)
         }
       catch(e) {
@@ -36,6 +32,6 @@ export const useRequestRecomments= ({commentId}: CommentIdProps) => {
       setRecommentLoading(false)
     }
     requestRecomments()
-  },[commentId, recommentSuccess ])
+  },[recommentSuccess ])
   return recommentList;
 }
