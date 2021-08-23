@@ -17,6 +17,7 @@ import { commentIdState, commentState,
          showRecommentState, writerInfoState, 
       } from '@recoil/CommunityStack';
 import {LikeBtn} from '@components/CommunityMain/LikeBtn';
+import { CommentListType } from '@/src/components/CommunityDetail/types';
 
 export default function CommunityDetailScreen({route, navigation}: CommunityDetailProps) {
   

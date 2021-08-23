@@ -5,7 +5,7 @@ import {
   selectorFamily,
   DefaultValue,
 } from 'recoil';
-import { commentListType, recommentListType } from '../components/CommunityDetail/types';
+import { CommentListType } from '../components/CommunityDetail/types';
 
 // 토큰 받기
 export type decodeTokenType = {
@@ -110,6 +110,7 @@ export const communityListState = atom<ContentItem[]>({
   key: 'communityListState',
   default: [],
 });
+
 
 export const likedListState = atom<ContentItem[]>({
   key: 'likedListState',
@@ -261,10 +262,24 @@ export const ImageState = atom({
   default: [],
 });
 
-export const commentState = atom({
+export const commentState = atom<CommentListType[]>({
   key: 'commentState',
   default: [],
 });
+
+export const commentIdSelector = selector({
+  key: 'commentIdSelector',
+  get: ({get}) => {
+    const commentList = get(commentState);
+
+    if(!commentList.length) return [];
+    const commentIdSelector= commentList.map(commentItem => {
+      return commentItem.accountModel.id
+    })
+    return commentIdSelector
+  }
+})
+
 
 // export const postIdState= atom({
 //   key: 'postIdState', 
@@ -297,7 +312,6 @@ export const commentIdState = atom({
   key: 'commentIdState',
   default: 0,
 });
-
 
 export const commentInputButtonState = atom({
   key: 'commentInputButtonState',

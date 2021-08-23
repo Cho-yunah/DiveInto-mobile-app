@@ -1,5 +1,8 @@
-import {StyleSheet} from 'react-native'
+import {StyleSheet, Dimensions} from 'react-native'
 import * as Color from '@config/colors';
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGTH = Dimensions.get('window').height;
 
 export const DetailInfoStyle = StyleSheet.create({
   writerInfoBox: {
@@ -82,7 +85,7 @@ export const CommentInputStyle = StyleSheet.create({
     backgroundColor: Color.Background
   },
   commentInputBox: {
-    width: '91%',
+    width: WIDTH-40,
     height: 46,
     paddingRight: 38,
     paddingLeft: 15, 
@@ -157,17 +160,17 @@ export const CommentInputStyle = StyleSheet.create({
 
 export const CommentDetailStyles = StyleSheet.create({
   flatlistContainer: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   commentBox: {
-    width: 353,
+    width: WIDTH-40,
     marginVertical: 6,
-    marginHorizontal: 17,
+    marginHorizontal: '5%',
     paddingVertical:10,
     paddingHorizontal: 16,
     borderRadius: 10,
     backgroundColor: '#fff',
-    color: '#202020'
+    color: '#202020',
   },
   commentInfo: {
     flexDirection: 'row',

@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { MyLectureStyle as styles, shadow } from './styles';
 import { Organization, Level, Region } from '@typing/common';
@@ -9,6 +9,9 @@ import Price from './Price';
 import MainImage from './MainImage';
 
 import axios from 'axios';
+
+import { SetRecoilState, useSetRecoilState } from 'recoil';
+import { LectureIdList } from '@recoil/Instructor/AdmMyLecture';
 
 export function MyLecture({
   id,
@@ -24,9 +27,14 @@ export function MyLecture({
   equipmentNames,
   leftScheduleDate,
   isClosed,
+  onPress = () => {},
 }: InstructorMyLecture) {
   return (
-    <TouchableOpacity style={[shadow, { marginRight: 5 }]} activeOpacity={0.7}>
+    <TouchableOpacity
+      style={[shadow, { marginRight: 5 }]}
+      activeOpacity={0.7}
+      onPress={() => onPress(id)}
+    >
       <View style={styles.lectureContainer}>
         <MainImage image={imageUrl} />
 
@@ -54,24 +62,45 @@ export function MyLecture({
   );
 }
 
-export default function MyLectureList() {
+type filterTagList = '등록순' | '최신강의순' | '낮은가격순' | '높은가격순';
+
+export default function MyLectureList({
+  onPress = () => {},
+  filter,
+}: {
+  onPress?: (lectureId: number) => void;
+  filter?: filterTagList;
+}) {
   const [lectures, setLectures] = useState<InstructorMyLecture[]>();
+  const setLectureIdList = useSetRecoilState(LectureIdList);
   useLayoutEffect(() => {
     try {
       const fetch = async () => {
         const res = await axios.get(
-          'http://52.79.225.4:8081/lecture/manage/list?page=0&size=5',
+          'http://52.79.225.4:8081/lecture/manage/list?page=0&size=30',
         );
 
         const status = res.status;
         if (status !== 200) throw new Error('강사 내강의 조회 에러');
         setLectures(res.data._embedded.myLectureInfoList);
+        setLectureIdList(
+          res.data._embedded.myLectureInfoList.map(
+            (lectureinfo: InstructorMyLecture) => lectureinfo.id,
+          ),
+        );
       };
       fetch();
     } catch (e) {
       console.log('강사 내강의 조회 에러');
     }
   }, []);
+
+  useEffect(() => {
+    if (filter === '낮은가격순')
+      setLectures(lectures?.sort((a, b) => b.price - a.price));
+    else if(filter === '높은가격순')
+      setLectures(lectures?.sort((a, b) => a.price - b.price));
+  }, [filter]);
 
   return (
     <ScrollView
@@ -95,6 +124,7 @@ export default function MyLectureList() {
             period={lecture.period}
             leftScheduleDate={lecture.leftScheduleDate}
             isClosed={lecture.isClosed}
+            onPress={onPress}
           />
         ))}
     </ScrollView>

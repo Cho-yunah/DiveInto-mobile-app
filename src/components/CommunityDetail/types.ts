@@ -1,9 +1,14 @@
+export type ImageType = {
+  id: number,
+  imageUrl: string
+}
 export type CommentItemType = {
   nickName: string,
   profileUrl: string,
   dateOfWriting: string,
   content: string,
   commentId: number,
+  commentWriterId: number
   // editing: void
 }
 export type decodeTokenType = {

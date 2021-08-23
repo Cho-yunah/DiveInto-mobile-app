@@ -3,16 +3,11 @@ import { View , Text, Image, FlatList} from 'react-native'
 import { useRecoilValue } from 'recoil'
 import {ContentsStyle as styles} from './styles'
 import { ImageState } from '@recoil/CommunityStack'
-
-type ImageType = {
-  id: number,
-  imageUrl: string
-}
+import { ImageType } from './types'
 
 export default function DetailContents({content} : {content: string}) {
 
   const imageArr = useRecoilValue<ImageType[]> (ImageState)
-  console.log(imageArr)
 
   return (
     <View style= {styles.contentsContainer}>

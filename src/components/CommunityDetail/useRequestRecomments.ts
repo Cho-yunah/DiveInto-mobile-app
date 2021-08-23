@@ -6,7 +6,7 @@ import { commentListPageState,
          recommentState, 
          recommentRequestState } 
   from "@recoil/CommunityStack"
-import { CommentIdProps, recommentListType } from './types';
+import { CommentIdProps } from './types';
 
 export const useRequestRecomments= ({commentId}: CommentIdProps) => {
   const [recommentList, setRecommentList] = useRecoilState(recommentState(commentId))
@@ -32,6 +32,6 @@ export const useRequestRecomments= ({commentId}: CommentIdProps) => {
       setRecommentLoading(false)
     }
     requestRecomments()
-  },[recommentSuccess ])
+  },[ recommentSuccess ])
   return recommentList;
 }
