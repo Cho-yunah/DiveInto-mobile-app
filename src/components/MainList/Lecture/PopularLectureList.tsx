@@ -11,7 +11,7 @@ const lectureExm = require('@assets/LectureExm.png');
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 
-const PopularLecture = ({
+export const PopularLecture = ({
   id,
   title = '프리다이빙',
   organization = 'AIDA',

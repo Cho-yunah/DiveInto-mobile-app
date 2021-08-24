@@ -7,6 +7,8 @@ export type RootLectureStack = {
   LectureDetail: { lectureId: number };
   ReserveLecture: { lectureId: number };
   RequestPayment: undefined;
+  '강의 키워드 검색': undefined;
+  '강의 필터 검색': undefined;
 };
 export type MainListProps = StackScreenProps<RootLectureStack, 'MainList'>;
 
@@ -23,4 +25,14 @@ export type ReserveLectureProps = StackScreenProps<
 export type RequestPaymentProps = StackScreenProps<
   RootLectureStack,
   'RequestPayment'
+>;
+
+export type KeywordSearchProps = StackScreenProps<
+  RootLectureStack,
+  '강의 키워드 검색'
+>;
+
+export type FilterSearchProps = StackScreenProps<
+  RootLectureStack,
+  '강의 필터 검색'
 >;
