@@ -16,7 +16,7 @@ export default function Recomment({commentId}) {
       <RecommentInput commentId={commentId}/>
       <FlatList
         data={recommentList}
-        keyExtractor={(item)=> `${item.accountModel.id}${item.accountModel.nickName}`}
+        keyExtractor={(item)=> `${item.commentCommentModel.id}${item.accountModel.nickName}`}
         disableVirtualization={false} 
         renderItem={({item}) => (
           <RecommentItem

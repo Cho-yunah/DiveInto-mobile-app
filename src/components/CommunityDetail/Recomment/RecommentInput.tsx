@@ -1,5 +1,5 @@
 import { getInstanceATK } from '@api/axios';
-import { recommentRequestState, recommentTextState, writingRecommentState } from '@recoil/CommunityStack';
+import { recommentRequestState, recommentTextState } from '@recoil/CommunityStack';
 import React from 'react'
 import {KeyboardAvoidingView, TextInput, TouchableOpacity, Text } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -10,7 +10,6 @@ export default function RecommentInput({commentId}: {commentId: number}) {
   
   const [recomment, setRecomment] = useRecoilState(recommentTextState)
   const setRecommentSuccess = useSetRecoilState(recommentRequestState)
-  const [writingRecomment, setWritingRecomment] = useRecoilState(writingRecommentState)
 
    // 대댓글 추가
    const addRecomment = async() => {
@@ -20,12 +19,11 @@ export default function RecommentInput({commentId}: {commentId: number}) {
       const {data} = await instanceAtk.post(`/community/comment/${commentId}/comment`, recomment)
       // console.log(data)
       setRecommentSuccess(true)
-      setWritingRecomment(true)
       setRecomment({content:''})
     } catch(e) {
       console.log(e)
     }
-  }
+  } 
 
   return (
     <KeyboardAvoidingView
@@ -41,7 +39,8 @@ export default function RecommentInput({commentId}: {commentId: number}) {
       />
       <TouchableOpacity >
         <AntDesign 
-          name='arrowright' 
+          name='arrowright'
+          onPress={addRecomment} 
           style={recomment.content.length >= 3
                   ? styles.recommentArrowIcon 
                   : styles.arrowIcon}

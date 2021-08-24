@@ -14,14 +14,6 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#D8D8D8',
     borderRadius: 5,
-    // shadowOffset: {
-    //   width: 2,
-    //   height: 2,
-    // },
-    // shadowColor: "#D8D8D8",
-    // shadowOpacity: 0.8,
-    // shadowRadius: 8,
-    // elevation: 3,
   },
   arrowIcon: {
     position: 'absolute',
@@ -31,18 +23,10 @@ export const styles = StyleSheet.create({
     color: '#D8D8D8',
     padding: 5
   },
-  activeArrowIcon: {
+  recommentArrowIcon: {
     position: 'absolute',
     bottom: 11,
     right: 5,
-    fontSize:24,
-    color: '#207AB4',
-    padding: 5
-  },
-  recommentArrowIcon: {
-    position: 'absolute',
-    bottom: 35,
-    right: 25,
     fontSize:24,
     color: '#38d9a9',
     padding: 5

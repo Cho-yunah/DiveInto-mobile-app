@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList} from 'react-native';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { commentIdSelector, commentIdState, commentListPageState, commentLoadingState, commentState } from '@recoil/CommunityStack';
+import { commentListPageState, commentLoadingState, commentState } from '@recoil/CommunityStack';
 import { useRequestComments } from '@components/CommunityDetail/useRequestComments';
 import {CommentItem} from '@components/CommunityDetail/CommentItem';
 import CommonLoading  from '@components/common/CommonLoading';
-import { useRequestRecomments } from './useRequestRecomments';
 import { CommentListType } from './types';
 
 
@@ -62,7 +61,7 @@ export default function CommentDetail({id}:{id: number}) {
         setCallOnScrollEnd(false)
         }}
       />
-    )
+    ) 
     : (<View></View>)}
     </>
   )
