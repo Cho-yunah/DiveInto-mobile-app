@@ -1,4 +1,5 @@
 import { getInstanceATK } from '@/src/lib/api/axios';
+import useAutoCloseModal from '@/src/lib/hooks/useAutoCloseModal';
 import { liekCollectionRefreshState } from '@/src/recoil/Global';
 import {
   lectureIdState,
@@ -18,6 +19,7 @@ const LectureDetailLikeBtn = () => {
   const setLecutreRefresh = useSetRecoilState(
     liekCollectionRefreshState('lecture'),
   );
+  const { showModal } = useAutoCloseModal('lectureLike');
 
   const requestLikeOrUnlike = async (isLike: boolean) => {
     const url = isLike ? `/lecture/unlike` : `/lecture/like`;
@@ -33,14 +35,19 @@ const LectureDetailLikeBtn = () => {
         ? await instanceATK.delete(url, config)
         : await instanceATK.post(url, body);
 
-      setSmallModalMessage(
+      // setSmallModalMessage(
+      //   isLike ? '강의 찜하기 취소 했습니다.' : '강의 찜하기 완료 했습니다.!',
+      // );
+
+      showModal(
         isLike ? '강의 찜하기 취소 했습니다.' : '강의 찜하기 완료 했습니다.!',
       );
       setIsLike(isLike => !isLike);
       setLecutreRefresh(prevRefresh => prevRefresh + 1);
     } catch (e) {
       console.log(e?.response?.data);
-      setSmallModalMessage(e?.response?.data?.msg || '찜하기 실패하였습니다.');
+      // setSmallModalMessage(e?.response?.data?.msg || '찜하기 실패하였습니다.');
+      showModal(e?.response?.data?.msg || '찜하기 실패하였습니다.');
     }
   };
 

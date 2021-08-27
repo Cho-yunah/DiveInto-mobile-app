@@ -5,21 +5,23 @@ import { useNavigation } from '@react-navigation/native';
 import { CancelBtnStyles as styles } from './styles';
 import { getInstanceATK } from '@/src/lib/api/axios';
 import { useRecoilCallback } from 'recoil';
-import { ReserveLectureCachingState } from '@/src/recoil/ProfileStack';
+import { ReserveLectureCachingState } from '@recoil/ProfileStack/store';
+import useAutoCloseModal from '@/src/lib/hooks/useAutoCloseModal';
 
 function CancelBtn({ reservationId }: { reservationId: number }) {
   const navigation = useNavigation();
+  const { showModal } = useAutoCloseModal('detailReservation');
   const onDeleteNextLecture = useRecoilCallback(({ set }) => async () => {
     const instanceAtk = await getInstanceATK();
 
     try {
-      const res = await instanceAtk.delete(`/reservation/${reservationId}`);
+      await instanceAtk.delete(`/reservation/${reservationId}`);
       set(ReserveLectureCachingState, prev => prev + 1);
+      showModal('예약한 강의롤 취소하였습니다.!');
       navigation.goBack();
-
-      console.log(res);
     } catch (err) {
-      console.log(err);
+      showModal('결제를 취소를 실패했습니다. 다시 시도해주세요!');
+      console.log(err.response);
     }
   });
 

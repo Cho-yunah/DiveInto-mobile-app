@@ -5,13 +5,12 @@ import { useRecoilValue } from 'recoil';
 import { styles } from './styles';
 import { CommunityLikeItemType } from './types';
 import { CommunityItem } from '@components/CommunityMain';
-import { requestLikeListSelector } from '@recoil/ProfileStack';
+import { getLikeListSelector } from '@/src/recoil/ProfileStack/dataFetch';
 import CommonEmptyView from '@components/common/CommonEmptyView';
+import withSuspense from '@/src/lib/HOC/withSuspense';
 
-export default function CommunityLike() {
-  const communityLikeList = useRecoilValue(
-    requestLikeListSelector('community'),
-  );
+function CommunityLikeScreen() {
+  const communityLikeList = useRecoilValue(getLikeListSelector('community'));
 
   if (communityLikeList.length === 0) {
     return (
@@ -51,3 +50,5 @@ export default function CommunityLike() {
     </View>
   );
 }
+
+export default withSuspense(CommunityLikeScreen);
