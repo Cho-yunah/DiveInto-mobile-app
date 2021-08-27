@@ -58,5 +58,5 @@ function NextLectureScreen() {
   );
 }
 
-export default NextLectureScreen;
-// export default withSuspense(NextLectureScreen);
+// export default NextLectureScreen;
+export default withSuspense(NextLectureScreen);
