@@ -4,7 +4,7 @@ import { View, Text, ScrollView } from 'react-native';
 import { ReserveCommonStyles as styles } from './styles';
 import EachCommonInfo from './EachCommonInfo';
 import { useRecoilValue } from 'recoil';
-import { reserveDetailListState } from '@/src/recoil/ProfileStack';
+import { reserveDetailListState } from '@recoil/ProfileStack/store';
 
 export default function ReserveUser() {
   const list = useRecoilValue(reserveDetailListState);

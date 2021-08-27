@@ -3,8 +3,8 @@ import { View } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import { styles } from './styles';
-import NextLectureScreen from './WrappingNextLecture';
-import LastLectureScreen from './WrappingLastLecture';
+import NextLectureScreen from './NextLecture';
+import LastLectureScreen from './LastLecture';
 
 const Tab = createMaterialTopTabNavigator();
 export default function LectureScheduleScreen() {

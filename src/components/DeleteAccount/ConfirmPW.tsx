@@ -4,7 +4,7 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { confirmPWStyle as styles } from './styles';
-import { deletePasswordState } from '@recoil/ProfileStack';
+import { deletePasswordState } from '@recoil/ProfileStack/store';
 
 export default function ConfirmPW() {
   const [password, setPassword] = useRecoilState(deletePasswordState);

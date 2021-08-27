@@ -6,9 +6,9 @@ import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { deleteReasonStyle as styles } from './styles';
 import {
   deleteReasonState,
-  deleteReasonStateType,
   etcDeleteReasonState,
-} from '@/src/recoil/ProfileStack';
+} from '@recoil/ProfileStack/store';
+import { deleteReasonStateType } from '@/src/recoil/ProfileStack/types';
 
 const Reason = [
   '원하는 정보가 존재하지 않아서',

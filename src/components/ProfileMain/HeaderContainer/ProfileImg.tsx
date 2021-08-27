@@ -3,8 +3,7 @@ import { View, Image, Text } from 'react-native';
 import { useRecoilValue } from 'recoil';
 
 import { mainHeaderStyles as styles } from './styles';
-import { ProfileImageProps } from './types';
-import { ProfileImageURIState } from '@/src/recoil/ProfileStack';
+import { ProfileImageURIState } from '@recoil/ProfileStack/store';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import { basicThumnailUrl } from '@/src/config/basicThumnailUrl';
 

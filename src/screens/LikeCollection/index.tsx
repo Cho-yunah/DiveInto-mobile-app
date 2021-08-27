@@ -3,8 +3,9 @@ import { View, Text } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import styles from '../CommunityMain/styles';
-import LectureLikeScreen from './WrappingLectureLike';
-import CommunityLikeScreen from './WrappingCommunityLike';
+import LectureLikeScreen from './LectureLike';
+// import CommunityLikeScreen from './WrappingCommunityLike';
+import CommunityLikeScreen from './CommunityLike';
 
 const Tab = createMaterialTopTabNavigator();
 

@@ -9,7 +9,7 @@ import { TouchSwipeStyle as styles, CommonStyles } from './styles';
 import { CommonListProps, RightSwipeProps } from './types';
 import CommonModal from '@components/common/CommonModal';
 import { getInstanceATK } from '@/src/lib/api/axios';
-import { ReserveLectureCachingState } from '@/src/recoil/ProfileStack';
+import { ReserveLectureCachingState } from '@/src/recoil/ProfileStack/store';
 
 export default function TouchSwipe({
   imgComponent,

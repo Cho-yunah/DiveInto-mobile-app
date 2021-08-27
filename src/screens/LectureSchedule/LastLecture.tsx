@@ -4,12 +4,13 @@ import { useRecoilValue } from 'recoil';
 
 import { styles } from './styles';
 import { LectureImg, LectureContents } from '@components/LectureSchedule';
-import { requestLectureScheduleListSelector } from '@recoil/ProfileStack';
+import { getLectureScheduleListSelector } from '@/src/recoil/ProfileStack/dataFetch';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 import LastLectureSchedule from '@components/LectureSchedule/LastLectureSchedule';
-export default function LastLecture() {
+import withSuspense from '@/src/lib/HOC/withSuspense';
+function LastLectureScreen() {
   const reservationList = useRecoilValue(
-    requestLectureScheduleListSelector('last'),
+    getLectureScheduleListSelector('last'),
   );
 
   if (reservationList.length === 0) {
@@ -52,6 +53,8 @@ export default function LastLecture() {
     </View>
   );
 }
+
+export default withSuspense(LastLectureScreen);
 
 //   const ListEl = reservationList ? (
 //     reservationList.length !== 0 ? (
