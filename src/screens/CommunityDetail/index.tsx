@@ -10,7 +10,8 @@ import {
 } from '@components/CommunityDetail';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useRequestCommunityItem } from '@components/CommunityDetail/useRequestCommunityItem';
-import { commentIdState, commentState, 
+import { commentIdState, 
+  commentInputButtonState, commentState, 
          communityItemSelector, 
          communityItemState, 
          ImageState, likeState, recommentState, 
@@ -33,6 +34,7 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
   const setRecommentList = useSetRecoilState(recommentState(commentId))
   const setCommentList = useSetRecoilState(commentState)
   const setShowRecomment = useSetRecoilState(showRecommentState(commentId));
+  const setEditButton = useSetRecoilState(commentInputButtonState)
 
   //  좋아요 
   const Clickedlike=() => {
@@ -60,8 +62,7 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
     setCommentList([])
     setRecommentList([])
     setShowRecomment(false)
-    // setEditButton(false),
-    // setWritingRecomment(false)
+    setEditButton(false)
   }
 
   useEffect(() => {

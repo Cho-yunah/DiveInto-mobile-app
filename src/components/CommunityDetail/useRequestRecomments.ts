@@ -20,7 +20,7 @@ export const useRequestRecomments= ({commentId}: CommentIdProps) => {
       const instanceAtk = await getInstanceATK();
       try{
         const recommentResource = await instance.get(`/community/comment/${commentId}/comment?page=${recommentListPage}&size=3`)
-        console.log(recommentResource)
+        // console.log(recommentResource)
         recommentResource.data._embedded
          ? setRecommentList(recommentResource.data._embedded.commentCommentsModelList)
          : setRecommentList([])

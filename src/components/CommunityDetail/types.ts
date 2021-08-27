@@ -15,8 +15,10 @@ export type decodeTokenType = {
   exp: string,
   user_name: string,
 }
-export type CommentIdProps ={
-  commentId : number,
+export type IdProps ={
+  id ?: number,
+  commentId ?: number,
+  recommentId ?: number
 }
 
 export type CommentListType = {
@@ -44,3 +46,10 @@ export type RecommentListType = {
     content: ''
   }
 }
+
+export type DetailInfoType = {
+  id: number;
+  title: string;
+  category: string;
+  dateOfRegistration: string;
+};

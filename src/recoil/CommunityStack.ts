@@ -239,13 +239,6 @@ export const communityItemSelector = selector({
 //   default: 
 // })
 
-export type DetailInfoType = {
-  id: number;
-  title: string;
-  category: string;
-  dateOfRegistration: string;
-};
-
 export type ImageArrStateType = {
   size: number;
   uri: string;
@@ -267,23 +260,17 @@ export const commentState = atom<CommentListType[]>({
   default: [],
 });
 
-export const commentIdSelector = selector({
-  key: 'commentIdSelector',
-  get: ({get}) => {
-    const commentList = get(commentState);
+// export const commentIdSelector = selector({
+//   key: 'commentIdSelector',
+//   get: ({get}) => {
+//     const commentList = get(commentState);
 
-    if(!commentList.length) return [];
-    const commentIdSelector= commentList.map(commentItem => {
-      return commentItem.accountModel.id
-    })
-    return commentIdSelector
-  }
-})
-
-
-// export const postIdState= atom({
-//   key: 'postIdState', 
-//   default: 1
+//     if(!commentList.length) return [];
+//     const commentIdSelector= commentList.map(commentItem => {
+//       return commentItem.accountModel.id
+//     })
+//     return commentIdSelector
+//   }
 // })
 
 export const commentTextState = atom({
@@ -291,11 +278,6 @@ export const commentTextState = atom({
   default: {
     content: '',
   },
-});
-
-export const showModalState = atom({
-  key: 'showModalState',
-  default: false,
 });
 
 export const commentRequestState = atom({
@@ -337,11 +319,6 @@ export const isEditedState = atom({
 });
 
 /// 대댓글///
-export const writingRecommentState = atom({
-  key: 'writingRecommentState',
-  default: false,
-});
-
 export const recommentTextState = atom({
   key: 'recommentTextState',
   default: {

@@ -39,14 +39,6 @@ export const DetailInfoStyle = StyleSheet.create({
     width: 55,
     justifyContent: 'space-between',
     alignItems: 'center'
-  },
-  modify: {
-    color: '#A9BBC9',
-    fontSize: 12
-  },
-  delete: {
-    color: '#E93A55',
-    fontSize: 12
   }
 })
 
@@ -150,8 +142,14 @@ export const CommentInputStyle = StyleSheet.create({
     color: '#38d9a9',
     padding: 5
   },
-  editButton: {
+  activeEditBtn: {
     color: '#207AB4',
+    position: 'absolute',
+    bottom: 45,
+    right: 25,
+  },
+  editBtn: {
+    color: '#D8D8D8',
     position: 'absolute',
     bottom: 45,
     right: 25,
@@ -196,10 +194,8 @@ export const CommentDetailStyles = StyleSheet.create({
   },
   comment: {
     marginTop: 10,
-    // lineHeight: 14
   },
   showingRecomment: {
-    // backgroundColor: 'skyblue',
     overflow: "hidden",
   },
   buttonBox: {
@@ -253,9 +249,4 @@ export const RecommentDetailStyles = StyleSheet.create({
   recomment: {
    flexGrow: 1
   },
-  deleteBtn: {
-    color: '#E93A55', 
-    fontSize: 12, 
-    paddingHorizontal: 5 
-  }
 })

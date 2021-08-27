@@ -12,7 +12,7 @@ import { atkState,
   from "@recoil/CommunityStack"
 import { TimeOfWriting } from '@components/CommunityMain/TimeOfWriting'
 import { useRequestRecomments } from '@components/CommunityDetail/useRequestRecomments'
-import { CommentEditBtn, CommentDeleteBtn } from './ButtonCollection'
+import { EditBtn, DeleteBtn } from './ButtonCollection'
 import Recomment from './Recomment/Recomments'
 
 export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, commentId, commentWriterId}: CommentItemType)=> {
@@ -30,7 +30,7 @@ export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, comme
 
   useEffect(()=> {
     // 댓글 작성자인지 확인
-    decodeToken.user_name == `${commentWriterId}`
+    decodeToken.user_name === `${commentWriterId}`
       ? setIsCommentWriter(true)
       : setIsCommentWriter(false)
   },[commentWriterId])
@@ -40,25 +40,27 @@ export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, comme
 
   const toggleDropdown = () => {
     setCommentId(commentId)
-    setShowRecomment(!showRecomment)
-    if (showRecomment == true ) {
-        Animated.timing(animatedHeight, {
-            toValue: 100,
-            duration: 300,
-            useNativeDriver: false
-        }).start()
-    } else {
-        Animated.timing(animatedHeight, {
-            toValue: 0,
-            duration: 300,
-            useNativeDriver: false
-        }).start()
-    }
+    setShowRecomment((showRecomment) => 
+    {if (showRecomment === false ) {
+          Animated.timing(animatedHeight, {
+              toValue: 100,
+              duration: 300,
+              useNativeDriver: false
+            }).start()
+          return true
+      } else {
+          Animated.timing(animatedHeight, {
+              toValue: 0,
+              duration: 300,
+              useNativeDriver: false
+          }).start()
+          return false
+      } 
+    },)
   }
 
   const interpolatedHeight = animatedHeight.interpolate({
     inputRange: [0, 100],
-    // outputRange: [0, 300]
     outputRange: ["0%", "100%"]
 })
 
@@ -78,7 +80,7 @@ export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, comme
       {/* 댓글내 버튼 모음*/}
       <View style={styles.buttonBox} >
         <TouchableOpacity 
-          onPress={ ()=> toggleDropdown()}>
+          onPress={toggleDropdown}>
           <Text style={{color: '#207AB4', fontSize: 12}}>
              {recommentList.length===0? '대댓글 쓰기': '대댓글 보기'}
           </Text>
@@ -87,8 +89,8 @@ export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, comme
         {/* 댓글을 작성한 사람이 아닐경우 버튼 안보이게 */}
         {isCommentWriter? 
           <View style={styles.edintingBtnBox}>
-            <CommentEditBtn commentId={commentId}/>
-            <CommentDeleteBtn commentId={commentId}/>
+            <EditBtn commentId={commentId}/>
+            <DeleteBtn commentId={commentId}/>
           </View>
           : null
         }

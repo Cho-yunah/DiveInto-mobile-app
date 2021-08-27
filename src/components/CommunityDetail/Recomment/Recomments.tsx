@@ -1,7 +1,6 @@
 import React from 'react'
 import RecommentInput from './RecommentInput'
 import { RecommentItem } from './RecommentItem'
-import {CommentDetailStyles as styles} from '../styles'
 import { useRecoilValue } from 'recoil'
 import { recommentState } from '@recoil/CommunityStack'
 import { FlatList } from 'react-native-gesture-handler'
