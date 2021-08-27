@@ -1,20 +1,19 @@
-import { commentLoadingState, commentState } from '@/src/recoil/CommunityStack';
 import React, { useEffect } from 'react';
-import { FlatList } from 'react-native';
-import { View,} from 'react-native';
+import { View, FlatList} from 'react-native';
 import { useRecoilValue } from 'recoil';
-import { useRequestComments } from './useRequestComments';
-import {CommentItem} from './CommentItem';
+import { commentLoadingState, commentState } from '@recoil/CommunityStack';
+import { useRequestComments } from '@components/CommunityDetail/useRequestComments';
+import {CommentItem} from '@components/CommunityDetail/CommentItem';
 import CommonLoading  from '@components/common/CommonLoading';
 
-export default function CommentDetail({id}) { 
+export default function CommentDetail({id}:{id: number}) { 
   useRequestComments({id})
 
   const commentList = useRecoilValue(commentState)
   const commentLoading = useRecoilValue(commentLoadingState)
 
   return (
-    <View >
+    < >
     {commentList
     ? (
       <FlatList
@@ -37,6 +36,6 @@ export default function CommentDetail({id}) {
       />
     )
     : (<View></View>)}
-    </View>
+    </>
   )
 }

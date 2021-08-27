@@ -20,20 +20,3 @@ export const TimeOfWriting =({time}: Time) => {
 
   return <Text>{timeOfWriting}</Text>
 }
-
-  // moment 시간 계산
-  // const monthInterval = moment().diff(moment(dateOfRegistration), 'months');
-  // const dayInterval = moment().diff(moment(dateOfRegistration), 'days');
-  // const hoursInterval = moment().diff(moment(dateOfRegistration), 'hours');
-  // const minutesInterval = moment().diff(moment(dateOfRegistration), 'minutes');
-
-  // const timeOfWriting =
-  //   dayInterval === 0
-  //     ? (hoursInterval === 0
-  //       ? `${minutesInterval}분 전`
-  //       : `${hoursInterval}시간 전`
-  //     )
-  //     : (0 < dayInterval && dayInterval <= 30
-  //       ? `${dayInterval}일 전`
-  //       : `${monthInterval}달 전`
-  //     );

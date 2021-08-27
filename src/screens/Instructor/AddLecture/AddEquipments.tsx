@@ -19,7 +19,7 @@ export function AddEqipments({ navigation }: AddEquipProps) {
     const onPress = () => navigation.navigate('위치등록');
     navigation.setOptions({
       title: '강의등록',
-      headerRight: () => <NextButton onPress={onPress} text="다음" />,
+      headerRight: () => <NextButton onPress={onPress} text="다음" disable />,
     });
   }, []);
 

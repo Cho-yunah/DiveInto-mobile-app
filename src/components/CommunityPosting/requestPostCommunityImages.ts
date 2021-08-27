@@ -1,4 +1,4 @@
-import { ContentItem, ImageArrStateType, PostingFormType, PostingItemType } from '@/src/recoil/CommunityStack';
+import { ContentItem, ImageArrStateType, PostingFormType, PostingItemType } from '@recoil/CommunityStack';
 import { getInstanceATK } from '../../lib/api/axios';
 
 export type PostingBodyType= {

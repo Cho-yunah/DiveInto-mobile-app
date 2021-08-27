@@ -43,6 +43,7 @@ export const requestPostReviewContentOrImages: RequestPostReviewContentOrImagesT
         return data.reviewId;
       }
     } catch (e) {
-      return e?.response;
+      console.log(e?.response?.data);
+      return e;
     }
   };

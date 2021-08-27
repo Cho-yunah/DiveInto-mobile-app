@@ -9,6 +9,7 @@ import ReserveLectureScreen from '@/src/screens/ReserveLecture';
 import RequestPaymentScreen from '@/src/screens/RequestPayment';
 import DetailReservationScreen from '@/src/screens/DetailReservation';
 import { IsLogin } from '@/src/recoil/Global';
+import WriteReviewScreen from '@/src/screens/WriteReview';
 
 const Stack = createStackNavigator<RootLectureStack>();
 

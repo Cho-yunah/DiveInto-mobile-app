@@ -1,23 +1,26 @@
-import { recommentRequestState } from '@/src/recoil/CommunityStack';
 import { useEffect } from "react"
-import { useRecoilState } from "recoil"
-import instance, { getInstanceATK } from "@/src/lib/api/axios"
-import { commentListPageState, recommentListType, recommentLoadingState, recommentState, writingRecommentState } from "@/src/recoil/CommunityStack"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
+import instance, { getInstanceATK } from "@lib/api/axios"
+import { commentListPageState, 
+         recommentLoadingState, 
+         recommentState, 
+         writingRecommentState, recommentRequestState } 
+  from "@recoil/CommunityStack"
+import { CommentIdProps, recommentListType } from './types';
 
-export const useRequestRecomments= ({commentId}) => {
+export const useRequestRecomments= ({commentId}: CommentIdProps) => {
   const [recommentList, setRecommentList] = useRecoilState<recommentListType[]>(recommentState)
-  const [recommentLoading, setRecommentLoading] = useRecoilState(recommentLoadingState)
-  const [writingRecomment, setWritingRecomment] = useRecoilState(writingRecommentState)
-  const [ recommentListPage , setRecommentListPage ] = useRecoilState(commentListPageState)
+  const setRecommentLoading = useSetRecoilState(recommentLoadingState)
+  const setWritingRecomment = useSetRecoilState(writingRecommentState)
+  const recommentListPage = useRecoilValue(commentListPageState)
   const [recommentSuccess, setRecommentSuccess] = useRecoilState(recommentRequestState)
-  console.log('hh')
 
   useEffect(()=> {
     const requestRecomments= async() => {
       setRecommentLoading(true)
       const instanceAtk = await getInstanceATK();
       try{
-        const recommentResource = await instance.get(`/community/comment/${commentId}/comment?page=${0}&size=3`)
+        const recommentResource = await instance.get(`/community/comment/${commentId}/comment?page=${recommentListPage}&size=3`)
         console.log(recommentResource)
         recommentResource.data._embedded
          ? setRecommentList(recommentResource.data._embedded.commentCommentsModelList)

@@ -45,7 +45,7 @@ LocaleConfig.locales.kr = {
 };
 LocaleConfig.defaultLocale = 'kr';
 
-export default function LectureCalendar({ onDateSelct = () => {} }) {
+export default function LectureCalendar({ onDateSelct }) {
   const [radioChoice, setRadioChoice] = useState(0);
   const radio_props = [
     { label: '원데이 클래스       ', value: 0 },
@@ -56,7 +56,7 @@ export default function LectureCalendar({ onDateSelct = () => {} }) {
 
   // 달력 선택 표시용 상태
   const [markedDatesObjects, setMarkedDatesObjects] = useState({}); // { "2021-02-01": {"selected": true}, "2021-02-02": {"selected": true} }
-  let marked = {};
+  const marked = {};
 
   const onOnedayPress = date => {
     /* --- 달력 컴포넌트 내부 상태 관리 --- */
@@ -75,24 +75,29 @@ export default function LectureCalendar({ onDateSelct = () => {} }) {
     setMarkedDatesObjects(tmp);
 
     // 부모컴포넌트에서 넘어온 추가 함수
-    onDateSelct(dateArray);
+    onDateSelct(dateArray.sort((a, b) => a - b));
   };
 
   const onMultidayPress = date => {
     /* --- 달력 컴포넌트 내부 상태 관리 --- */
-    const tmp = datesArray.concat(date.dateString);
+    const uniqueArray = new Set(datesArray);
+    console.log(uniqueArray);
+
+    if (uniqueArray.has(date.dateString)) uniqueArray.delete(date.dateString);
+    else uniqueArray.add(date.dateString);
+
+    const newDates = Array.from(uniqueArray);
 
     // 달력 렌더링용 오브젝트로 변환
-    tmp.forEach(val => {
+    newDates.forEach(val => {
       marked[val] = { selected: true };
-    }),
-      // // // console.log("dateArray : ", tmp, " Range : ", tmp.length);
+    });
 
-      setDatesArray(tmp);
+    setDatesArray(newDates);
     setMarkedDatesObjects(marked);
 
-    //부모 컴포넌트에서 넘어온 추가 함수
-    onDateSelct(tmp);
+    // 부모 컴포넌트에서 넘어온 추가 함수
+    onDateSelct(newDates);
   };
 
   return (
@@ -100,7 +105,7 @@ export default function LectureCalendar({ onDateSelct = () => {} }) {
       <Calendar
         markedDates={markedDatesObjects}
         onDayPress={radioChoice === 0 ? onOnedayPress : onMultidayPress}
-        markingType={'multi-dot'}
+        markingType="multi-dot"
       />
       <RadioForm
         radio_props={radio_props}
@@ -111,9 +116,9 @@ export default function LectureCalendar({ onDateSelct = () => {} }) {
           setMarkedDatesObjects({});
           onDateSelct([]);
         }}
-        formHorizontal={true}
-        labelHorizontal={true}
-        animation={true}
+        formHorizontal
+        labelHorizontal
+        animation
         style={{ margin: 15, paddingLeft: 10 }}
       />
     </>

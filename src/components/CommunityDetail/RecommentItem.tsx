@@ -1,12 +1,11 @@
-import { getInstanceATK } from '@/src/lib/api/axios'
-import { atkState, checkRecommentWriter, decodeTokenType, recommentItemType, recommentRequestState, recommentState } from '@/src/recoil/CommunityStack'
 import React from 'react'
-import {View, Text, Image, TouchableOpacity} from 'react-native'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { TimeOfWriting } from '../CommunityMain/TimeOfWriting'
 import {RecommentDetailStyles as styles} from './styles'
+import { getInstanceATK } from '@lib/api/axios'
+import { atkState, checkRecommentWriter, decodeTokenType, recommentItemType, recommentRequestState, recommentState } from '@recoil/CommunityStack'
+import {View, Text, Image, TouchableOpacity} from 'react-native'
+import { TimeOfWriting } from '@components/CommunityMain/TimeOfWriting'
 import jwt_decode from "jwt-decode";
-
 
 export const RecommentItem =({nickName, profileUrl, dateOfWriting, content, recommentId}: recommentItemType) => {
 
@@ -14,9 +13,9 @@ export const RecommentItem =({nickName, profileUrl, dateOfWriting, content, reco
   const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null
   const recommentWriterInfo = useRecoilValue(recommentState)
   const [recommentWriter] = recommentWriterInfo.map(item=> item.accountModel.id)
-  const  [isRecommentWriter, setIsRecommentWriter] = useRecoilState(checkRecommentWriter)
+  const [isRecommentWriter, setIsRecommentWriter] = useRecoilState(checkRecommentWriter)
 
-  const [recommentSuccess, setRecommentSuccess] = useRecoilState(recommentRequestState)
+  const[recommentSuccess, setRecommentSuccess] = useRecoilState(recommentRequestState)
 
    // 댓글 삭제
    const requestDelete = async() => {

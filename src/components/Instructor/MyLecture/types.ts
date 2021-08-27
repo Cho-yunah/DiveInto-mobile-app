@@ -13,4 +13,5 @@ export type InstructorMyLecture = {
   equipmentNames?: string[];
   leftScheduleDate?: number;
   isClosed?: boolean;
+  onPress?: (lectureId: number) => void;
 };
