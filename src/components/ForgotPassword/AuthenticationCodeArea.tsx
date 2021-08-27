@@ -75,6 +75,7 @@ const AuthenticationCodeArea = () => {
           </Text>
         </Pressable>
       </View>
+
       {isCodeRequested && <AuthenticationCodeInput />}
     </View>
   );

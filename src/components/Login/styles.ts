@@ -1,4 +1,81 @@
 import { StyleSheet } from 'react-native';
+import * as getDimenstion from '@config/windowDimention';
+
+export const headerTextStyle = StyleSheet.create({
+  container: {
+    paddingVertical: getDimenstion.HEIGHT * 0.1,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    width: getDimenstion.WIDTH * 0.6,
+  },
+  explanation: {
+    fontSize: 14,
+    marginTop: 16,
+  },
+});
+
+export const emailInputStyle = StyleSheet.create({
+  inputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#c1c2c3',
+  },
+  subContainer: {
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  middleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  checkBoxText: {
+    marginLeft: 3,
+    fontSize: 12,
+    color: '#c1c2c3',
+  },
+  emailInput: {
+    paddingBottom: 8,
+    fontSize: 16,
+  },
+  checkIcon: {
+    paddingRight: 7.5,
+  },
+  guideTextValid: {
+    color: '#38D1A8',
+    fontSize: 12,
+    width: getDimenstion.WIDTH * 0.6,
+  },
+  guideTextInvalid: {
+    color: '#E93A55',
+    fontSize: 12,
+    width: getDimenstion.WIDTH * 0.6,
+  },
+  transitionPressable: {
+    borderWidth: 1,
+    borderRadius: 10,
+    marginTop: getDimenstion.HEIGHT / 7,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: getDimenstion.HEIGHT > 600 ? 14 : 12,
+    borderColor: 'rgb(32, 122, 180)',
+    height: getDimenstion.HEIGHT > 600 ? getDimenstion.HEIGHT / 16 : 50,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'rgb(32,122,180)',
+  },
+});
 
 const styles = StyleSheet.create({
   transitionPressable: {

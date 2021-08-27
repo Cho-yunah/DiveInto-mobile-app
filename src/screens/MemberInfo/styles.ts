@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
+import * as Color from '@config/colors';
 
 const styles = StyleSheet.create({
   conatiner: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
+    padding: 18,
+    backgroundColor: Color.White,
   },
 });
 

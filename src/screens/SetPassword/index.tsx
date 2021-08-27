@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { SetPasswordProps } from '@navigators/LoginStack/types';
 
 // import style
@@ -21,7 +21,9 @@ export default function SetPasswordScreen({
 
   return (
     <View style={styles.container}>
-      <SetPassword />
+      <ScrollView>
+        <SetPassword />
+      </ScrollView>
     </View>
   );
 }

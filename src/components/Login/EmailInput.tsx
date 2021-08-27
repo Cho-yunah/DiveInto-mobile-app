@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { EmailInputProps } from './types';
-import styles from './styles';
+import { emailInputStyle as styles } from './styles';
 import useTransitionColor from './useTransitionColor';
 
 import CheckBox from '@react-native-community/checkbox';
@@ -56,59 +56,65 @@ export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
   }, []);
 
   return (
-    <>
-      <View style={styles.middleContainer}>
-        <Pressable
-          onPress={() => setToggleCheckBox(s => !s)}
-          style={styles.button}
-        >
-          <CheckBox
-            boxType="square"
-            onCheckColor={'rgb(32,122,180)'}
-            value={toggleCheckBox}
-          />
-          <Text
-            style={[
-              styles.checkBoxText,
-              { color: toggleCheckBox ? 'rgb(32,122,180)' : '#c1c2c3' },
-            ]}
-          >
-            이메일 저장
-          </Text>
-        </Pressable>
-      </View>
-
+    <View>
       {/* 이메일 입력, 검증 */}
-      <TextInput
-        style={styles.emailInput}
-        placeholder="이메일 주소를 입력해주세요"
-        textContentType={'emailAddress'}
-        onChangeText={e => {
-          onTextInput(e);
-          setEmail(e);
-        }}
-        spellCheck={false}
-        value={email}
-      />
-      {isValid && (
-        <Entype
-          name={'check'}
-          size={24}
-          color={'#38D1A8'}
-          style={styles.checkIcon}
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.emailInput}
+          placeholder="이메일 주소를 입력해주세요"
+          textContentType={'emailAddress'}
+          onChangeText={e => {
+            onTextInput(e);
+            setEmail(e);
+          }}
+          spellCheck={false}
+          value={email}
         />
-      )}
+        {isValid && (
+          <Entype
+            name={'check'}
+            size={24}
+            color={'#38D1A8'}
+            style={styles.checkIcon}
+          />
+        )}
+      </View>
+      {/* 로그인 안내 메시지 & 이메일 저장 체크 박스*/}
+      <View style={styles.subContainer}>
+        <View style={styles.middleContainer}>
+          <Pressable
+            onPress={() => setToggleCheckBox(s => !s)}
+            style={styles.button}
+          >
+            <CheckBox
+              boxType="square"
+              onCheckColor={'rgb(32,122,180)'}
+              value={toggleCheckBox}
+            />
+            <Text
+              style={[
+                styles.checkBoxText,
+                { color: toggleCheckBox ? 'rgb(32,122,180)' : '#c1c2c3' },
+              ]}
+            >
+              이메일 저장
+            </Text>
+          </Pressable>
+        </View>
 
-      {/* 이메일 형식 검증 */}
-      {isValid !== undefined ? (
-        <Text style={isValid ? styles.guideTextValid : styles.guideTextInvalid}>
-          {isValid
-            ? '올바른 형태의 이메일 주소입니다.'
-            : '올바른 형태의 이메일 주소를 작성해주세요.'}
-        </Text>
-      ) : (
-        <Text style={styles.guideTextInvalid}>{''}</Text>
-      )}
+        {/* 이메일 형식 검증 */}
+        {isValid !== undefined ? (
+          <Text
+            style={isValid ? styles.guideTextValid : styles.guideTextInvalid}
+          >
+            {isValid
+              ? '올바른 형태의 이메일 주소입니다.'
+              : '올바른 형태의 이메일 주소를 작성해주세요.'}
+          </Text>
+        ) : (
+          <Text style={styles.guideTextInvalid}>{''}</Text>
+        )}
+      </View>
 
       {/* 로그인 버튼 */}
       <TransitionPressable
@@ -132,7 +138,7 @@ export default function EmailInput({ requestCheckEmail }: EmailInputProps) {
           )}
         </TransitionText>
       </TransitionPressable>
-    </>
+    </View>
   );
 }
 

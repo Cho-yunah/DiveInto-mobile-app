@@ -1,21 +1,25 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import * as Color from '@/src/config/colors';
+import * as Color from '@config/colors';
+import * as getDimension from '@config/windowDimention';
 
 export const inputStyles = StyleSheet.create({
   inputContainer: {
-    width: '100%',
-    marginTop: 80,
+    // width: '100%',
+    marginTop: getDimension.HEIGHT / 11,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccd7df',
-    paddingBottom: 9,
+    borderBottomColor: Color.underLine,
+    paddingBottom: getDimension.HEIGHT > 600 ? 9 : 5,
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   commonText: {
-    flex: 1,
+    padding: 0,
+    width: getDimension.WIDTH * 0.7,
     fontSize: 16,
     color: '#6a6d70',
   },
-  button: { alignItems: 'flex-end' },
+  button: {},
   buttonText: { color: Color.deepBlue, fontSize: 14 },
   notErrorText: {
     paddingTop: 8,
@@ -32,8 +36,7 @@ export const genderBtnStyles = StyleSheet.create({
   genderTotalContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 80,
-    width: '100%',
+    marginTop: getDimension.HEIGHT / 11,
   },
   genderBtn: {
     borderBottomWidth: 2,
@@ -58,10 +61,11 @@ export const genderBtnStyles = StyleSheet.create({
 export const datePickerStyles = StyleSheet.create({
   dateInputContainer: {
     borderBottomWidth: 1,
-    borderColor: '#ccd7df',
+    borderColor: Color.underLine,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 80,
+    alignItems: 'center',
+    marginTop: getDimension.HEIGHT / 11,
   },
   dateText: {
     paddingBottom: 9,

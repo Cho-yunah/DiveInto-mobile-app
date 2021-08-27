@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -45,15 +45,15 @@ function ProfileMain() {
   return (
     <>
       {userInfo && (
-        <SafeAreaView style={styles.container}>
-          <HeaderContainer currScreen="main" buttonText="사진수정" />
+        <View style={styles.container}>
+          <HeaderContainer currScreen="main" buttonText="사진수정" />
           <MainContainer
             email={userInfo?.email}
             nickname={userInfo?.nickname}
             phone={userInfo?.phone}
             type={isInstructor ? 'instructor' : 'student'}
           />
-        </SafeAreaView>
+        </View>
       )}
     </>
   );

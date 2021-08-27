@@ -27,6 +27,7 @@ function PhoneInput() {
         onChangeText={onChangeText}
         value={autoHyphen()}
         placeholderTextColor={placeholder}
+        textAlignVertical="bottom"
       />
     </View>
   );
