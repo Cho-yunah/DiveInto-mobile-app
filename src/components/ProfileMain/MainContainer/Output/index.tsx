@@ -10,7 +10,9 @@ import { IsLogin } from '@recoil/Global';
 import {
   logoutModalOpenState,
   deleteModalOpenState,
-} from '@recoil/ProfileStack';
+} from '@recoil/ProfileStack/store';
+
+import RNRestart from 'react-native-restart';
 
 export default function Output() {
   const navigation = useNavigation();
@@ -25,6 +27,7 @@ export default function Output() {
       await AsyncStorage.removeItem('atk');
       setLogoutShow(false);
       setIsLogin(false);
+      RNRestart.Restart();
     } catch (err) {
       console.log(err);
     }

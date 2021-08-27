@@ -20,6 +20,7 @@ import InstructorProfileSuspense from '@/src/components/LectureDetail/Instructor
 import SuspenseLocationInfo from '@/src/components/LectureDetail/LocationInfo/SuspenseLocationInfo';
 import LectureDetailLikeBtn from '@/src/components/LectureDetail/LectureDetailLikeBtn';
 import { AlertModal } from '../ReserveLecture';
+import AutoCloseAlertModal from '@/src/components/common/AutoCloseAlertModal';
 
 const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
   const { lectureId } = route.params;
@@ -77,7 +78,8 @@ const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {
       {/* 사진 modal */}
       <LeturePicsModal />
       {/* 찜하기 modal */}
-      <AlertModal />
+      {/* <AlertModal /> */}
+      <AutoCloseAlertModal callerName="lectureLike" />
 
       {/* 예약하기 버튼 */}
       <ReserveBtn navigateToReserveLecture={navigateToReserveLecture} />

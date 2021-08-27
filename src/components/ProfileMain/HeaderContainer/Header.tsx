@@ -6,35 +6,24 @@ import { mainHeaderStyles as styles, lecturerHeaderStyles } from './styles';
 import { HeaderContainerProps } from './types';
 import ProfileImg from './ProfileImg';
 import UploadImgBtn from './UploadImgBtn';
-import instance from '@/src/lib/api/axios';
-import { atkState, ProfileImageURIState } from '@/src/recoil/ProfileStack';
+
+import { ProfileImageURIState } from '@recoil/ProfileStack/store';
+import { profileMainMultipleEval } from '@/src/recoil/ProfileStack/dataFetch';
 
 export default function Header({
   currScreen,
   buttonText,
 }: HeaderContainerProps) {
   const setImageURI = useSetRecoilState(ProfileImageURIState);
-  const atk = useRecoilValue(atkState);
+  const {
+    imgURI: { imageUrl },
+  } = useRecoilValue(profileMainMultipleEval);
 
   useEffect(() => {
-    const getProfileImg = async () => {
-      try {
-        const res = await instance.get('/profile-photo', {
-          headers: {
-            Authorization: atk,
-          },
-        });
+    console.log(imageUrl);
 
-        setImageURI(res.data.imageUrl);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    if (atk) {
-      getProfileImg();
-    }
-  }, [atk]);
+    setImageURI(imageUrl);
+  }, [imageUrl]);
 
   return (
     <View

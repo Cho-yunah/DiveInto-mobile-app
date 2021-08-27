@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 import instance from '@/src/lib/api/axios';
-import { atkState } from '@/src/recoil/ProfileStack';
+import { atkState } from '@recoil/ProfileStack/store';
 
 function useRequestTotalAvg(id: number) {
   const [reviewTotalAvg, setReviewTotalAvg] = useState<number | null>(null);

@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 
 import { ReserveScheduleStyles as styles } from './styles';
 import { EachScheduleInfoProps, StartOrEndScheduleInfoProps } from './types';
-import { dateOrTimeOfNewStringSelector } from '@/src/recoil/ProfileStack';
+import { dateOrTimeOfNewStringSelector } from '@recoil/ProfileStack/utils';
 
 // 예약한 강의 관련 모든 일정 View
 export default function ReserveSchedule() {

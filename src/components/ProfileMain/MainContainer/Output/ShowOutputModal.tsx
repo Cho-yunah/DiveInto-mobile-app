@@ -9,7 +9,7 @@ import CommonModal from '@components/common/CommonModal';
 import {
   logoutModalOpenState,
   deleteModalOpenState,
-} from '@recoil/ProfileStack';
+} from '@recoil/ProfileStack/store';
 
 export default function ShowOutpuModal({
   title,

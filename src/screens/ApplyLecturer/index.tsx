@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState, useEffect } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { View } from 'react-native';
 
 import { styles } from './styles';
 import ApplyLecturerView from './ApplyLecturerView';
@@ -7,24 +7,19 @@ import useInputText from './useInputText';
 import { ApplyLecturerProps } from '@navigators/ProfileStack/types';
 import NextButton from '@components/common/NextButton';
 import { getInstanceATK } from '@lib/api/axios';
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import {
-  instructorImageCollectionState,
-  WaitingCERTInstructorState,
-} from '@recoil/ProfileStack';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { instructorImageCollectionState } from '@recoil/ProfileStack/store';
 import WaitingCERTInstructorView from './WaitingCERTInstructorView';
+import { getIsApplyInsctructorSelector } from '@/src/recoil/ProfileStack/dataFetch';
+import withSuspense from '@/src/lib/HOC/withSuspense';
 
-export default function ApplyLecturerScreen({
-  navigation,
-}: ApplyLecturerProps) {
+function ApplyLecturerScreen({ navigation }: ApplyLecturerProps) {
   const [group, setGroup] = useState('');
   const [intro, onChangeIntro] = useInputText('');
   const [isCompleted, setIsCompleted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const picsArr = useRecoilValue(instructorImageCollectionState);
   const resetPicsArr = useResetRecoilState(instructorImageCollectionState);
-  const [validInstructor, setValidInstructor] = useState(false);
-  // const [viewType, setViewType] = useRecoilState(WaitingCERTInstructorState);
+  const isValidInstructor = useRecoilValue(getIsApplyInsctructorSelector);
 
   const applyInstructorInfo = async () => {
     const instanceAtk = await getInstanceATK();
@@ -33,8 +28,6 @@ export default function ApplyLecturerScreen({
       organization: group,
       selfIntroduction: intro,
     };
-
-    console.log(instructorInfoBody, 'instructorInfoBody');
 
     const certificatePicsBody = new FormData();
     picsArr.forEach(pic => {
@@ -46,7 +39,6 @@ export default function ApplyLecturerScreen({
     });
 
     try {
-      setIsLoading(true);
       await instanceAtk.post('/sign/instructor/info', instructorInfoBody);
 
       await instanceAtk.post(
@@ -60,28 +52,7 @@ export default function ApplyLecturerScreen({
     }
 
     resetPicsArr();
-    setIsLoading(false);
   };
-
-  useEffect(() => {
-    const validApplyInstructor = async () => {
-      const instanceAtk = await getInstanceATK();
-
-      try {
-        setIsLoading(true);
-        const { data } = await instanceAtk.get(
-          '/account/instructor-application',
-        );
-        console.log(data);
-
-        setValidInstructor(data.applied);
-      } catch (err) {
-        console.log(err);
-      }
-      setIsLoading(false);
-    };
-    validApplyInstructor();
-  }, []);
 
   useEffect(() => {
     if (group && intro && picsArr.length === 3) {
@@ -92,7 +63,7 @@ export default function ApplyLecturerScreen({
   }, [group, intro, picsArr]);
 
   useLayoutEffect(() => {
-    if (validInstructor) {
+    if (isValidInstructor) {
       navigation.setOptions({
         headerRight: () => (
           <NextButton
@@ -108,25 +79,27 @@ export default function ApplyLecturerScreen({
         headerRight: () => null,
       });
     }
-  }, [isCompleted, validInstructor]);
-
-  const conditionStyle = isLoading
-    ? styles.loadingContainer
-    : styles.basicContainer;
+  }, [isCompleted, isValidInstructor]);
 
   console.log(isCompleted, '모든 조건 만족');
 
-  return (
-    <View style={conditionStyle}>
-      {isLoading ? null : !validInstructor ? ( // <ActivityIndicator size="large" color="#50CAD2" />
-        <ApplyLecturerView
-          intro={intro}
-          onChange={onChangeIntro}
-          setGroup={setGroup}
-        />
-      ) : (
+  if (isValidInstructor) {
+    return (
+      <View style={styles.loadingContainer}>
         <WaitingCERTInstructorView />
-      )}
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.basicContainer}>
+      <ApplyLecturerView
+        intro={intro}
+        onChange={onChangeIntro}
+        setGroup={setGroup}
+      />
     </View>
   );
 }
+
+export default withSuspense(ApplyLecturerScreen);
