@@ -11,6 +11,8 @@ const lectureExm = require('@assets/LectureExm.png');
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+
 export const PopularLecture = ({
   id,
   title = '프리다이빙',
@@ -66,6 +68,16 @@ export const PopularLecture = ({
   );
 };
 
+const PopularLectureSkeleton = () => (
+  <>
+    {Array.from({ length: 5 }, (v, i) => (
+      <SkeletonPlaceholder>
+        <View style={styles.lectureContainer}></View>
+      </SkeletonPlaceholder>
+    ))}
+  </>
+);
+
 export default function PopularLectureList() {
   const [lectures, setLectures] = useState<PopularLectureProps[]>();
   useLayoutEffect(() => {
@@ -102,7 +114,7 @@ export default function PopularLectureList() {
       </View>
       {/* 인기 강의 리스트 */}
       <ScrollView>
-        {lectures &&
+        {lectures ? (
           lectures.map(lecture => (
             <PopularLecture
               id={lecture.id}
@@ -120,7 +132,10 @@ export default function PopularLectureList() {
               starAvg={lecture.starAvg}
               reviewCount={lecture.reviewCount}
             />
-          ))}
+          ))
+        ) : (
+          <PopularLectureSkeleton />
+        )}
       </ScrollView>
     </View>
   );
