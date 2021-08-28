@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as Color from '@config/colors';
 import { HeaderStyles as styles, shadow } from './styles';
-import { SearchBoxProps } from './types';
+import { SearchBoxProps, StaticSearchBoxProps } from './types';
 
 import { useSetRecoilState } from 'recoil';
 import { searchText } from '@recoil/LectureStack';
@@ -14,6 +14,9 @@ export default function SearchBox({ placeholder }: SearchBoxProps) {
   const setSearchText = useSetRecoilState(searchText);
 
   const onSearch = () => setSearchText(text);
+
+  useEffect(() => {
+  }, []);
 
   return (
     <View style={[styles.searchBar, shadow]}>
@@ -29,5 +32,30 @@ export default function SearchBox({ placeholder }: SearchBoxProps) {
         <AntDesign name="search1" size={20} color={Color.Gray2} />
       </TouchableOpacity>
     </View>
+  );
+}
+
+export function StaticSearchBox({
+  placeholder,
+  onPress,
+}: StaticSearchBoxProps) {
+  const [text, setText] = useState('');
+  const setSearchText = useSetRecoilState(searchText);
+
+  const onSearch = () => setSearchText(text);
+
+  return (
+    <TouchableOpacity
+      style={[styles.searchBar, shadow]}
+      activeOpacity={0.7}
+      onPress={onPress}
+    >
+      <Text style={[styles.searchBarText, { color: colors.placeholder }]}>
+        {placeholder}
+      </Text>
+      <View style={styles.searchButton}>
+        <AntDesign name="search1" size={20} color={Color.Gray2} />
+      </View>
+    </TouchableOpacity>
   );
 }

@@ -11,6 +11,8 @@ const lectureExm = require('@assets/LectureExm.png');
 
 import axios from 'axios';
 
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+
 const NewLecture = ({
   id,
   title = '프리다이빙',
@@ -55,6 +57,19 @@ const NewLecture = ({
   );
 };
 
+const NewLectureSkeleton = () => (
+  <>
+    {Array.from({ length: 5 }, (v, i) => (
+      <SkeletonPlaceholder>
+        <View style={[styles.lectureContainer, shadow]}>
+          <View style={styles.lectureImage} />
+          <View style={styles.infoContainer} />
+        </View>
+      </SkeletonPlaceholder>
+    ))}
+  </>
+);
+
 export default function NewLectureList() {
   const [lectures, setLectures] = useState<NewLectureProps[]>();
   useLayoutEffect(() => {
@@ -86,7 +101,7 @@ export default function NewLectureList() {
         </TouchableOpacity>
       </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {lectures &&
+        {lectures ? (
           lectures.map(lecture => (
             <NewLecture
               id={lecture.id}
@@ -102,7 +117,10 @@ export default function NewLectureList() {
               price={lecture.price}
               period={lecture.period}
             />
-          ))}
+          ))
+        ) : (
+          <NewLectureSkeleton />
+        )}
       </ScrollView>
     </View>
   );
