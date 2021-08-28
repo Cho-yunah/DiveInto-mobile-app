@@ -16,7 +16,7 @@ export default function Header({
 }) {
   const hasAlarm = true;
   const onAlarmPress = () => {};
-  const onFilterPress = () => {};
+  // const onFilterPress = () => {};
 
   return (
     <View style={styles.rootContainer}>
@@ -33,7 +33,7 @@ export default function Header({
             onPress={onKeywordSearchPress}
           />
         </View>
-        <Filter onPress={onFilterPress} />
+        <Filter onPress={onFilterSearchPress} />
       </View>
     </View>
   );

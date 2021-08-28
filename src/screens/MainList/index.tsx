@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, SafeAreaView } from 'react-native';
 import { RecoilRoot } from 'recoil';
 import { MainProps } from './types';
@@ -11,11 +11,19 @@ import {
   PopularLectureList,
 } from '@/src/components/MainList';
 
+import { FilterModal } from '@components/FilterSearch';
+
 import { MainListProps } from '@navigators/LectureStack/types';
 
 export default function MainList({ navigation, route }: MainListProps) {
   const onKeywordSearchPress = () => navigation.navigate('강의 키워드 검색');
-  const onFilterSearchPress = () => navigation.navigate('강의 필터 검색');
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const onFilterSearchPress = () => {
+    setIsModalVisible(true);
+    console.log('test');
+  }; //() => navigation.navigate('강의 필터 검색');
+  const onModalClose = () => setIsModalVisible(false);
 
   return (
     <RecoilRoot>
@@ -32,6 +40,7 @@ export default function MainList({ navigation, route }: MainListProps) {
           </View>
         </ScrollView>
       </SafeAreaView>
+      <FilterModal modalClose={onModalClose} modalVisible={isModalVisible} />
     </RecoilRoot>
   );
 }
