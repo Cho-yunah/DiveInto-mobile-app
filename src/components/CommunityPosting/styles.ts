@@ -54,7 +54,7 @@ export const styles = StyleSheet.create({
     padding: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 30
+    margin: 30,
   },
   imageUploadBtn: {
     width: 60,

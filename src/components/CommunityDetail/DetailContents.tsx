@@ -3,15 +3,11 @@ import { View , Text, Image, FlatList} from 'react-native'
 import { useRecoilValue } from 'recoil'
 import {ContentsStyle as styles} from './styles'
 import { ImageState } from '@recoil/CommunityStack'
+import { ImageType } from './types'
 
-export default function DetailContents({content} : any) {
-  const imageArr = useRecoilValue (ImageState)
+export default function DetailContents({content} : {content: string}) {
 
-  const ImageItem =({item}: any) => {
-    return <Image 
-              style={styles.contentsImage} 
-              source={{uri: item.imageUrl}} />
-  }
+  const imageArr = useRecoilValue<ImageType[]> (ImageState)
 
   return (
     <View style= {styles.contentsContainer}>
@@ -25,9 +21,12 @@ export default function DetailContents({content} : any) {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             disableVirtualization={false} 
-            renderItem= {({item, index})=> {
-              return <ImageItem item={item} />
-            }}
+            keyExtractor={(item=> `communityImg${item.id}`)}
+            renderItem= {({item})=> (
+              <Image 
+                style={styles.contentsImage} 
+                source={{uri: item.imageUrl}} />
+            )}
             nestedScrollEnabled={true}
           />
       </View>

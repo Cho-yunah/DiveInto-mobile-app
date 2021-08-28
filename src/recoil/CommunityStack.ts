@@ -5,7 +5,7 @@ import {
   selectorFamily,
   DefaultValue,
 } from 'recoil';
-import { commentListType, recommentListType } from '../components/CommunityDetail/types';
+import { CommentListType } from '../components/CommunityDetail/types';
 
 // 토큰 받기
 export type decodeTokenType = {
@@ -16,6 +16,11 @@ export const atkState = atom<string | null>({
   key: 'atkState',
   default: null,
 });
+
+export const isLoginState = atom({
+  key: 'isLoginState',
+  default: false
+})
 
 // 커뮤니티 리스트 
 export type ContentItem = {
@@ -105,6 +110,7 @@ export const communityListState = atom<ContentItem[]>({
   key: 'communityListState',
   default: [],
 });
+
 
 export const likedListState = atom<ContentItem[]>({
   key: 'likedListState',
@@ -233,13 +239,6 @@ export const communityItemSelector = selector({
 //   default: 
 // })
 
-export type DetailInfoType = {
-  id: number;
-  title: string;
-  category: string;
-  dateOfRegistration: string;
-};
-
 export type ImageArrStateType = {
   size: number;
   uri: string;
@@ -256,35 +255,29 @@ export const ImageState = atom({
   default: [],
 });
 
-export const commentState = atom<commentListType[]>({
+export const commentState = atom<CommentListType[]>({
   key: 'commentState',
   default: [],
 });
 
-export const postIdState= atom({
-  key: 'postIdState', 
-  default: 1
-})
+// export const commentIdSelector = selector({
+//   key: 'commentIdSelector',
+//   get: ({get}) => {
+//     const commentList = get(commentState);
+
+//     if(!commentList.length) return [];
+//     const commentIdSelector= commentList.map(commentItem => {
+//       return commentItem.accountModel.id
+//     })
+//     return commentIdSelector
+//   }
+// })
 
 export const commentTextState = atom({
   key: 'commentTextState',
   default: {
     content: '',
   },
-});
-
-export const CommentTextSelector = selector({
-  key: 'CommentTextSelector',
-  get: ({ get }) => {
-    const { content } = get(commentTextState);
-
-    return { content };
-  },
-});
-
-export const showModalState = atom({
-  key: 'showModalState',
-  default: false,
 });
 
 export const commentRequestState = atom({
@@ -301,11 +294,12 @@ export const commentIdState = atom({
   key: 'commentIdState',
   default: 0,
 });
+
 export const commentInputButtonState = atom({
   key: 'commentInputButtonState',
   default: false
 })
-export const checkCommentWriter= atom({
+export const checkCommentWriter= atomFamily({
   key: 'checkRecommentWriter',
   default: false
 })
@@ -325,11 +319,6 @@ export const isEditedState = atom({
 });
 
 /// 대댓글///
-export const writingRecommentState = atom({
-  key: 'writingRecommentState',
-  default: false,
-});
-
 export const recommentTextState = atom({
   key: 'recommentTextState',
   default: {
@@ -337,7 +326,7 @@ export const recommentTextState = atom({
   },
 });
 
-export const recommentState = atom<recommentListType[]>({
+export const recommentState = atomFamily({
   key: 'recommentState',
   default: [],
 });
@@ -348,6 +337,7 @@ export type recommentItemType = {
   dateOfWriting: string;
   content: string;
   recommentId: number;
+  commentId: number
 };
 
 export const recommentLoadingState = atom({
