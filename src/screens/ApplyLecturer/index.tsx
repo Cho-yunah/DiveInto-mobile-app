@@ -1,76 +1,105 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState, useEffect } from 'react';
 import { View } from 'react-native';
 
 import { styles } from './styles';
-import { HeaderContainer } from '@/src/components/ProfileMain';
-import {
-  CommonInput,
-  OrganizationDropdown,
-  UploadCertificate,
-} from '@/src/components/ApplyLecturer';
+import ApplyLecturerView from './ApplyLecturerView';
 import useInputText from './useInputText';
-import { ApplyLecturerProps } from '@/src/navigators/ProfileStack/types';
-import NextButton from '@/src/components/common/NextButton';
-import instance from '@/src/lib/api/axios';
-import { useRecoilValue } from 'recoil';
-import { atkState } from '@/src/recoil/ProfileStack';
-import { useEffect } from 'react';
+import { ApplyLecturerProps } from '@navigators/ProfileStack/types';
+import NextButton from '@components/common/NextButton';
+import { getInstanceATK } from '@lib/api/axios';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { instructorImageCollectionState } from '@recoil/ProfileStack/store';
+import WaitingCERTInstructorView from './WaitingCERTInstructorView';
+import { getIsApplyInsctructorSelector } from '@/src/recoil/ProfileStack/dataFetch';
+import withSuspense from '@/src/lib/HOC/withSuspense';
 
-export default function ApplyLecturerScreen({
-  navigation,
-}: ApplyLecturerProps) {
-  // const [group, onChangeGroup] = useInputText('');
+function ApplyLecturerScreen({ navigation }: ApplyLecturerProps) {
   const [group, setGroup] = useState('');
   const [intro, onChangeIntro] = useInputText('');
   const [isCompleted, setIsCompleted] = useState(false);
-  const atk = useRecoilValue(atkState);
+  const picsArr = useRecoilValue(instructorImageCollectionState);
+  const resetPicsArr = useResetRecoilState(instructorImageCollectionState);
+  const isValidInstructor = useRecoilValue(getIsApplyInsctructorSelector);
 
-  const onPress = async () => {
-    const headers = {
-      Authorization: atk,
-    };
+  const applyInstructorInfo = async () => {
+    const instanceAtk = await getInstanceATK();
 
-    const body = {
+    const instructorInfoBody = {
       organization: group,
       selfIntroduction: intro,
     };
 
-    try {
-      await instance.post('/sign/instructor/info', body, {
-        headers,
+    const certificatePicsBody = new FormData();
+    picsArr.forEach(pic => {
+      certificatePicsBody.append('certificateImages', {
+        name: pic.name,
+        type: pic.type,
+        uri: pic.uri,
       });
+    });
 
-      navigation.navigate('ProfileMain');
+    try {
+      await instanceAtk.post('/sign/instructor/info', instructorInfoBody);
+
+      await instanceAtk.post(
+        '/sign/instructor/certificate',
+        certificatePicsBody,
+      );
+
+      navigation.navigate('ApplyLecturer');
     } catch (err) {
       console.log(err);
     }
+
+    resetPicsArr();
   };
 
   useEffect(() => {
-    if (group && intro) {
+    if (group && intro && picsArr.length === 3) {
       setIsCompleted(true);
     } else {
       setIsCompleted(false);
     }
-  }, [group, intro]);
+  }, [group, intro, picsArr]);
 
-  navigation.setOptions({
-    headerRight: () => (
-      <NextButton onPress={onPress} text="완료" disable={isCompleted} />
-    ),
-  });
+  useLayoutEffect(() => {
+    if (isValidInstructor) {
+      navigation.setOptions({
+        headerRight: () => (
+          <NextButton
+            onPress={applyInstructorInfo}
+            text="완료"
+            disable={isCompleted}
+          />
+        ),
+      });
+    } else {
+      navigation.setOptions({
+        title: '강사 신청 대기중 ...',
+        headerRight: () => null,
+      });
+    }
+  }, [isCompleted, isValidInstructor]);
+
+  console.log(isCompleted, '모든 조건 만족');
+
+  if (isValidInstructor) {
+    return (
+      <View style={styles.loadingContainer}>
+        <WaitingCERTInstructorView />
+      </View>
+    );
+  }
 
   return (
-    <View style={styles.container}>
-      <HeaderContainer currScreen="lecturer" buttonText="프로필사진추가" />
-      <CommonInput
-        placeholderText="강사소개글"
-        topBlank
-        value={intro}
-        handleInputText={onChangeIntro}
+    <View style={styles.basicContainer}>
+      <ApplyLecturerView
+        intro={intro}
+        onChange={onChangeIntro}
+        setGroup={setGroup}
       />
-      <OrganizationDropdown setGroup={setGroup} />
-      <UploadCertificate />
     </View>
   );
 }
+
+export default withSuspense(ApplyLecturerScreen);

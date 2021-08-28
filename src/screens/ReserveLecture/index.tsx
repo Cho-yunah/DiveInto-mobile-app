@@ -11,11 +11,15 @@ import {
 } from '@components/ReserveLecture';
 import SuspenseCalendar from '@/src/components/ReserveLecture/SuspenseCalendar';
 import SuspenseReserveBtn from '@/src/components/ReserveLecture/SuspenseReserveBtn';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRecoilCallback, useRecoilState } from 'recoil';
+import {
+  reservationIdState,
+  smallModalMessageState,
+} from '@/src/recoil/LectureStack';
+import { View } from 'react-native-animatable';
+import { useNavigation } from '@react-navigation/native';
 
 const index = ({ navigation }: ReserveLectureProps) => {
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
   const navigateToRequestPayment = () => {
     navigation.navigate('RequestPayment');
   };
@@ -23,12 +27,7 @@ const index = ({ navigation }: ReserveLectureProps) => {
     navigation.setOptions({
       headerRight: () => (
         <Suspense fallback={<SuspenseReserveBtn />}>
-          <ReserveBtn
-            navigateToRequestPayment={navigateToRequestPayment}
-            isDisabled={isDisabled}
-            setIsDisabled={setIsDisabled}
-            setModalMessage={setModalMessage}
-          />
+          <ReserveBtn navigateToRequestPayment={navigateToRequestPayment} />
         </Suspense>
       ),
     });
@@ -47,23 +46,59 @@ const index = ({ navigation }: ReserveLectureProps) => {
         <SelectLectureSchedule />
         {/* 장비대여 */}
         <RentEquipments />
-        <Modal visible={isDisabled} transparent={true} animationType={'fade'}>
-          <Pressable
-            onPress={() => setIsDisabled(false)}
-            style={styles.modalOuterContainer}
-          >
-            <ModalContainer message={modalMessage} />
-          </Pressable>
-        </Modal>
+
+        {/* 모달 */}
+        <AlertModal />
       </ScrollView>
     </>
   );
 };
 
-export const ModalContainer = ({ message }: { message: string }) => (
-  <SafeAreaView style={styles.modalContainer}>
-    <Text style={styles.modalText}>{message}</Text>
-  </SafeAreaView>
-);
+export const AlertModal = () => {
+  const [smallModalMessage, setSmallModalMessage] = useRecoilState(
+    smallModalMessageState,
+  );
+  const navigation = useNavigation<ReserveLectureProps['navigation']>();
+
+  const navigateToDetailReservation = useRecoilCallback(
+    ({ snapshot }) =>
+      async (navigation: ReserveLectureProps['navigation']) => {
+        const reservationId = await snapshot.getPromise(reservationIdState);
+        navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: 'DetailReservation',
+              params: {
+                reservationId,
+                navigateToHome: () => navigation.navigate('MainList'),
+              },
+            },
+          ],
+        });
+      },
+  );
+
+  return (
+    <Modal
+      visible={!!smallModalMessage}
+      transparent={true}
+      animationType={'fade'}
+    >
+      <Pressable
+        onPress={() => {
+          if (smallModalMessage === '결제가 완료되었습니다.') {
+            navigateToDetailReservation(navigation);
+          }
+          setSmallModalMessage('');
+        }}
+        style={styles.modalOuterContainer}
+      ></Pressable>
+      <View style={styles.modalContainer}>
+        <Text style={styles.modalText}>{smallModalMessage}</Text>
+      </View>
+    </Modal>
+  );
+};
 
 export default index;

@@ -5,7 +5,7 @@ import { etcUserInfo as styles } from './styles';
 import { EtcUserInfoProps } from '../types';
 
 export default function EtcUserInfo({ nickname, email }: EtcUserInfoProps) {
-  const autoMasking = (): string => email.replace(/^(.{3})[^@]+/, '$1***');
+  const autoMasking = () => email.replace(/^(.{3})[^@]+/, '$1***');
 
   return (
     <View style={styles.container}>

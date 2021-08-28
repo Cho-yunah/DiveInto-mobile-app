@@ -1,14 +1,15 @@
 import { ReactChild, ReactChildren } from 'react';
 import { Animated } from 'react-native';
 
-export type AuxProps = {
+export type CommonListProps = {
   imgComponent: ReactChild | ReactChild[] | ReactChildren | ReactChildren[];
   contentsComponents?:
     | ReactChild
     | ReactChild[]
     | ReactChildren
     | ReactChildren[];
-  type: 'last' | 'next';
+  // type: 'last' | 'next';
+  reservationId: number;
 };
 
 export type SwipeAnimatedProps = {
@@ -22,6 +23,7 @@ export type LectureContentsProps = {
   group: string;
   reservationDate: string;
   nickname: string;
+  lectureType: 'last' | 'next';
 };
 
 export type RightSwipeProps = {

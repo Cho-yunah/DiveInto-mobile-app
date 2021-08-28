@@ -1,52 +1,88 @@
 import {
   cachingState,
+  cachingStateFormClassScheduleState,
   currMonthState,
-  currScheduleIdState,
   currSelectedDateState,
   currYearState,
+  lectureIdState,
   lectureScheduleListsSelector,
   markedDateState,
+  scheduleIdObjState,
+  schedulesByIdState,
 } from '@/src/recoil/LectureStack';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { DateTimeInfoType, MarkedDatesType, ScheduleInfoType } from './types';
 
 const LectureCalendar = () => {
-  const ScheduleInfoLists = useRecoilValue(lectureScheduleListsSelector(1));
-  const [markedDate, setMarkedDate] = useRecoilState(markedDateState);
-  const [currSelectedDate, setCurrSelectedDate] = useRecoilState(
-    currSelectedDateState,
+  const lectureId = useRecoilValue(lectureIdState);
+  const ScheduleInfoLists = useRecoilValue(
+    lectureScheduleListsSelector(lectureId!),
   );
+  const [markedDate, setMarkedDate] = useRecoilState(markedDateState);
+  const setCurrSelectedDate = useSetRecoilState(currSelectedDateState);
   const setCaching = useSetRecoilState(cachingState);
-  const setCurrScheduleId = useSetRecoilState(currScheduleIdState);
   const setCurrYear = useSetRecoilState(currYearState);
   const setCurrMonth = useSetRecoilState(currMonthState);
+  const setScheduleIdObj = useSetRecoilState(scheduleIdObjState);
+  const setScheduleById = useSetRecoilState(schedulesByIdState);
+  const setCachingSchedule = useSetRecoilState(
+    cachingStateFormClassScheduleState,
+  );
 
   useEffect(() => {
-    if (currSelectedDate in markedDate)
-      setCurrScheduleId(markedDate[currSelectedDate].scheduleId);
-  }, [currSelectedDate]);
+    console.log(ScheduleInfoLists, 'ScheduleInfoLists');
 
-  useEffect(() => {
     if (ScheduleInfoLists.length)
-      ScheduleInfoLists.forEach((schedule: any) => {
-        const markedDatesObj: any = {};
-        schedule.dateTimeInfos.forEach((s: any) => {
-          markedDatesObj[s.date] = {
+      ScheduleInfoLists.forEach((scheduleInfo: ScheduleInfoType) => {
+        const newMarkedDates: MarkedDatesType = {};
+
+        setScheduleById(scheduleById => [
+          ...scheduleById,
+          [
+            {
+              scheduleId: scheduleInfo.scheduleId,
+              currentNumber: scheduleInfo.currentNumber,
+              maxNumber: scheduleInfo.maxNumber,
+            },
+            scheduleInfo.dateTimeInfos,
+          ],
+        ]);
+        scheduleInfo.dateTimeInfos.forEach((dateTimeInfo: DateTimeInfoType) => {
+          // 같은 수업을 일정별로 담기 -> scheduleSelector에서 사용
+          setScheduleIdObj(scheduleIdObj => {
+            if (scheduleIdObj[dateTimeInfo.date])
+              return {
+                ...scheduleIdObj,
+                [dateTimeInfo.date]: [
+                  ...scheduleIdObj[dateTimeInfo.date],
+                  scheduleInfo.scheduleId,
+                ],
+              };
+            else
+              return {
+                ...scheduleIdObj,
+                [dateTimeInfo.date]: [scheduleInfo.scheduleId],
+              };
+          });
+
+          // 달력에 표시하는 일정 객체 만들기
+          newMarkedDates[dateTimeInfo.date] = {
             selectedColor: '#50CAD2',
             selected: true,
-            currentNumber: schedule.currentNumber,
-            maxNumber: schedule.maxNumber,
-            scheduleId: schedule.scheduleId,
-            scheduleDateTimeId: s.scheduleDateTimeId,
-            startTime: s.startTime,
-            endTime: s.endTime,
-            date: s.date,
+            currentNumber: scheduleInfo.currentNumber,
+            maxNumber: scheduleInfo.maxNumber,
+            scheduleId: [scheduleInfo.scheduleId],
+            scheduleDateTimeId: dateTimeInfo.scheduleDateTimeId,
+            startTime: dateTimeInfo.startTime,
+            endTime: dateTimeInfo.endTime,
+            date: dateTimeInfo.date,
           };
         });
-        setMarkedDate({ ...markedDate, ...markedDatesObj });
+        setMarkedDate(markedDate => ({ ...markedDate, ...newMarkedDates }));
       });
   }, [ScheduleInfoLists]);
 
@@ -57,7 +93,10 @@ const LectureCalendar = () => {
       setCurrSelectedDate('');
       setCurrYear(date.getFullYear());
       setCurrMonth(date.getMonth() + 1);
+      setMarkedDate({});
       setCaching(caching => caching + 1);
+      setCachingSchedule(caching => caching + 1);
+      setScheduleById([]);
     };
   }, []);
 

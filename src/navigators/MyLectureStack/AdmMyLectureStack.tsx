@@ -1,5 +1,5 @@
 import React from 'react';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useRecoilValue } from 'recoil';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootAdmMyLectureStack } from './types';
 
@@ -16,8 +16,12 @@ import {
   AddSchedule,
 } from '@screens/Instructor';
 import { LectureInfoTab } from './LectureInfoTab';
+import { IsLogin } from '@/src/recoil/Global';
 
 export default function AdmMyLectureStack() {
+  const confirmIsLogin = useRecoilValue(IsLogin);
+  console.log(confirmIsLogin, '로그인 확인/강의');
+
   return (
     <RecoilRoot>
       <Stack.Navigator

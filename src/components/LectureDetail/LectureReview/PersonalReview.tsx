@@ -44,6 +44,9 @@ const PersonalReview = ({ item }: { item: lectureReviewType }) => {
         ) : null}
         {isOpen ? (
           <>
+            <Text style={[RS.contentText, { fontSize: 12, marginBottom: 4 }]}>
+              {item.writeDate.replace(/-/g, '/')} 작성
+            </Text>
             <Text style={RS.contentText}>{item.description}</Text>
             <Pics pics={item.reviewImageUrls} />
           </>

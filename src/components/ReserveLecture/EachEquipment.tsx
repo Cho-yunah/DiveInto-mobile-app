@@ -1,8 +1,10 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import {
-  eachEquipmentState,
-  requestReservationEquipmentState,
+  providedEquipmentsState,
+  EquipmentsByScheduleIdType,
   selectedEquipmentsIdState,
+  reservationEquipmentObjState,
+  requestReservationEquipmentDetailType,
 } from '@/src/recoil/LectureStack';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { View, TouchableOpacity, Text } from 'react-native';
@@ -10,40 +12,74 @@ import { RentEquipments as styles } from './styles';
 import addCashComma from '@/src/lib/utils/addCashComma';
 import EachEquipController from './EachEquipController';
 
-const EachEquipment = ({ item, setIsOpen }: any) => {
+type EachEquipmentsProps = {
+  item: EquipmentsByScheduleIdType;
+  setIsOpen: (isOpen: boolean) => void;
+};
+
+const EachEquipment = ({ item, setIsOpen }: EachEquipmentsProps) => {
   const [displayedPrice, setDisplayedPrice] = useState<number>(item.price);
-  const selectedEquipments = useSetRecoilState(selectedEquipmentsIdState);
-  const setEachEquipment = useSetRecoilState(eachEquipmentState(item.id));
-  // 현재 장비중에 대여하고 싶은 물품 사이즈와 수량 담은 배열
-  const [thisEquipmentArr, setThisEquipmentArr] = useRecoilState(
-    requestReservationEquipmentState(item.id),
+  const [selectedEquipmentsArray, setSelectedEquipmentsArray] = useState<
+    requestReservationEquipmentDetailType[]
+  >([]);
+  const setSelectedEquipments = useSetRecoilState(selectedEquipmentsIdState);
+  const setProvidedEquipments = useSetRecoilState(
+    providedEquipmentsState(item.scheduleEquipmentId),
+  ); // 선택된 일정에서 제공되는 대여 장비 리스트
+
+  const [selectedEquipmentsObj, setSelectedEquipmentsObj] = useRecoilState(
+    reservationEquipmentObjState,
   );
 
   useEffect(() => {
-    setEachEquipment({
+    setProvidedEquipments({
       name: item.name,
-      id: item.id,
-      stocks: item.equipmentStocks,
+      id: item.scheduleEquipmentId,
+      stocks: item.stockInfoList,
     });
-
-    // 한 대여 장비의 사이즈 별 대여 개수 정보 배열 cleanup effect
-    return () => {
-      console.log('장비 리스트 clean up EachEquipment.tsx');
-
-      setThisEquipmentArr([]);
-    };
   }, []);
 
   useEffect(() => {
-    const priceUnit = item.price; // 1개당 가격
-    let sum = 0;
+    const pricePerEach = item.price; // 1개당 가격
+    let NumOfEquipment = 0;
+    const newSelectedEquipmentsArray: requestReservationEquipmentDetailType[] =
+      [];
 
-    thisEquipmentArr.forEach(equip => {
-      sum += equip.rentNumber;
-    });
+    // 오리발 전체에 대한 정보를 가진 객체에서 사이즈 별 오리발의 정보를 가진 객체를 순회해서 단위가격 * 갯수로 가격 총합을 구한다.
+    const targetEquipmentObj = {
+      ...selectedEquipmentsObj[item.scheduleEquipmentId]?.equipmentStocks,
+    };
 
-    setDisplayedPrice(sum * priceUnit);
-  }, [thisEquipmentArr]);
+    for (const stockIdBySize in targetEquipmentObj) {
+      const {
+        rentNumber,
+        size,
+        name,
+        price,
+        totalRentNumber,
+        quantity,
+        scheduleEquipmentStockId,
+      } = targetEquipmentObj[stockIdBySize];
+
+      console.log(targetEquipmentObj[stockIdBySize]);
+
+      NumOfEquipment += rentNumber;
+
+      newSelectedEquipmentsArray.push({
+        scheduleEquipmentStockId, // 사이즈별 재고 아이디
+        rentNumber, // 대여하고 싶은 갯수
+        size, // 사이즈
+        name, // 장비 이름
+        price,
+        totalRentNumber, // 같은 일정의 다른사람들이 대여한 갯수
+        quantity, // 전체 재고
+      });
+    }
+
+    setSelectedEquipmentsArray(newSelectedEquipmentsArray);
+
+    setDisplayedPrice(NumOfEquipment * pricePerEach);
+  }, [selectedEquipmentsObj]);
 
   return (
     <Suspense
@@ -57,8 +93,11 @@ const EachEquipment = ({ item, setIsOpen }: any) => {
         <TouchableOpacity
           style={styles.itemContainer}
           onPress={() => {
-            selectedEquipments({ id: item.id, name: item.name });
-            setIsOpen((state: boolean) => !state);
+            setSelectedEquipments({
+              id: item.scheduleEquipmentId, // 해당 일정의 오리발이면, 오리발 자체의 id, (사이즈별 id아님)
+              name: item.name,
+            });
+            setIsOpen(true);
           }}
         >
           <View style={styles.itemName}>
@@ -69,11 +108,11 @@ const EachEquipment = ({ item, setIsOpen }: any) => {
         <Text>{addCashComma(displayedPrice)} 원</Text>
       </View>
       <View>
-        {thisEquipmentArr.map(equip => (
+        {selectedEquipmentsArray.map(selectedEquipBySize => (
           <EachEquipController
-            item={item}
-            equip={equip}
-            key={equip.scheduleEquipmentStockId}
+            item={item} // 오리발 전체에 대한 정보를 가진 객체(오리발 id, 가격, 이름, size별 정보 객체)
+            currControllerEquip={selectedEquipBySize} // 내가 대여하고 싶은 장비의 사이즈에 대한 정보를 가진 배열의 한 원소(size별 오리발 정보 객체,)
+            key={selectedEquipBySize.scheduleEquipmentStockId}
           />
         ))}
       </View>

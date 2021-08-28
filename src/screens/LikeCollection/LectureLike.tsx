@@ -1,59 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
-
-import { PopularLecture } from '@/src/components/MainList/Lecture/PopularLectureList';
-import { styles } from './styles';
-import instance from '@/src/lib/api/axios';
+import React from 'react';
+import { FlatList, View } from 'react-native';
 import { useRecoilValue } from 'recoil';
-import { atkState } from '@/src/recoil/ProfileStack';
+
+import { styles } from './styles';
 import { LectureLikeProps } from './types';
+import { getLikeListSelector } from '@/src/recoil/ProfileStack/dataFetch';
+import CommonEmptyView from '@components/common/CommonEmptyView';
+import { PopularLecture } from '@components/MainList/Lecture/PopularLectureList';
+import withSuspense from '@/src/lib/HOC/withSuspense';
 
-export default function LectureLikeScreen() {
-  const atk = useRecoilValue(atkState);
-  const [lectureList, setLectureList] = useState([]);
+function LectureLikeScreen() {
+  const LectureLikeList = useRecoilValue(getLikeListSelector('lecture'));
 
-  useEffect(() => {
-    const getLikeLecture = async () => {
-      try {
-        const res = await instance.get('/lecture/like/list?page=0&size=2', {
-          headers: {
-            Authorization: atk,
-          },
-        });
+  // price, period 값이 lectureList에 있는지 확인 후 props로 넣어주기
+  console.log(LectureLikeList, 'LectureLikeList');
 
-        setLectureList(res.data._embedded.likeLectureInfoList);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getLikeLecture();
-  }, [atk]);
+  if (LectureLikeList.length === 0) {
+    return (
+      <View style={styles.eachContainer}>
+        <CommonEmptyView
+          guideText="강의가 없습니다."
+          buttonText="강의 둘러보기"
+          moveViewName="홈"
+        />
+      </View>
+    );
+  }
 
   return (
-    <View style={styles.container}>
-      {lectureList && (
-        <FlatList
-          data={lectureList}
-          renderItem={({ item }: { item: LectureLikeProps }) => {
-            return (
-              <PopularLecture
-                title={item.title}
-                organization={item.organization}
-                level={item.level}
-                region={item.region}
-                maxNumber={item.maxNumber}
-                lectureTime={item.lectureTime}
-                equipmentNames={item.equipmentNames}
-                image={item.imageUrl}
-                reviewAvg={2.5}
-                reviewCount={item.reviewCount}
-              />
-            );
-          }}
-          keyExtractor={item => item.id.toString()}
-        />
-      )}
+    <View style={styles.eachContainer}>
+      <FlatList
+        data={LectureLikeList}
+        renderItem={({ item }: { item: LectureLikeProps }) => {
+          return (
+            <PopularLecture
+              id={item.id}
+              title={item.title}
+              organization={item.organization}
+              level={item.level}
+              region={item.region}
+              maxNumber={item.maxNumber}
+              lectureTime={item.lectureTime}
+              equipmentNames={item.equipmentNames}
+              imageUrl={item.imageUrl}
+              starAvg={2.5}
+              reviewCount={item.reviewCount}
+              isMarked={item.isMarked}
+            />
+          );
+        }}
+        keyExtractor={item => item.id.toString()}
+      />
     </View>
   );
 }
+
+export default withSuspense(LectureLikeScreen);

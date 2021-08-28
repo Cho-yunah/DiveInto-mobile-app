@@ -11,3 +11,9 @@ export type SortByType =
   | 'writeDate,DESC'
   | 'totalStarAvg,DESC'
   | 'totalStarAvg,ASC';
+
+export type SortBySelectorProps = {
+  sortByText: SortByType;
+  sortByTextKr: '최신순' | '높은평순' | '낮은평순';
+  isDisabled: boolean;
+};

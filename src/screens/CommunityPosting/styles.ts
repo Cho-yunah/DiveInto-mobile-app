@@ -4,7 +4,11 @@ import { StyleSheet } from 'react-native';
   container: {
     flex: 1,
     backgroundColor: '#F3F5F7',
-    alignItems: 'center'
+    paddingHorizontal: 20,
+  },
+  contentsAll: {
+    alignItems: 'center',
+    width: '100%',
   },
 });
 

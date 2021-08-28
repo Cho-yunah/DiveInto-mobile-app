@@ -9,6 +9,7 @@ export type RootLectureStack = {
   RequestPayment: undefined;
   '강의 키워드 검색': undefined;
   '강의 필터 검색': undefined;
+  DetailReservation: { reservationId: number; navigateToHome: () => void };
 };
 export type MainListProps = StackScreenProps<RootLectureStack, 'MainList'>;
 

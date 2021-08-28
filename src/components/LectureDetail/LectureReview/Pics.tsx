@@ -10,7 +10,6 @@ const Pics = ({ pics }: { pics: string[] }) => {
   const setLectureModalPics = useSetRecoilState(lectureModalState);
   const setSelectedIdx = useSetRecoilState(lecutureModalSelectedIdxState);
   const reviewPics = pics.map(pic => ({ url: pic }));
-
   return (
     <FlatList
       contentContainerStyle={{ marginTop: 8 }}
@@ -20,8 +19,8 @@ const Pics = ({ pics }: { pics: string[] }) => {
         <Pressable
           key={item}
           onPress={() => {
-            setLectureModalPics(reviewPics);
             setSelectedIdx(index);
+            setLectureModalPics(reviewPics);
           }}
           style={{ marginRight: 8 }}
         >

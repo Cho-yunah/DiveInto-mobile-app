@@ -22,7 +22,7 @@ export default function EmailInput() {
 
   return (
     <View style={styles.inputContainer}>
-      <Text style={styles.commonText}>{email}</Text>
+      <Text style={styles.emailText}>{email}</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() => requestCertificationNumber(email)}

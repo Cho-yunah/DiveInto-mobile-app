@@ -1,51 +1,33 @@
-import instance from '@/src/lib/api/axios';
+import React, { useEffect } from 'react';
+import { View, Image, Text } from 'react-native';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { DetailInfoStyle as styles } from './styles';
 import {
   atkState,
+  checkWriterState,
   communityItemSelector,
-  communityListState,
-  showModalState,
   writerInfoState,
-} from '@/src/recoil/CommunityStack';
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import CommonModal from '@components/common/CommonModal';
-import { DetailInfoStyle as styles } from './styles';
+  writerInfoType,
+} from '@recoil/CommunityStack';
+import jwt_decode from "jwt-decode";
+import { decodeTokenType } from './types';
+import { DeleteBtn, EditBtn } from './ButtonCollection';
 
-export default function DetailInfo({ id }) {
-  const navigation = useNavigation();
-  const token = useRecoilValue(atkState);
-  const [communityList, setCommunityList] = useRecoilState(communityListState);
-  const { title, dateOfRegistration } = useRecoilValue(communityItemSelector);
+export default function DetailInfo({ id }: {id: number}) {
+
+  const { title } = useRecoilValue(communityItemSelector);
   const writer = useRecoilValue(writerInfoState);
-  const [show, setShow] = useRecoilState(showModalState);
-  const basicProfilelUrl =
-    'https://img.freepik.com/free-vector/swimmer-dives-into-water-from-splash-watercolors-illustration-paints_291138-350.jpg?size=626&ext=jpg';
+  const token = useRecoilValue(atkState)
+  const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null;
+  const writerInfo= useRecoilValue<writerInfoType>(writerInfoState)
+  const [checkWriter, setCheckWriter] = useRecoilState(checkWriterState)
 
-  const config = {
-    headers: {
-      Authorization: token,
-      'Content-Type': 'application/json',
-    },
-  };
-
-  const toggleShowModal = (): void => {
-    setShow(!show);
-  };
-
-  const requestDelete = async () => {
-    // console.log('delete!')
-    // console.log(id)
-    try {
-      const response = await instance.delete(`community/post/${id}`, config);
-      // console.log(response)
-      setCommunityList(communityList.filter(item => item.id !== id));
-      navigation.navigate('CommunityMain');
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  useEffect(()=> {
+    // 로그인한 사람과 글 게시한 사람이 일치하는지
+    decodeToken.user_name == writerInfo.id 
+      ? setCheckWriter(true)
+      : setCheckWriter(false)
+  },[writerInfo.id ])
 
   return (
     <View>
@@ -55,48 +37,25 @@ export default function DetailInfo({ id }) {
             style={styles.writerImage}
             source={{ uri: writer.profileImageUrl }}
           />
-        ) : (
-          <Image
-            style={styles.writerImage}
-            source={{ uri: basicProfilelUrl }}
-          />
-        )}
+         ) : (
+          <View style={styles.writerImage}>
+          </View>
+         )}
         <View>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.dateStyle}>{writer.nickName}</Text>
         </View>
       </View>
       <View style={styles.buttons}>
-        <EditBtn style={styles.modify} navigation={navigation} id={id} />
-        <DeleteBtn style={styles.delete} toggleShowModal={toggleShowModal} />
+        {checkWriter 
+          ? <>
+              <EditBtn id={id} />
+              <DeleteBtn id={id}/>
+            </>
+          : null
+        }
       </View>
-
-      {/* 삭제버튼 눌렀을 경우 확인 모달 */}
-      <CommonModal
-        show={show}
-        desc="게시글을 삭제하시겠습니까?"
-        toggleShowModal={toggleShowModal}
-        onClickConfirm={requestDelete}
-      />
     </View>
   );
 }
 
-const EditBtn = ({ navigation, id }: any) => {
-  // console.log(id)
-  return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('CommunityPosting', { id })}
-    >
-      <Text>수정</Text>
-    </TouchableOpacity>
-  );
-};
-
-const DeleteBtn = ({ toggleShowModal }: any) => {
-  return (
-    <TouchableOpacity onPress={toggleShowModal}>
-      <Text>삭제</Text>
-    </TouchableOpacity>
-  );
-};

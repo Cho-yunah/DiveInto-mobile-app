@@ -1,17 +1,13 @@
-import { ImageState } from '@/src/recoil/CommunityStack'
 import React from 'react'
 import { View , Text, Image, FlatList} from 'react-native'
 import { useRecoilValue } from 'recoil'
 import {ContentsStyle as styles} from './styles'
+import { ImageState } from '@recoil/CommunityStack'
+import { ImageType } from './types'
 
-export default function DetailContents({content} : any) {
-  const imageArr = useRecoilValue (ImageState)
+export default function DetailContents({content} : {content: string}) {
 
-  const ImageItem =({item, index}: any) => {
-    return (
-        <Image style={styles.contentsImage} source={{uri: item.imageUrl}} ></Image>
-    )
-  }
+  const imageArr = useRecoilValue<ImageType[]> (ImageState)
 
   return (
     <View style= {styles.contentsContainer}>
@@ -24,9 +20,13 @@ export default function DetailContents({content} : any) {
             data={imageArr}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            renderItem= {({item, index})=> {
-              return <ImageItem item={item} index={index}/>
-            }}
+            disableVirtualization={false} 
+            keyExtractor={(item=> `communityImg${item.id}`)}
+            renderItem= {({item})=> (
+              <Image 
+                style={styles.contentsImage} 
+                source={{uri: item.imageUrl}} />
+            )}
             nestedScrollEnabled={true}
           />
       </View>

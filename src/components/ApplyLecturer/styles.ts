@@ -4,15 +4,15 @@ import * as Color from '@/src/config/colors';
 // 강사 소개글 관련 스타일
 export const inputStyle = StyleSheet.create({
   container: {
-    marginTop: 60,
+    marginTop: 50,
     backgroundColor: Color.White,
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 8,
   },
-  topBlank: {
-    marginTop: 50,
-  },
+  // topBlank: {
+  //   marginTop: 50,
+  // },
   inputText: {
     fontSize: 16,
     lineHeight: 25,
@@ -23,55 +23,32 @@ export const inputStyle = StyleSheet.create({
 
 // 자격 단체 선택 스타일
 export const selectbox = StyleSheet.create({
-  selectContainer: {
+  container: {
     marginTop: 30,
-    width: 353,
-    height: 40,
-  },
-  shadowContainer: {
-    marginTop: 30,
-    width: 353,
-    height: 40,
-    shadowOffset: { width: 2, height: -2 },
-    shadowColor: '#566B7E33',
-    shadowOpacity: 0.5,
-  },
-  itemStyle: {
-    justifyContent: 'flex-start',
-  },
-  pickerStyle: {
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
-    borderWidth: 0,
-  },
-  dropDown: {
-    borderTopWidth: 1,
-    borderWidth: 0,
-    borderTopColor: '#A9BBC9',
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
-    shadowOffset: { width: 2, height: 2 },
-    shadowColor: '#566B7E33',
-    shadowOpacity: 0.5,
-  },
-  labelStyle: {
-    fontSize: 15,
-    textAlign: 'left',
-    color: '#6A6D70',
+    zIndex: 2,
   },
 });
 
 // 강사 자격증 선택 관련 스타일
 export const UploadCertificate = StyleSheet.create({
+  loadingContainer: {
+    height: 76,
+    marginTop: 50,
+    padding: 8,
+    borderRadius: 8,
+    zIndex: 1,
+  },
+
   container: {
     height: 76,
-    marginTop: 40,
+    marginTop: 12,
     padding: 8,
     borderRadius: 8,
     backgroundColor: Color.White,
+    flexDirection: 'row',
   },
+
+  // 사진 업로드 전 스타일
   uploadButton: {
     flex: 1,
     flexDirection: 'row',
@@ -90,5 +67,29 @@ export const UploadCertificate = StyleSheet.create({
     color: '#F3F5F7',
     textAlign: 'center',
     lineHeight: 55,
+  },
+
+  // 사진 업로드 후 관련 이미지 보여주는 스타일
+  picsArrButton: {
+    marginRight: 10,
+  },
+  picsArrImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 8,
+  },
+});
+
+export const containerShadowBox = StyleSheet.create({
+  container: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+
+    elevation: 3,
   },
 });

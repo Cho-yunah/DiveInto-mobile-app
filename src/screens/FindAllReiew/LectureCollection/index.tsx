@@ -3,59 +3,55 @@ import { FlatList, View } from 'react-native';
 import { useRecoilValue } from 'recoil';
 
 import { styles } from './styles';
-import LectureFilterContainer from '@/src/components/FindInstructorReview/LectureFilter';
+import LectureFilterContainer from '@components/FindInstructorReview/LectureFilter';
 import CommonLecture from '@components/FindInstructorReview/CommonLecture';
-import { atkState } from '@recoil/ProfileStack';
-import instance from '@/src/lib/api/axios';
 import { CommonLectureProps } from '@components/FindInstructorReview/types';
+import CommonLoading from '@components/common/CommonLoading';
+import { getMyLectureListSelector } from '@recoil/ProfileStack/dataFetch';
+import withSuspense from '@/src/lib/HOC/withSuspense';
+import CommonEmptyView from '@/src/components/common/CommonEmptyView';
 
-export default function LectureCollectionScreen() {
-  const atk = useRecoilValue(atkState);
-  const [LectureList, setLectureList] = useState(null);
+function LectureCollectionScreen() {
+  const list = useRecoilValue(getMyLectureListSelector);
+  const [lectureList, setLectureList] = useState<CommonLectureProps[] | null>(
+    null,
+  );
 
   useEffect(() => {
-    const getLectureInfo = async () => {
-      try {
-        const res = await instance.get('/lecture/manage/list?page=0&size=5', {
-          headers: {
-            Authorization: atk,
-          },
-        });
+    setLectureList(list._embedded.myLectureInfoList);
+  }, [list]);
 
-        setLectureList(res.data._embedded.myLectureInfoList);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getLectureInfo();
-  }, [atk]);
+  if (!lectureList?.length) {
+    <CommonEmptyView
+      guideText="blablabla"
+      buttonText="blablabla"
+      moveViewName="프로필"
+    />;
+  }
 
   return (
-    <>
-      {LectureList && (
-        <View style={styles.container}>
-          <LectureFilterContainer />
-          <FlatList
-            data={LectureList}
-            renderItem={({ item }: { item: CommonLectureProps }) => {
-              const { id, title, organization, level, region, imageUrl } = item;
+    <View style={styles.container}>
+      <LectureFilterContainer />
+      <FlatList
+        data={lectureList}
+        renderItem={({ item }: { item: CommonLectureProps }) => {
+          const { id, title, organization, level, region, imageUrl } = item;
 
-              return (
-                <CommonLecture
-                  id={id}
-                  title={title}
-                  organization={organization}
-                  level={level}
-                  region={region}
-                  imageUrl={imageUrl}
-                />
-              );
-            }}
-            keyExtractor={item => String(item.id)}
-          />
-        </View>
-      )}
-    </>
+          return (
+            <CommonLecture
+              id={id}
+              title={title}
+              organization={organization}
+              level={level}
+              region={region}
+              imageUrl={imageUrl}
+            />
+          );
+        }}
+        keyExtractor={item => String(item.id)}
+      />
+    </View>
   );
 }
+
+export default withSuspense(LectureCollectionScreen);
