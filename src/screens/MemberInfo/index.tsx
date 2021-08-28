@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { useRecoilValue } from 'recoil';
 
 import {
@@ -37,10 +37,12 @@ const MemberInfoScreen = ({ navigation }: MemberInfoProps) => {
 
   return (
     <View style={styles.conatiner}>
-      <PhoneInput />
-      <NicknameInput />
-      <GenderBtn />
-      <CustomDatePicker />
+      <ScrollView>
+        <PhoneInput />
+        <NicknameInput />
+        <GenderBtn />
+        <CustomDatePicker />
+      </ScrollView>
     </View>
   );
 };

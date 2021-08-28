@@ -1,5 +1,5 @@
 export type HeaderContainerProps = {
-  currScreen: string;
+  currScreen: 'main' | 'instructor';
   buttonText: string;
 };
 

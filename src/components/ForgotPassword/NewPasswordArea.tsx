@@ -19,7 +19,11 @@ const NewPasswordArea = () => {
   }, []);
 
   return (
-    <View>
+    <View
+      style={{
+        marginTop: 20,
+      }}
+    >
       <Text>새 비밀번호를 입력해주세요. (4글자 이상)</Text>
       <View style={styles.PWInputContainer}>
         <TextInput

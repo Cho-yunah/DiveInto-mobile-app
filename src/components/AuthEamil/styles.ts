@@ -1,11 +1,18 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import * as Color from '@/src/config/colors';
+import * as getDimension from '@config/windowDimention';
 import NaverMap from '@/src/legacy/Containers/common/NaverMap';
 
 export const HeaderText = StyleSheet.create({
   container: {
-    paddingBottom: 60,
-    width: 260,
+    paddingTop: getDimension.HEIGHT / 10,
+  },
+  eachContainer: {
+    paddingBottom: getDimension.HEIGHT / 15,
+    width:
+      getDimension.WIDTH > 370
+        ? getDimension.WIDTH * 0.65
+        : getDimension.WIDTH * 0.75,
   },
   title: {
     fontSize: 24,
@@ -23,20 +30,32 @@ export const inputStyles = StyleSheet.create({
   inputContainer: {
     width: '100%',
     borderBottomWidth: 1,
-    borderBottomColor: '#A9BBC9',
-    paddingBottom: 9,
+    borderBottomColor: Color.underLine,
+    paddingBottom: Platform.OS === 'ios' ? 9 : 0,
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   lastInputLayout: {
-    paddingTop: 60,
+    paddingTop: getDimension.HEIGHT / 15,
   },
-  commonText: {
-    flex: 1,
+  emailText: {
     fontSize: 16,
     color: Color.BasicText,
+    paddingBottom: 5,
+    width: getDimension.WIDTH * 0.6,
   },
-  button: { alignItems: 'flex-end' },
-  buttonText: { color: '#CCD7DF', fontSize: 14 },
+  inputText: {
+    padding: 0,
+    color: Color.BasicText,
+  },
+  button: {
+    alignItems: 'flex-end',
+  },
+  buttonText: {
+    color: '#CCD7DF',
+    fontSize: 14,
+  },
   activeButton: {
     color: Color.deepBlue,
   },

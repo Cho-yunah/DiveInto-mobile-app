@@ -8,17 +8,19 @@ import { liekCollectionRefreshState } from '../Global';
 // ProfileMainScreen에서 기본 사용자 정보를 받는 dataFetching selector
 export const getUserInfoSelector = selector({
   key: '/account',
-  get: async () => {
-    console.log('getUserInfoSelector');
-
+  get: async ({ get }) => {
     const instanceAtk = await getInstanceATK();
 
     try {
-      const { data: userInfo } = await instanceAtk.get('/account');
+      const response = await instanceAtk.get('/account');
+      console.log(response, 'response');
+
+      const userInfo = response.data;
 
       return userInfo;
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error.response);
+      // throw err;
     }
   },
 });
@@ -27,16 +29,15 @@ export const getUserInfoSelector = selector({
 export const getProfileImg = selector({
   key: '/profile-photo',
   get: async () => {
-    console.log('getProfileImg');
-
     const instanceAtk = await getInstanceATK();
 
     try {
       const { data: imgURI } = await instanceAtk.get('/profile-photo');
 
       return imgURI;
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
+      // throw error;
     }
   },
 });
@@ -67,7 +68,7 @@ export const getLectureScheduleListSelector = selectorFamily({
         console.log('Rerendering');
 
         const { data } = await instanceAtk.get(
-          '/reservation/list?page=0&size=15&sort=dateOfReservation,DESC',
+          '/reservation/list?page=0&size=15&sort=dateOfReservationv,DESC',
         );
 
         if (!data.page.totalElements) return [];
@@ -84,8 +85,9 @@ export const getLectureScheduleListSelector = selectorFamily({
               (data: reservationLectureListType) => data.remainingDate === 365,
             );
         }
-      } catch (err) {
-        console.log(err);
+      } catch (error) {
+        console.log(error.response);
+        throw error;
       }
     },
 });
@@ -109,8 +111,9 @@ export const getLikeListSelector = selectorFamily({
 
         if (!data.page.totalElements) return [];
         else return data._embedded[dataStoreName];
-      } catch (err) {
-        console.log(err);
+      } catch (error) {
+        console.log(error);
+        throw error;
       }
     },
 });
@@ -127,8 +130,9 @@ export const getIsApplyInsctructorSelector = selector({
       } = await instanceAtk.get('/account/instructor-application');
 
       return applied;
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   },
 });
@@ -147,8 +151,9 @@ export const getMyLectureListSelector = selector({
       if (!data.page.totalElements) return [];
 
       return data;
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   },
 });
@@ -163,8 +168,9 @@ export const getReservationDetail = selectorFamily({
       const { data } = await instanceATK.get(uri);
 
       return data;
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   },
 });

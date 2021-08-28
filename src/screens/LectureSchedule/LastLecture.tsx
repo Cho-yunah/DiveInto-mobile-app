@@ -8,6 +8,7 @@ import { getLectureScheduleListSelector } from '@/src/recoil/ProfileStack/dataFe
 import CommonEmptyView from '@components/common/CommonEmptyView';
 import LastLectureSchedule from '@components/LectureSchedule/LastLectureSchedule';
 import withSuspense from '@/src/lib/HOC/withSuspense';
+
 function LastLectureScreen() {
   const reservationList = useRecoilValue(
     getLectureScheduleListSelector('last'),
@@ -54,7 +55,8 @@ function LastLectureScreen() {
   );
 }
 
-export default withSuspense(LastLectureScreen);
+export default LastLectureScreen;
+// export default withSuspense(LastLectureScreen);
 
 //   const ListEl = reservationList ? (
 //     reservationList.length !== 0 ? (

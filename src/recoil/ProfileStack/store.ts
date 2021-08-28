@@ -127,21 +127,21 @@ export type PicsArrStateType = {
 };
 
 export const ratingStarState = atomFamily<number, string>({
-  key: 'ratingStar',
+  key: 'profile/ratingStar',
   default: 0,
 });
 
 export const contentState = atom<string>({
-  key: 'content',
+  key: 'profile/content',
   default: '',
 });
 
 export const picsArrState = atom<PicsArrStateType[]>({
-  key: 'picsArr',
+  key: 'profile/picsArr',
   default: [],
 });
 
 export const isModalOpenState = atom({
-  key: 'isModalOpen',
+  key: 'profile/isModalOpen',
   default: false,
 });

@@ -9,7 +9,7 @@ import ReserveLectureScreen from '@/src/screens/ReserveLecture';
 import RequestPaymentScreen from '@/src/screens/RequestPayment';
 import DetailReservationScreen from '@/src/screens/DetailReservation';
 import { IsLogin } from '@/src/recoil/Global';
-import WriteReviewScreen from '@/src/screens/WriteReview';
+import * as getDimension from '@config/windowDimention';
 
 const Stack = createStackNavigator<RootLectureStack>();
 
@@ -23,13 +23,14 @@ export default function LectureStack() {
         screenOptions={{
           headerStyle: {
             backgroundColor: '#50CAD2',
-            height: 88,
+            height: getDimension.HEIGHT * 0.1,
           },
           headerTitleStyle: {
             fontWeight: 'bold',
             fontSize: 18,
             height: 21,
           },
+          headerTitleAlign: 'center',
           headerBackTitle: '뒤로',
           headerBackTitleStyle: {
             fontWeight: 'bold',
