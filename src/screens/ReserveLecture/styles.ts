@@ -1,4 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
@@ -15,7 +18,8 @@ const styles = StyleSheet.create({
   modalContainer: {
     zIndex: 0,
     position: 'absolute',
-    top: 650,
+    top: HEIGHT * 0.8,
+    // bottom: 20,
     left: 20,
     right: 20,
     borderRadius: 20,
