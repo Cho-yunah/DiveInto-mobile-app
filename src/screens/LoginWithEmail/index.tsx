@@ -72,7 +72,7 @@ const LoginWithEmailScreen = ({ navigation }: LoginWithEmailProps) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <PWInput />
         <LoginButton requestLogin={requestLogin} />
         <PwForgot navigateToForgotPassword={navigateToForgotPassword} />

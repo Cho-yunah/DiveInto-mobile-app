@@ -1,23 +1,27 @@
 import { StyleSheet } from 'react-native';
+import * as getDimension from '@config/windowDimention';
 
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    paddingLeft: 18,
-    paddingRight: 18,
+    paddingTop: getDimension.HEIGHT / 7.5,
   },
   inputBox: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#ccd7df',
     marginBottom: 8,
   },
   passwordInput: {
-    flex: 1,
+    padding: 0,
     paddingBottom: 8,
     fontSize: 16,
   },
-  messageText: { height: 15, marginBottom: 63.18 },
+  messageText: {
+    marginBottom: getDimension.HEIGHT / 14,
+  },
   valid: { color: '#38D1A8' },
   invalid: { color: '#E93A55' },
   btnText: {

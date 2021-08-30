@@ -8,6 +8,7 @@ import SetPasswordScreen from '@screens/SetPassword';
 import AuthEmailScreen from '@screens/AuthEmail';
 import MemberInfoScreen from '@screens/MemberInfo';
 import ForgotPasswordScreen from '@/src/screens/ForgotPassword';
+import * as getDimension from '@config/windowDimention';
 
 const Stack = createStackNavigator<RootLoginStack>();
 
@@ -17,13 +18,14 @@ export default function LoginStack() {
       screenOptions={{
         headerStyle: {
           backgroundColor: '#50CAD2',
-          height: 88,
+          height: getDimension.HEIGHT * 0.1,
         },
         headerTitleStyle: {
           fontWeight: 'bold',
           fontSize: 18,
           height: 21,
         },
+        headerTitleAlign: 'center',
         headerBackTitle: '뒤로',
         headerBackTitleStyle: {
           fontWeight: 'bold',
@@ -31,6 +33,7 @@ export default function LoginStack() {
         },
         headerTintColor: '#fefefe',
       }}
+      // initialRouteName="ForgotPassword"
     >
       <Stack.Screen
         name="Login"

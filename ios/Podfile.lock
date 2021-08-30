@@ -759,8 +759,9 @@ SPEC CHECKSUMS:
   react-native-document-picker: aa3fd58d5fcc1fdbf6939510b9407d16377f5832
   react-native-image-picker: 7bda3c7297c3ea16f4f504ad6174aa7e548192ef
   react-native-nmap: 0b154f695c47e4b6db708ecf46bf9ad3ea8ae4b1
-  react-native-safe-area-context: e471852c5ed67eea4b10c5d9d43c1cebae3b231d
-  react-native-restart: d4ea7637e193da7558d229b3704d500ec0d75f9c
+  react-native-restart: 733a51ad137f15b0f8dc34c4082e55af7da00979
+  react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
+  React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5
   React-RCTAnimation: 6a2e76ab50c6f25b428d81b76a5a45351c4d77aa
   React-RCTImage: ce5bf8e7438f2286d9b646a05d6ab11f38b0323d

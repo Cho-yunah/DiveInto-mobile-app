@@ -1,6 +1,6 @@
 import { passwordLoginState } from '@/src/recoil/LoginStack';
 import React, { useState, useEffect } from 'react';
-import { Pressable, TextInput } from 'react-native';
+import { Pressable, TextInput, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useRecoilState } from 'recoil';
 import useTransitionColor from '../Login/useTransitionColor';
@@ -27,7 +27,7 @@ export default function LoginWithEmail() {
   const onPWVisiblePress = () => setIsPWVisible(!isPWVisible);
 
   return (
-    <>
+    <View style={styles.container}>
       <TextInput
         textContentType={'newPassword'}
         secureTextEntry={isPWVisible ? false : true}
@@ -50,6 +50,6 @@ export default function LoginWithEmail() {
           ]}
         />
       </Pressable>
-    </>
+    </View>
   );
 }

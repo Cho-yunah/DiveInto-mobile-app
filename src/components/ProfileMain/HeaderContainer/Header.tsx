@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { mainHeaderStyles as styles, lecturerHeaderStyles } from './styles';
 import { HeaderContainerProps } from './types';
 import ProfileImg from './ProfileImg';
 import UploadImgBtn from './UploadImgBtn';
-
 import { ProfileImageURIState } from '@recoil/ProfileStack/store';
-import { profileMainMultipleEval } from '@/src/recoil/ProfileStack/dataFetch';
+import { profileMainMultipleEval } from '@recoil/ProfileStack/dataFetch';
 
 export default function Header({
   currScreen,
@@ -26,21 +25,21 @@ export default function Header({
   }, [imageUrl]);
 
   return (
-    <View
+    <SafeAreaView
       style={[
         styles.rootContainer,
-        currScreen === 'lecturer' && lecturerHeaderStyles.rootContainer,
+        currScreen === 'instructor' && lecturerHeaderStyles.rootContainer,
       ]}
     >
       <View
         style={[
           styles.headerContainer,
-          currScreen === 'lecturer' && lecturerHeaderStyles.headerContainer,
+          currScreen === 'instructor' && lecturerHeaderStyles.headerContainer,
         ]}
       >
         <ProfileImg />
         <UploadImgBtn buttonText={buttonText} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

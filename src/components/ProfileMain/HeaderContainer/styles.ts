@@ -1,9 +1,12 @@
 import { StyleSheet } from 'react-native';
 import * as Color from '@config/colors';
+import * as getDimension from '@config/windowDimention';
+
+console.log(getDimension.HEIGHT);
 
 export const mainHeaderStyles = StyleSheet.create({
   rootContainer: {
-    height: 180,
+    height: '30%',
   },
   headerContainer: {
     flex: 1,
@@ -13,7 +16,6 @@ export const mainHeaderStyles = StyleSheet.create({
   profileImage: {
     width: 100,
     height: 100,
-    borderWidth: 1,
     borderColor: '#A9BBC9',
     borderRadius: 50,
     marginBottom: 8,
@@ -27,7 +29,7 @@ export const mainHeaderStyles = StyleSheet.create({
 
 export const lecturerHeaderStyles = StyleSheet.create({
   rootContainer: {
-    height: 130,
+    height: '30%',
     marginTop: 40,
   },
   headerContainer: {

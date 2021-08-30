@@ -15,7 +15,7 @@ export default function ApplyLecturerView({
 }: ApplyLectureViewType) {
   return (
     <>
-      <HeaderContainer currScreen="lecturer" buttonText="프로필사진추가" />
+      <HeaderContainer currScreen="instructor" buttonText="프로필사진추가" />
       <CommonInput
         placeholderText="강사소개글"
         value={intro}

@@ -1,5 +1,8 @@
-import {StyleSheet} from 'react-native'
+import {StyleSheet, Dimensions} from 'react-native'
 import * as Color from '@config/colors';
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGTH = Dimensions.get('window').height;
 
 export const DetailInfoStyle = StyleSheet.create({
   writerInfoBox: {
@@ -21,11 +24,11 @@ export const DetailInfoStyle = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: '600',
-    lineHeight: 21
+    paddingVertical: 3,
   },
   dateStyle: {
     fontSize: 12,
-    lineHeight: 20.4,
+    padding: 2,
     color: Color.DarkgrayText
   },
   buttons: {
@@ -36,14 +39,6 @@ export const DetailInfoStyle = StyleSheet.create({
     width: 55,
     justifyContent: 'space-between',
     alignItems: 'center'
-  },
-  modify: {
-    color: '#A9BBC9',
-    fontSize: 12
-  },
-  delete: {
-    color: '#E93A55',
-    fontSize: 12
   }
 })
 
@@ -57,7 +52,6 @@ export const ContentsStyle = StyleSheet.create({
     marginBottom: 5,
   },
   textStyle: {
-    lineHeight: 25,
     marginHorizontal: 19,
     color: '#202020',
   },
@@ -83,7 +77,7 @@ export const CommentInputStyle = StyleSheet.create({
     backgroundColor: Color.Background
   },
   commentInputBox: {
-    width: '91%',
+    width: WIDTH-40,
     height: 46,
     paddingRight: 38,
     paddingLeft: 15, 
@@ -148,8 +142,14 @@ export const CommentInputStyle = StyleSheet.create({
     color: '#38d9a9',
     padding: 5
   },
-  editButton: {
+  activeEditBtn: {
     color: '#207AB4',
+    position: 'absolute',
+    bottom: 45,
+    right: 25,
+  },
+  editBtn: {
+    color: '#D8D8D8',
     position: 'absolute',
     bottom: 45,
     right: 25,
@@ -158,17 +158,17 @@ export const CommentInputStyle = StyleSheet.create({
 
 export const CommentDetailStyles = StyleSheet.create({
   flatlistContainer: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   commentBox: {
-    width: 353,
+    width: WIDTH-40,
     marginVertical: 6,
-    marginHorizontal: 17,
+    marginHorizontal: '5%',
     paddingVertical:10,
     paddingHorizontal: 16,
     borderRadius: 10,
     backgroundColor: '#fff',
-    color: '#202020'
+    color: '#202020',
   },
   commentInfo: {
     flexDirection: 'row',
@@ -194,7 +194,9 @@ export const CommentDetailStyles = StyleSheet.create({
   },
   comment: {
     marginTop: 10,
-    // lineHeight: 14
+  },
+  showingRecomment: {
+    overflow: "hidden",
   },
   buttonBox: {
     paddingVertical:10,
@@ -206,7 +208,7 @@ export const CommentDetailStyles = StyleSheet.create({
     width: 55,
     flexDirection: 'row',
     justifyContent: 'space-between',
-  }
+  },
 })
 
 export const RecommentDetailStyles = StyleSheet.create({
@@ -217,6 +219,7 @@ export const RecommentDetailStyles = StyleSheet.create({
     padding: 10,
     marginVertical: 6
   },
+
   writerInfo: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -246,9 +249,4 @@ export const RecommentDetailStyles = StyleSheet.create({
   recomment: {
    flexGrow: 1
   },
-  deleteBtn: {
-    color: '#E93A55', 
-    fontSize: 12, 
-    paddingHorizontal: 5 
-  }
 })

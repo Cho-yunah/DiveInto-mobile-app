@@ -7,7 +7,7 @@ import { CommunityPostingProps } from '@navigators/CommunityStack/types';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useRecoilState} from 'recoil';
-import { atkState } from '@recoil/CommunityStack';
+import { atkState, isLoginState } from '@recoil/CommunityStack';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -15,15 +15,18 @@ const Tab = createMaterialTopTabNavigator();
 export default function CommunityMainScreen({
   navigation,
 }: CommunityPostingProps): ReactElement {
+
   const [token, setToken] = useRecoilState(atkState);
   console.log(token);
+  const [isLogin, setIsLogin]= useRecoilState(isLoginState)
+
   // token 받아오기
   useEffect(() => {
     const getToken = async () => {
       try {
         const getTokenRequest = await AsyncStorage.getItem('atk');
         setToken(getTokenRequest);
-
+        setIsLogin(true)
       } catch (error) {
         console.log(error);
       }
@@ -36,7 +39,7 @@ export default function CommunityMainScreen({
     const addContent = () => navigation.navigate('CommunityPosting');
 
     navigation.setOptions({
-      headerRight: () => <NextButton text="글쓰기" onPress={addContent} />,
+      headerRight: () => <NextButton text="글쓰기" onPress={addContent} disable={!isLogin}/>,
     });
   }, []);
 

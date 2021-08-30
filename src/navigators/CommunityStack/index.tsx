@@ -38,11 +38,14 @@ export default function CommunityStack({ navigation, route }: any) {
           headerStyle: {
             backgroundColor: '#50CAD2',
             height: 88,
+            // width: '100%',
           },
           headerTitleStyle: {
             fontWeight: 'bold',
             fontSize: 18,
             height: 21,
+            flex: 1,
+            alignSelf:'center'
           },
           headerBackTitle: '뒤로',
           headerBackTitleStyle: {

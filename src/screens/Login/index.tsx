@@ -32,11 +32,11 @@ const LoginScreen = ({ navigation }: LoginProps) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderText />
         <EmailInput requestCheckEmail={requestCheckEmail} />
         {/* <SocialLogin /> */}
-        <LoginProblem />
+        {/* <LoginProblem /> */}
       </ScrollView>
     </View>
   );

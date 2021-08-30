@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
 
 import { styles } from './styles';
 import {
@@ -11,7 +11,6 @@ import {
 import { getLectureScheduleListSelector } from '@/src/recoil/ProfileStack/dataFetch';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 import withSuspense from '@/src/lib/HOC/withSuspense';
-import AutoCloseAlertModal from '@/src/components/common/AutoCloseAlertModal';
 
 function NextLectureScreen() {
   const reservationList = useRecoilValue(
@@ -59,4 +58,5 @@ function NextLectureScreen() {
   );
 }
 
+// export default NextLectureScreen;
 export default withSuspense(NextLectureScreen);
