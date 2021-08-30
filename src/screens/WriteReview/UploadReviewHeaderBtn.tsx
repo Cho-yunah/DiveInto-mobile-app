@@ -9,6 +9,7 @@ import {
   picsArrState,
   ratingStarState,
 } from '@/src/recoil/ProfileStack';
+import { WriteReviewCachingState } from '@/src/recoil/ProfileStack/store';
 import { useNavigation } from '@react-navigation/native';
 import React, { useRef } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
@@ -26,6 +27,7 @@ const UploadReviewHeaderBtn = ({
   const picsArr = useRecoilValue(picsArrState);
   const setIsLoadingModalOpen = useSetRecoilState(isModalOpenState);
   const navigation = useNavigation();
+  const setTriteReviewsetCache = useSetRecoilState(WriteReviewCachingState);
 
   const isReadyToUpload = () =>
     instructorStar &&
@@ -53,6 +55,8 @@ const UploadReviewHeaderBtn = ({
         const imageRes = await requestPostReviewContentOrImages(
           getFormData(reservationId, reviewId, picsArr),
         ); // 첫번째 인자 나중에 reservationId 건네받아서 전달
+        setTriteReviewsetCache(prevState => prevState + 1);
+
         console.log(imageRes);
         console.warn('후기 작성 완료');
 

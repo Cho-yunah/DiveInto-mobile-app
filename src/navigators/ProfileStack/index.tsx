@@ -27,6 +27,7 @@ import CommunityDetailScreen from '@screens/CommunityDetail';
 import LectureDetailScreen from '@screens/LectureDetail';
 import { IsLogin } from '@recoil/Global';
 import ErrorFallback from '@components/common/ErrorFallback';
+import TotalAttendeeReviewScreen from '@/src/screens/TotalAttendeeReview';
 
 const Stack = createStackNavigator();
 
@@ -80,6 +81,7 @@ export default function ProfileStack<ProfileStak>() {
               title: '후기 모아보기',
             }}
           />
+
           {/* 한 강의에 관한 리뷰 모아보기 */}
           <Stack.Screen
             name="ReviewCollection"
@@ -88,6 +90,15 @@ export default function ProfileStack<ProfileStak>() {
               title: '후기 리스트',
             }}
           />
+
+          <Stack.Screen
+            name="TotalAttendeeReview"
+            component={TotalAttendeeReviewScreen}
+            options={{
+              title: '리뷰관리',
+            }}
+          />
+
           {/* 리뷰 작성하기 스크린 */}
           <Stack.Screen
             name="WriteReview"
