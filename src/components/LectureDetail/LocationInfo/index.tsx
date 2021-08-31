@@ -42,7 +42,7 @@ export function Map({ latitude = 0, longitude = 0 }: locationResponseType) {
 
   return (
     <NaverMapView
-      style={{ width: '100%', height: 200 }}
+      style={{ width: '100%', height: '100%' }}
       // showsMyLocationButton={true}
       center={{ ...posCoords, zoom: 15 }}
     >

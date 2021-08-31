@@ -7,7 +7,8 @@ export const styles = StyleSheet.create({
   container: {
     zIndex: 0,
     position: 'absolute',
-    top: WIDTH + 250,
+    top: HEIGHT * 0.7,
+    // bottom: 0.1 * HEIGHT,
     left: 20,
     right: 20,
     borderRadius: 20,

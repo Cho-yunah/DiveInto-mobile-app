@@ -1,4 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
 
 export const ForgotPasswordScreenStyle = StyleSheet.create({
   container: {
@@ -18,9 +21,10 @@ export const ForgotPasswordScreenStyle = StyleSheet.create({
   },
   modalContainer: {
     position: 'absolute',
-    top: 650,
     left: 20,
     right: 20,
+    // bottom: 40,
+    top: HEIGHT * 0.7,
     borderRadius: 20,
     flexDirection: 'row',
     justifyContent: 'center',

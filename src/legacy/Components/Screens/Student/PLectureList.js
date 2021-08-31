@@ -238,12 +238,8 @@ export default function PLectureList({
   };
 
   const onFilterOk = () => {
-    const {
-      region,
-      costCondition,
-      certificateKind,
-      groupName,
-    } = selectedFilter;
+    const { region, costCondition, certificateKind, groupName } =
+      selectedFilter;
     updateFilter({
       region,
       costCondition,

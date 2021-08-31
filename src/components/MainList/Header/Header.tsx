@@ -1,14 +1,22 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { HeaderStyles as styles } from './styles';
-import SearchBox from './SearchBox';
+import { StaticSearchBox } from './SearchBox';
 import Alarm from './Alarm';
 import Filter from './Filter';
 
-export default function Header({ userName }: { userName: string }) {
+export default function Header({
+  userName,
+  onKeywordSearchPress,
+  onFilterSearchPress,
+}: {
+  userName: string;
+  onKeywordSearchPress: () => void;
+  onFilterSearchPress: () => void;
+}) {
   const hasAlarm = true;
   const onAlarmPress = () => {};
-  const onFilterPress = () => {};
+  // const onFilterPress = () => {};
 
   return (
     <View style={styles.rootContainer}>
@@ -19,8 +27,13 @@ export default function Header({ userName }: { userName: string }) {
         <Alarm onPress={onAlarmPress} hasAlarm={hasAlarm} />
       </View>
       <View style={[styles.searchBarContainer]}>
-        <SearchBox placeholder="원하는 강의를 찾아보세요." />
-        <Filter onPress={onFilterPress} />
+        <View style={{ flex: 1, marginRight: 10 }}>
+          <StaticSearchBox
+            placeholder="원하는 강의를 찾아보세요."
+            onPress={onKeywordSearchPress}
+          />
+        </View>
+        <Filter onPress={onFilterSearchPress} />
       </View>
     </View>
   );
