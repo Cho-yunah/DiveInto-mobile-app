@@ -112,6 +112,8 @@ export function FilterSearch() {
             backgroundColor: colors.White,
             borderRadius: 15,
             zIndex: 2,
+            marginLeft: 10,
+            marginRight: 10,
           },
           styles.shadow,
         ]}
