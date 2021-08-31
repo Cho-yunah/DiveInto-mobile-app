@@ -20,12 +20,16 @@ export const NewLectures = StyleSheet.create({
   lectureContainer: {
     marginRight: 10,
     width: 196,
-    height: 200,
     backgroundColor: colors.White,
     borderRadius: 20,
     marginBottom: 6,
   },
-  lectureImage: { width: '100%', height: 120 },
+  lectureImage: {
+    width: '100%',
+    height: 120,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+  },
   heart: {
     position: 'absolute',
     alignSelf: 'flex-end',
@@ -75,7 +79,8 @@ export const PopularLectures = StyleSheet.create({
 });
 
 export const InfoTags = StyleSheet.create({
-  titleText: { fontSize: 14 },
+  titleText: { fontSize: 13, marginBottom: -3 },
+  subText: { fontSize: 10 },
 });
 
 export const Tags = StyleSheet.create({
