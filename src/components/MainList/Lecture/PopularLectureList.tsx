@@ -139,3 +139,65 @@ export default function PopularLectureList() {
     </View>
   );
 }
+
+export function FilteredLectureList() {
+  const [lectures, setLectures] = useState<PopularLectureProps[]>();
+  useLayoutEffect(() => {
+    try {
+      const fetch = async () => {
+        const instanceAtk = await getInstanceATK();
+
+        const res = await instanceAtk.get(
+          'http://52.79.225.4:8081/lecture/popular/list?page=0&size=5',
+        );
+
+        console.log(res.data._embedded);
+
+        const status = res.status;
+        if (status !== 200) throw new Error('인기강의 조회 에러');
+
+        setLectures(res.data._embedded.lectureInfoList);
+      };
+      fetch();
+    } catch (e) {
+      console.log('인기강의 조회 에러');
+    }
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      {/* 헤더 */}
+      <View style={styles.header}>
+        <Text style={styles.title}>인기 강의</Text>
+        <TouchableOpacity>
+          <Text style={styles.more}>더보기</Text>
+        </TouchableOpacity>
+      </View>
+      {/* 인기 강의 리스트 */}
+      <ScrollView>
+        {lectures ? (
+          lectures.map(lecture => (
+            <PopularLecture
+              id={lecture.id}
+              title={lecture.title}
+              organization={lecture.organization}
+              level={lecture.level}
+              region={lecture.region}
+              maxNumber={lecture.maxNumber}
+              lectureTime={lecture.lectureTime}
+              equipmentNames={lecture.equipmentNames}
+              imageUrl={lecture.imageUrl}
+              isMarked={lecture.isMarked}
+              price={lecture.price}
+              period={lecture.period}
+              starAvg={lecture.starAvg}
+              reviewCount={lecture.reviewCount}
+            />
+          ))
+        ) : (
+          <PopularLectureSkeleton />
+        )}
+      </ScrollView>
+    </View>
+  );
+}

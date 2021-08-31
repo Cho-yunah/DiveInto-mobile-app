@@ -36,10 +36,11 @@ const regionLabel: { label: Region; value: number }[] = [
 ];
 
 const certificateKindLabel: { label: Level; value: number }[] = [
-  { label: 'level1', value: 0 },
-  { label: 'level2', value: 1 },
-  { label: 'level3', value: 2 },
-  { label: 'level4', value: 3 },
+  { label: 'Level1', value: 0 },
+  { label: 'Level2', value: 1 },
+  { label: 'Level3', value: 2 },
+  { label: 'Level4', value: 3 },
+  { label: 'Level5', value: 4 },
 ];
 
 const groupNameLabel: { label: Organization; value: number }[] = [
