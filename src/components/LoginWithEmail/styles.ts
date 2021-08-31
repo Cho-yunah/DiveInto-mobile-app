@@ -2,8 +2,6 @@ import { StyleSheet, Platform } from 'react-native';
 import * as Color from '@config/colors';
 import * as getDimenstion from '@config/windowDimention';
 
-console.log(getDimenstion.HEIGHT, 'ㅌㅌㅌ ');
-
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',

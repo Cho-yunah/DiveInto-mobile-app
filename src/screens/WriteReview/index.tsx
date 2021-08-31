@@ -7,11 +7,11 @@ import { Content, StarRatings, UploadPics } from '@/src/components/WriteReview';
 import WriteReviewLoadingModal from './WriteReviewLoadingModal';
 
 const WriteReviewScreen = ({ navigation, route }: WriteReviewScreenProps) => {
-  // const { reservationId } = route.params;
+  const { reservationId } = route.params;
 
   navigation.setOptions({
     // headerRight: () => <UploadReviewHeaderBtn reservationId={reservationId} />,
-    headerRight: () => <UploadReviewHeaderBtn />,
+    headerRight: () => <UploadReviewHeaderBtn reservationId={reservationId} />,
   });
 
   return (

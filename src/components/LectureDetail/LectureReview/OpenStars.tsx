@@ -8,15 +8,26 @@ import { ReviewListStyles as RS } from './styles';
 const OpenStars = ({
   rate,
   ratingName,
+  layoutCenter,
 }: {
   rate: number;
   ratingName: string;
+  layoutCenter?: boolean;
 }) => {
   const stars = pushCorrectStar(
     rate,
     <FontAwesome name="star" size={16} color={'rgb(248,194,93)'} />,
     <FontAwesome name="star-half" size={16} color={'rgb(248,194,93)'} />,
   );
+
+  if (layoutCenter) {
+    return (
+      <View style={{ alignItems: 'center' }}>
+        <Text style={RS.openStarText}>{ratingName}</Text>
+        <View style={RS.openStars}>{stars.map(star => star)}</View>
+      </View>
+    );
+  }
 
   return (
     <View>
