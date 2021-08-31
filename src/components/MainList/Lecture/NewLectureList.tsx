@@ -1,5 +1,12 @@
 import React, { useLayoutEffect, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  ViewStyle,
+} from 'react-native';
 import { NewLectures as styles, shadow } from './styles';
 import { NewLectureProps } from './types';
 import { useNavigation } from '@react-navigation/native';
@@ -25,11 +32,12 @@ export const NewLecture = ({
   imageUrl = '',
   isMarked,
   price,
+  containerStyle,
 }: NewLectureProps) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      style={[styles.lectureContainer, shadow]}
+      style={[styles.lectureContainer, shadow, containerStyle]}
       activeOpacity={0.7}
       onPress={() => navigation.navigate('LectureDetail', { lectureId: id })}
     >
@@ -38,7 +46,7 @@ export const NewLecture = ({
         source={imageUrl ? { uri: imageUrl } : lectureExm}
         style={styles.lectureImage}
       />
-      <Heart containerStyle={styles.heart} />
+      {/* <Heart containerStyle={styles.heart} /> */}
 
       {/* 강의 정보 요약 */}
       <View style={styles.infoContainer}>

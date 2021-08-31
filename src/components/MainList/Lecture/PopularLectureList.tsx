@@ -17,7 +17,7 @@ export const PopularLecture = ({
   id,
   title = '프리다이빙',
   organization = 'AIDA',
-  level = 'level1',
+  level = 'Level1',
   region = '서울',
   maxNumber = 4,
   lectureTime = 8,
@@ -61,7 +61,7 @@ export const PopularLecture = ({
           />
 
           {/* 찜하기 버튼 */}
-          <Heart containerStyle={styles.heart} isMarked={isMarked} />
+          {/* <Heart containerStyle={styles.heart} isMarked={isMarked} /> */}
         </View>
       </View>
     </TouchableOpacity>

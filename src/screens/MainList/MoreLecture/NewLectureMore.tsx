@@ -53,12 +53,18 @@ export function NewLectureMore() {
         isMarked={item.isMarked}
         price={item.price}
         period={item.period}
+        containerStyle={{
+          width: '100%',
+          marginBottom: 20,
+          justifyContent: 'center',
+          borderRadius: 10,
+        }}
       />
     );
   };
 
   return (
-    <View>
+    <View style={{}}>
       {lectures && (
         <FlatList
           data={lectures}
