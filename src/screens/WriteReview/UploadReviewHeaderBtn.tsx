@@ -9,11 +9,14 @@ import {
   picsArrState,
   ratingStarState,
 } from '@/src/recoil/ProfileStack';
-import { WriteReviewCachingState } from '@/src/recoil/ProfileStack/store';
+import {
+  AttendeeReviewListCachingState,
+  WriteReviewCachingState,
+} from '@/src/recoil/ProfileStack/store';
 import { useNavigation } from '@react-navigation/native';
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import styles from './styles';
 import { UploadReviewHeaderBtnProps } from './types';
 
@@ -27,7 +30,17 @@ const UploadReviewHeaderBtn = ({
   const picsArr = useRecoilValue(picsArrState);
   const setIsLoadingModalOpen = useSetRecoilState(isModalOpenState);
   const navigation = useNavigation();
-  const setTriteReviewsetCache = useSetRecoilState(WriteReviewCachingState);
+  const setWriteReviewCache = useSetRecoilState(WriteReviewCachingState);
+  const setAttendeeReviewListCache = useSetRecoilState(
+    AttendeeReviewListCachingState,
+  );
+
+  // 후기 작성 관련 임시 리셋 기능
+  const resetInstructor = useResetRecoilState(ratingStarState('강사'));
+  const resetLecture = useResetRecoilState(ratingStarState('강의'));
+  const resetLocation = useResetRecoilState(ratingStarState('장소'));
+  const resetContents = useResetRecoilState(contentState);
+  const resetPics = useResetRecoilState(picsArrState);
 
   const isReadyToUpload = () =>
     instructorStar &&
@@ -55,7 +68,8 @@ const UploadReviewHeaderBtn = ({
         const imageRes = await requestPostReviewContentOrImages(
           getFormData(reservationId, reviewId, picsArr),
         ); // 첫번째 인자 나중에 reservationId 건네받아서 전달
-        setTriteReviewsetCache(prevState => prevState + 1);
+        setWriteReviewCache(prevState => prevState + 1);
+        setAttendeeReviewListCache(prevState => prevState + 1);
 
         console.log(imageRes);
         console.warn('후기 작성 완료');
@@ -71,6 +85,17 @@ const UploadReviewHeaderBtn = ({
 
     navigation.goBack();
   };
+
+  useEffect(() => {
+    return () => {
+      // 후기 작성 관련 임시 리셋 기능
+      resetInstructor();
+      resetLecture();
+      resetLocation();
+      resetContents();
+      resetPics();
+    };
+  }, []);
 
   return (
     <TouchableOpacity

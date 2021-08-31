@@ -2,6 +2,7 @@ import { selector, selectorFamily, waitForAll } from 'recoil';
 
 import { getInstanceATK } from '@lib/api/axios';
 import {
+  AttendeeReviewListCachingState,
   modifyNumViewStateAtom,
   ReserveLectureCachingState,
   WriteReviewCachingState,
@@ -200,4 +201,33 @@ export const reserveDetailMultipleEval = selectorFamily({
 
       return { info, location, schedule, equipment };
     },
+});
+
+// 수강생 작성한 리뷰 정보를 받아오는 selector
+export const getAttendeeReviews = selector({
+  key: '/review/mine',
+  get: async ({ get }) => {
+    get(AttendeeReviewListCachingState);
+    const instanceATK = await getInstanceATK();
+
+    try {
+      const { data } = await instanceATK.get(
+        '/review/mine?page=0&size=20&sort=writeDate,DESC',
+      );
+
+      if (!data.page.totalElements) {
+        return {
+          list: [],
+          totalElements: data.page.totalElements,
+        };
+      }
+
+      return {
+        list: data._embedded.myReviewUIList,
+        totalElements: data.page.totalElements,
+      };
+    } catch (error) {
+      throw error;
+    }
+  },
 });
