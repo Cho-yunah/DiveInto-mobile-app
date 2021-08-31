@@ -13,11 +13,11 @@ import axios from 'axios';
 
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-const NewLecture = ({
+export const NewLecture = ({
   id,
   title = '프리다이빙',
   organization = 'AIDA',
-  level = 'level1',
+  level = 'Level1',
   region = '서울',
   maxNumber,
   lectureTime,
