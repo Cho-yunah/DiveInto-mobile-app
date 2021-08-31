@@ -365,9 +365,9 @@ PODS:
     - React-jsi (= 0.64.2)
     - React-perflogger (= 0.64.2)
   - React-jsinspector (0.64.2)
-  - react-native-date-picker (3.4.3):
+  - react-native-date-picker (3.3.2):
     - React-Core
-  - react-native-document-picker (5.3.0):
+  - react-native-document-picker (5.2.0):
     - React-Core
   - react-native-image-picker (4.0.6):
     - React-Core
@@ -376,7 +376,7 @@ PODS:
     - React
   - react-native-restart (0.0.22):
     - React-Core
-  - react-native-safe-area-context (3.3.1):
+  - react-native-safe-area-context (3.3.0):
     - React-Core
   - React-perflogger (0.64.2)
   - React-RCTActionSheet (0.64.2):
@@ -450,11 +450,11 @@ PODS:
     - React-Core
   - RNCMaskedView (0.1.11):
     - React
-  - RNCPicker (1.16.7):
+  - RNCPicker (1.16.4):
     - React-Core
-  - RNCPushNotificationIOS (1.10.0):
+  - RNCPushNotificationIOS (1.8.0):
     - React-Core
-  - RNDeviceInfo (8.3.1):
+  - RNDeviceInfo (8.1.5):
     - React-Core
   - RNFBApp (11.5.0):
     - Firebase/CoreOnly (= 7.11.0)
@@ -755,12 +755,12 @@ SPEC CHECKSUMS:
   React-jsi: 67747b9722f6dab2ffe15b011bcf6b3f2c3f1427
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
-  react-native-date-picker: 201b481c94dcb7678f4712477ad026dd7793305b
-  react-native-document-picker: 226068006be4c52f8ef7f32d855ee025a12e9e64
+  react-native-date-picker: 96a07ca27a6225da8a3935324d85046028456b0f
+  react-native-document-picker: f1b5398801b332c77bc62ae0eae2116f49bdff26
   react-native-image-picker: a6e56460d34905c849ada551db30897dc7f3d535
   react-native-nmap: 0b154f695c47e4b6db708ecf46bf9ad3ea8ae4b1
   react-native-restart: 733a51ad137f15b0f8dc34c4082e55af7da00979
-  react-native-safe-area-context: ca9f3b49266e56b1d841ccdde7cfe2e076f529b6
+  react-native-safe-area-context: 61c8c484a3a9e7d1fda19f7b1794b35bbfd2262a
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5
   React-RCTAnimation: 6a2e76ab50c6f25b428d81b76a5a45351c4d77aa
@@ -777,9 +777,9 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCCheckbox: 6bd119c26c6eb8264a29d59ff66cb70a14de3349
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
-  RNCPicker: 9865e85857650bbc553c660acc580ff86abd056a
-  RNCPushNotificationIOS: 5ee247e594d0b5df3cd7be74b51035a0d91807eb
-  RNDeviceInfo: 7b82d1467b87f7e74d1c7ba9439a9a57d0c68ee9
+  RNCPicker: c620feabdfb8b131fc1be42b407be5bacc147fea
+  RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
+  RNDeviceInfo: b7b76016bf0d89c0446365dde551273195e0f525
   RNFBApp: 9c90f9d576861947ba75fe0830567c570bcbcf6d
   RNFBIid: e3a0c5de29ab0d414f6b186963066b4d34884d59
   RNFBMessaging: c873e6c37f69d22de22cab134413030a9c6330a9
