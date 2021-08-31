@@ -4,6 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { RootLectureStack } from './types';
 
 import MainList from '@screens/MainList';
+import {
+  NewLectureMore,
+  PopularLectureMore,
+} from '@screens/MainList/MoreLecture';
 import { KeywordSearch, FilterSearch } from '@screens/Search';
 import LectureDetailScreen from '@/src/screens/LectureDetail';
 import ReserveLectureScreen from '@/src/screens/ReserveLecture';
@@ -47,6 +51,8 @@ export default function LectureStack() {
         />
         <Stack.Screen name="강의 키워드 검색" component={KeywordSearch} />
         <Stack.Screen name="강의 필터 검색" component={FilterSearch} />
+        <Stack.Screen name="새로운 강의 더보기" component={NewLectureMore} />
+        <Stack.Screen name="인기 강의 더보기" component={PopularLectureMore} />
         <Stack.Screen
           name="LectureDetail"
           component={LectureDetailScreen}

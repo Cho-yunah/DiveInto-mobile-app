@@ -16,6 +16,9 @@ import { MainListProps } from '@navigators/LectureStack/types';
 export default function MainList({ navigation, route }: MainListProps) {
   const onKeywordSearchPress = () => navigation.navigate('강의 키워드 검색');
   const onFilterSearchPress = () => navigation.navigate('강의 필터 검색');
+  const onNewLectureMorePress = () => navigation.navigate('새로운 강의 더보기');
+  const onPopularLectureMorePress = () =>
+    navigation.navigate('인기 강의 더보기');
 
   return (
     // <RecoilRoot>
@@ -27,8 +30,8 @@ export default function MainList({ navigation, route }: MainListProps) {
           onFilterSearchPress={onFilterSearchPress}
         />
         <View style={{ backgroundColor: Color.Background }}>
-          <NewLectureList />
-          <PopularLectureList />
+          <NewLectureList onMorePress={onNewLectureMorePress} />
+          <PopularLectureList onMorePress={onPopularLectureMorePress} />
         </View>
       </ScrollView>
     </SafeAreaView>

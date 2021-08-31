@@ -70,7 +70,11 @@ const NewLectureSkeleton = () => (
   </>
 );
 
-export default function NewLectureList() {
+export default function NewLectureList({
+  onMorePress,
+}: {
+  onMorePress: () => void;
+}) {
   const [lectures, setLectures] = useState<NewLectureProps[]>();
   useLayoutEffect(() => {
     const fetch = async () => {
@@ -96,7 +100,7 @@ export default function NewLectureList() {
     <View style={styles.rootContainer}>
       <View style={styles.header}>
         <Text style={styles.title}>새로운 강의</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onMorePress}>
           <Text style={styles.more}>더보기</Text>
         </TouchableOpacity>
       </View>

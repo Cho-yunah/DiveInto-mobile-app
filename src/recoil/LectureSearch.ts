@@ -19,7 +19,7 @@ export const FilterRegion = atom<{ region: Region; id: number }>({
 
 export const FilterLevel = atom<{ level: Level; id: number }>({
   key: 'FilterSearchLevel',
-  default: { level: 'level1', id: 0 },
+  default: { level: 'Level1', id: 0 },
 });
 
 export const FilterCostCondition = atom<CostCondition>({
