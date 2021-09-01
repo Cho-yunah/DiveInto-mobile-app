@@ -62,7 +62,7 @@ type EquipmentInfo = {
   price: number;
   equipmentStockInfos: {
     size: string; // L, M 이런거 적을 수도 있고, api 요청 시 문자열로 보내야하므로
-    quantity: number;
+    quantity: number | '';
   }[];
 };
 
@@ -74,7 +74,7 @@ export const EquipmentList = atomFamily<EquipmentInfo, number>({
     equipmentStockInfos: [
       {
         size: '',
-        quantity: 0,
+        quantity: '',
       },
     ],
   },
