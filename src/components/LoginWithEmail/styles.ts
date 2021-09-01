@@ -2,8 +2,6 @@ import { StyleSheet, Platform } from 'react-native';
 import * as Color from '@config/colors';
 import * as getDimenstion from '@config/windowDimention';
 
-console.log(getDimenstion.HEIGHT, 'ㅌㅌㅌ ');
-
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -23,12 +21,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     marginTop: getDimenstion.HEIGHT / 2.55,
+    // marginTop: getDimenstion.HEIGHT * 0.35,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: getDimenstion.HEIGHT > 600 ? 14 : 12,
     borderColor: 'rgb(32, 122, 180)',
-    height: getDimenstion.HEIGHT > 600 ? getDimenstion.HEIGHT / 16 : 50,
+    // height: getDimenstion.HEIGHT > 600 ? getDimenstion.HEIGHT / 16 : 50,
   },
   transitionText: {
     fontSize: 18,

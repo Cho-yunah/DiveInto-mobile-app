@@ -1,6 +1,6 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
-import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
+import { View, FlatList } from 'react-native';
+import { useRecoilValue } from 'recoil';
 
 import { styles } from './styles';
 import {
@@ -11,11 +11,17 @@ import {
 import { getLectureScheduleListSelector } from '@/src/recoil/ProfileStack/dataFetch';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 import withSuspense from '@/src/lib/HOC/withSuspense';
+import { NextLectureListType } from './types';
 
 function NextLectureScreen() {
-  const reservationList = useRecoilValue(
-    getLectureScheduleListSelector('next'),
+  const reservationList = useRecoilValue<NextLectureListType[]>(
+    getLectureScheduleListSelector({
+      uri: '/reservation/future?page=0&size=20&sort=dateOfReservation,DESC',
+      type: 'next',
+    }),
   );
+
+  console.log(reservationList, 'xxx');
 
   if (reservationList.length === 0) {
     return (
@@ -45,6 +51,7 @@ function NextLectureScreen() {
                   reservationDate={item.reservationDate}
                   nickname={item.instructorNickname}
                   lectureType="next"
+                  isExistedReview={null}
                 />
               }
               reservationId={item.reservationId}
@@ -58,5 +65,4 @@ function NextLectureScreen() {
   );
 }
 
-// export default NextLectureScreen;
 export default withSuspense(NextLectureScreen);

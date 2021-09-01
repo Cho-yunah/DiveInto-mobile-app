@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { CommonStyles as styles } from './styles';
 import { CommonListProps } from './types';
+import { shadow } from '../MainList/styles';
 
 export default function LastLectureSchedule({
   imgComponent,
@@ -12,14 +13,14 @@ export default function LastLectureSchedule({
 }: CommonListProps) {
   const navigation = useNavigation();
 
-  const onMoveWriteReiveView = () => {
-    navigation.navigate('WriteReview', { reservationId });
+  const onMoveLectureDetailView = () => {
+    navigation.navigate('DetailReservation', { reservationId });
   };
 
   return (
     <TouchableOpacity
-      style={[styles.listContainer, styles.lastLectureContainer]}
-      onPress={onMoveWriteReiveView}
+      style={[styles.lastListContainer]}
+      onPress={onMoveLectureDetailView}
     >
       {imgComponent}
       {contentsComponents}
