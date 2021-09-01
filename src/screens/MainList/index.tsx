@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, ScrollView, SafeAreaView } from 'react-native';
 import { RecoilRoot } from 'recoil';
-import { MainProps } from './types';
 import { styles } from './styles';
 import * as Color from '@config/colors';
 
