@@ -1,29 +1,28 @@
-import { atom, atomFamily } from 'recoil';
+import { atom } from 'recoil';
+import { Organization, Region, Level, CostCondition } from '@typing/common';
 
-import {
-  Organization,
-  Level,
-  Region,
-  CostCondition,
-  ClassKind,
-} from '@typing/common';
-
-export const FilterOrganization = atom<Organization | undefined>({
-  key: 'FilterSearch/Organization',
-  default: undefined,
+export const FilterOrganization = atom<{
+  organization: Organization;
+  id: number;
+}>({
+  key: 'FilterSearchOrganization',
+  default: {
+    organization: 'AIDA',
+    id: 0,
+  },
 });
 
-export const FilterLevel = atom<Level>({
-  key: 'FilterSearch/Level',
-  default: 'level1',
+export const FilterRegion = atom<{ region: Region; id: number }>({
+  key: 'FilterSearchRegion',
+  default: { region: '서울', id: 0 },
 });
 
-export const FilterRegion = atom<Region>({
-  key: 'FilterSearch/Region',
-  default: '서울',
+export const FilterLevel = atom<{ level: Level; id: number }>({
+  key: 'FilterSearchLevel',
+  default: { level: 'Level1', id: 0 },
 });
 
-export const FilterCostCondition = atom<CostCondition | undefined>({
-  key: 'FilterSearch/CostCondition ',
-  default: undefined,
+export const FilterCostCondition = atom<CostCondition>({
+  key: 'FilterSearchCostCondition',
+  default: { max: 0, min: 0 },
 });

@@ -6,7 +6,7 @@ import {
 import { RequestPaymentProps } from '@/src/navigators/LectureStack/types';
 import { smallModalMessageState } from '@/src/recoil/LectureStack';
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { useSetRecoilState } from 'recoil';
 import { AlertModal } from '../ReserveLecture';
 import styles from './styles';
@@ -15,7 +15,7 @@ const index = ({ navigation }: RequestPaymentProps) => {
   const setErrorMsg = useSetRecoilState(smallModalMessageState);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* 강의 제목, 예약 일정 내용, 대여장비 */}
       <AboutReservationDetail />
       {/* 금액 상세 수강료, 대여비, 결제 총 금액 */}
@@ -23,7 +23,7 @@ const index = ({ navigation }: RequestPaymentProps) => {
       {/* 결제하기 버튼 */}
       <PayButton setErrorMsg={setErrorMsg} />
       <AlertModal />
-    </View>
+    </ScrollView>
   );
 };
 

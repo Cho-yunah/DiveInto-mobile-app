@@ -2,8 +2,6 @@ import { StyleSheet } from 'react-native';
 import * as Color from '@config/colors';
 import * as getDimension from '@config/windowDimention';
 
-console.log(getDimension.HEIGHT);
-
 export const mainHeaderStyles = StyleSheet.create({
   rootContainer: {
     height: '30%',

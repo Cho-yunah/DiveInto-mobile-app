@@ -6,7 +6,11 @@ import { lectureImgStyle as styles } from './styles';
 export default function LectureImg({ img }: { img: string }) {
   return (
     <View>
-      <Image source={{ uri: img }} style={styles.imageElStyle} />
+      <Image
+        source={{ uri: img }}
+        style={styles.imageElStyle}
+        resizeMode="repeat"
+      />
     </View>
   );
 }

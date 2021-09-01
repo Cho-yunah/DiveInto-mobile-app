@@ -18,6 +18,16 @@ export const ReserveLectureCachingState = atom({
   default: 0,
 });
 
+export const WriteReviewCachingState = atom({
+  key: 'profile/WriteReviewCachingState',
+  default: 0,
+});
+
+export const AttendeeReviewListCachingState = atom({
+  key: 'profile/AttendeeReviewListCachingState',
+  default: 0,
+});
+
 export const modifyNumViewStateAtom = atom<modifyNumViewStateAtomType | null>({
   key: 'profile/modifyNumViewState',
   default: {

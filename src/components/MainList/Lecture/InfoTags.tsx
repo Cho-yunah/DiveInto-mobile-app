@@ -41,10 +41,10 @@ export default function InfoTags({
       {/* 제목, 자격단체, 자격증레벨 */}
       <View style={containerStyle}>
         <Text style={[{ marginRight: 10 }, styles.titleText]}>{title}</Text>
-        <Text style={[{ marginRight: 5 }, styles.titleText]}>
-          {organization}
-        </Text>
-        <Text style={styles.titleText}>{level}</Text>
+      </View>
+      <View style={{ flexDirection: 'row', marginBottom: 8 }}>
+        <Text style={[{ marginRight: 5 }, styles.subText]}>{organization}</Text>
+        <Text style={styles.subText}>{level}</Text>
       </View>
 
       {/* 지역, 인원, 소요시간 */}

@@ -16,6 +16,7 @@ export type NewLectureProps = {
   imageUrl: string;
   isMarked: boolean;
   price: number;
+  containerStyle?: ViewStyle;
 };
 export type PopularLectureProps = NewLectureProps & {
   starAvg: number;

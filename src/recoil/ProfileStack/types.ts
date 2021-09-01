@@ -5,7 +5,7 @@ export type lectureReviewAllType = {
   locationStar: number;
   totalStarAvg: number;
   description: string;
-  writeDate: Date;
+  writeDate: string;
   reviewImageUrls: string[];
 };
 

@@ -1,8 +1,12 @@
 import { selector, selectorFamily, waitForAll } from 'recoil';
 
-import { reservationLectureListType } from './types';
 import { getInstanceATK } from '@lib/api/axios';
-import { modifyNumViewStateAtom, ReserveLectureCachingState } from './store';
+import {
+  AttendeeReviewListCachingState,
+  modifyNumViewStateAtom,
+  ReserveLectureCachingState,
+  WriteReviewCachingState,
+} from './store';
 import { liekCollectionRefreshState } from '../Global';
 
 // ProfileMainScreen에서 기본 사용자 정보를 받는 dataFetching selector
@@ -59,31 +63,28 @@ export const profileMainMultipleEval = selector({
 export const getLectureScheduleListSelector = selectorFamily({
   key: '/reservation/list',
   get:
-    (scheduleType: 'next' | 'last') =>
+    (info: { uri: string; type: 'next' | 'last' }) =>
     async ({ get }) => {
-      get(ReserveLectureCachingState);
       const instanceAtk = await getInstanceATK();
 
-      try {
-        console.log('Rerendering');
+      if (info.type === 'last') {
+        console.log('run writeReview cache');
+        get(WriteReviewCachingState);
+      } else {
+        console.log('run reservation cache');
+        get(ReserveLectureCachingState);
+      }
 
-        const { data } = await instanceAtk.get(
-          '/reservation/list?page=0&size=15&sort=dateOfReservationv,DESC',
-        );
+      try {
+        const { data } = await instanceAtk.get(info.uri);
 
         if (!data.page.totalElements) return [];
 
-        const schedule = data._embedded.reservationInfoList;
-
-        switch (scheduleType) {
+        switch (info.type) {
           case 'next':
-            return schedule.filter(
-              (data: reservationLectureListType) => data.remainingDate !== 365,
-            );
+            return data._embedded.futureReservationUIModelList;
           case 'last':
-            return schedule.filter(
-              (data: reservationLectureListType) => data.remainingDate === 365,
-            );
+            return data._embedded.pastReservationUIModelList;
         }
       } catch (error) {
         console.log(error.response);
@@ -200,4 +201,33 @@ export const reserveDetailMultipleEval = selectorFamily({
 
       return { info, location, schedule, equipment };
     },
+});
+
+// 수강생 작성한 리뷰 정보를 받아오는 selector
+export const getAttendeeReviews = selector({
+  key: '/review/mine',
+  get: async ({ get }) => {
+    get(AttendeeReviewListCachingState);
+    const instanceATK = await getInstanceATK();
+
+    try {
+      const { data } = await instanceATK.get(
+        '/review/mine?page=0&size=20&sort=writeDate,DESC',
+      );
+
+      if (!data.page.totalElements) {
+        return {
+          list: [],
+          totalElements: data.page.totalElements,
+        };
+      }
+
+      return {
+        list: data._embedded.myReviewUIList,
+        totalElements: data.page.totalElements,
+      };
+    } catch (error) {
+      throw error;
+    }
+  },
 });

@@ -69,7 +69,7 @@ export const emailInputStyle = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: getDimenstion.HEIGHT > 600 ? 14 : 12,
     borderColor: 'rgb(32, 122, 180)',
-    height: getDimenstion.HEIGHT > 600 ? getDimenstion.HEIGHT / 16 : 50,
+    // height: getDimenstion.HEIGHT > 600 ? getDimenstion.HEIGHT / 16 : 50,
   },
   buttonText: {
     fontSize: 18,

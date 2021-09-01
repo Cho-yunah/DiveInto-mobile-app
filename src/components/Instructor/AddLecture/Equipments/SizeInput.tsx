@@ -43,7 +43,7 @@ export const SizeInput = ({
         placeholder="수량"
         containerStyle={styles.textInputContainer}
         keyboardType="number-pad"
-        value={sizeInfo.quantity.toString()}
+        value={sizeInfo.quantity?.toString()}
       />
       <TouchableOpacity
         style={[
