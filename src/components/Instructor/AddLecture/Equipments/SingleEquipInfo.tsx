@@ -20,7 +20,7 @@ export const SingleEquipInfo = ({ idx }: { idx: number }) => {
       ...equipInfo,
       equipmentStockInfos: equipInfo.equipmentStockInfos.concat({
         size: '',
-        quantity: 0,
+        quantity: '',
       }),
     });
   const onRemoveSizePress = (rmIdx: number) =>
@@ -31,7 +31,7 @@ export const SingleEquipInfo = ({ idx }: { idx: number }) => {
           ? equipInfo.equipmentStockInfos
               .slice(0, rmIdx)
               .concat(equipInfo.equipmentStockInfos.slice(rmIdx + 1))
-          : [{ size: '', quantity: 0 }],
+          : [{ size: '', quantity: '' }],
     });
 
   const SizeList = equipInfo.equipmentStockInfos.map((info, idx) => {
@@ -49,15 +49,15 @@ export const SingleEquipInfo = ({ idx }: { idx: number }) => {
       });
     };
 
-    const onQuantityInput = (quantity: number) => {
-      console.log('equipInfo : ', equipInfo);
+    const onQuantityInput = (quantity: number | undefined) => {
+      console.log('equipInfo----: ', equipInfo);
       setEquipInfo({
         ...equipInfo,
         equipmentStockInfos: equipInfo.equipmentStockInfos
           .slice(0, idx)
           .concat({
             size: equipInfo.equipmentStockInfos[idx].size,
-            quantity,
+            quantity: quantity ? quantity : '',
           })
           .concat(equipInfo.equipmentStockInfos.slice(idx + 1)),
       });
