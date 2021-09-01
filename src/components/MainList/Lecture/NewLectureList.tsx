@@ -1,5 +1,12 @@
 import React, { useLayoutEffect, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  ViewStyle,
+} from 'react-native';
 import { NewLectures as styles, shadow } from './styles';
 import { NewLectureProps } from './types';
 import { useNavigation } from '@react-navigation/native';
@@ -13,11 +20,11 @@ import axios from 'axios';
 
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-const NewLecture = ({
+export const NewLecture = ({
   id,
   title = '프리다이빙',
   organization = 'AIDA',
-  level = 'level1',
+  level = 'Level1',
   region = '서울',
   maxNumber,
   lectureTime,
@@ -25,11 +32,12 @@ const NewLecture = ({
   imageUrl = '',
   isMarked,
   price,
+  containerStyle,
 }: NewLectureProps) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      style={[styles.lectureContainer, shadow]}
+      style={[styles.lectureContainer, shadow, containerStyle]}
       activeOpacity={0.7}
       onPress={() => navigation.navigate('LectureDetail', { lectureId: id })}
     >
@@ -38,7 +46,7 @@ const NewLecture = ({
         source={imageUrl ? { uri: imageUrl } : lectureExm}
         style={styles.lectureImage}
       />
-      <Heart containerStyle={styles.heart} />
+      {/* <Heart containerStyle={styles.heart} /> */}
 
       {/* 강의 정보 요약 */}
       <View style={styles.infoContainer}>
@@ -70,7 +78,11 @@ const NewLectureSkeleton = () => (
   </>
 );
 
-export default function NewLectureList() {
+export default function NewLectureList({
+  onMorePress,
+}: {
+  onMorePress: () => void;
+}) {
   const [lectures, setLectures] = useState<NewLectureProps[]>();
   useLayoutEffect(() => {
     const fetch = async () => {
@@ -96,7 +108,7 @@ export default function NewLectureList() {
     <View style={styles.rootContainer}>
       <View style={styles.header}>
         <Text style={styles.title}>새로운 강의</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onMorePress}>
           <Text style={styles.more}>더보기</Text>
         </TouchableOpacity>
       </View>

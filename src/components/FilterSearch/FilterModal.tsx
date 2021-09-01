@@ -1,29 +1,49 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  Organization,
+  Level,
+  Region,
+  CostCondition,
+  ClassKind,
+} from '@typing/common';
 
 import CModal from '@legacy_cCommon/CModal';
 import { EachFilter } from './EachFilter';
 
-const region = [
+import { useSetRecoilState, useRecoilState } from 'recoil';
+import {
+  FilterOrganization,
+  FilterRegion,
+  FilterLevel,
+  FilterCostCondition,
+} from '@recoil/LectureSearch';
+
+const regionLabel: { label: Region; value: number }[] = [
   { label: '서울', value: 0 },
   { label: '경기', value: 1 },
   { label: '인천', value: 2 },
   { label: '부산', value: 3 },
-  { label: '경상, 대구, 울산', value: 4 },
-  { label: '대전, 충청', value: 5 },
-  { label: '강원', value: 6 },
-  { label: '광주, 전라, 제주', value: 7 },
-  { label: '온라인', value: 8 },
+  { label: '경상', value: 4 },
+  { label: '대구', value: 5 },
+  { label: '울산', value: 6 },
+  { label: '대전', value: 7 },
+  { label: '충청', value: 8 },
+  { label: '강원', value: 9 },
+  { label: '광주', value: 10 },
+  { label: '전라', value: 11 },
+  { label: '제주', value: 12 },
 ];
 
-const certificateKind = [
-  { label: 'level1', value: 0 },
-  { label: 'level2', value: 1 },
-  { label: 'level3', value: 2 },
-  { label: 'level4', value: 3 },
+const certificateKindLabel: { label: Level; value: number }[] = [
+  { label: 'Level1', value: 0 },
+  { label: 'Level2', value: 1 },
+  { label: 'Level3', value: 2 },
+  { label: 'Level4', value: 3 },
+  { label: 'Level5', value: 4 },
 ];
 
-const groupName = [
+const groupNameLabel: { label: Organization; value: number }[] = [
   { label: 'AIDA', value: 0 },
   { label: 'PADI', value: 1 },
   { label: 'SSI', value: 2 },
@@ -37,6 +57,11 @@ export function FilterModal({
   onGroupNameSelect = () => {},
   onFilterOk = () => {},
 }) {
+  const [organization, setOrganization] = useRecoilState(FilterOrganization);
+  const [region, setRegion] = useRecoilState(FilterRegion);
+  const [level, setLevel] = useRecoilState(FilterLevel);
+  const [costCondition, setCostCondition] = useRecoilState(FilterCostCondition);
+
   return (
     <CModal
       modalClose={modalClose}
@@ -46,18 +71,42 @@ export function FilterModal({
     >
       <>
         <Text style={styles.filterTitle}>지역선택</Text>
-        {EachFilter({ radioProps: region, onDateSelect: onRegionSelect })}
+        {EachFilter({
+          seletedNum: region.id,
+          radioProps: regionLabel,
+          onDateSelect: num => {
+            const newValue = regionLabel.filter(rg => rg.value == num)[0].label;
+            setRegion({ region: newValue, id: num });
+            console.log(newValue);
+          },
+        })}
+
         <Text style={styles.filterTitle}>자격증 종류</Text>
         {EachFilter({
-          radioProps: certificateKind,
-          onDateSelect: onCertificateKindSelect,
+          seletedNum: level.id,
+          radioProps: certificateKindLabel,
+          onDateSelect: num => {
+            const newValue = certificateKindLabel.filter(
+              rg => rg.value == num,
+            )[0].label;
+            setLevel({ level: newValue, id: num });
+            console.log(newValue);
+          },
         })}
+
         <Text style={styles.filterTitle}>자격 단체</Text>
         {EachFilter({
-          radioProps: groupName,
-          onDateSelect: onGroupNameSelect,
+          seletedNum: organization.id,
+          radioProps: groupNameLabel,
+          onDateSelect: num => {
+            const newValue = groupNameLabel.filter(rg => rg.value == num)[0]
+              .label;
+            setOrganization({ organization: newValue, id: num });
+            console.log(newValue);
+          },
         })}
       </>
+
       <TouchableOpacity style={styles.filterOkButton} onPress={onFilterOk}>
         <Text style={styles.filterOkButtonText}>확인</Text>
       </TouchableOpacity>

@@ -10,10 +10,15 @@ import {
 export const EachFilter = ({
   radioProps = [{ label: 'test' }],
   onDateSelect = () => {},
+  seletedNum = 0,
+}: {
+  radioProps: { label: string }[];
+  onDateSelect: (num: number) => void;
+  seletedNum: number;
 }) => {
-  const [selected, setSelected] = useState(0);
-  const onPress = num => {
-    setSelected(num);
+  // const [selected, setSelected] = useState(0);
+  const onPress = (num: number) => {
+    // setSelected(num);
     onDateSelect(num);
   };
   return (
@@ -27,11 +32,11 @@ export const EachFilter = ({
           <RadioButtonInput
             obj={obj}
             index={i}
-            isSelected={selected === i}
+            isSelected={i == seletedNum}
             onPress={onPress}
             borderWidth={2}
             buttonInnerColor="#2295FF"
-            buttonOuterColor={selected === i ? '#2196f3' : '#000'}
+            buttonOuterColor={seletedNum === i ? '#2196f3' : '#000'}
             buttonSize={20}
             buttonOuterSize={23}
             buttonStyle={{}}
