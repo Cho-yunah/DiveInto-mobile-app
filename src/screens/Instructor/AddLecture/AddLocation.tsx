@@ -6,6 +6,8 @@ import NaverMap from '@legacy_cCommon/NaverMap';
 import ButtomButtons from '@legacy_cCommon/BottomButtons';
 import TextInput, { TextInputStatic } from '@legacy_cCommon/TextInputContainer';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   LectureImages,
@@ -34,6 +36,8 @@ import {
 } from '@/src/legacy/config/strings';
 import axios from 'axios';
 import instance from '@lib/api/axios';
+
+import { lectureImageUpload } from '@lib/file/fileFetch';
 
 export function AddLocation({ navigation, route }: AddLocationProps) {
   const [baseLocation, setBaseLocation] = useState({
@@ -94,6 +98,21 @@ export function AddLocation({ navigation, route }: AddLocationProps) {
           },
         );
         if (res3.status !== 201) throw new Error('위치 등록 에러');
+
+        const atk = await AsyncStorage.getItem('atk');
+        images &&
+          lectureId &&
+          atk &&
+          (await lectureImageUpload({
+            selectedFiles: images,
+            uploadTo: 'http://52.79.225.4:8081/lectureImage/create/list',
+            headers: { Authorization: atk },
+            lectureId,
+            onSuccess: res => {
+              if (res.respInfo.status !== 201)
+                throw new Error('이미지 등록 에러');
+            },
+          }));
       } catch (e) {
         console.log(e);
       }
