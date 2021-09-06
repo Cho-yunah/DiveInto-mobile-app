@@ -24,7 +24,7 @@ function ProfileMain() {
   const { userInfo: data } = useRecoilValue(profileMainMultipleEval);
 
   useEffect(() => {
-    console.log(data);
+    console.log(data, 'data');
 
     setUserInfo(state => ({
       ...state,
@@ -40,7 +40,7 @@ function ProfileMain() {
     });
 
     setPhoneNum(data.phoneNumber);
-  }, []);
+  }, [data]);
 
   return (
     <>

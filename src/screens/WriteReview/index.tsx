@@ -1,5 +1,5 @@
 import React from 'react';
-import { WriteReviewScreenProps } from '@/src/navigators/ReviewStack/types';
+import { WriteReviewScreenProps } from '@navigators/AttendeeScheduleStack/types';
 import styles from './styles';
 import { ScrollView, View } from 'react-native';
 import UploadReviewHeaderBtn from './UploadReviewHeaderBtn';

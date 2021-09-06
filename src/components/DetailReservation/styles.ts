@@ -1,8 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import * as Color from '@config/colors';
-
-const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
+import * as getDimension from '@config/windowDimention';
 
 export const RserveHeaderStyles = StyleSheet.create({
   container: {
@@ -50,6 +48,10 @@ export const ReserveLocationInfoStyles = StyleSheet.create({
   },
   addressText: {
     color: Color.White,
+  },
+  mapContainer: {
+    width: getDimension.WIDTH - 50,
+    height: 180,
   },
 });
 
@@ -181,7 +183,7 @@ export const CancelBtnStyles = StyleSheet.create({
     paddingTop: 5,
   },
   btnContainer: {
-    width: WIDTH - 50,
+    width: getDimension.WIDTH - 50,
     paddingVertical: 15,
     justifyContent: 'center',
     alignItems: 'center',

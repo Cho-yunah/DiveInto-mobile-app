@@ -3,7 +3,7 @@ import { Pressable, ScrollView, Text } from 'react-native';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { styles } from './styles';
-import { DetailReservationProps } from '@navigators/ProfileStack/types';
+import { DetailReservationProps } from '@navigators/AttendeeScheduleStack/types';
 import {
   ReserveHeader,
   ReserveLocationInfo,
