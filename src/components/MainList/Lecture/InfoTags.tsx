@@ -39,23 +39,33 @@ export default function InfoTags({
   return (
     <View>
       {/* 제목, 자격단체, 자격증레벨 */}
-      <View style={containerStyle}>
-        <Text style={[{ marginRight: 10 }, styles.titleText]}>{title}</Text>
-      </View>
+      {title && (
+        <View style={containerStyle}>
+          <Text style={[{ marginRight: 10 }, styles.titleText]}>{title}</Text>
+        </View>
+      )}
       <View style={{ flexDirection: 'row', marginBottom: 8 }}>
-        <Text style={[{ marginRight: 5 }, styles.subText]}>{organization}</Text>
-        <Text style={styles.subText}>{level}</Text>
+        {organization && (
+          <Text style={[{ marginRight: 5 }, styles.subText]}>
+            {organization}
+          </Text>
+        )}
+        {level && <Text style={styles.subText}>{level}</Text>}
       </View>
 
       {/* 지역, 인원, 소요시간 */}
-      <View style={containerStyle}>
-        <TagList tags={infoTags} />
-      </View>
+      {infoTags && (
+        <View style={containerStyle}>
+          <TagList tags={infoTags} />
+        </View>
+      )}
 
       {/* 대여장비 목록 */}
-      <View style={containerStyle}>
-        <TagList tags={equipTags} />
-      </View>
+      {equipTags && (
+        <View style={containerStyle}>
+          <TagList tags={equipTags} />
+        </View>
+      )}
 
       {/* 평점, 리뷰개수 */}
       {starAvg !== undefined && (

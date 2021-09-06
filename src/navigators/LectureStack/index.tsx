@@ -1,5 +1,5 @@
 import React from 'react';
-import { RecoilRoot, useRecoilValue } from 'recoil';
+import { RecoilRoot } from 'recoil';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootLectureStack } from './types';
 
@@ -13,15 +13,11 @@ import LectureDetailScreen from '@/src/screens/LectureDetail';
 import ReserveLectureScreen from '@/src/screens/ReserveLecture';
 import RequestPaymentScreen from '@/src/screens/RequestPayment';
 import DetailReservationScreen from '@/src/screens/DetailReservation';
-import { IsLogin } from '@/src/recoil/Global';
 import * as getDimension from '@config/windowDimention';
 
 const Stack = createStackNavigator<RootLectureStack>();
 
 export default function LectureStack() {
-  const confirmIsLogin = useRecoilValue(IsLogin);
-  console.log(confirmIsLogin, '로그인 확인/강의 상세');
-
   return (
     <RecoilRoot override={false}>
       <Stack.Navigator
