@@ -7,13 +7,22 @@ import NextButton from '@components/common/NextButton';
 
 import { AllSchedule, MyLectureInfo } from '@screens/Instructor';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { CurrentTab } from '@recoil/Instructor/LectureInfo';
+import { lectureIdState } from '@recoil/Instructor/AllSchedule';
 
-const ScheduleTab = createMaterialTopTabNavigator<RootAdmMyLectureStack>();
+// const ScheduleTab = createMaterialTopTabNavigator<RootAdmMyLectureStack>();
+
 export function LectureInfoTab({ navigation, route }: ScheduleStackProps) {
   const { lectureId } = route.params;
   const currentTab = useRecoilValue(CurrentTab);
+  const setLectureId = useSetRecoilState(lectureIdState);
+  console.log(lectureId);
+
+  useLayoutEffect(() => {
+    setLectureId(lectureId);
+  }, []);
+
   useLayoutEffect(() => {
     const onEditPress = () => {
       console.log('강의등록 버튼 테스트');
@@ -38,11 +47,12 @@ export function LectureInfoTab({ navigation, route }: ScheduleStackProps) {
   }, [currentTab]);
 
   return (
-    // <RecoilRoot>
-    <ScheduleTab.Navigator>
-      <ScheduleTab.Screen name="강의정보" component={MyLectureInfo} />
-      <ScheduleTab.Screen name="전체일정" component={AllSchedule} />
-    </ScheduleTab.Navigator>
-    // </RecoilRoot>
+    lectureId && <AllSchedule />
+    // (
+    //   <ScheduleTab.Navigator>
+    //     {/* <ScheduleTab.Screen name="강의정보" component={MyLectureInfo} /> */}
+    //     <ScheduleTab.Screen name="강의일정" component={AllSchedule} />
+    //   </ScheduleTab.Navigator>
+    // )
   );
 }

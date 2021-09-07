@@ -1,9 +1,8 @@
 import React, { useLayoutEffect, Suspense } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { LectureInfoProps } from '@navigators/MyLectureStack/LectureInfoTab/types';
 
-import { useSetRecoilState, useRecoilValue } from 'recoil';
-import {lectureIdState} from '@recoil/Instructor/AllSchedule';
+import { useSetRecoilState } from 'recoil';
 import { CurrentTab } from '@recoil/Instructor/LectureInfo';
 // import {
 //   LectureIdList,
@@ -12,12 +11,12 @@ import { CurrentTab } from '@recoil/Instructor/LectureInfo';
 
 // import { getInstanceATK } from '@lib/api/axios';
 
-import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { LocaleConfig } from 'react-native-calendars';
 
 import {
   LectureCalendar,
   SelectLectureSchedule,
-  SuspenseCalendar
+  SuspenseCalendar,
 } from '@components/Instructor/AllSchedule';
 
 /**
@@ -66,25 +65,15 @@ LocaleConfig.locales.kr = {
 };
 LocaleConfig.defaultLocale = 'kr';
 
-export function AllSchedule({ navigation, route }: LectureInfoProps) {
-  const setCurrentTab = useSetRecoilState(CurrentTab);
-  // const lectureIdList = useRecoilValue(LectureIdList);
+export function AllSchedule() {
+  // const setCurrentTab = useSetRecoilState(CurrentTab);
 
-  const { lectureId } = route.params;
-  const setLectureId = useSetRecoilState(lectureIdState);
-  console.log(lectureId);
-
-  useLayoutEffect(() => {
-    setLectureId(lectureId);
-  }, []);
-
-  useLayoutEffect(() => {
-    navigation.addListener('focus', () => {
-      console.log('전체일정 포커스');
-      setCurrentTab('전체일정');
-    });
-  }, []);
-
+  // useLayoutEffect(() => {
+  //   navigation.addListener('focus', () => {
+  //     console.log('전체일정 포커스');
+  //     setCurrentTab('전체일정');
+  //   });
+  // }, []);
 
   return (
     <ScrollView>
@@ -97,7 +86,6 @@ export function AllSchedule({ navigation, route }: LectureInfoProps) {
 
       {/* 일정선택 */}
       <SelectLectureSchedule />
-
     </ScrollView>
   );
 }
