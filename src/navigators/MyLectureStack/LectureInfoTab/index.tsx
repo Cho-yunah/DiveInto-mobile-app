@@ -10,7 +10,6 @@ import { AllSchedule, MyLectureInfo } from '@screens/Instructor';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { CurrentTab } from '@recoil/Instructor/LectureInfo';
 import { lectureIdState } from '@recoil/Instructor/AllSchedule';
-
 // const ScheduleTab = createMaterialTopTabNavigator<RootAdmMyLectureStack>();
 
 export function LectureInfoTab({ navigation, route }: ScheduleStackProps) {

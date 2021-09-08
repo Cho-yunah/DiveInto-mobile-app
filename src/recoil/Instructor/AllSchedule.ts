@@ -372,3 +372,8 @@ export const reservationIdState = atom<null | number>({
   key: 'Instructor_reservationIdState',
   default: null,
 });
+
+export const ScheduleRerender = atom<boolean>({
+  key: 'Instructor_ScheduleRerender',
+  default: false,
+});

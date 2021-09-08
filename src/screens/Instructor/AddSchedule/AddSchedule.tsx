@@ -10,7 +10,13 @@ import NextButton from '@components/common/NextButton';
 
 import { TimeForEachDay } from './TimeForEachDay';
 
+import { useRecoilState } from 'recoil';
+import { ScheduleRerender } from '@recoil/Instructor/AllSchedule';
+
 export function AddSchedule({ navigation, route }: AddScheduleProps) {
+  const [scheduleRerender, setScheduleRerender] =
+    useRecoilState(ScheduleRerender);
+
   // 달력 컴포넌트에서 선택된 날짜 배열 저장용 상태
   const [dates, setDates] = useState([]); // ['2020-02-01', '2020-02-02'];
   const [datesWithTime, setDatesWithTime] =
@@ -31,6 +37,7 @@ export function AddSchedule({ navigation, route }: AddScheduleProps) {
 
         if (res.status === 201) console.log('일정 추가 성공');
         else throw new Error('일정추가 오류');
+        setScheduleRerender(!scheduleRerender);
 
         navigation.goBack();
       } catch (e) {
