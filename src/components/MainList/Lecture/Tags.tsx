@@ -19,6 +19,7 @@ import Star from '@assets/Star.svg';
 export const Tag = ({ tagName, icon, containerStyle, textStyle }: TagProps) => {
   return (
     <View style={[styles.tagContainer, containerStyle]}>
+      {/* 아이콘 없이 텍스트만 있을수도 있다 */}
       {icon === 'Location' && (
         <Location width={8} height={8} style={styles.icon} />
       )}
@@ -26,6 +27,8 @@ export const Tag = ({ tagName, icon, containerStyle, textStyle }: TagProps) => {
       {icon === 'Time' && <Time width={8} height={8} style={styles.icon} />}
       {icon === 'Plus' && <Plus width={8} height={8} style={styles.icon} />}
       {icon === 'Star' && <Star width={8} height={8} style={styles.icon} />}
+
+      {/* 텍스트는 반드시 있어야함 */}
       <Text style={[styles.tagText, textStyle]}>{tagName}</Text>
     </View>
   );
@@ -44,21 +47,24 @@ export default function TagList({
   tagTextStyle,
   hideSeparator,
 }: TagListProps) {
-  const tagList = tags.map((tag, i) => (
-    <View key={i} style={{ flexDirection: 'row' }}>
-      <Tag
-        tagName={tag.tagName}
-        icon={tag.icon}
-        containerStyle={tagContainerStyle}
-        textStyle={tagTextStyle}
-      />
-      {hideSeparator ? (
-        <View style={styles.separate}></View>
-      ) : (
-        i !== tags.length - 1 && <Separator style={styles.separate} />
-      )}
-    </View>
-  ));
+  const tagList = tags.map(
+    (tag, i) =>
+      tag.tagName && (
+        <View key={i} style={{ flexDirection: 'row' }}>
+          <Tag
+            tagName={tag.tagName}
+            icon={tag.icon}
+            containerStyle={tagContainerStyle}
+            textStyle={tagTextStyle}
+          />
+          {hideSeparator ? (
+            <View style={styles.separate}></View>
+          ) : (
+            i !== tags.length - 1 && <Separator style={styles.separate} />
+          )}
+        </View>
+      ),
+  );
 
   return (
     <View style={[styles.tagListContainer, listContainerStyle]}>{tagList}</View>

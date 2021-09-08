@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import instance from '@/src/lib/api/axios';
-import { commentListPageState, commentListType, commentLoadingState, commentRequestState, commentState, recommentRequestState } from '@/src/recoil/CommunityStack';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import instance from '@lib/api/axios';
+import { commentListPageState, commentLoadingState, commentRequestState, commentState } from '@recoil/CommunityStack';
+import { CommentListType } from './types';
 
-export const useRequestComments =({id}) => {
-  const [commentList, setCommentList]= useRecoilState<commentListType[]>(commentState)
+export const useRequestComments =({id}: {id: number}) => {
+  const [commentList, setCommentList]= useRecoilState(commentState)
   const [commentLoading, setCommentLoading] = useRecoilState(commentLoadingState)
-  const [RequestSuccess, setRequestSuccess] = useRecoilState(commentRequestState)
+  const [commentSuccess, setCommentSuccess] = useRecoilState(commentRequestState)
   const [ commentListPage , setCommentListPage ] = useRecoilState(commentListPageState)
-  const [recommentSuccess, setRecommentSuccess] = useRecoilState(recommentRequestState)
  
   useEffect(()=> {
     const requestComments= async() => {
@@ -18,8 +18,7 @@ export const useRequestComments =({id}) => {
          commentResource.data._embedded
          ? setCommentList(commentResource.data._embedded.commentsModelList)
          : setCommentList([])
-         setRequestSuccess(false)
-         setRecommentSuccess(false)
+         setCommentSuccess(false)
         }
       catch(e) {
         console.log(e)
@@ -27,6 +26,6 @@ export const useRequestComments =({id}) => {
       setCommentLoading(false)
     }
     requestComments()
-  },[ id, RequestSuccess, recommentSuccess])
+  },[ id, commentSuccess])
   return commentList;
 }

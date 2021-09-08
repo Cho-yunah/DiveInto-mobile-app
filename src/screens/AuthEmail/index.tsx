@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useLayoutEffect } from 'react';
+import { View, Text, ScrollView } from 'react-native';
 import { useRecoilValue } from 'recoil';
 
 import { styles } from './styles';
@@ -19,16 +19,22 @@ export default function AuthEmailScreen({ navigation }: AuthEmailProps) {
     navigation.navigate('SetPassword');
   };
 
-  navigation.setOptions({
-    headerRight: () => <NextButton onPress={onPress} disable={certification} />,
-  });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <NextButton onPress={onPress} disable={certification} />
+      ),
+    });
+  }, [onPress, certification]);
 
   return (
     <View style={styles.container}>
-      <HeaderText />
-      <EmailInput />
-      <CertificationInput />
-      <ErrorMessage />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <HeaderText />
+        <EmailInput />
+        <CertificationInput />
+        <ErrorMessage />
+      </ScrollView>
     </View>
   );
 }

@@ -3,12 +3,16 @@ import { Animated } from 'react-native';
 
 export type CommonListProps = {
   imgComponent: ReactChild | ReactChild[] | ReactChildren | ReactChildren[];
-  contentsComponents?:
+  contentsComponents:
     | ReactChild
     | ReactChild[]
     | ReactChildren
     | ReactChildren[];
-  // type: 'last' | 'next';
+  writeReviewComponents?:
+    | ReactChild
+    | ReactChild[]
+    | ReactChildren
+    | ReactChildren[];
   reservationId: number;
 };
 
@@ -24,6 +28,8 @@ export type LectureContentsProps = {
   reservationDate: string;
   nickname: string;
   lectureType: 'last' | 'next';
+  isExistedReview: boolean | null;
+  reservationId?: number;
 };
 
 export type RightSwipeProps = {

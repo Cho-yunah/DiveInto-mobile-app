@@ -10,8 +10,8 @@ const WriteReviewScreen = ({ navigation, route }: WriteReviewScreenProps) => {
   const { reservationId } = route.params;
 
   navigation.setOptions({
+    // headerRight: () => <UploadReviewHeaderBtn reservationId={reservationId} />,
     headerRight: () => <UploadReviewHeaderBtn reservationId={reservationId} />,
-    // headerRight: () => <UploadReviewHeaderBtn />,
   });
 
   return (

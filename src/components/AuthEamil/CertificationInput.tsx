@@ -21,6 +21,7 @@ export default function CertificationInput() {
   const setIsCertification = useSetRecoilState(isCertification);
 
   const onChange = (text: string) => {
+    if (text.length > 7) return;
     setUniqueNumber(text);
 
     checkNumberValidation(text) ? setIsValid(false) : setIsValid(true);
@@ -44,11 +45,12 @@ export default function CertificationInput() {
   return (
     <View style={[styles.inputContainer, styles.lastInputLayout]}>
       <TextInput
-        style={styles.commonText}
+        style={styles.inputText}
         placeholder="인증번호"
-        keyboardType="number-pad"
+        // keyboardType="number-pad"
         placeholderTextColor={placeholder}
         onChangeText={onChange}
+        // value={uniqueNumber}
       />
       <TouchableOpacity
         style={styles.button}

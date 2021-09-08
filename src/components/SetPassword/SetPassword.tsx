@@ -27,14 +27,14 @@ export default function SetPassword() {
 
   // 유효성 검사 함수
   const validation = () => {
-    const passwordReg =  /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+])(?!.*[^a-zA-z0-9$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+    const passwordReg =
+      /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+])(?!.*[^a-zA-z0-9$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
 
     const hasEveryCharacter = passwordReg.test(password);
     const isLongerThanTen = password.length >= 10 ? true : false;
 
     if (password) {
-      hasEveryCharacter &&
-      isLongerThanTen 
+      hasEveryCharacter && isLongerThanTen
         ? setIsValid(true)
         : setIsValid(false),
         setIsMatch(false);
@@ -91,6 +91,7 @@ const PWInput = ({
         placeholderTextColor="#D8D8D8"
         autoCapitalize="none"
         secureTextEntry={!isShow}
+        textAlignVertical="bottom"
         onChangeText={text => {
           console.log(text);
           onChangeText(text);

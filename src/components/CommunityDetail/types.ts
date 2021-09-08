@@ -1,20 +1,27 @@
-export type commentItemType = {
+export type ImageType = {
+  id: number,
+  imageUrl: string
+}
+export type CommentItemType = {
   nickName: string,
   profileUrl: string,
   dateOfWriting: string,
   content: string,
   commentId: number,
+  commentWriterId: number
   // editing: void
 }
 export type decodeTokenType = {
   exp: string,
   user_name: string,
 }
-export type CommentIdProps ={
-  commentId : number,
+export type IdProps ={
+  id ?: number,
+  commentId ?: number,
+  recommentId ?: number
 }
 
-export type commentListType = {
+export type CommentListType = {
   accountModel: {
     id: number,
     nickName: '',
@@ -27,7 +34,7 @@ export type commentListType = {
   }
 }
 
-export type recommentListType = {
+export type RecommentListType = {
   accountModel: {
     id: number,
     nickName: '',
@@ -39,3 +46,10 @@ export type recommentListType = {
     content: ''
   }
 }
+
+export type DetailInfoType = {
+  id: number;
+  title: string;
+  category: string;
+  dateOfRegistration: string;
+};

@@ -63,6 +63,7 @@
 		92BA10896D3C715D726CC11D /* Pods-PungDong-PungDongTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PungDong-PungDongTests.debug.xcconfig"; path = "Target Support Files/Pods-PungDong-PungDongTests/Pods-PungDong-PungDongTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A827B45F4C85959BE78A37D2 /* Pods-PungDong.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PungDong.debug.xcconfig"; path = "Target Support Files/Pods-PungDong/Pods-PungDong.debug.xcconfig"; sourceTree = "<group>"; };
 		A934300526AA2FD7005E48D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A958AF6126DC9A82003D67A8 /* PungDong.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PungDong.entitlements; path = PungDong/PungDong.entitlements; sourceTree = "<group>"; };
 		E33D3A45AFE25EB721CF057B /* Pods-PungDong.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PungDong.release.xcconfig"; path = "Target Support Files/Pods-PungDong/Pods-PungDong.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -126,6 +127,7 @@
 		13B07FAE1A68108700A75B9A /* PungDong */ = {
 			isa = PBXGroup;
 			children = (
+				A958AF6126DC9A82003D67A8 /* PungDong.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -798,7 +800,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_ENTITLEMENTS = PungDong/PungDong.entitlements;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = J8CF76R47B;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PungDong/Info.plist;
@@ -822,7 +825,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_ENTITLEMENTS = PungDong/PungDong.entitlements;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = J8CF76R47B;
 				INFOPLIST_FILE = PungDong/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

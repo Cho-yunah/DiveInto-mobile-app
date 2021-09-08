@@ -1,20 +1,26 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import * as Color from '@config/colors';
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
+import * as getDimension from '@config/windowDimention';
 
 export const CommonStyles = StyleSheet.create({
-  listContainer: {
-    width: SCREEN_WIDTH,
+  lastListContainer: {
     backgroundColor: Color.White,
-    // backgroundColor: 'red',
     flexDirection: 'row',
-    borderBottomRightRadius: 10,
-    borderTopRightRadius: 10,
+    width: getDimension.WIDTH,
+    marginTop: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      height: 5,
+      width: 0,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
   },
-
-  lastLectureContainer: {
-    marginBottom: 12,
+  nextListContainer: {
+    backgroundColor: Color.White,
+    flexDirection: 'row',
+    width: getDimension.WIDTH,
+    height: 115,
   },
 });
 
@@ -22,12 +28,11 @@ export const TouchSwipeStyle = StyleSheet.create({
   deleteBottonContainer: {
     backgroundColor: Color.Selected,
     justifyContent: 'center',
-    width: SCREEN_WIDTH * 0.25,
+    width: getDimension.WIDTH * 0.25,
   },
 
   deleteBox: {
     alignItems: 'center',
-    paddingLeft: 32,
   },
   textStyle: {
     fontSize: 12,
@@ -39,18 +44,16 @@ export const TouchSwipeStyle = StyleSheet.create({
 
 export const lectureImgStyle = StyleSheet.create({
   imageElStyle: {
-    width: SCREEN_WIDTH * 0.4,
-    height: 108,
+    width: getDimension.WIDTH * 0.4,
+    height: 115,
   },
 });
 
 export const nextLectureContentsStyle = StyleSheet.create({
   container: {
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10,
     backgroundColor: Color.White,
     justifyContent: 'center',
-    paddingLeft: 13,
+    paddingLeft: 12.5,
   },
   commonLayout: {
     flexDirection: 'row',
@@ -75,15 +78,10 @@ export const nextLectureContentsStyle = StyleSheet.create({
 
 export const lastLectureContentsStyle = StyleSheet.create({
   container: {
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10,
     backgroundColor: Color.White,
     justifyContent: 'center',
     paddingLeft: 13,
-    width: SCREEN_WIDTH * 0.51,
-    // borderWidth: 1,
-
-    borderRadius: 10,
+    width: getDimension.WIDTH * 0.59,
   },
   commonLayout: {
     flexDirection: 'row',
@@ -103,5 +101,21 @@ export const lastLectureContentsStyle = StyleSheet.create({
   smallTextStyle: {
     fontSize: 10,
     paddingBottom: 5,
+  },
+  moveWriteBtn: {
+    position: 'absolute',
+    top: 10,
+    right: 12.5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    zIndex: 10,
+    borderWidth: 1,
+    borderRadius: 20,
+    borderColor: Color.underLine,
+  },
+  btnText: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: Color.BlackText,
   },
 });

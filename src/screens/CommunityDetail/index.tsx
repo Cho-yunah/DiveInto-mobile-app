@@ -1,4 +1,4 @@
-import React, { ReactElement, useLayoutEffect, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import { ScrollView, View, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import { CommunityDetailProps } from '@navigators/CommunityStack/types';
@@ -9,28 +9,32 @@ import {
   CommentDetail,
 } from '@components/CommunityDetail';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-
 import { useRequestCommunityItem } from '@components/CommunityDetail/useRequestCommunityItem';
-import { atkState, checkWriterState, communityItemSelector, communityItemState, decodeTokenType, ImageState, likeState, writerInfoState, writerInfoType } from '@recoil/CommunityStack';
+import { commentIdState, 
+  commentInputButtonState, commentState, 
+         communityItemSelector, 
+         communityItemState, 
+         ImageState, likeState, recommentState, 
+         showRecommentState, writerInfoState, 
+      } from '@recoil/CommunityStack';
 import {LikeBtn} from '@components/CommunityMain/LikeBtn';
-import jwt_decode from "jwt-decode";
 
 export default function CommunityDetailScreen({route, navigation}: CommunityDetailProps) {
   
   const {id} =route.params;
-  useRequestCommunityItem(id)
+  useRequestCommunityItem(id);
   
-  const token = useRecoilValue(atkState)
-  const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null
-  const writerInfo= useRecoilValue<writerInfoType>(writerInfoState)
-  const setCheckWriter = useSetRecoilState(checkWriterState)
-
   const { content, liked, likeCount } = useRecoilValue(communityItemSelector);
   const [like, setLike] = useRecoilState(likeState(id));
 
   const setCommunityItem = useSetRecoilState(communityItemState);
   const setImageItem = useSetRecoilState(ImageState);
   const setWriterInfo = useSetRecoilState(writerInfoState);
+  const commentId = useRecoilValue(commentIdState)
+  const setRecommentList = useSetRecoilState(recommentState(commentId))
+  const setCommentList = useSetRecoilState(commentState)
+  const setShowRecomment = useSetRecoilState(showRecommentState(commentId));
+  const setEditButton = useSetRecoilState(commentInputButtonState)
 
   //  좋아요 
   const Clickedlike=() => {
@@ -38,7 +42,7 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
   }
 
   // 클린업 함수
-  const cleanUp = () => {
+  const cleanUp = () => {   
     setCommunityItem({
       id: id,
       title: '',
@@ -55,7 +59,11 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
       nickName: '',
       profileImageUrl: '',
     });
-  };
+    setCommentList([])
+    setRecommentList([])
+    setShowRecomment(false)
+    setEditButton(false)
+  }
 
   useEffect(() => {
     navigation.setOptions({
@@ -64,13 +72,11 @@ export default function CommunityDetailScreen({route, navigation}: CommunityDeta
         <LikeBtn id={id} liked={liked} likeCount={likeCount}/>
       </TouchableOpacity>
     })
-    cleanUp()
 
-     // 로그인한 사람과 글 게시한 사람이 일치하는지
-    decodeToken.user_name == writerInfo.id 
-    ? setCheckWriter(true)
-    : setCheckWriter(false)
-  },[like])
+    return (
+      cleanUp()
+    )
+  },[])
 
   return (
     <View style={styles.container}>

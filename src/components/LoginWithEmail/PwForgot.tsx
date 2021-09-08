@@ -17,4 +17,3 @@ const PwForgot = ({ navigateToForgotPassword }: PwForgotProps) => (
 );
 
 export default PwForgot;
-1;

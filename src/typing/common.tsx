@@ -1,5 +1,5 @@
 export type Organization = 'AIDA' | 'PADI' | 'SSI';
-export type Level = 'level1' | 'level2' | 'level3' | 'level4' | 'level5';
+export type Level = 'Level1' | 'Level2' | 'Level3' | 'Level4' | 'Level5';
 export type Region =
   | '서울'
   | '경기'

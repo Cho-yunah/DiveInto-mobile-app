@@ -1,16 +1,24 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, ScrollView } from 'react-native';
 import { useRecoilValue } from 'recoil';
 
 import { styles } from './styles';
 import { LectureImg, LectureContents } from '@components/LectureSchedule';
-import { requestLectureScheduleListSelector } from '@recoil/ProfileStack';
+import { getLectureScheduleListSelector } from '@/src/recoil/ProfileStack/dataFetch';
 import CommonEmptyView from '@components/common/CommonEmptyView';
 import LastLectureSchedule from '@components/LectureSchedule/LastLectureSchedule';
-export default function LastLecture() {
-  const reservationList = useRecoilValue(
-    requestLectureScheduleListSelector('last'),
+import withSuspense from '@/src/lib/HOC/withSuspense';
+import { LastLectureListType } from './types';
+
+function LastLectureScreen() {
+  const reservationList = useRecoilValue<LastLectureListType[]>(
+    getLectureScheduleListSelector({
+      uri: '/reservation/past?page=0&size=8&sort=dateOfReservation,DESC',
+      type: 'last',
+    }),
   );
+
+  console.log(reservationList, 'reservationList');
 
   if (reservationList.length === 0) {
     return (
@@ -40,6 +48,8 @@ export default function LastLecture() {
                   reservationDate={item.reservationDate}
                   nickname={item.instructorNickname}
                   lectureType="last"
+                  isExistedReview={item.isExistedReview}
+                  reservationId={item.reservationId}
                 />
               }
               reservationId={item.reservationId}
@@ -53,37 +63,4 @@ export default function LastLecture() {
   );
 }
 
-//   const ListEl = reservationList ? (
-//     reservationList.length !== 0 ? (
-//       <FlatList
-//         data={reservationList}
-//         renderItem={({ item }) => {
-//           return (
-//             <LastLectureSchedule
-//               imgComponent={<LectureImg img={item.lectureImageUrl} />}
-//               contentsComponents={
-//                 <LectureContents
-//                   title={item.lectureTitle}
-//                   level={item.level}
-//                   group={item.organization}
-//                   reservationDate={item.reservationDate}
-//                   nickname={item.instructorNickname}
-//                   lectureType="last"
-//                 />
-//               }
-//               reservationId={item.reservationId}
-//             ></LastLectureSchedule>
-//           );
-//         }}
-//         keyExtractor={item => String(item.reservationId)}
-//         showsVerticalScrollIndicator={false}
-//       />
-//     ) : (
-
-//     )
-//   ) : (
-//     <CommonLoading />
-//   );
-
-//   return <View style={styles.eachScreenContainerStyle}>{ListEl}</View>;
-// }
+export default withSuspense(LastLectureScreen);

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { ScrollView, Text } from 'react-native';
+import React from 'react';
+import { View, ScrollView } from 'react-native';
 
 import { styles } from './styles';
 import { userInfoPorps } from './types';
@@ -18,7 +18,10 @@ export default function MainContainer({
 }: userInfoPorps) {
   if (type === 'instructor')
     return (
-      <ScrollView style={styles.rootContainer}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.rootContainer}
+      >
         <PhoneNumberInfo phone={phone} />
         <EtcUserInfo nickname={nickname} email={email} />
         <InstructorLectureList />
@@ -28,7 +31,10 @@ export default function MainContainer({
     );
   else
     return (
-      <ScrollView style={styles.rootContainer}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.rootContainer}
+      >
         <PhoneNumberInfo phone={phone} />
         <EtcUserInfo nickname={nickname} email={email} />
         <StudentLectureList />

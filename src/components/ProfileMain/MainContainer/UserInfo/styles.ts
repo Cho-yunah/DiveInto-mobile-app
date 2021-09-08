@@ -5,7 +5,7 @@ import { underLine } from '../../styles';
 
 export const phoneNumber = StyleSheet.create({
   rootContainer: {
-    height: 65,
+    // height: 65,
   },
   layoutContainer: {
     flex: 1,
@@ -40,7 +40,7 @@ export const phoneNumber = StyleSheet.create({
 
 export const etcUserInfo = StyleSheet.create({
   container: {
-    marginVertical: 32,
+    marginVertical: 30,
   },
   nicknameText: {
     fontSize: 18,

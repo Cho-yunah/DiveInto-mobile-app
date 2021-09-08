@@ -9,7 +9,7 @@ import { TouchSwipeStyle as styles, CommonStyles } from './styles';
 import { CommonListProps, RightSwipeProps } from './types';
 import CommonModal from '@components/common/CommonModal';
 import { getInstanceATK } from '@/src/lib/api/axios';
-import { ReserveLectureCachingState } from '@/src/recoil/ProfileStack';
+import { ReserveLectureCachingState } from '@/src/recoil/ProfileStack/store';
 
 export default function TouchSwipe({
   imgComponent,
@@ -49,7 +49,20 @@ export default function TouchSwipe({
   });
 
   return (
-    <TouchableOpacity onPress={onMoveLectureDetailView}>
+    <TouchableOpacity
+      onPress={onMoveLectureDetailView}
+      style={{
+        // borderWidth: 1,
+        shadowColor: '#000',
+        shadowOffset: {
+          height: 5,
+          width: 0,
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 3,
+        marginTop: 10,
+      }}
+    >
       <Swipeable
         ref={swipeableRef}
         renderRightActions={(progress, dragX) => (
@@ -60,12 +73,13 @@ export default function TouchSwipe({
           />
         )}
         overshootFriction={30}
-        containerStyle={{
-          borderRadius: 10,
-          marginBottom: 12,
-        }}
+        containerStyle={
+          {
+            // marginTop: 10,
+          }
+        }
       >
-        <View style={CommonStyles.listContainer}>
+        <View style={[CommonStyles.nextListContainer]}>
           {imgComponent}
           {contentsComponents}
         </View>

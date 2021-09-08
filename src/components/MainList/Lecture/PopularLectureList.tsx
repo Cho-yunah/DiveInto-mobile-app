@@ -11,17 +11,19 @@ const lectureExm = require('@assets/LectureExm.png');
 
 import { useNavigation } from '@react-navigation/native';
 
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+
 export const PopularLecture = ({
   id,
   title = '프리다이빙',
   organization = 'AIDA',
-  level = 'level1',
+  level = 'Level1',
   region = '서울',
   maxNumber = 4,
   lectureTime = 8,
   equipmentNames = ['아쿠아슈즈', '잠수복'],
-  imageUrl,
-  isMarked,
+  imageUrl = '',
+  isMarked = false,
   price,
   starAvg = 0,
   reviewCount = 0,
@@ -59,20 +61,34 @@ export const PopularLecture = ({
           />
 
           {/* 찜하기 버튼 */}
-          <Heart containerStyle={styles.heart} isMarked={isMarked} />
+          {/* <Heart containerStyle={styles.heart} isMarked={isMarked} /> */}
         </View>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default function PopularLectureList() {
+export const PopularLectureSkeleton = () => (
+  <>
+    {Array.from({ length: 5 }, (v, i) => (
+      <SkeletonPlaceholder key={`popularLectureSkeleton_${i}`}>
+        <View style={styles.lectureContainer}></View>
+      </SkeletonPlaceholder>
+    ))}
+  </>
+);
+
+export default function PopularLectureList({
+  onMorePress,
+}: {
+  onMorePress: () => void;
+}) {
   const [lectures, setLectures] = useState<PopularLectureProps[]>();
   useLayoutEffect(() => {
-    try {
-      const fetch = async () => {
-        const instanceAtk = await getInstanceATK();
+    const fetch = async () => {
+      const instanceAtk = await getInstanceATK();
 
+      try {
         const res = await instanceAtk.get(
           'http://52.79.225.4:8081/lecture/popular/list?page=0&size=5',
         );
@@ -83,11 +99,12 @@ export default function PopularLectureList() {
         if (status !== 200) throw new Error('인기강의 조회 에러');
 
         setLectures(res.data._embedded.lectureInfoList);
-      };
-      fetch();
-    } catch (e) {
-      console.log('인기강의 조회 에러');
-    }
+      } catch (e) {
+        console.log('인기강의 조회 에러');
+      }
+    };
+
+    fetch();
   }, []);
 
   return (
@@ -95,14 +112,14 @@ export default function PopularLectureList() {
       {/* 헤더 */}
       <View style={styles.header}>
         <Text style={styles.title}>인기 강의</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onMorePress}>
           <Text style={styles.more}>더보기</Text>
         </TouchableOpacity>
       </View>
       {/* 인기 강의 리스트 */}
       <ScrollView>
-        {lectures &&
-          lectures.map(lecture => (
+        {lectures ? (
+          lectures.map((lecture, i) => (
             <PopularLecture
               id={lecture.id}
               title={lecture.title}
@@ -118,8 +135,12 @@ export default function PopularLectureList() {
               period={lecture.period}
               starAvg={lecture.starAvg}
               reviewCount={lecture.reviewCount}
+              key={`popularLecture_${i}`}
             />
-          ))}
+          ))
+        ) : (
+          <PopularLectureSkeleton />
+        )}
       </ScrollView>
     </View>
   );

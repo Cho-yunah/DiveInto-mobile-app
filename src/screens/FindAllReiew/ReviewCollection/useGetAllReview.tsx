@@ -3,10 +3,8 @@ import { useRecoilState } from 'recoil';
 
 import instance from '@/src/lib/api/axios';
 import { SortByType } from '@components/LectureDetail/LectureReview/types';
-import {
-  lectureReviewAllState,
-  lectureReviewAllType,
-} from '@recoil/ProfileStack';
+import { lectureReviewAllState } from '@recoil/ProfileStack/store';
+import { lectureReviewAllType } from '@recoil/ProfileStack/types';
 
 const useGetSortedReviews = (id: number) => {
   const [sortBy, setSortBy] = useState<SortByType>('writeDate,DESC');

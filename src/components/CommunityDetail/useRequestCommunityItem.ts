@@ -1,10 +1,10 @@
-import { getInstanceATK } from '@/src/lib/api/axios';
+import { getInstanceATK } from '@lib/api/axios';
 import {
   communityItemState,
   ImageState,
   isEditedState,
   writerInfoState,
-} from '@/src/recoil/CommunityStack';
+} from '@recoil/CommunityStack';
 import { useEffect } from 'react';
 import  {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil';
 

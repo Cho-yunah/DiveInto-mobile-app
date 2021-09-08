@@ -1,54 +1,68 @@
 import React, { useEffect, useState } from 'react'
-import { Image, View, Text, FlatList } from "react-native"
+import { Image, View, Text, Animated, TouchableOpacity } from "react-native"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {CommentDetailStyles as styles} from './styles'
-import { commentItemType, decodeTokenType } from './types'
+import { CommentItemType, decodeTokenType, RecommentListType } from './types'
 import jwt_decode from "jwt-decode";
 import { atkState, 
          checkCommentWriter,
-         commentListPageState, 
-         commentLoadingState, 
-         commentState, 
+         commentIdState,
          recommentState, 
          showRecommentState,  } 
   from "@recoil/CommunityStack"
 import { TimeOfWriting } from '@components/CommunityMain/TimeOfWriting'
 import { useRequestRecomments } from '@components/CommunityDetail/useRequestRecomments'
-import { RecommentItem } from '@components/CommunityDetail/RecommentItem'
-import { CommentEditBtn, CommentDeleteBtn, RecommentAddBtn } from './ButtonCollection'
+import { EditBtn, DeleteBtn } from './ButtonCollection'
+import Recomment from './Recomment/Recomments'
 
-export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, commentId}: commentItemType)=> {
+export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, commentId, commentWriterId}: CommentItemType)=> {
 
   useRequestRecomments({commentId}) // 대댓글 요청 
-
+  
   const token = useRecoilValue(atkState)
   const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null
   
-  const commentLoading = useRecoilValue(commentLoadingState)
-  const commentWriterInfo = useRecoilValue(commentState)
-  const recommentList = useRecoilValue(recommentState)
-  const showRecomment= useRecoilValue(showRecommentState(commentId))
-  
-  const [ callOnScrollEnd, setCallOnScrollEnd ] = useState(false)
-  const setIsCommentWriter = useSetRecoilState(checkCommentWriter)
-  const [ recommentListPage , setRecommentListPage ] = useRecoilState(commentListPageState)
+  const setCommentId = useSetRecoilState(commentIdState)
+  const [isCommentWriter, setIsCommentWriter] = useRecoilState(checkCommentWriter(commentId))
 
-  // 댓글 작성자인지 확인
-  const [commentWriter] = commentWriterInfo.map(item=> item.accountModel.id )
-  // console.log(typeof decodeToken.user_name) // string
-  // console.log(typeof commentWriter) // number
+  const recommentList = useRecoilValue<RecommentListType[]>(recommentState(commentId))
+  const [showRecomment, setShowRecomment]= useRecoilState(showRecommentState(commentId))
 
   useEffect(()=> {
-    decodeToken.user_name === `${commentWriter}`
+    // 댓글 작성자인지 확인
+    decodeToken.user_name === `${commentWriterId}`
       ? setIsCommentWriter(true)
       : setIsCommentWriter(false)
-  },[])
+  },[commentWriterId])
 
-  // comments 더 가져오기
-   const commentsLoadMore= ()=> { 
-    if( commentLoading ) return 
-    setRecommentListPage(recommentListPage +1 ) 
+  // animation 
+  const [animatedHeight, setAnimatedHeight] = useState(new Animated.Value(0))
+
+  const toggleDropdown = () => {
+    setCommentId(commentId)
+    setShowRecomment((showRecomment) => 
+    {if (showRecomment === false ) {
+          Animated.timing(animatedHeight, {
+              toValue: 100,
+              duration: 300,
+              useNativeDriver: false
+            }).start()
+          return true
+      } else {
+          Animated.timing(animatedHeight, {
+              toValue: 0,
+              duration: 300,
+              useNativeDriver: false
+          }).start()
+          return false
+      } 
+    },)
   }
+
+  const interpolatedHeight = animatedHeight.interpolate({
+    inputRange: [0, 100],
+    outputRange: ["0%", "100%"]
+})
 
   return (
     <View style={styles.commentBox}>
@@ -65,41 +79,28 @@ export const CommentItem =({ nickName, profileUrl, dateOfWriting, content, comme
 
       {/* 댓글내 버튼 모음*/}
       <View style={styles.buttonBox} >
-        <RecommentAddBtn commentId={commentId}/>
+        <TouchableOpacity 
+          onPress={toggleDropdown}>
+          <Text style={{color: '#207AB4', fontSize: 12}}>
+             {recommentList.length===0? '대댓글 쓰기': '대댓글 보기'}
+          </Text>
+        </TouchableOpacity>
+
         {/* 댓글을 작성한 사람이 아닐경우 버튼 안보이게 */}
-        {commentWriter? 
+        {isCommentWriter? 
           <View style={styles.edintingBtnBox}>
-            <CommentEditBtn commentId={commentId}/>
-            <CommentDeleteBtn commentId={commentId}/>
+            <EditBtn commentId={commentId}/>
+            <DeleteBtn commentId={commentId}/>
           </View>
           : null
         }
       </View>
-
-      {/* 대댓글 component */}
-      {recommentList && showRecomment ?
-        (
-          <FlatList
-            data={recommentList}
-            keyExtractor={(item)=> `${item.accountModel.id}${item.accountModel.nickName}`}
-            disableVirtualization={false} 
-            renderItem={({item}) => (
-              <RecommentItem
-                nickName= {item.accountModel.nickName}
-                profileUrl={item.accountModel.profileImageUrl}
-                dateOfWriting={item.commentCommentModel.dateOfWriting}
-                content={item.commentCommentModel.content}
-                recommentId= {item.commentCommentModel.id}
-              />
-            )}
-            onEndReachedThreshold={0}
-            onEndReached={() => setCallOnScrollEnd(true)}
-            onMomentumScrollEnd={() => {
-              callOnScrollEnd && commentsLoadMore()
-              setCallOnScrollEnd(false)
-            }}
-          />
-        ):((<View></View>))}
+    
+      {/* Recomment 애니메이션 */}
+      <Animated.View style={[styles.showingRecomment,
+          {maxHeight: interpolatedHeight}]}>
+        <Recomment  commentId={commentId}/>
+      </Animated.View> 
     </View>
   )
 }

@@ -12,11 +12,7 @@ import {
   ConfirmPW,
   DeleteCompleteBtn,
 } from '@components/DeleteAccount';
-import {
-  deletePasswordState,
-  deleteReasonState,
-  etcDeleteReasonState,
-} from '@recoil/ProfileStack';
+import { deletePasswordState } from '@recoil/ProfileStack/store';
 
 export default function DeleteAccountScreen() {
   const navigation = useNavigation();

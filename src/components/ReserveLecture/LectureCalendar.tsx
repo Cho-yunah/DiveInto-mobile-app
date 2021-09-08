@@ -36,7 +36,7 @@ const LectureCalendar = () => {
   useEffect(() => {
     console.log(ScheduleInfoLists, 'ScheduleInfoLists');
 
-    if (ScheduleInfoLists.length)
+    if (ScheduleInfoLists?.length)
       ScheduleInfoLists.forEach((scheduleInfo: ScheduleInfoType) => {
         const newMarkedDates: MarkedDatesType = {};
 

@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 
 import { ReserveCommonStyles as styles } from './styles';
 import EachCommonInfo from './EachCommonInfo';
-import { sumOfTheSameListSelector } from '@recoil/ProfileStack';
+import { sumOfTheSameListSelector } from '@recoil/ProfileStack/utils';
 
 export default function ReserveEquipmentInfo() {
   const detailEquipments = useRecoilValue(sumOfTheSameListSelector);

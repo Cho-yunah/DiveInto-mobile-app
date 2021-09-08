@@ -1,37 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import {RecommentDetailStyles as styles} from './styles'
+import {RecommentDetailStyles as styles} from '../styles'
 import { getInstanceATK } from '@lib/api/axios'
 import { atkState, checkRecommentWriter, decodeTokenType, recommentItemType, recommentRequestState, recommentState } from '@recoil/CommunityStack'
 import {View, Text, Image, TouchableOpacity} from 'react-native'
 import { TimeOfWriting } from '@components/CommunityMain/TimeOfWriting'
 import jwt_decode from "jwt-decode";
+import { RecommentListType } from '../types'
+import { DeleteBtn } from '../ButtonCollection'
 
-export const RecommentItem =({nickName, profileUrl, dateOfWriting, content, recommentId}: recommentItemType) => {
+export const RecommentItem =({nickName, profileUrl, dateOfWriting, content, recommentId, commentId}: recommentItemType) => {
 
   const token = useRecoilValue(atkState)
-  const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null
-  const recommentWriterInfo = useRecoilValue(recommentState)
+  const decodeToken= jwt_decode<decodeTokenType>(token|| '') || null
+  const recommentWriterInfo = useRecoilValue<RecommentListType[]>(recommentState(commentId))
   const [recommentWriter] = recommentWriterInfo.map(item=> item.accountModel.id)
   const [isRecommentWriter, setIsRecommentWriter] = useRecoilState(checkRecommentWriter)
 
-  const[recommentSuccess, setRecommentSuccess] = useRecoilState(recommentRequestState)
+   // 대댓글 삭제 확인 모달
 
-   // 댓글 삭제
-   const requestDelete = async() => {
-    const instanceAtk = await getInstanceATK();
-    console.log(recommentId)
-    try {
-      await instanceAtk.delete(`/community/comment/${recommentId}`)
-      setRecommentSuccess(true) 
-    } catch(e) {
-      console.log(e)
-    }
-  }
-
-  decodeToken.user_name == `${recommentWriter}`
-    ? setIsRecommentWriter(true)
-    : setIsRecommentWriter(false)
+  useEffect(()=> {
+    decodeToken.user_name === `${recommentWriter}`
+      ? setIsRecommentWriter(true)
+      : setIsRecommentWriter(false)
+  },[recommentWriter])
 
   return (
     <View style={styles.recommentBox}>
@@ -46,19 +38,12 @@ export const RecommentItem =({nickName, profileUrl, dateOfWriting, content, reco
       </View>
       <View style={styles.contentBox} >
         <Text style={styles.recomment} >{content}</Text>
-        {isRecommentWriter ?
-          <DeleteBtn requestDelete={requestDelete}/>
+        {isRecommentWriter 
+          ? <DeleteBtn recommentId={recommentId}/>
           : null
         }
+        {/* 삭제 확인 모달 띄우기 */}
       </View>
     </View>
-  )
-}
-
-const DeleteBtn= ({requestDelete}) => {
-  return (
-    <TouchableOpacity onPress={requestDelete}>
-      <Text style={styles.deleteBtn}>삭제</Text>
-    </TouchableOpacity>
   )
 }

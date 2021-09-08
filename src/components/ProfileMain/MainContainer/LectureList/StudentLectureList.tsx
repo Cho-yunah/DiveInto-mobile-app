@@ -20,8 +20,13 @@ export default function StudentLectureList() {
     navigation.navigate('ApplyLecturer');
   };
 
+  const moveNavTotalAteendeeReview = () => {
+    navigation.navigate('TotalAttendeeReview');
+  };
+
   return (
     <View style={styles.container}>
+      <CommonBtn title="리뷰관리" moveNavigation={moveNavTotalAteendeeReview} />
       <CommonBtn title="수강내역" moveNavigation={moveNavLectureSchedule} />
       <CommonBtn title="종아요목록" moveNavigation={moveNavLikeCollection} />
       <CommonBtn title="강사신청" moveNavigation={moveNavApplyLecturer} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { useRecoilValue } from 'recoil';
 
 import { styles } from './styles';
@@ -8,13 +8,20 @@ import {
   TouchSwipe,
   LectureContents,
 } from '@components/LectureSchedule';
-import { requestLectureScheduleListSelector } from '@recoil/ProfileStack';
+import { getLectureScheduleListSelector } from '@/src/recoil/ProfileStack/dataFetch';
 import CommonEmptyView from '@components/common/CommonEmptyView';
+import withSuspense from '@/src/lib/HOC/withSuspense';
+import { NextLectureListType } from './types';
 
-export default function NextLecture() {
-  const reservationList = useRecoilValue(
-    requestLectureScheduleListSelector('next'),
+function NextLectureScreen() {
+  const reservationList = useRecoilValue<NextLectureListType[]>(
+    getLectureScheduleListSelector({
+      uri: '/reservation/future?page=0&size=20&sort=dateOfReservation,DESC',
+      type: 'next',
+    }),
   );
+
+  console.log(reservationList, 'xxx');
 
   if (reservationList.length === 0) {
     return (
@@ -22,7 +29,7 @@ export default function NextLecture() {
         <CommonEmptyView
           guideText="예약한 강의가 없습니다."
           buttonText="강의 둘러보기"
-          moveViewName="ProfileMain"
+          moveViewName="홈"
         />
       </View>
     );
@@ -44,6 +51,7 @@ export default function NextLecture() {
                   reservationDate={item.reservationDate}
                   nickname={item.instructorNickname}
                   lectureType="next"
+                  isExistedReview={null}
                 />
               }
               reservationId={item.reservationId}
@@ -56,3 +64,5 @@ export default function NextLecture() {
     </View>
   );
 }
+
+export default withSuspense(NextLectureScreen);
