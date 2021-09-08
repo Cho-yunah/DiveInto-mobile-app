@@ -37,12 +37,13 @@ export function LectureInfoTab({ navigation, route }: ScheduleStackProps) {
 
     navigation.setOptions({
       title: '내 강의 목록',
-      headerRight: () =>
-        currentTab === '강의정보' ? (
-          <NextButton onPress={onEditPress} text="강의수정" disable />
-        ) : (
-          <NextButton onPress={onNewPress} text="일정추가" disable />
-        ),
+      headerRight: () => (
+        // currentTab === '강의정보' ? (
+        //   <NextButton onPress={onEditPress} text="강의수정" disable />
+        // ) : (
+        <NextButton onPress={onNewPress} text="일정추가" disable />
+      ),
+      // ),
     });
   }, [currentTab]);
 
