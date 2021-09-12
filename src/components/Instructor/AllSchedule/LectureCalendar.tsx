@@ -9,7 +9,9 @@ import {
   markedDateState,
   scheduleIdObjState,
   schedulesByIdState,
-} from '@/src/recoil/LectureStack';
+  ScheduleRerender,
+} from '@recoil/Instructor/AllSchedule';
+
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
@@ -19,6 +21,8 @@ import { DateTimeInfoType, MarkedDatesType, ScheduleInfoType } from './types';
 
 const LectureCalendar = () => {
   const lectureId = useRecoilValue(lectureIdState);
+  const scheduleRerender = useRecoilValue(ScheduleRerender);
+
   const ScheduleInfoLists = useRecoilValue(
     lectureScheduleListsSelector(lectureId!),
   );
@@ -98,7 +102,7 @@ const LectureCalendar = () => {
       setCachingSchedule(caching => caching + 1);
       setScheduleById([]);
     };
-  }, []);
+  }, [scheduleRerender]);
 
   return (
     <View style={{ backgroundColor: '#fefefe' }}>

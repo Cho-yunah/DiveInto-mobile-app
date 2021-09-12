@@ -30,7 +30,7 @@ export const NewLecture = ({
   lectureTime,
   equipmentNames,
   imageUrl = '',
-  isMarked,
+  isMarked = false,
   price,
   containerStyle,
 }: NewLectureProps) => {
@@ -68,7 +68,7 @@ export const NewLecture = ({
 const NewLectureSkeleton = () => (
   <>
     {Array.from({ length: 5 }, (v, i) => (
-      <SkeletonPlaceholder>
+      <SkeletonPlaceholder key={`newLectureSkeleton_${i}`}>
         <View style={[styles.lectureContainer, shadow]}>
           <View style={styles.lectureImage} />
           <View style={styles.infoContainer} />
@@ -86,19 +86,24 @@ export default function NewLectureList({
   const [lectures, setLectures] = useState<NewLectureProps[]>();
   useLayoutEffect(() => {
     const fetch = async () => {
-      const res = await axios.get(
-        'http://52.79.225.4:8081/lecture/new/list?page=0&size=10',
-        {
-          headers: {
-            // IsRefreshToken: 'false',
-            Authorization: null,
+      try {
+        const res = await axios.get(
+          'http://52.79.225.4:8081/lecture/new/list?page=0&size=10',
+          {
+            headers: {
+              // IsRefreshToken: 'false',
+              Authorization: null,
+            },
           },
-        },
-      );
+        );
 
-      const status = res.status;
-      if (status !== 200) throw new Error('신규강의 조회 에러');
-      setLectures(res.data._embedded.newLectureInfoList);
+        const status = res.status;
+        if (status !== 200) throw new Error('신규강의 조회 에러');
+
+        setLectures(res.data._embedded.newLectureInfoList);
+      } catch (e) {
+        console.log('신규강의 조회 에러 : ', e);
+      }
     };
 
     fetch();
@@ -114,7 +119,7 @@ export default function NewLectureList({
       </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {lectures ? (
-          lectures.map(lecture => (
+          lectures.map((lecture, i) => (
             <NewLecture
               id={lecture.id}
               title={lecture.title}
@@ -128,6 +133,7 @@ export default function NewLectureList({
               isMarked={lecture.isMarked}
               price={lecture.price}
               period={lecture.period}
+              key={`newLecture_${i}`}
             />
           ))
         ) : (
