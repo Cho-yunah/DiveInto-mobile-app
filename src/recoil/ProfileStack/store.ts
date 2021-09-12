@@ -28,6 +28,11 @@ export const AttendeeReviewListCachingState = atom({
   default: 0,
 });
 
+export const modifyNumCachingState = atom({
+  key: 'profile/modifyNumCachingState',
+  default: 0,
+});
+
 export const modifyNumViewStateAtom = atom<modifyNumViewStateAtomType | null>({
   key: 'profile/modifyNumViewState',
   default: {

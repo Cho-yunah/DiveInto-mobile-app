@@ -3,7 +3,7 @@ import { selector, selectorFamily, waitForAll } from 'recoil';
 import { getInstanceATK } from '@lib/api/axios';
 import {
   AttendeeReviewListCachingState,
-  modifyNumViewStateAtom,
+  modifyNumCachingState,
   ReserveLectureCachingState,
   WriteReviewCachingState,
 } from './store';
@@ -13,18 +13,18 @@ import { liekCollectionRefreshState } from '../Global';
 export const getUserInfoSelector = selector({
   key: '/account',
   get: async ({ get }) => {
+    get(modifyNumCachingState);
+
     const instanceAtk = await getInstanceATK();
 
     try {
       const response = await instanceAtk.get('/account');
-      console.log(response, 'response');
 
       const userInfo = response.data;
 
       return userInfo;
     } catch (error) {
-      console.log(error.response);
-      // throw err;
+      console.log(error);
     }
   },
 });
@@ -41,7 +41,6 @@ export const getProfileImg = selector({
       return imgURI;
     } catch (error) {
       console.log(error);
-      // throw error;
     }
   },
 });
@@ -50,7 +49,6 @@ export const getProfileImg = selector({
 export const profileMainMultipleEval = selector({
   key: ' multipleEval',
   get: ({ get }) => {
-    get(modifyNumViewStateAtom);
     const [userInfo, imgURI] = get(
       waitForAll([getUserInfoSelector, getProfileImg]),
     );
@@ -87,7 +85,6 @@ export const getLectureScheduleListSelector = selectorFamily({
             return data._embedded.pastReservationUIModelList;
         }
       } catch (error) {
-        console.log(error.response);
         throw error;
       }
     },
@@ -105,6 +102,8 @@ export const getLikeListSelector = selectorFamily({
           : ['/lecture/like/list?page=0&size=5', 'likeLectureInfoList'];
 
       get(liekCollectionRefreshState(likeListType));
+      // console.log('caching');
+
       const instanceAtk = await getInstanceATK();
 
       try {
