@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native';
 import * as Color from '@config/colors';
 
 const WIDTH = Dimensions.get('window').width;
@@ -6,8 +6,8 @@ const HEIGTH = Dimensions.get('window').height;
 
 export const DetailInfoStyle = StyleSheet.create({
   writerInfoBox: {
-    flexDirection:'row',
-    alignItems : 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: 17,
     paddingVertical: 13,
     position: 'relative',
@@ -19,9 +19,10 @@ export const DetailInfoStyle = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 0,
     backgroundColor: 'pink',
-    marginRight: 16
+    marginRight: 16,
   },
   title: {
+    width: WIDTH - 90,
     fontSize: 14,
     fontWeight: '600',
     paddingVertical: 3,
@@ -29,7 +30,7 @@ export const DetailInfoStyle = StyleSheet.create({
   dateStyle: {
     fontSize: 12,
     padding: 2,
-    color: Color.DarkgrayText
+    color: Color.DarkgrayText,
   },
   buttons: {
     position: 'absolute',
@@ -38,12 +39,12 @@ export const DetailInfoStyle = StyleSheet.create({
     top: 38,
     width: 55,
     justifyContent: 'space-between',
-    alignItems: 'center'
-  }
-})
+    alignItems: 'center',
+  },
+});
 
 export const ContentsStyle = StyleSheet.create({
-  contentsContainer : {
+  contentsContainer: {
     justifyContent: 'center',
     paddingVertical: 30,
     borderWidth: 1,
@@ -56,7 +57,7 @@ export const ContentsStyle = StyleSheet.create({
     color: '#202020',
   },
   imageBox: {
-    marginTop: 30
+    marginTop: 30,
   },
   contentsImage: {
     width: 320,
@@ -64,26 +65,25 @@ export const ContentsStyle = StyleSheet.create({
     backgroundColor: '#E3CCCC',
     marginRight: 15,
     borderWidth: 0.2,
-    borderColor: '#6A6D70'
+    borderColor: '#6A6D70',
   },
-})
+});
 
 export const CommentInputStyle = StyleSheet.create({
   keyboardAvoidingStyle: {
     position: 'absolute',
-    left: 0, 
-    right: 0, 
-    bottom: 0, 
-    backgroundColor: Color.Background
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   commentInputBox: {
-    width: WIDTH-40,
+    width: WIDTH - 40,
     height: 46,
     paddingRight: 38,
-    paddingLeft: 15, 
+    paddingLeft: 15,
     paddingTop: 10,
     marginTop: 10,
-    marginBottom: 30,
+    marginBottom: 15,
     marginHorizontal: 19,
     backgroundColor: '#fff',
     borderRadius: 10,
@@ -91,17 +91,46 @@ export const CommentInputStyle = StyleSheet.create({
       width: 2,
       height: 2,
     },
-    shadowColor: "#566B7E33",
+    shadowColor: '#566B7E33',
     shadowOpacity: 0.8,
     shadowRadius: 8,
-    elevation: 3,
     lineHeight: 20,
+  },
+  arrowIcon: {
+    position: 'absolute',
+    bottom: 22,
+    right: 20,
+    fontSize: 24,
+    color: '#D8D8D8',
+    padding: 5,
+  },
+  activeArrowIcon: {
+    position: 'absolute',
+    bottom: 22,
+    right: 20,
+    fontSize: 24,
+    color: '#207AB4',
+    padding: 5,
+  },
+  editBtn: {
+    color: '#D8D8D8',
+    position: 'absolute',
+    bottom: 24,
+    right: 26,
+    padding: 5,
+  },
+  activeEditBtn: {
+    color: '#207AB4',
+    position: 'absolute',
+    bottom: 24,
+    right: 26,
+    padding: 5,
   },
   recommentInput: {
     width: '91%',
     height: 46,
     paddingRight: 38,
-    paddingLeft: 15, 
+    paddingLeft: 15,
     paddingTop: 10,
     marginTop: 10,
     marginBottom: 30,
@@ -112,59 +141,32 @@ export const CommentInputStyle = StyleSheet.create({
       width: 2,
       height: 2,
     },
-    shadowColor: "#b2f2bb",
+    shadowColor: '#b2f2bb',
     shadowOpacity: 0.8,
     shadowRadius: 8,
     elevation: 3,
     lineHeight: 20,
   },
-  arrowIcon: {
-    position: 'absolute',
-    bottom: 35,
-    right: 25,
-    fontSize:24,
-    color: '#D8D8D8',
-    padding: 5
-  },
-  activeArrowIcon: {
-    position: 'absolute',
-    bottom: 35,
-    right: 25,
-    fontSize:24,
-    color: '#207AB4',
-    padding: 5
-  },
+
   recommentArrowIcon: {
     position: 'absolute',
     bottom: 35,
     right: 25,
-    fontSize:24,
+    fontSize: 24,
     color: '#38d9a9',
-    padding: 5
+    padding: 5,
   },
-  activeEditBtn: {
-    color: '#207AB4',
-    position: 'absolute',
-    bottom: 45,
-    right: 25,
-  },
-  editBtn: {
-    color: '#D8D8D8',
-    position: 'absolute',
-    bottom: 45,
-    right: 25,
-  }
-})
+});
 
 export const CommentDetailStyles = StyleSheet.create({
   flatlistContainer: {
     flexGrow: 1,
   },
   commentBox: {
-    width: WIDTH-40,
+    width: WIDTH - 40,
     marginVertical: 6,
     marginHorizontal: '5%',
-    paddingVertical:10,
+    paddingTop: 10,
     paddingHorizontal: 16,
     borderRadius: 10,
     backgroundColor: '#fff',
@@ -180,7 +182,7 @@ export const CommentDetailStyles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 0,
     backgroundColor: 'pink',
-    marginRight: 10
+    marginRight: 10,
   },
   nicknameStyle: {
     fontSize: 12,
@@ -196,10 +198,10 @@ export const CommentDetailStyles = StyleSheet.create({
     marginTop: 10,
   },
   showingRecomment: {
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   buttonBox: {
-    paddingVertical:10,
+    paddingVertical: 10,
     marginBottom: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -209,7 +211,7 @@ export const CommentDetailStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-})
+});
 
 export const RecommentDetailStyles = StyleSheet.create({
   recommentBox: {
@@ -217,36 +219,36 @@ export const RecommentDetailStyles = StyleSheet.create({
     borderColor: '#F0F0F0',
     borderRadius: 10,
     padding: 10,
-    marginVertical: 6
+    marginVertical: 6,
   },
 
   writerInfo: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  profileImg:{
+  profileImg: {
     width: 16,
     height: 16,
     borderRadius: 50,
     borderWidth: 0,
     backgroundColor: 'pink',
-    marginRight: 7
+    marginRight: 7,
   },
   nickname: {
     fontSize: 12,
     lineHeight: 20,
-    flexGrow: 1
+    flexGrow: 1,
   },
   date: {
     fontSize: 12,
     color: '#6A6D70',
-  }, 
+  },
   contentBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
   },
   recomment: {
-   flexGrow: 1
+    flexGrow: 1,
   },
-})
+});

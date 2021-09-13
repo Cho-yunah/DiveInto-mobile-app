@@ -8,7 +8,8 @@ import CommunityPostingScreen from '@screens/CommunityPosting';
 import CommunityDetailScreen from '@screens/CommunityDetail';
 import { useEffect } from 'react';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
-import { IsLogin } from '@/src/recoil/Global';
+import { IsLogin } from '@recoil/Global';
+import * as getDimension from '@config/windowDimention';
 
 const Stack = createStackNavigator<RootCommunityStack>();
 
@@ -37,15 +38,14 @@ export default function CommunityStack({ navigation, route }: any) {
         screenOptions={{
           headerStyle: {
             backgroundColor: '#50CAD2',
-            height: 88,
-            // width: '100%',
+            height: getDimension.HEIGHT * 0.07,
           },
           headerTitleStyle: {
             fontWeight: 'bold',
             fontSize: 18,
             height: 21,
             flex: 1,
-            alignSelf:'center'
+            alignSelf: 'center',
           },
           headerBackTitle: '뒤로',
           headerBackTitleStyle: {
@@ -59,7 +59,7 @@ export default function CommunityStack({ navigation, route }: any) {
           name="CommunityMain"
           component={CommunityMainScreen}
           options={{
-            title: '커뮤니티',
+            title: '',
           }}
         />
         <Stack.Screen
@@ -73,7 +73,7 @@ export default function CommunityStack({ navigation, route }: any) {
           name="CommunityDetail"
           component={CommunityDetailScreen}
           options={{
-            title: '커뮤니티 상세',
+            title: '',
           }}
         />
       </Stack.Navigator>

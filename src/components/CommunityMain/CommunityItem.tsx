@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { TimeOfWriting } from './TimeOfWriting';
 import { useSetRecoilState } from 'recoil';
 import { styles } from './styles';
-import { ContentItem, CommentNumber, ContentItemType, } from './types';
+import { CommentNumber, ContentItemType } from './types';
 import * as colors from '@config/colors';
 import { LikeBtn } from './LikeBtn';
 import { likeState } from '@recoil/CommunityStack';
@@ -20,12 +20,11 @@ export default function CommunityItem({
   commentCount,
   likeCount,
   liked,
-  listType,
 }: ContentItemType) {
-
   const navigation = useNavigation();
   const basicThumnailUrl =
     'https://png.pngtree.com/png-clipart/20190516/original/pngtree-warm-color-cool-in-summer-cartoon-swimming-goggles-cool-png-image_3774944.jpg';
+
   const setLike = useSetRecoilState(likeState(id));
 
   useEffect(() => {
@@ -33,9 +32,8 @@ export default function CommunityItem({
   }, [liked]);
 
   const onMoveDetailScreen = () => {
-    navigation.navigate('CommunityDetail', { id, ScreenType: listType });
+    navigation.navigate('CommunityDetail', { id });
   };
-
 
   return (
     <TouchableOpacity
@@ -43,15 +41,19 @@ export default function CommunityItem({
       activeOpacity={0.8}
       onPress={onMoveDetailScreen}
     >
-      <Image 
-        style={styles.thumnailImage} 
-        source={{uri: imageUrl ? imageUrl : basicThumnailUrl }} 
+      <Image
+        style={styles.thumnailImage}
+        source={{ uri: imageUrl ? imageUrl : basicThumnailUrl }}
       />
       <View style={styles.contentInfo}>
-        <Text>{title}</Text>
+        <View style={styles.title}>
+          <Text numberOfLines={1} ellipsizeMode="tail">
+            {title}
+          </Text>
+        </View>
         <View style={styles.flexBox}>
           <Text>{writerNickname}</Text>
-          <Entypo name="dot-single" size={14} color={colors.BlackText} />
+          <Entypo name="dot-single" size={12} color={colors.BlackText} />
           <TimeOfWriting time={dateOfRegistration} />
         </View>
       </View>
@@ -61,14 +63,9 @@ export default function CommunityItem({
           id={id}
           likeCount={likeCount}
           liked={liked}
-          listType={listType}
+          listType="mainList"
         />
       </View>
-
-      {/* <View style={styles.iconBox}>
-        <CommentNum commentNum={commentCount} />
-        <LikeBtn id={id} likeCount={likeCount} liked={liked} />
-      </View> */}
     </TouchableOpacity>
   );
 }

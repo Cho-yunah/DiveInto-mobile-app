@@ -9,25 +9,24 @@ import {
   writerInfoState,
   writerInfoType,
 } from '@recoil/CommunityStack';
-import jwt_decode from "jwt-decode";
+import jwt_decode from 'jwt-decode';
 import { decodeTokenType } from './types';
 import { DeleteBtn, EditBtn } from './ButtonCollection';
 
-export default function DetailInfo({ id }: {id: number}) {
-
+export default function DetailInfo({ id }: { id: number }) {
   const { title } = useRecoilValue(communityItemSelector);
   const writer = useRecoilValue(writerInfoState);
-  const token = useRecoilValue(atkState)
-  const decodeToken=  jwt_decode<decodeTokenType>(token|| '') || null;
-  const writerInfo= useRecoilValue<writerInfoType>(writerInfoState)
-  const [checkWriter, setCheckWriter] = useRecoilState(checkWriterState)
+  const token = useRecoilValue(atkState);
+  const decodeToken = jwt_decode<decodeTokenType>(token || '') || null;
+  const writerInfo = useRecoilValue<writerInfoType>(writerInfoState);
+  const [checkWriter, setCheckWriter] = useRecoilState(checkWriterState);
 
-  useEffect(()=> {
+  useEffect(() => {
     // 로그인한 사람과 글 게시한 사람이 일치하는지
-    decodeToken.user_name == writerInfo.id 
+    decodeToken.user_name == writerInfo.id
       ? setCheckWriter(true)
-      : setCheckWriter(false)
-  },[writerInfo.id ])
+      : setCheckWriter(false);
+  }, [writerInfo.id]);
 
   return (
     <View>
@@ -37,25 +36,24 @@ export default function DetailInfo({ id }: {id: number}) {
             style={styles.writerImage}
             source={{ uri: writer.profileImageUrl }}
           />
-         ) : (
-          <View style={styles.writerImage}>
-          </View>
-         )}
+        ) : (
+          <View style={styles.writerImage}></View>
+        )}
         <View>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title} numberOfLines={2}>
+            {title}
+          </Text>
           <Text style={styles.dateStyle}>{writer.nickName}</Text>
         </View>
       </View>
       <View style={styles.buttons}>
-        {checkWriter 
-          ? <>
-              <EditBtn id={id} />
-              <DeleteBtn id={id}/>
-            </>
-          : null
-        }
+        {checkWriter ? (
+          <>
+            <EditBtn id={id} />
+            <DeleteBtn id={id} />
+          </>
+        ) : null}
       </View>
     </View>
   );
 }
-

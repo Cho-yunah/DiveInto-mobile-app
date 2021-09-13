@@ -5,7 +5,7 @@ import CommunityItem from './CommunityItem';
 import { styles } from './styles';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useRequestCommunityList } from './useRequestCommunityList';
-import { CommunityTabType, ContentItemType  } from './types';
+import { CommunityTabType, ContentItemType } from './types';
 import {
   shareListState,
   shareListPageState,
@@ -17,25 +17,32 @@ import {
   questionLoadingState,
 } from '@recoil/CommunityStack';
 
-export default function CommunityMain({share, question}: CommunityTabType):ReactElement  {
+export default function CommunityMain({
+  share,
+  question,
+}: CommunityTabType): ReactElement {
   // data 요청
-  share? 
-    useRequestCommunityList({requestPage: 'SHARE'})
-    : useRequestCommunityList({requestPage: 'QUESTION'})
-  
+  share
+    ? useRequestCommunityList({ requestPage: 'SHARE' })
+    : useRequestCommunityList({ requestPage: 'QUESTION' });
+
   // focus 되어있는 tab click 하면 맨위로 이동
-  const listRef= useRef(null)
-  useScrollToTop(listRef)
-  
+  const listRef = useRef(null);
+  useScrollToTop(listRef);
+
   // props로 share이 전달될 경우
-  const shareList= useRecoilValue<ContentItemType[]>(shareListState)
-  const [sharePage, setSharePage] = useRecoilState<number>(shareListPageState) 
-  const [refreshShare, setRefreshShare] = useRecoilState<boolean>(refreshShareState)
+  const shareList = useRecoilValue<ContentItemType[]>(shareListState);
+  const [sharePage, setSharePage] = useRecoilState<number>(shareListPageState);
+  const [refreshShare, setRefreshShare] =
+    useRecoilState<boolean>(refreshShareState);
 
   // props로 question이 전달될 경우
-  const questionList = useRecoilValue<ContentItemType[]>(questionListState)
-  const [questionPage, setQuestionPage] = useRecoilState<number>(questionListPageState)
-  const [refreshQuestion, setRefreshQuestion] = useRecoilState<boolean>(refreshQuestionState)
+  const questionList = useRecoilValue<ContentItemType[]>(questionListState);
+  const [questionPage, setQuestionPage] = useRecoilState<number>(
+    questionListPageState,
+  );
+  const [refreshQuestion, setRefreshQuestion] =
+    useRecoilState<boolean>(refreshQuestionState);
 
   const isShareLoading = useRecoilValue<boolean>(shareLoadingState);
   const isQuestionLoading = useRecoilValue<boolean>(questionLoadingState);
@@ -44,24 +51,21 @@ export default function CommunityMain({share, question}: CommunityTabType):React
   // console.log('share',shareList)
   // console.log('question',questionList)
 
-
   // data 받아올 때의 loader
   const renderLoader = () => {
     return isShareLoading || isQuestionLoading ? (
       <View style={styles.loaderStyle}>
         <ActivityIndicator size="large" color="#50CAD2" />
       </View>
-     ) : null;
+    ) : null;
   };
 
   // contents 더 가져오기
-  const contentsLoadMore= ()=> { 
-    if(isShareLoading && refreshShare ) return
-    if(isQuestionLoading && refreshQuestion) return 
-    share? 
-      setSharePage(sharePage +1 ) 
-      : setQuestionPage(questionPage + 1)
-  }
+  const contentsLoadMore = () => {
+    if (isShareLoading && refreshShare) return;
+    if (isQuestionLoading && refreshQuestion) return;
+    share ? setSharePage(sharePage + 1) : setQuestionPage(questionPage + 1);
+  };
 
   // 새로고침
   const onFresh = () => {
@@ -109,6 +113,8 @@ export default function CommunityMain({share, question}: CommunityTabType):React
         windowSize={2}
         disableVirtualization={false} // virtualized 어쩌구 에러 없애줌
         initialNumToRender={9}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 20 }}
       />
     </View>
   );

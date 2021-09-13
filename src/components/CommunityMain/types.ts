@@ -1,7 +1,7 @@
 export type CommunityTabType = {
-  share ?: string,
-  question ?: string
-}
+  share?: string;
+  question?: string;
+};
 
 export type CommunityMainProps = {
   enterContenetDetail?: () => void;
@@ -33,12 +33,13 @@ export type nextButtonProps = {
 };
 
 export type likeBtnPropsType = {
-  id: number,
-  likeCount: number , 
-  liked: boolean ,
-  mainList ?: string
-}
+  id: number;
+  likeCount: number;
+  liked: boolean;
+  mainList?: string;
+  listType: string;
+};
 
 export type Time = {
-  time: string
-}
+  time: string;
+};

@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native'
-import { atkState, likeState } from "@recoil/CommunityStack"
-import { useRecoilState, useRecoilValue } from "recoil"
+import { View, Text } from 'react-native';
+import { likeState } from '@recoil/CommunityStack';
+import { useRecoilValue } from 'recoil';
 import { likeBtnPropsType } from './types';
-import {styles} from "./styles"
+import { styles } from './styles';
 
 import * as colors from '@config/colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -17,11 +17,7 @@ export const LikeBtn = ({
 }: likeBtnPropsType) => {
   const like = useRecoilValue(likeState(id));
 
-  const likeCountNumber = liked
-    ? like
-      ? likeCount
-      : likeCount - 1
-    : like
+  const likeCountNumber = like
     ? likeCount + 1
     : likeCount === 0
     ? 0
@@ -31,7 +27,7 @@ export const LikeBtn = ({
     <View style={styles.commentAndLike}>
       <FontAwesome
         name="heart"
-        size={14}
+        size={16}
         color={like ? colors.Selected : colors.Gray2}
       />
       {listType === 'mainList' ? (

@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, FlatList } from 'react-native';
 import * as Color from '@config/colors';
 
 const WIDTH = Dimensions.get('window').width;
@@ -7,7 +7,6 @@ const HEIGTH = Dimensions.get('window').height;
 export const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-
   },
   tabContainer: {
     backgroundColor: Color.White,
@@ -27,7 +26,6 @@ export const styles = StyleSheet.create({
   },
   listItem: {
     flexDirection: 'row',
-
     marginTop: 12,
     width: WIDTH - 34,
     height: 70,
@@ -49,8 +47,12 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-around',
   },
+  title: {
+    width: WIDTH - 120,
+  },
   flexBox: {
     flexDirection: 'row',
+    alignItems: 'baseline',
   },
   iconBox: {
     flexDirection: 'row',
