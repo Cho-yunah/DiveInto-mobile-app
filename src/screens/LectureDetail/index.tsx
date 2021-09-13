@@ -19,7 +19,6 @@ import LecturePicsCarouselSuspense from '@/src/components/LectureDetail/LectureP
 import InstructorProfileSuspense from '@/src/components/LectureDetail/InstructorProfile/InstructorProfileSuspense';
 import SuspenseLocationInfo from '@/src/components/LectureDetail/LocationInfo/SuspenseLocationInfo';
 import LectureDetailLikeBtn from '@/src/components/LectureDetail/LectureDetailLikeBtn';
-import { AlertModal } from '../ReserveLecture';
 import AutoCloseAlertModal from '@/src/components/common/AutoCloseAlertModal';
 
 const LectureDetailScreen = ({ navigation, route }: LectureDetailProps) => {

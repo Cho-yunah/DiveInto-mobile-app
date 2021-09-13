@@ -84,6 +84,7 @@ export const SelectLectureSchedule = StyleSheet.create({
     alignItems: 'center',
     marginRight: 5,
     marginBottom: 5,
+    minWidth: 120,
   },
 });
 
