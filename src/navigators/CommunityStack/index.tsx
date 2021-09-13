@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { IsLogin } from '@recoil/Global';
 import * as getDimension from '@config/windowDimention';
+import { Platform } from 'react-native';
 
 const Stack = createStackNavigator<RootCommunityStack>();
 
@@ -38,7 +39,10 @@ export default function CommunityStack({ navigation, route }: any) {
         screenOptions={{
           headerStyle: {
             backgroundColor: '#50CAD2',
-            height: getDimension.HEIGHT * 0.07,
+            height:
+              Platform.OS === 'ios'
+                ? getDimension.HEIGHT * 0.1
+                : getDimension.HEIGHT * 0.07,
           },
           headerTitleStyle: {
             fontWeight: 'bold',
