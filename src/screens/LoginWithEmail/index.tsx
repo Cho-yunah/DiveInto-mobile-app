@@ -12,7 +12,7 @@ import jwt_decode from 'jwt-decode';
 import { JWToken } from './types';
 import axios from 'axios';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as FCM from '@lib/firebase/FCM';
 import { emailState, isCheckedSaveEmailState } from '@/src/recoil/LoginStack';

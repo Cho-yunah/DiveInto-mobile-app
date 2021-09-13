@@ -87,7 +87,6 @@ const LectureReview = () => {
 
           <TouchableOpacity
             style={styles.seeMoreBtn}
-            onPress={() => console.warn('더보기클릭')}
             disabled={!lectureReviews?.contents?.length}
           >
             <Text style={styles.seeMoreBtnText}>더보기</Text>

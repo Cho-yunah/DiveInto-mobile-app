@@ -61,9 +61,12 @@ const SelectLectureSchedule = () => {
                   return (
                     <>
                       <View
-                        style={{ flexDirection: 'row', alignItems: 'center' }}
+                        style={{
+                          width: '100%',
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}
                       >
-                        <Entype name="dot-single" size={20} />
                         {schedule[1]?.map(dateTime => (
                           <Pressable
                             key={dateTime.scheduleDateTimeId}

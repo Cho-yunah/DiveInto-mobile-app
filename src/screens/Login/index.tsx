@@ -1,11 +1,6 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
-import {
-  HeaderText,
-  LoginProblem,
-  SocialLogin,
-  EmailInput,
-} from '@components/Login';
+import { HeaderText, EmailInput } from '@components/Login';
 
 import { LoginProps } from '@navigators/LoginStack/types';
 import styles from './styles';
