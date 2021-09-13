@@ -16,6 +16,8 @@ import ProfileStack from '@navigators/ProfileStack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AttendeeScheduleStack from '../AttendeeScheduleStack';
+import ManagementLectureStack from '../ManagementLecture';
 
 const Tab = createBottomTabNavigator<RootMainTab>();
 
@@ -43,14 +45,14 @@ export default function LoginStack() {
           <Tab.Screen name="홈" component={LectureStack} />
           <Tab.Screen name="강의일정" component={AdmMyLectureStack} />
           <Tab.Screen name="커뮤니티" component={CommunityStack} />
-          <Tab.Screen name="강의후기" component={Tmp} />
+          <Tab.Screen name="강의관리" component={ManagementLectureStack} />
           <Tab.Screen name="프로필" component={ProfileStack} />
         </>
       ) : (
         <>
           <Tab.Screen name="홈" component={LectureStack} />
           <Tab.Screen name="커뮤니티" component={CommunityStack} />
-          <Tab.Screen name="강의일정" component={Tmp} />
+          <Tab.Screen name="강의일정" component={AttendeeScheduleStack} />
           <Tab.Screen name="프로필" component={ProfileStack} />
         </>
       )}
@@ -75,7 +77,7 @@ const IconSelector = ({
   focused: boolean;
   color: string;
   size: number;
-  routeName: '홈' | '커뮤니티' | '강의일정' | '강의후기' | '프로필';
+  routeName: '홈' | '커뮤니티' | '강의일정' | '강의관리' | '프로필';
 }) => {
   switch (routeName) {
     case '홈':
@@ -102,7 +104,7 @@ const IconSelector = ({
           color={focused ? colors.PointBlue : colors.Gray2}
         />
       );
-    case '강의후기':
+    case '강의관리':
       return (
         <Ionicons
           name={focused ? 'add-circle' : 'add-circle-outline'}

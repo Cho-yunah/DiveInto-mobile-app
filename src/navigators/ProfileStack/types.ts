@@ -15,10 +15,10 @@ export type RootProfileStack = {
   FTPolicy: undefined;
   PrivacyPolicy: undefined;
   DetailPolicy: undefined;
-  ReviewCollection: {
-    id: number;
-    title: string;
-  };
+  // ReviewCollection: {
+  //   id: number;
+  //   title: string;
+  // };
   DetailFAQ: {
     FAQ_id: number;
     title: string;
@@ -75,19 +75,19 @@ export type ApplyLecturerProps = StackScreenProps<
 >;
 
 // 강사 타입
-export type ReviewCollectionProps = StackScreenProps<
-  RootProfileStack,
-  'ReviewCollection'
->;
-
-// 예약 상세 타입
-export type DetailReservationProps = StackScreenProps<
-  RootProfileStack,
-  'DetailReservation'
->;
+// export type ReviewCollectionProps = StackScreenProps<
+//   RootProfileStack,
+//   'ReviewCollection'
+// >;
 
 // 후기작성 타입
 export type WriteReviewProps = StackScreenProps<
   RootProfileStack,
   'WriteReview'
+>;
+
+// 예약한 강의 상세 타입
+export type DetailReservationProps = StackScreenProps<
+  RootProfileStack,
+  'DetailReservation'
 >;

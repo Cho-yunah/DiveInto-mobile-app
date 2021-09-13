@@ -5,7 +5,7 @@ export type ReviewStack = {
   // WriteReview: undefined;
 };
 
-export type WriteReviewScreenProps = StackScreenProps<
-  ReviewStack,
-  'WriteReview'
->;
+// export type WriteReviewScreenProps = StackScreenProps<
+//   ReviewStack,
+//   'WriteReview'
+// >;

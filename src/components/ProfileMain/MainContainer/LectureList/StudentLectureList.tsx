@@ -8,10 +8,6 @@ import { useNavigation } from '@react-navigation/native';
 export default function StudentLectureList() {
   const navigation = useNavigation();
 
-  const moveNavLectureSchedule = () => {
-    navigation.navigate('LectureSchedule');
-  };
-
   const moveNavLikeCollection = () => {
     navigation.navigate('LikeCollection');
   };
@@ -27,7 +23,6 @@ export default function StudentLectureList() {
   return (
     <View style={styles.container}>
       <CommonBtn title="리뷰관리" moveNavigation={moveNavTotalAteendeeReview} />
-      <CommonBtn title="수강내역" moveNavigation={moveNavLectureSchedule} />
       <CommonBtn title="종아요목록" moveNavigation={moveNavLikeCollection} />
       <CommonBtn title="강사신청" moveNavigation={moveNavApplyLecturer} />
     </View>

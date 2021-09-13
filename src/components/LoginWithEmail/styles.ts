@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
   TextInput: {
     paddingHorizontal: 0,
     paddingBottom: getDimenstion.HEIGHT > 600 ? 9 : 5,
+    width: '100%',
   },
   TextInputIconContainer: {},
   TextInputIcons: {},

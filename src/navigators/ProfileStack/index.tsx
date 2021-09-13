@@ -74,23 +74,24 @@ export default function ProfileStack<ProfileStak>() {
           />
 
           {/* 강사 자신의 강의 리스트 조회 */}
-          <Stack.Screen
+          {/* <Stack.Screen
             name="FindAllReview"
             component={LectureCollectionScreen}
             options={{
               title: '후기 모아보기',
             }}
-          />
+          /> */}
 
           {/* 한 강의에 관한 리뷰 모아보기 */}
-          <Stack.Screen
+          {/* <Stack.Screen
             name="ReviewCollection"
             component={ReviewCollectionScreen}
             options={{
               title: '후기 리스트',
             }}
-          />
+          /> */}
 
+          {/* 수강생이 자신이 작성한 리뷰 보기 */}
           <Stack.Screen
             name="TotalAttendeeReview"
             component={TotalAttendeeReviewScreen}

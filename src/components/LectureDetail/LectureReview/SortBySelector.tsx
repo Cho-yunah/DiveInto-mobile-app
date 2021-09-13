@@ -22,7 +22,11 @@ const SortBySelector = ({
             : styles.orderBySelectorBtn,
         ]}
       >
-        <Text style={sortBy === sortByText ? { color: 'white' } : {}}>
+        <Text
+          style={
+            sortBy === sortByText ? { color: 'white' } : { color: 'black' }
+          }
+        >
           {sortByTextKr}
         </Text>
       </View>

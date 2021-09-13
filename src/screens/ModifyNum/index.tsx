@@ -6,7 +6,10 @@ import { getInstanceATK } from '@lib/api/axios';
 import { ModifyNumProps } from '@navigators/ProfileStack/types';
 import NextButton from '@components/common/NextButton';
 import { useRecoilCallback } from 'recoil';
-import { modifyNumViewStateAtom } from '@recoil/ProfileStack/store';
+import {
+  modifyNumCachingState,
+  modifyNumViewStateAtom,
+} from '@recoil/ProfileStack/store';
 
 export default function ModifyNumScreen({ navigation }: ModifyNumProps) {
   const [nextPhoneNum, setNextPhoneNum] = useState('');
@@ -24,6 +27,8 @@ export default function ModifyNumScreen({ navigation }: ModifyNumProps) {
 
       const instanceAtk = await getInstanceATK();
       await instanceAtk.put('/account', body);
+
+      set(modifyNumCachingState, prev => prev + 1);
     } catch (err) {
       console.log(err);
     }
@@ -68,24 +73,3 @@ const autoHyphen = (phone: string) =>
   phone
     .replace(/(^\d{3})-(\d{4})(\d+)/g, '$1-$2-$3')
     .replace(/(^\d{3})(\d+)/g, '$1-$2');
-
-// const onChangeDone = useCallback(() => {
-//   const requestModifiyNumber = async () => {
-//     try {
-//       const body = {
-//         birth: staticInfo?.birth,
-//         gender: staticInfo?.gender,
-//         phoneNumber: nextPhoneNum,
-//       };
-
-//       const instanceAtk = await getInstanceATK();
-//       await instanceAtk.put('/account', body);
-//     } catch (err) {
-//       console.log(err);
-//     }
-
-//     navigation.navigate('ProfileMain');
-//   };
-
-//   requestModifiyNumber();
-// }, [nextPhoneNum, staticInfo]);
